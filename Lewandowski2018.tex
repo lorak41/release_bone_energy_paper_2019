@@ -65,8 +65,27 @@
 
 
 {\small 
-	Metacarpal fractures are a common cause of failure in Thoroughbred racehorses. A large proportion of injuries occur in the absence of a specific traumatic event and show typical characteristics of stress fractures. The purpose of this work is to develop a combined remodelling and fracture finite element based framework allowing for integrated simulation of a equine 3rd metacarpal remodelling under specific training regime (boundary conditions), followed by the evaluation of its fracture release energy. Such approach may help to better understand the correlation between high intense training, bone adaptation and fracture risk, ultimately improving the welfare of the racehorse. The remodelling analysis is based on phenomenological model for the macroscopic behaviour of bone based on thermodynamics of open systems. Assessment of the fracture risk is conducted by evaluating strain release energy rate within the context configurational mechanics. Material mapping between meshes of both analyses is carried out by using Moving Least Squares approximation. Hierarchical basis functions of arbitrary polynomial order are adopted to increase the order of approximation leading to accurate results for relatively coarse meshes and take advantage of efficient multigrid solvers. Stress singularity at the crack tip is modelled accurately in an~unstructured tetrahedral mesh domain by using Quarter Point Elements. The implemented framework provides robust, accurate and energy consistent method for quantifying the influence of bone adaptation on the fracture propensity. Performance, verification and convergence of the presented method are demonstrated by numerical examples. The promising results of this study offer a~novel framework to simulate changes in the bone structure in response to training and quantify the fracture propensity. 
-	%Bone is able to adapt to changes in its mechanical environment. Studies of the Thoroughbred racehorse show modification of the geometric properties of the third metacarpal bone in response to training. These modifications are associated with reduced bone strains. Intense training before the adaptive response is completed and bone strain reduced increases the risk of fatigue damage. Bone adaptation in response to different loads is known to increase the resistance to fracture. The development of computational models to describe bone behavior has gained tremendous importance over the last decade. In particular, computational modelling for bone growth and resorption processes followed by fracture analysis can be a useful tool to determine crack propensity. Therefore, this study aims to develop an efficient framework which will help to understand the relationship between exercise loading, bone density and ultimately fracture risk. This case study highlights the development of subject-specific FE analyses to simulate exercise loading on equine bone and subsequently quantify changes in the fracture propensity in open source code - MoFEM.
+	Fractures of the metacarpal condyle are a common orthopaedic injury in Thoroughbred racehorses.  
+	A large proportion of injuries occur in the absence of a specific traumatic event and show typical characteristics of stress fractures. 
+	The purpose of this work is to develop a combined remodelling and fracture finite element based framework allowing for integrated simulation of an~equine 3rd metacarpal remodelling under specific exercise regime (boundary conditions), followed by the evaluation of its fracture release energy. 
+	The proposed approach can improve the understanding of the correlation between high intense exercise intensity, bone adaptation and fracture 
+	risk, ultimately improving the welfare of the racehorse. 
+	The remodelling analysis is based on a phenomenological model of the macroscopic behaviour of bone based on thermodynamics of open 
+	systems previously presented in the literature. 
+	Assessment of fracture propensity is conducted by evaluating strain release energy rate within the context of configurational mechanics. 
+	All analyses are performed using unstructured tetrahedral meshes. 
+	Material mapping between remodelling analysis mesh and fracture analysis mesh is obtained through Moving Least Squares approximation. 
+	Hierarchical basis functions of arbitrary polynomial order are adopted to increase the order of approximation to achieve high 
+	accuracy results with relatively coarse meshes and to take advantage of efficient multigrid solvers.
+	Extension of Quarter Point Elements tailored for hierarchical basis functions is proposed to solve the stress singularity at the 
+	crack tip.
+	The implemented framework provides a robust and energy consistent method for quantifying the influence of bone adaptation on the
+	 fracture propensity
+	Performance, verification, convergence and validation of the presented method are demonstrated by numerical examples.
+	The promising results of this study offer a~novel framework to simulate changes in the bone structure in response to exercise and 
+	quantify the fracture propensity.
+	 
+	%Bone is able to adapt to changes in its mechanical environment. Studies of the Thoroughbred racehorse show modification of the geometric properties of the third metacarpal bone in response to training. These modifications are associated with reduced bone strains. Intense training before the adaptive response is completed and bone strain reduced increases the risk of fatigue damage. Bone adaptation in response to different loads is known to increase the resistance to fracture. The development of computational models to describe bone behavior has gained tremendous importance over the last decade. In particular, computational modelling for bone growth and resorption processes followed by fracture analysis can be a useful tool to determine crack propensity. Therefore,, this study aims to develop an efficient framework which will help to understand the relationship between exercise loading, bone density and ultimately fracture risk. This case study highlights the development of subject-specific FE analyses to simulate exercise loading on equine bone and subsequently quantify changes in the fracture propensity in open source code - MoFEM.
 	
 \textbf{\textit{Key Words:}} {\it finite element analysis, bone remodelling, fracture, 3rd metacarpal, moving least squares, configurational mechanics, heterogeneity}}
 %
@@ -75,18 +94,39 @@
 
 \textcolor{red}{All the figures are still in draft mode.}
 \section{Introduction}
-Fractures of the third metacarpal bone in thoroughbred racehorses are one of the main reasons for euthanasia in the UK \citep{Parkin2004risk}. Most of these fractures occur due to the accumulation of tissue fatigue as a result of repetitive loading \citep{Parkin2005} rather than specific traumatic event. Remodelling is the on-going process of replacing old bone tissue by new bone and thus repairing the fatigue damage \citep{hughes2017role}. However, the racehorse is an extreme example of this process in which intense exercise and excessive loading of the metacarpal bones results in maladaptation. The bone repair is overwhelmed by load-induced bone densification that also increases brittleness \citep{loughridge2017qualitative}. The location of 3rd metacarpal fractures is remarkably consistent as a vast amount of the cracks initiate on the lateral condyle of the leading forelimb \citep{jacklin2012frequency, parkin2006analysis}. However, despite a considerable research in the field, including applying advanced methods like radiography \citep{crijns2014intramodality, loughridge2017qualitative, bogers2016quantitative}, magnetic resonance imaging \citep{tranquille2017MRI} or biomarkers \citep{mcilwraith2005use}, it still remains a challenge to accurately predict the fracture risk and prevent this type of fatal injuries. Therefore, the development of computational tools with the capability to estimate bone adaptation and its resistance to fracture might become a viable and robust solution. The numerical models to describe bone behaviour has gained a tremendous importance over the last decade. In particular, Finite Element Method has been used to improve understanding of the fracture behaviour of bones and the relationships between load conditions and bone architecture \citep{podshivalov2014road, poelert2013patient}. \\
-The goal of this study is to explore the potential of computational framework based on FEM to predict bone density profiles for the horses in training and subsequently quantify fracture resistance of adapted bones using linear fracture mechanics for brittle materials. Schematic of the procedure is presented in Figure \ref{fig:framework}.
+Fractures of the third metacarpal bone are one of the main reasons for euthanasia of Thoroughbred racehorses on racecourses in the UK \citep{Parkin2004risk}.
+Most of these fractures occur due to the accumulation of tissue fatigue as a result of repetitive loading \citep{Parkin2005} rather than specific traumatic event.
+Remodelling is the on-going complex biological process of replacing old bone tissue by new bone and thus repairing the fatigue damage\citep{hughes2017role}.
+However, the racehorse is an extreme example of this process in which intense exercise and excessive loading of the metacarpal bones results in maladaptation.
+The bone repair is overwhelmed by load-induced bone densification that also increases brittleness \citep{loughridge2017qualitative}.
+The location of 3rd metacarpal fractures is remarkably consistent as a large number of racehorses present crack initiation from 
+the lateral lateral para-sagittal groove of the distal condyle of the leading forelimb \citep{jacklin2012frequency, parkin2006analysis}.
+However, despite a considerable research in the field, including applying diagnostics methods like radiography 
+\citep{bogers2016quantitative, crijns2014intramodality, loughridge2017qualitative}, magnetic resonance imaging 
+\citep{tranquille2017MRI} or biomarkers \citep{mcilwraith2005use}, it still remains a challenge to accurately predict the fracture risk 
+and prevent this type of significant injury.
+Therefore, development of computational tools with the capability to estimate bone adaptation and its resistance to fracture is a potential 
+viable and robust solution.
+The use of numerical models to describe bone behaviour has gained a tremendous importance over the last decade. 
+In particular, Finite Element Method has been used to improve understanding of the fracture behaviour of bones and the relationships between load conditions and bone architecture \citep{podshivalov2014road, poelert2013patient}. \\
+The goals of this study are to explore the potential of a computational framework based on FEM to predict bone density profiles 
+(bone adaptation) for the undergoing exercise (training) and subsequently quantify fracture resistance of 
+adapted bones using linear fracture mechanics for brittle materials. 
+A schematic of the procedure is presented in Figure \ref{fig:framework}.
 %(The aim for this study is the establishment and implementation of FEM based framework suitable for clinical practice that will help to simulate density evolution, quantify current and future fracture risk based on CT scanning data derived from horses in training.) 
-The process of bone adaptation, within the developed framework, is incorporated by using computational algorithm in open system thermodynamics \citep{Kuhl2003a}. A brief review of which is included in Section \ref{sec:bone_remodel} of this study. Heterogeneous mechanical properties of the bone derived from CT data are assigned to FE model by adopting the approximation of meshless Moving Least Squares method. This novel approach in mapping data on unstructured mesh is presented with examples and validation in Section \ref{sec:dens_mapping}. The fourth section contains extension of recently established energy consistent approach for evolving crack propagation in the context of configurational mechanics. The method is utilised to calculate release energy of bones under quasi-static loading during different stages of adaptation. The next section brings together all the developments of the framework in the form of numerical examples. Finally, the discussion gives a brief summary and areas for further research are identified.
-% \begin{figure}[h!]
-% 	\begin{centering}
-% 		\includegraphics[width=12cm]{Figures/framework.pdf}
-% 		\caption{Framework for estimating crack propensity in MoFEM \citep{mofem2017}. Density derived from Quantitative Computed Tomography (qCT) is mapped onto finite element mesh, which is subsequently used for bone remodelling analysis. Next, utilizing the fracture mechanics module the released energy of an initial crack is computed at different time steps.}
-% 		\label{fig:framework}
-% 	\end{centering}
-% \end{figure}
+Bone adaptation process, within the developed framework, is incorporated by using computational algorithm in open system thermodynamics 
+\citep{Kuhl2003a}.
 
+The rest of the article is structured as follows.
+A brief review of open system thermodynamics is presented in Section \ref{sec:bone_remodel}.
+Moreover, a novel approach to assign heterogeneous mechanical bone properties, derived from CT scans,
+to the FE model by means of the Moving Least Squares (MLS) method is proposed in Section \ref{sec:dens_mapping}.
+Examples and verification of the proposed approach are also demonstrated. 
+Thereafter, Section \ref{sec:release_energy} encompasses extension of recently established energy consistent approach 
+for evolving crack propagation in the context of configurational mechanics. 
+The method is utilised to calculate release energy of bones under quasi-static loading during different stages of adaptation. 
+Section \ref{sec:numerical_examples} brings together all the developments of the framework in the form of numerical examples. 
+Finally, in Section \ref{sec:discussion} a brief summary of the work is presented and areas for further research are identified.
 \begin{figure}[h!]
 \begin{center}
 \includegraphics[width=12cm,height=12cm]{Figures/framework.png}
@@ -97,12 +137,41 @@ The process of bone adaptation, within the developed framework, is incorporated 
 
 \section{Bone remodelling} 
 \label{sec:bone_remodel}
-Stress fractures are strongly correlated with the remodelling process \citep{hughes2017role}. The bone's ability to repair micro-damage caused by cycling loading is essential for maintaining the mechanical integrity. One of the first mathematical theories for bone remodelling, based on open system thermodynamics \citep{cowin1976bone} has foundations in the theory of poroelasticity. Since it was introduced in the 1970s, it became a popular area of interest within the field of modelling biomechanical processes. In this theory, unlike in classical closed systems, energy, mass, momentum and entropy can cross the boundary of the body and exchange with its environment. Many derivations and enhancements of this approach have been developed over the years. 
-For example, based on optimisation theory with an objective function where researchers were able to capture the functional adaptation of the bones \citep{harrigan1996bone, jacobs1995numerical, weinans1992behavior}.
-The general concept for density evolution within these and many other approaches is to establish a~mechanical stimuli as triggers for bone adaptation. The stimulus may take the form of stress \citep{beaupre1990approach, carter1996mechanical, doblare2002anisotropic}, strains \citep{cowin1976bone}, strain energy density \citep{weinans1992behavior, kuhl2003theory,kaczmarczyk2011efficient, Connor2017bone}. \\ 
-In this contribution functional adaptation of the equine 3rd bone is modelled by using approach proposed by Kuhl and Steinmann \citep{kuhl2003theory}. It is based on the theory of poroelasticity and open system thermodynamics with the modification of constitutive equations proposed in Harrigan et al. \citep{harrigan1996bone}. Over the years the model was proven to be stable \citep{kuhl2003computational}, efficient \citep{kaczmarczyk2011efficient} and capable of producing quantitatively comparable results with DEXA scanning when combined with loading given from gait analysis \citep{pang2012computational}. Using this approach, researchers have been able to simulate bone adaptation in human scapula \citep{liedtke2017computational}, tibia \citep{pang2012computational}, humeral \citep{taylor2009phenomenon} and femur with various implants \citep{ambrosi2011perspectives, Connor2017bone} and even explore its potential in topology optimization \citep{waffenschmidt2012application}. One of the advantages of these phenomenological models is that they often require a small number of parameters and therefore they can be experimentally determined for example by using CT imaging \citep{zadpoor2013open}.\\ 
-To the best of authors' knowledge, so far there is only one work on finite element modelling equine bones adaptation reported by Wang \citep{Wang2016}. A mechanostat micro-scale model of three-dimensional cortical bone remodelling was presented and applied to in vivo equine data. The model used the von Mises stress as a stimulus to control microstructural cortical bone remodelling. 
-The objective of this study is to simulate a full macro-scale bone model response to mechanical loading. The hypothesis that the complex processes of bone remodelling, micro-damages and fracture can be modelled in macro-scale by using clinically available CT-scanning data to generate subject-specific simulations will be tested. %results of which could give a practical %meaningful insight into bone resistance for veterinary practitioners. 
+Stress fractures are strongly correlated with the remodelling process \citep{hughes2017role}. 
+The bone's ability to repair micro-damage caused by cyclical loading is essential for maintaining the mechanical integrity. 
+One of the first mathematical theories for bone remodelling, based on open system thermodynamics has foundations in the 
+theory of poroelasticity \citep{cowin1976bone}. 
+Since it was introduced in the 1970s, it has become a popular area of interest within the field of modelling biomechanical processes. 
+In this theory, unlike in classical closed systems, energy, mass, momentum and entropy can cross the boundary of the body and 
+be exchanged with its environment. 
+Many derivations and enhancements of this approach have been developed over the years. 
+For example, researchers were able to capture the functional adaptation of the bones by means of optimisation theory
+ \citep{harrigan1996bone, jacobs1995numerical, weinans1992behavior}.
+%explain this better
+The general concept for density evolution within these approaches is to establish a~mechanical stimuli as triggers for bone adaptation. 
+The stimulus may take the form of stress \citep{beaupre1990approach, carter1996mechanical, doblare2002anisotropic}, strains \citep{cowin1976bone} or strain energy density \citep{weinans1992behavior, kuhl2003theory,kaczmarczyk2011efficient, Connor2017bone}. 
+\\ 
+In this contribution functional adaptation of the equine 3rd metacarpal bone is modelled by using approach proposed by Kuhl and Steinmann \citep{kuhl2003theory}. 
+It is based on the theory of poroelasticity and open system thermodynamics with the modification of constitutive equations proposed in Harrigan et al. 
+\citep{harrigan1996bone}. 
+It has been proven that the model is stable \citep{kuhl2003computational}, efficient \citep{kaczmarczyk2011efficient} and capable of 
+producing quantitatively comparable results with DEXA scanning when combined with loading given from gait analysis \citep{pang2012computational}. 
+Using this approach, researchers have been able to simulate bone adaptation in human scapula \citep{liedtke2017computational}, 
+tibia \citep{pang2012computational}, humerus \citep{taylor2009phenomenon} and femur with various surgical implants 
+\citep{ambrosi2011perspectives, Connor2017bone} and even explore its potential in topology optimization 
+\citep{waffenschmidt2012application}. 
+One of the advantages of these phenomenological models is that they often require a small number of parameters which can be experimentally
+ determined for example by using CT imaging \citep{zadpoor2013open}.
+\\ 
+To the best of authors' knowledge, to date there is only one report of equine bones adaptation in a FEM framework \citep{Wang2016}. 
+A mechanostat micro-scale model of three-dimensional cortical bone remodelling was presented and in vivo equine data was applied. 
+The model used the von Mises stress as a stimulus to control microstructural cortical bone remodelling.
+The objective of this study is to simulate a full macro-scale model of the bone response to mechanical loading. 
+The main goal of the present study is to test the hypothesis that micro-damages and fracture can be modelled at macroscale 
+by using clinically available CT-scanning data.
+The motivation for this pursue is to generate subject-specific simulations to acquire meaningful insight into bone resistance
+ for veterinary practitioners.
+
 \subsection{Kinematics and balance equations}
 This section briefly reviews the model formulation used to simulate  adaptation of the equine 3d metacarpal bone. For a more detailed outline including aspects on the implementation of the model in a finite element framework, the reader is referred to authors' previous work \cite{lewandowski2017} based on 
 \citep{kuhl2003computational}.\\
