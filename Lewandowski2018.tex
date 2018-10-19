@@ -1,5 +1,5 @@
 \documentclass[11pt]{acmeArticle}
-\usepackage{amssymb,amsthm,mathrsfs,graphicx}
+\usepackage{amssymb,amsthm,mathrsfs,graphicx, bm}
 \usepackage{natbib}
 \usepackage{subfigure}
 \usepackage{titlesec}
@@ -12,7 +12,7 @@
 \usepackage{color}
 \usepackage{amsfonts}
 %\DeclareMathOperator*{\Aoperator}{ \mathlarger{\mathlarger{\mathlarger{\boldsymbol{\mathsf{A}}}}} }
-\DeclareMathOperator*{\aoperator}{ \text{\huge${\rm{A}}$}}
+\DeclareMathOperator*{\aoperator}{ \text{\huge${\mathsf{A}}$}}
 \pagenumbering{arabic}
 
 
@@ -131,7 +131,7 @@ Finally, in Section \ref{sec:discussion} a brief summary of the work is presente
 \begin{center}
 \includegraphics[width=12cm,height=12cm]{Figures/framework.png}
 \caption{Framework for estimating crack propensity in MoFEM \citep{mofem2017}. Density derived from Quantitative Computed Tomography (qCT) is mapped onto finite element mesh, which is subsequently used for bone remodelling analysis. Next, utilizing the fracture mechanics module the released energy of an initial crack is computed at different time steps.}
-\label{fig:scales}
+\label{fig:framework}
 \end{center}
 \end{figure}
 
@@ -334,7 +334,7 @@ One of the concerns arising when analysing medical images are Partial Volume Art
 redefine data at any node of the mesh surface to data assigned on the nearest internal node \citep{helgason2008modified, chen2010new} or resurface the mesh geometry \citep{peleg2014can}. In this study, a more elegant solution is proposed; every CT scan data point positioned outside the geometry of the bone is simply removed from the domain of influence, thereby only points that fall inside the volume are approximated. 
 %Determining whether a given point is inside a polyhedron is a classic computer graphics problem.  It can be solved by casting a ray originating from the given point to an arbitrary direction and determine the number of intersections of the ray with the polyhedron. If the ray intersects the shape an even number of times, then the point is outside the shape. It is important to choose a random direction. (should I describe why based on measure theory?) In MoFEM implementation standard C++ $rand()$ function was used, however without the seed in order to ensure that the code remains deterministic. 
 The procedure is computationally expensive, however it has to be performed only once for each influence domain and can be easily parallelized. %is 'embarrasingly parrallel' 
-\section{Release energy rate of remodelled bones}
+\section{Release energy rate of remodelled bones}\label{sec:release_energy}
 Various theories exist in the literature regarding failure criteria for bone tissue. Commonly researchers attempt to estimate the fracture risk within the framework of finite element analysis. In particular, subject-specific FEM models could potentially quantify how far the bone is from failure under given loading scenario. However, this still remains an open challenge. \\
 In recent years, the main focus in bone mechanics was in the use of different strength criteria for failure initialization. The most commonly adopted were based on stress \citep{keyak2005predicting} or strain measures \citep{schileo2008subject} assuming the bone failure under the von Mises, the Drucker-Prager or maximum principal strain and maximum principal stress yield criterion \citep{yosibash2010predicting}. The experimental validations for such simplified models show that they have a significant spread in the predicted failure. The percentage error in the majority of studies report is between 10 and 20\% \citep{van2014accurately}. \\
 The variation could be explained due to main attention on the local failure initialization, rather than on the prediction of the propagation. The brittle fracturing process of the bone is far more important and might be crucial for understanding the genesis and complete pattern of the fracture, in particular for fatigue fractures \citep{gupta2008fracture}. Due to many limitations (like usage of 2D geometry \citep{bettamer2017using}, not taking into account bone heterogeneity \citep{gasser2007numerical}), studies in the past have failed to deliver an applicable modelling method to predict the complete fracture pattern of bone. \\
@@ -400,19 +400,19 @@ Crack propagation problem can be considered as a thermodynamic system consisting
 \end{equation}
 where the left hand side is the power of external work. The first therm on the right hand side is the rate of the crack surface energy and the last term is the rate of internal body energy. $\mathbf t$ is the external traction vector, $\gamma $ is the surface energy $[ {\rm{N m}}^{-1} ]$ and $\Psi$ is the free energy density function. Next, by substituting Equations (\ref{eq:crack_disp}),(\ref{eq:crack_def_grad}) and (\ref{eq:crack_front}) and given that $\mathrm d \dot V = \nabla _{\mathbf X} \cdot \mathbf{\dot W} \mathrm d V$, the above expression can be reformulated as:
 \begin{equation}\label{eq:crack_first_law}
-\int_{\partial \mathcal B_t} \big( {\dot {\boldsymbol {\rm w} } } \cdot \mathbf t - {\dot {\boldsymbol {\rm W} } } \cdot \mathbf F^{\rm T} \mathbf t \big) \mathrm d S = \int_{\partial \Gamma } \gamma \mathbf A_{\partial \Gamma} \cdot {\dot {\boldsymbol {\rm W} } } \mathrm d L + \int_{\mathcal B_t} \big( \mathbf P\, \colon \nabla_{\mathbf X} {\dot {\boldsymbol {\rm w} } } +\mathbf  \Sigma\, \colon \nabla_{\mathbf X} {\dot {\boldsymbol {\rm W} } } \big) \mathrm d V 
+\int_{\partial \mathcal B_t} \big( {\dot {\boldsymbol {\rm w} } } \cdot \mathbf t - {\dot {\boldsymbol {\rm W} } } \cdot \mathbf F^{\rm T} \mathbf t \big) \mathrm d S = \int_{\partial \Gamma } \gamma \mathbf A_{\partial \Gamma} \cdot {\dot {\boldsymbol {\rm W} } } \mathrm d L + \int_{\mathcal B_t} \big( \mathbf P\, \colon \nabla_{\mathbf X} {\dot {\boldsymbol {\rm w} } } + {\bm  \Sigma}\, \colon \nabla_{\mathbf X} {\dot {\boldsymbol {\rm W} } } \big) \mathrm d V 
 \end{equation}
 where
 \begin{equation}
-\mathbf P = \frac{\partial \Psi (\mathbf F, \rho)}{\partial \mathbf F} \quad \mathrm{and } \quad \mathbf \Sigma = \Psi(\mathbf F) \mathbf  1 - \mathbf F^{\rm T} \mathbf P
+\mathbf P = \frac{\partial \Psi (\mathbf F, \rho)}{\partial \mathbf F} \quad \mathrm{and } \quad {\bm {\Sigma}} = \Psi(\mathbf F) \mathbf  1 - \mathbf F^{\rm T} \mathbf P
 \end{equation}
 are the first Piola-Kirchhoff stress and Eshelby stress tensors, respectively. The first one is a well-known driving force for elastic deformation in the spatial domain. It is worth noting that in case of the previously presented bone material model, it also depends on density $\rho$. The Eshelby stress is Piola's material counterpart and is the driving force for local configurational changes in the material domain. Local form of the first law in Equation (\ref{eq:crack_first_law})
 can be obtained by applying the divergence theorem to the last integral resulting in the following expression:
 \begin{equation}\label{eq:crack_local_gauss}
 \begin{aligned}
-&  \int_{\partial \Gamma } \gamma \mathbf A_{\partial \Gamma} \cdot {\dot {\boldsymbol {\rm W} } } \mathrm d L = \int_{\mathcal B_t} {\dot {\boldsymbol {\rm w} } } \cdot \big( \nabla_{\mathbf x} \cdot \mathbf P  \big) \mathrm d V + \int_{\mathcal B_t} {\dot {\boldsymbol {\rm W} } } \cdot \big( \nabla_{\mathbf x} \cdot \mathbf \Sigma \big) \mathrm d V \\
-& +\int_{\partial \mathcal B_t \cup \Gamma^+ \cup \Gamma^-} {\dot {\boldsymbol {\rm w} } }\cdot \big( \mathbf t - \mathbf{PN}\big) \mathrm  d S + \int_{\partial \mathcal B_t \cup \Gamma^+ \cup \Gamma^-}  {\dot {\boldsymbol {\rm W} } } \cdot \big( \mathbf F^{\rm T} + \mathbf{\Sigma N} \big) \mathrm d S \\
-& - \lim_{\mathcal C \to 0} \int_{\mathcal C} {\dot {\boldsymbol {\rm w} } } \cdot \mathbf {PN} \mathrm d S + \lim_{\mathcal C \to 0} \int_{\mathcal C} {\dot {\boldsymbol {\rm W} } } \cdot \mathbf{\Sigma N} \mathrm d S
+&  \int_{\partial \Gamma } \gamma \mathbf A_{\partial \Gamma} \cdot {\dot {\boldsymbol {\rm W} } } \mathrm d L = \int_{\mathcal B_t} {\dot {\boldsymbol {\rm w} } } \cdot \big( \nabla_{\mathbf x} \cdot \mathbf P  \big) \mathrm d V + \int_{\mathcal B_t} {\dot {\boldsymbol {\rm W} } } \cdot \big( \nabla_{\mathbf x} \cdot {\bm {\Sigma}} \big) \mathrm d V \\
+& +\int_{\partial \mathcal B_t \cup \Gamma^+ \cup \Gamma^-} {\dot {\boldsymbol {\rm w} } }\cdot \big( \mathbf t - \mathbf{PN}\big) \mathrm  d S + \int_{\partial \mathcal B_t \cup \Gamma^+ \cup \Gamma^-}  {\dot {\boldsymbol {\rm W} } } \cdot \big( \mathbf F^{\rm T} + {\bm {\Sigma}} \mathbf{ N} \big) \mathrm d S \\
+& - \lim_{\mathcal C \to 0} \int_{\mathcal C} {\dot {\boldsymbol {\rm w} } } \cdot \mathbf {PN} \mathrm d S + \lim_{\mathcal C \to 0} \int_{\mathcal C} {\dot {\boldsymbol {\rm W} } } \cdot {\bm {\Sigma}}\mathbf{N} \mathrm d S
 \end{aligned}
 \end{equation}
 Moreover, it can be recognised that, in the limit, the surface $\mathcal C$ (Figure \ref{fig:frac_crack_con}) collapses to the crack front $\partial \Gamma $ and integrals over the crack front are simplified as follows:
@@ -426,7 +426,7 @@ The spatial conservation law of linear momentum balance, for any point inside th
 Therefore, the first term on the right-hand side in Equation (\ref{eq:crack_local_gauss}) vanishes. 
 However, the material conservation law is not equal to zero in case of heterogeneous materials like bones. Following \citep{kienzler2014configurational}, material defects and inhomogeneities can create additional configurational forces; hence, material momentum balance can be expressed as:
 \begin{equation}
-\nabla_{\mathbf X } \cdot \mathbf \Sigma = \mathbf f^{\mathrm {inh}}
+\nabla_{\mathbf X } \cdot {\bm {\Sigma}}= \mathbf f^{\mathrm {inh}}
 \end{equation}
 where $ \mathbf f^{\mathrm {inh}}$ is a fictitious force, directed from the $ \textit {harder}$ part of the material to the $ \textit {softer}$ part. It represents a vector of the spatial variation of material properties, and in the context of heterogeneous bodies considered in this study it has the following form:
 \begin{equation}
@@ -435,11 +435,11 @@ where $ \mathbf f^{\mathrm {inh}}$ is a fictitious force, directed from the $ \t
 where $\Psi$ is the free energy that depends on density as noted in Equation (\ref{eq:free_energ}). Above expression is an explicit derivative - it does not depend on the spatial configuration $\mathbf x$. \\
 Furthermore, considering only admissible velocity fields and stress fields in equilibrium with external forces, the following expression can be obtained. 
 \begin{equation}
-\int_{\partial \Gamma } \gamma \mathbf A_{\partial \Gamma} \cdot {\dot {\boldsymbol {\rm W} } } \mathrm d L -\int_{\partial \Gamma} {\dot {\boldsymbol {\rm W} } } \cdot \lim_{|\mathcal L_n| \to 0 }  \int_{\mathcal L_n } \mathbf{\Sigma N} \mathrm d S  = 0
+\int_{\partial \Gamma } \gamma \mathbf A_{\partial \Gamma} \cdot {\dot {\boldsymbol {\rm W} } } \mathrm d L -\int_{\partial \Gamma} {\dot {\boldsymbol {\rm W} } } \cdot \lim_{|\mathcal L_n| \to 0 }  \int_{\mathcal L_n } {\bm {\Sigma}}\mathbf{N} \mathrm d S  = 0
 \end{equation}
 The configurational (material) force at the crack front, which is the material counterpart of the spatial internal force vector is defined as:
 \begin{equation}
-\mathbf G = \lim_{|\mathcal{ L }|\to 0} \int_{\mathcal L_n} \mathbf{ \Sigma N}\, \mathrm d L 
+\mathbf G = \lim_{|\mathcal{ L }|\to 0} \int_{\mathcal L_n} {\bm {\Sigma}}\mathbf{N}\, \mathrm d L 
 \label{eq:crack_configuration_force}
 \end{equation}
 It should be noted that for a continuous and homogeneous elastic body, the material force $\mathbf G$ away from the crack should be zero.
@@ -474,7 +474,7 @@ Therein, the operator $ \aoperator$ symbolises the assembly of all contributions
 \end{equation}
 The nodal material forces $\mathbf{\tilde G}^h$ are the driving force for the crack front propagation and have the following form:
 \begin{equation}\label{eq:crack_material_force_dis}
-\mathbf{\tilde G}^h = \aoperator_{\text{TET}}^{n_{\rm {el}}} \int_\text{TET} (\mathbf{B_x})^{\rm T} \mathbf \Sigma^h +   \left.\left( \frac{\partial \Psi}{\partial \rho} \right)\right|_{\mathbf{x}= \text {const}} \mathbf B^{\rm T} \rho \mathrm \,d V
+\mathbf{\tilde G}^h = \aoperator_{\text{TET}}^{n_{\rm {el}}} \int_\text{TET} (\mathbf{B_x})^{\rm T} {\bm {\Sigma}}^h +   \left.\left( \frac{\partial \Psi}{\partial \rho} \right)\right|_{\mathbf{x}= \text {const}} \mathbf B^{\rm T} \rho \mathrm \,d V
 \end{equation}
 The explicit derivative of energy with respect to density in Equation (\ref{eq:crack_material_force_dis}) is derived automatically by means of ADOL-C library~\citep{Walther2009}. Furthermore, $\mathbf f^h_{\text {res}}$ is the vector of nodal material resistance (Griffith) forces, given as:
 \begin{equation}
@@ -577,7 +577,7 @@ onto nodes of finite element mesh is presented. At each node of the mesh, the sp
 In this section, the results of density approximation from CT data are presented. Geometry and finite element mesh of an equine 3rd metacarpal bone was obtained in ScanIP (Synopsys Simpleware, Exeter) from medical 3D images. The data was subsequently used to approximate the density values onto finite element mesh nodes by using implemented moving least squares method. The mesh consisted of approximately 7000 tetrahedral elements. \\
 \begin{figure}
 	\centering
-	\includegraphics[width=0.5\linewidth]{Figures/mwlsmapping_cross.png}
+	\includegraphics[width=0.5\linewidth]{Figures/mwlsmapping_cross.pdf}
 	\caption{Comparison of a CT data with the corresponding approximation. A cut-view along the Y axis for CT scan data a) and density mapped onto FE mesh. b)}
 	\label{fig:mwlsmapping_cross}
 \end{figure}
@@ -588,7 +588,7 @@ The results of the mapping procedures are presented in Figure \ref{fig:mwlsmappi
 	\caption{Mapping results of bone density (left) and density gradient (right). a) Least squares approximation. b)~Moving least squares approximation.}
 	\label{fig:mwlsmappingcomparisons}
 \end{figure}
-It is clear that mapped density pattern from both methods is very similar. Thanks to the approximation, the obtained field is continuous despite the fact that the mesh is relatively coarse. It is especially beneficial in case of hierarchical basis framework where larger elements with high order approximation are more desired. Classic finite element method provides only $\mathit{C^0}$-continuity; therefore the results of gradients obtained with LS are only piecewise continuous. Gradients form MLS, on the contrary, are smooth, which can be of great importance when the mapping is used in crack propagation analysis since it strongly influences the direction of a crack. It can also be seen that mesh boundary does not suffer from Partial Volume Artifacts.
+It is clear that mapped density pattern from both methods is very similar. Thanks to the approximation, the obtained field is continuous despite the fact that the mesh is relatively coarse. It is especially beneficial in case of hierarchical basis framework where larger elements with high order approximation are more desired. Classic finite element method provides only ${C^0}$-continuity; therefore the results of gradients obtained with LS are only piecewise continuous. Gradients form MLS, on the contrary, are smooth, which can be of great importance when the mapping is used in crack propagation analysis since it strongly influences the direction of a crack. It can also be seen that mesh boundary does not suffer from Partial Volume Artifacts.
 %try more meshes maybe?
 \subsection{Release energy rate examples}
 In this section five numerical examples of calculating material forces are presented. To validate the correctness of the implementation, first, a simple quasi-two-dimensional plate with homogeneous material distribution is considered. The convergence study is performed by comparing results to the analytical solution. In the next section, quarter point elements are presented and their influence on the convergence rate. In the third subsection, the results with the heterogeneous material are presented, along with proposed validation. The last two examples demonstrate the calculation of material forces for bones.  
@@ -650,12 +650,12 @@ From Equation (\ref{eq:crack_radius_dep}) above it can be easily derived that fo
 \begin{equation}
 r= \frac{L}{4}(1+\xi)^2 \quad \rightarrow \quad \xi = 2 \sqrt{\frac{r}{L}} -1,
 \end{equation}
-which substituted into Equation (\ref{eq:crack_disp_func}) renders the desired radial dependence of the displacements $u$ and strains $\epsilon$:
+which substituted into Equation (\ref{eq:crack_disp_func}) renders the desired radial dependence of the displacements $u$ and strains $\varepsilon$:
 \begin{equation*}
 u(r) = u^{(1)} + \left( -3u^{(1)} - u^{(2)} +4u^{(3)} \right) \sqrt{\frac{r}{L}} + 2 \left( u^{(1)} + u^{(2)} -2 u^{(3)} \right) \frac{r}{L}
 \end{equation*}
 \begin{equation}
-\epsilon(r) = \frac{\partial u}{ \partial r} = + \left( - \frac{3}{2}u^{(1)} - \frac{1}{2}u^{(2)} +2u^{(3)} \right) \frac{1}{\sqrt{Lr}} + 2 \left( u^{(1)} + u^{(2)} -2 u^{(3)} \right) \frac{1}{L}
+\varepsilon(r) = \frac{\partial u}{ \partial r} = + \left( - \frac{3}{2}u^{(1)} - \frac{1}{2}u^{(2)} +2u^{(3)} \right) \frac{1}{\sqrt{Lr}} + 2 \left( u^{(1)} + u^{(2)} -2 u^{(3)} \right) \frac{1}{L}
 \end{equation}
 The displacement function contains now a constant (rigid body motion) and linear function also a $\sqrt r$ term, which reproduces the displacement field at the crack tip. The strain in the quarter-point element possess of the square root $\frac{1}{\sqrt r}$ singularity.
 \subsubsection{Hierarchical shape functions}
@@ -676,7 +676,7 @@ which yields the following radial dependence for displacements and strains:
 u(r) = u^{(1)} + \left( -u^{(1)} + u^{(2)} - u^{(3)} \right) \sqrt \frac{r}{L} - u^{(3)} \frac{r}{L}
 \end{equation*}
 \begin{equation}
-\epsilon(r) = \frac{\partial u}{\partial r} = \left( u^{(1)}  + u^{(2)} - u^{(3)}  \right) \frac{1}{2} \sqrt \frac{L}{r} + u^{(3)} \frac{1}{L}
+\varepsilon(r) = \frac{\partial u}{\partial r} = \left( u^{(1)}  + u^{(2)} - u^{(3)}  \right) \frac{1}{2} \sqrt \frac{L}{r} + u^{(3)} \frac{1}{L}
 \end{equation}
 Further, emerging equations have the necessary terms to reproduce rigid body motion and pass the patch tests, as well as the desired $1 / \sqrt r$ term.
 This should enable the elements adjacent to the crack front to reproduce strain singularity resulting in a more accurate finite element solution \citep{nejati2015use}. The influence of the similar procedure with tetrahedral elements will is tested in the following section.
@@ -756,7 +756,7 @@ The numerical outcomes clearly capture the general trend of increasing release e
 %SIMPLY: energy release per unit length of a crack advancement has to be equal energy consumption for the creation of the new surface in the circuital conditions and its equal to %material parameter - fracture energy. Griffith theory
 %$-\frac{\partial \psi}{\partial a} = \frac{\partial S}{\partial a} = \mathcal\mathbf G_c$
 
-\section{Discussion}
+\section{Discussion}\label{sec:discussion}
 Development of a 3D Finite Element model for biological applications is a very complicated process. Unlike that in typical engineering research subjects, there is still very little knowledge of the material properties. Another issue is a proper definition of the boundary conditions. Constraints are mostly explicit when analysing engineering objects such as concrete beams or steel frames under different loading conditions. However, in a living body it is challenging to accurately define loads. Model geometry suffers from inaccuracies in scanning as well as segmentation process. A~possible number of errors increase at each stage of creating such models since there is high uncertainty about obtained data \citep{campoli2014effects}. Available information is usually subject-specific or gathered for a relatively small population of subjects and cannot be generalised. Subsequently, even if one manages to overcome the aforementioned obstacles, there is a need for validation of such models, which will also have to deal with similar difficulties. Over the years, many frameworks have been developed to quantify such uncertainty levels, which might greatly increase the credibility of computational models \citep{wille2016uncertainty}. CT scanning on living horses limbs is still too cumbersome to be used as a standard diagnostic tool, as to best authors' knowledge there is a limited number of facilities that can perform CT scanning for horses without the necessity for anaesthesia. Nevertheless, this study can bring new insight in the area of catastrophic injuries in order to improve the welfare of the thoroughbred racehorse. %The successful application of developed framework would enable the introduction of interventions for veterinary practitioners, such as suggestions for training regimes based on known risk factors for lateral condylar fractures that could reduce the probability of fracture in racehorses. \\
 In summary, the goals of this study were (i) implement bone remodelling algorithm to predict density levels in response to high-intensity training for racehorses (ii) to incorporate an efficient and accurate mapping strategy to represent heterogeneous bone material properties for hierarchical finite element models (iii) to assess the potential of linear fracture mechanics in evaluating bones' propensity to failure. Despite certain limitations, it was demonstrated that the implemented open systems thermodynamics framework allows for simulating of a natural behaviour of hard biological tissues. The proposed computational method may have a great potential to identify the risk of fracture related to changes in bone mineral density. Understanding the effects of changing release energy in response to bone remodelling can help developing training regimes that reduces the liability of fatal injury. Furthermore, the model uses very few parameters which can be experimentally determined in a practical manner increasing the attractiveness of this approach.\\ 
 Application of a bell function to enforce bounds on density levels in the constitutive model did not provide rigid constrains for density levels, but merely slowed down the convergence to the biological equilibrium process. Nevertheless, it may still become useful, when one tries to fit the model parameters into the actual density data form CT scanning in defined periods of time. One could also constrain density bounds by introducing and calibrating mass influx to the balance of mass equation \citep{sharma2013adaptive}. Nonetheless, bones in the living organisms are never fully load adapted \citep{christen2014bone}. Therefore, achieving a biological equilibrium that results in unrealistic levels of density should never take place in a real case scenario. \\
