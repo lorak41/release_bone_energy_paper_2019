@@ -348,7 +348,7 @@ In the context of configurational mechanics, an elastic body with an initial cra
 The reference configuration represents the body before crack extensions with mapping $\mathbf \Xi( { \boldsymbol {\rm \chi}}, t)$ of the reference coordinates ${ \boldsymbol {\rm \chi}}$ on to the material coordinates $\mathbf X$. This mapping describes a material structural change like extensions of the crack as a result of the crack front movement. 
 \begin{figure}[h!]
 	\begin{centering}
-		\includegraphics[width=10cm]{Figures/frac_kinematics.png}
+		\includegraphics[width=10cm]{Figures/Configurations.pdf}
 		\caption{Decomposition of crack propagation in an elastically deforming body.}
 		\label{fig:frac_kinematics}
 	\end{centering}
@@ -379,7 +379,7 @@ and
 \end{equation}
 \begin{figure}
 	\begin{centering}
-		\includegraphics[width=10cm]{Figures/frac_crack_con.png}
+		\includegraphics[width=10cm]{Figures/CrackSurface.pdf}
 		\caption{Crack construction \citep{kaczmarczyk2017energy}.}
 		\label{fig:frac_crack_con}
 	\end{centering}
@@ -617,23 +617,35 @@ Figure \ref{fig:plate_conv_no_sing} shows the deformed shape of the plate for th
 	\label{fig:plate_conv_no_sing}
 \end{figure}
 \textcolor{red}{Should I put more emphasis on this part of the work?}
+
 \subsubsection{Quarter point elements} %should that be in appendix?
-\begin{figure}
-	\centering
-	\includegraphics[width=0.7\linewidth]{Figures/1D-quarter.png}
-	\caption{One-dimensional quarter-point element: a) natural coordinates, b) local Cartesian coordinates}
-	\label{fig:1d-quarter}
+\begin{figure}[h!]
+\begin{center}
+\begin{tabular}{c c c}
+\includegraphics[height=1.3cm]{Figures/StandardElement.pdf} &   & \includegraphics[height=2.cm]{Figures/QuarterPoint.pdf}  \\  
+ (a) & & (b)
+\end{tabular}
+\caption{One-dimensional quarter-point element: a) natural coordinates, b) local Cartesian coordinates}
+\label{fig:1d-quarter}
+\end{center}
 \end{figure}
 The use of finite element method to analyse fracture problems is complicated for many reasons. One of them is stress field singularity which exists at the crack tip.
 Conventional finite elements are interpolated by polynomials which are not able to reproduce the infinite stress. In the mid-1970s, two independent contributors \citep{barsoum1976use,henshell1975crack} showed that the singularity at the crack tip can be modelled by placing the mid-node near the tip or front at the quarter-point position. This results in a nonlinear mapping between natural (isoparametric) and local coordinates $\xi \rightarrow x$ which produces the square root singularity. Stress and strain fields are dependent on the radial function of the crack tip, reaching infinity as $ r \rightarrow 0$. \\
 This section briefly describes the reproduction of the square root singularity in quarter-point one-dimensional finite elements. 
-\begin{figure}
-	\centering
-	\includegraphics[width=0.5\linewidth]{Figures/shape_funcs.png}
-	\caption{a) Node oriented shape functions of a 1D element. b) Hierarchical shape functions of a 1D element}
-	\label{fig:shape_funcs}
+
+\begin{figure}[h!]
+\begin{center}
+\begin{tabular}{c c c}
+(a) & \includegraphics[height=2.cm]{Figures/LinearShapeFunction.pdf}  & {\includegraphics[height=2.cm]{Figures/2ndOrderNodeOr.pdf}}\\  
+ &  & \\  
+  &  & \\
+(b) & \includegraphics[height=2.cm]{Figures/LinearShapeFunction.pdf}  & {\includegraphics[height=2.cm]{Figures/Hierarchical2nd.pdf}}
+\end{tabular}
+\caption{a) Node oriented shape functions of a 1D element. b) Hierarchical shape functions of a 1D element}
+\label{fig:shape_funcs}
+\end{center}
 \end{figure}
-\subsubsection{Standard shape functions} 
+
 The principle of quarter-point element can be straightforwardly introduced by using simple one-dimensional element as presented in Figure \ref{fig:1d-quarter} \citep{kuna2013finite}.
 Let the demonstrated element be a quarter-point type at the crack tip, the distance between three nodes 1,3 and 2 is given by the coordinate $r$. The position of the middle node 3 is controlled by the parameter $\kappa$. The quadratic 1D displacement function of this element is: 
 \begin{equation}\label{eq:crack_disp_func}
