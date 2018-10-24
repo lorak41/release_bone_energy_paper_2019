@@ -130,7 +130,8 @@ Finally, in Section \ref{sec:discussion} a brief summary of the work is presente
 \begin{figure}[h!]
 \begin{center}
 \includegraphics[width=12cm,height=12cm]{Figures/framework.png}
-\caption{Framework for estimating crack propensity in MoFEM \citep{mofem2017}. Density derived from Quantitative Computed Tomography (qCT) is mapped onto finite element mesh, which is subsequently used for bone remodelling analysis. Next, utilizing the fracture mechanics module the released energy of an initial crack is computed at different time steps.}
+\caption{Framework for estimating crack propensity in MoFEM \citep{mofem2017}. Density derived from Quantitative Computed Tomography (qCT) is mapped onto finite element mesh, which is subsequently used for bone remodelling analysis. 
+Next, utilizing the fracture mechanics module the released energy of an initial crack is computed at different time steps.}
 \label{fig:framework}
 \end{center}
 \end{figure}
@@ -178,15 +179,15 @@ This section briefly reviews the model formulation used to simulate  adaptation 
 The highly nonlinear continuum theory is solved with the approximation of hierarchical finite element method implemented in open source library - MoFEM \citep{mofem2017}.  \\
 
 In the present work, three configurations are considered for modelling crack propagation, i.e. reference, material, spatial and reference configuration (see Section\ref{sec:Kinematics} for more details).
-Different coordinate systems are used for the reference, material and spatial configuration and denoted by $\boldsymbol {\rm \chi}$, $\boldsymbol {\rm X}$ and $\boldsymbol {\rm x}$, respectively. 
+Different coordinate systems are used for the reference, material and spatial configuration and denoted by $\boldsymbol {\rm \upchi}$, $\boldsymbol {\rm X}$ and $\boldsymbol {\rm x}$, respectively. 
 Furthermore, gradient operators corresponding to each coordinate system and therefore configuration are denoted as
 
 \begin{equation}
-\nabla_{\boldsymbol {\rm \chi}} = \dfrac{\partial}{\partial \boldsymbol {\rm \chi}}, \nabla_{\boldsymbol {\rm X}} = \dfrac{\partial}{\partial \boldsymbol {\rm X}}, \nabla_{\boldsymbol {\rm x}} = \dfrac{\partial}{\partial \boldsymbol {\rm x}}
+\nabla_{\boldsymbol {\rm \upchi}} = \dfrac{\partial}{\partial \boldsymbol {\rm \upchi}}, \nabla_{\boldsymbol {\rm X}} = \dfrac{\partial}{\partial \boldsymbol {\rm X}}, \nabla_{\boldsymbol {\rm x}} = \dfrac{\partial}{\partial \boldsymbol {\rm x}}
 \label{eq:gradients}
 \end{equation}
 
-Following Kuhl and Steinmann \citep{kuhl2003computational}, for the sake of generality, a nonlinear kinematic formulation was chosen, although bone, in the physiological range, only experiences small strains. The motion of material placements ${\boldsymbol {\rm X}} \in  \mathcal{B}_0 $ of particles of the body in $\mathcal{B}$ is described by map ${\boldsymbol {\rm x}} = \phi({\boldsymbol {\chi}},t)$. 
+Following Kuhl and Steinmann \citep{kuhl2003computational}, for the sake of generality, a nonlinear kinematic formulation was chosen, although bone, in the physiological range, only experiences small strains. The motion of material placements ${\boldsymbol {\rm X}} \in  \mathcal{B}_0 $ of particles of the body in $\mathcal{B}$ is described by map ${\boldsymbol {\rm x}} = \phi({\boldsymbol {\upchi}},t)$. 
 The corresponding deformation gradient tensor, $\boldsymbol {\rm F}$, and the right Cauchy-Green deformation tensor $\boldsymbol {\rm C}$  are denoted as follows: 
 \begin{equation}
 \mathbf{F}=\nabla_{\boldsymbol {\rm X}}\varphi, \quad \mathbf{C}=\mathbf{F}^{\rm T}\mathbf{F}
@@ -210,15 +211,24 @@ The mechanical equilibrium of a solid can be represented by the balance of linea
 where $\mathbf{P}$ denotes the first Piola-Kirchhoff stress tensor. 
 The mechanical forces should be interpreted as an average daily loading on the bone \citep{kuhl2003computational}, with an additional assumption that inertial forces are negligible. 
 \subsection{Constitutive equations}
-The subsequently presented constitutive equations are one dimensional. However, the formulation can be extended to the three-dimensional anisotropic case by means of the micro-sphere framework \citep{Waffenschmidt2012}. In the present work, such approach is excluded from considerations.
+In the present work, one dimensional constitutive law is considered. 
+%The subsequently presented constitutive equations are one dimensional. 
+However, formulation of the constitutive law can be extended to the three-dimensional anisotropic case by means of the micro-sphere framework \citep{Waffenschmidt2012}. 
+%In the present work, such approach is excluded from considerations.
 Following Harrigan and Hamilton \citep{Harrigan1993}, the constitutive relation for the mass source is adopted:
 \begin{equation}
 \mathcal{R}_{0}=c\left[\Biggl[\frac{\rho}{\rho_{0}^{\ast}}\Biggr]^{-m}\psi_{0}-\psi_{0}^{\ast}\right]
 \label{eq:mass_source}
 \end{equation}
-where $\rho_0^\ast$ and $\psi_{0}^\ast$ represent reference values of the density and free energy, respectively.  Eq. (\ref{eq:mass_source}) demonstrates energy-type saturation for the density changes. It means that the driving term $\left[ \rho / \rho_0^\ast \right]^{-m}\psi_0$ tends to converge to the value of referential free energy $\psi_{0}^\ast$. 
-Exponent $m$ is a dimensionless scalar is introduced to guarantee uniqueness and stability \citep{Harrigan1993} . 
-Coefficient $c$ in Equation~(\ref{eq:mass_source}) controls the rate of the remodelling process, and its unit is the time divided by the length squared. Following classical structural optimisation formulations as presented in \citep{Waffenschmidt2012}, often it might beneficial to prescribe an upper and lower bound for the densities. Especially, when considered body possesses of unloaded regions where density can converge to zero. Such bounds for the density $\rho$ were implemented in the present work by means of replacing the constant $c$ by a bell function depending on $\rho$. It can be defined as:
+where $\rho_0^\ast$ and $\psi_{0}^\ast$ represent reference values of the density, $\rho$ and free energy, $\psi_0$, respectively.  
+Eq. (\ref{eq:mass_source}) demonstrates energy-type saturation for the density changes, i.e. the driving term $\left[ \rho / \rho_0^\ast \right]^{-m}\psi_0$ tends to converge to the value of $\psi_{0}^\ast$. 
+Exponent $m$ is a dimensionless scalar introduced to guarantee uniqueness and stability \citep{Harrigan1993} . 
+Furthermore, coefficient $c$ controls the rate of the remodelling process with units $[t/m]$. 
+Following classical structural optimisation formulations, as presented in \citep{Waffenschmidt2012}, it could often be beneficial to prescribe an upper and lower bound for the density%. 
+%Especially, when considered body possesses of unloaded regions where density can converge to zero.
+since density of unloaded regions can converge to zero.
+Such bounds for the density $\rho$ were implemented in the present work by replacing the constant $c$ with bell function defined as:
+%Such bounds for the density $\rho$ were implemented in the present work by means of replacing the constant $c$ by a bell function depending on $\rho$. It can be defined as:
 \begin{equation*}
 c=\frac{1}{1 + \left[  (\rho - \rho^{\mathrm{mid}}) / (\rho{^\mathrm{max}} - \rho{^\mathrm{mid})} \right]^{2 b}}
 \end{equation*}
@@ -226,11 +236,15 @@ c=\frac{1}{1 + \left[  (\rho - \rho^{\mathrm{mid}}) / (\rho{^\mathrm{max}} - \rh
 \mathrm{with} \quad \rho^{\mathrm{mid}} = \frac{\rho{^\mathrm{max}} + \rho{^\mathrm{min}}}{2}
 \label{eq:bell_function}
 \end{equation}
-restricting the density between $ \rho{^\mathrm{max}}$ and $ \rho{^\mathrm{min}}$. The bell function (\ref{eq:bell_function}) is demonstrated in Fig. \ref{fig:bell_func} for different values of $b$. Its application and influence on the overall results are elaborated in section \ref{sec:bell}.
+%is b an intiger?? please define
+%restricting the density between $ \rho{^\mathrm{max}}$ and $ \rho{^\mathrm{min}}$.
+where $\rho^{\rm {mid}}$ is the mean of $\rho{^\mathrm{max}}$ and $\rho{^\mathrm{min}}$ are the maximum and minimum truncation values of $\rho$, respectively.
+The bell function (\ref{eq:bell_function}) is demonstrated in Fig. \ref{fig:bell_func} for different values of the integer exponent $b$. 
+Its application and influence on the overall results are elaborated in section \ref{sec:bell}.
 \begin{figure}[h!]
 	\begin{centering}
 		\includegraphics[width=7cm]{Figures/graphs/bell_func.png}
-		\caption{Bell function plotted for different values of $\mathrm b$. For $\mathrm b \rightarrow \infty$ the bounds for $ \rho{^\mathrm{min}}$ and $ \rho{^\mathrm{max}}$ sharpen.}
+		\caption{Bell function plotted for different values of the integer exponent $b$. For $b \rightarrow \infty$ the bounds for $ \rho{^\mathrm{min}}$ and $ \rho{^\mathrm{max}}$ sharpen.}
 		\label{fig:bell_func}
 	\end{centering}
 \end{figure}
@@ -239,99 +253,145 @@ In the context of porous materials like bones, the free energy $\psi$ is equal t
 \psi_{0}=\left[\frac{\rho}{\rho_{0}^{\ast}}\right]^{n}\psi_{0}^{\mathrm{neo}},
 \label{eq:free_energ}
 \end{equation}
-where Helmholtz free energy $\psi$ was chosen to be of Neo-hookean type, which is expressed in terms of the right Cauchy-Green deformation tensor: 
+where $\rho^{\rm {neo}}_0$ is the Helmholtz free energy chosen to be of Neo-hookean type defined as:
+%where Helmholtz free energy $\psi$ was chosen to be of Neo-hookean type, which is expressed in terms of the right Cauchy-Green deformation tensor: 
 \begin{equation}
 \psi_{0}^{\mathrm{neo}}=\frac{\mu}{2}\left[\textrm{tr}(\mathbf{C})-3\right]-\mu\ln(\sqrt{\det\mathbf{C}})+\frac{\lambda}{2}\ln^{2}(\sqrt{\det\mathbf{C}})
 \end{equation}
-$\mu$ and $\nu$ are the Lam\'e constants. Moreover, the exponent $n$ typically varies between $1 \leq n \leq 3.5$ depending on the porosity of the material \citep{Gibson2005}.
-Finally, to iteratively solve the system of nonlinear equations monolithic solution scheme is chosen. Following classical Newton method, both mass and momentum balance equations are linearised. To ensure quadratic convergence of the algorithm, the consistent material tangent matrix is derived by means of automatic differentiation provided with ADOL-C library~\citep{Walther2009}. For the time discretisation of the governing equations, implicit backward Euler method was utilised. The application of the proposed model for equine metacarpal is demonstrated by two numerical examples in Section \ref{sec:numerical_examples}.
+where $\mu$ and $\nu$ are the Lam\'e constants and $\boldsymbol{\rm{C}}$ is the right Cauchy-Green deformation tensor.
+Moreover, the exponent $n$ is a non physical parameter that typically varies between $1 \leq n \leq 3.5$ depending on the porosity of the material \citep{Gibson2005}.
+Finally, to iteratively solve the system of nonlinear equations monolithic solution scheme is chosen. Following classical Newton method, both mass and momentum balance equations are linearised. 
+To ensure quadratic convergence of the algorithm, the consistent material tangent matrix is derived by means of automatic differentiation provided with ADOL-C library~\citep{Walther2009}. 
+For the time discretisation of the governing equations, backward Euler method was utilised. 
+Application of the proposed model for equine metacarpal is demonstrated by two numerical examples in Section \ref{sec:numerical_examples}.
 \section{Density mapping}
 \label{sec:dens_mapping}
-Subject-specific finite element (FE) modelling has commonly been used to assess the stresses and fracture risk of bones~\citep{poelert2013patient,Helgason2008b,Yosibash2010}. The two crucial components of subject-specific FE models- model geometry and material properties, can be derived from computed tomography (CT) datasets. Generation of the three-dimensional (3D) geometry of a~bone segment with an accurate material distribution from CT data might be troublesome and time-consuming depending complexity of the considered bone. In this contribution, a new approach to assign bone density from CT scan datasets into FE models is presented. Most of the previously proposed density mapping algorithms simply average~\citep{zannoni1999material} or integrate~\citep{taddei2007material, schileo2008subject} voxel data from CT scans onto finite elements supplying a constant density within their volume. Herein, the data is spatially approximated by using Moving Least Squares (MLS) method. It provides smooth density field and gradient over the entire domain which significantly reduces the noise and improves the quality of FE solution. 
-\subsection{Moving least squares}
+Subject-specific finite element (FE) modelling has been commonly used to assess the stresses and fracture risk of bones~\citep{poelert2013patient,Helgason2008b,Yosibash2010}. 
+Geometry and material properties are two crucial components of subject-specific FE models that can be derived from computed tomography (CT) data. 
+Generation of the three-dimensional (3D) geometry of a~bone segment with an accurate material distribution from CT data might be laboured and time-consuming depending on the micro-structural complexity of the considered bone. 
+In this contribution, a new approach to assign bone density from CT scan data into FE models is presented. 
+Most of the previously proposed density mapping algorithms simply average~\citep{zannoni1999material} or integrate~\citep{taddei2007material, schileo2008subject} voxel data from CT scans onto finite elements supplying a constant density within their volume. 
+Herein, the data is spatially approximated by means of the Moving Least Squares (MLS) method. 
+The main advantage of MLS is that it provides smooth density field and gradient over the entire domain leading to significant reduction of noise and improves the quality of FE solution. 
+\subsection{Moving Least Squares (MLS)}
 \label{sec:mwls}
-The moving least squares approximation is a method for constructing interpolation functions on a set of nodes and is widely used for various meshless methods \citep{belytschko1996meshless}. In computer graphics, it is useful for reconstructing a surface from a set of points \citep{lancaster1981surfaces} through  downsampling or upsampling. Numerous studies have also attempted utilize the method within the context of Element-Free Galerkin approach as trial and test functions \citep{belytschko1996dynamic,wong2010meshfree, ullah2013finite}. In this study it is used to approximate density and calculate its gradient obtained from clinical CT scan data. \\
-In MLS the local approximation of the field variable $u^h({\boldsymbol {\rm x}})$ is expressed as: 
+The Moving Least Squares method is used to construct interpolation functions on a set of points to approximate a given spatially varying field, $v(\boldsymbol{\rm v} )$, and is widely used for various meshless methods \citep{belytschko1996meshless}. 
+In computer graphics, it is useful to reconstruct a surface from a set of points \citep{lancaster1981surfaces} through downsampling or upsampling. 
+Numerous studies have also attempted to utilise the method within the context of Element-Free Galerkin approach as trial and test functions \citep{belytschko1996dynamic,wong2010meshfree, ullah2013finite}.\\
+In this study, MLS is used to approximate density and calculate its gradient obtained from clinical CT scan data.
+To approximate a given field, $v({\boldsymbol{\rm x}})$, with MLS method at a set of points (e.g. nodes or gauss points), each point is separately considered and denoted as Target Point of Approximation (TPA). 
+For a each TPA, its coordinates are denoted with vector ${\boldsymbol {\rm {x}}}_{\rm t}$ and the approximated field at that location is evaluated as:
 \begin{equation}
-u^h({\boldsymbol {\rm x}})=\sum^m_{j=1}p_j({\boldsymbol {\rm x}} )a_j({\boldsymbol {\rm x}} ) =\mathbf p^{\rm T}({\boldsymbol {\rm x}} )\mathbf a({\boldsymbol {\rm x}} )
+v^h({\boldsymbol {\rm x}}_{\rm t})=\sum^q_{\alpha=1}p_{\alpha}({\boldsymbol {\rm x}}_{\rm t} )a_{\alpha}({\boldsymbol {\rm x}}_{\rm t} ) =\mathbf p^{\rm T}({\boldsymbol {\rm x}}_{\rm t} )\mathbf a({\boldsymbol {\rm x}}_{\rm t} )
 \label{eq:mwls_approx}
 \end{equation}
-where $\mathbf p({\boldsymbol {\rm x}})$ is the vector of complete basis functions with order $m$ and $\mathbf a({\boldsymbol {\rm x}})$ is the vector of unknowns and in the case of MLS approximation which is also a function of spatial coordinates, ${\boldsymbol {\rm x}}$, unlike in conventional Least Squares method where $\mathbf a({\boldsymbol {\rm x}})$ is held constant. 
-The polynomial basis functions $\mathbf p({\boldsymbol {\rm x}})$ are built form Pascal's pyramid. 
-In the current implementation three types of the basis functions are used as follows:
-\begin{equation*}
-\mathbf p^{\rm T}({\boldsymbol {\rm x}})  = \mathbf p^{\rm T}(x,y,z)= [1], \quad m=1,
-\end{equation*}
-\begin{equation*}
-\mathbf p^{\rm T}({\boldsymbol {\rm x}}) = \mathbf p^{\rm T}(x,y,z)= [1,x,y,z], \quad m=4,
-\end{equation*}
-\begin{equation}\label{eq:mwls_basis}
-\mathbf p^{\rm T}({{\boldsymbol {\rm x}}}) = \mathbf p^{\rm T}(x,y,z)= [1,x,y,z,xy,yz,zx,x^2,y^2,z^2], \quad m=10
-\end{equation}
-Moving on, the vector of unknowns $\mathbf a({\boldsymbol {\rm x}}) = \Big[ a_1({\boldsymbol {\rm x}} )\quad a_2({\boldsymbol {\rm x}} )\quad\dots \quad a_m({\boldsymbol {\rm x}} ) \Big]$ in Equation (\ref{eq:mwls_approx}) can be obtained from a minimization of weighted discrete $L_2$ norm:
+where $v^h({\boldsymbol {\rm x}}_{\rm t})$ is the approximated value, $\mathbf p({\boldsymbol {\rm x}}_{\rm t})$ is the vector of complete basis functions and $\mathbf a({\boldsymbol {\rm x}}_{\rm t})$ is the vector of unknowns.
+It should be noted that in MLS method, $\mathbf a({\boldsymbol {\rm x}}_{\rm t})$ is spatially varying rather than being constant as used in conventional Least Squares method.
+Moreover, $q$ is the number of base shape functions that are built form Pascal's tetrahedron via multiplication combinations of unity with monomials equal to the spatial coordinates $x_{\rm t}$, $y_{\rm t}$ and $z_{\rm t}$ of the TPA.
+For maximum target order of shape functions, $k$, the total number of non-orthogonal base shape functions is determined by the binomial coefficient as:
 \begin{equation}
-J({{\boldsymbol {\rm x}}})=\frac{1}{2} \sum_i^n w_i({{\boldsymbol {\rm x}}}) \left( \mathbf p^{\rm T} ({\boldsymbol {\rm x}}_i)\mathbf a({\boldsymbol {\rm x}}) - u_i \right)^2
-\label{eq:mwls_l2}
+q = \binom{k+3}{3}
 \end{equation}
-where $u_i$,${\boldsymbol {\rm x}}_i $, $w_i({{\boldsymbol {\rm x}}})$ are a nodal parameter, coordinate and a weight function of node $i$, respectively, and $n$ is the number of nodes with $w_i(\mathrm) > 0$; i.e. the nodes belonging to the nodal influence domain of point $x$. Many types of weight functions can be used for MLS approximation. The domain of influence of a node is an essential concept in a meshless method, as it determines the region in which it has influence. The weight function should be non-zero over a small neighbourhood of a node. For illustrative purposes, a 2D domain of influence is presented in Figure \ref{fig:weight_func}.
+ 
+In the current implementation, for each TPA, three types of basis functions are used:
+\begin{equation}
+\begin{centering}
+\begin{aligned} 
+\mathbf p^{\rm T}({\boldsymbol {\rm x}}_{\rm t})  = \mathbf p^{\rm T}(x_{\rm t},y_{\rm t},z_{\rm t})= [1], \quad q=1 \,\,\,{\rm {and}}\,\,\, k = 0,\\
+\mathbf p^{\rm T}({\boldsymbol {\rm x}}_{\rm t}) = \mathbf p^{\rm T}(x_{\rm t},y_{\rm t},z_{\rm t})= [1,x_{\rm t},y_{\rm t},z_{\rm t}], \quad q=4 \,\,\,{\rm {and}}\,\,\, k = 1,\\
+\mathbf p^{\rm T}({{\boldsymbol {\rm x}}}_{\rm t}) = \mathbf p^{\rm T}(x_{\rm t},y_{\rm t},z_{\rm t})= [1,x_{\rm t},y_{\rm t},z_{\rm t},x_{\rm t}y_{\rm t},y_{\rm t}z_{\rm t},z_{\rm t}x_{\rm t},x^2_{\rm t},y^2_{\rm t},z^2_{\rm t}],\quad q=10 \,\,\,{\rm {and}}\,\,\, k = 2
+\end{aligned}
+\end{centering}
+\label{eq:mwls_basis}
+\end{equation}
+For each TPA, the process to evaluate the vector of unknowns $\mathbf a({\boldsymbol {\rm x}}_{\rm t}) = \Big[ a_1({\boldsymbol {\rm x}}_{\rm t} ), a_2({\boldsymbol {\rm x}}_{\rm t} ), \dots a_q({\boldsymbol {\rm x}}_{\rm t} ) \Big]$ in Equation (\ref{eq:mwls_approx}), involve consideration of the rest of the set of points that $v({\boldsymbol {\rm x}})$ will be approximated and a weight function $w(r)$ is constructed, where $r$ is the radial distance from the TPA.
+Example of an arbitrary weight function for a 2D domain is presented in Figure \ref{fig:weight_func} with shaded area.
+All points where the given field is going to be evaluated and the TPA are presented with dots and a cylindrical local coordinate system is presented with $r$ and $w$ axes with origin located at ${\boldsymbol {\rm x}}_{\rm t}$. 
+For the 2D case, the weight function is the 3D surface area (shaded area) resulting from the full rotation around $w$ axis of the 1D shape function, $w_{\rm r}$, presented with solid line.
+The boundary of the domain of influence of $w(r)$ is presented with dashed ellipsoid (that is a circle from a top view).
+Typically, the size of the domain of influence is determined by searching for enough neighbour points so that no numerical issues will arise for computing the approximation as explained later.
+Outside the domain of influence the $w(r)$ is equal to zero.
+Value of the weight function, $w(||{\boldsymbol {\rm x}}_{\rm t} - {\boldsymbol {\rm x}}_{i}||)$, at each $i-{\rm{th}}$ point located within the domain of influence with position vector ${\boldsymbol {\rm x}}_{i}$, depends on its distance from the TPA, $||{\boldsymbol {\rm x}}_{\rm t} - {\boldsymbol {\rm x}}_{i}||$.
 \begin{figure}[h!]
 	\begin{centering}
-		\includegraphics[width=5cm]{Figures/weight_func.png}
-		\caption{Example of a weight function and its influence domain. It can be recognized that such function is smooth, non-negative and reaches maximum at the considered node and decrease with the distance $|| {\boldsymbol {\rm x}} - {\boldsymbol {\rm x}}_i||$ from the node. Outside of the influence domain of a node has a constant value of zero. Typically, the size of the domain is determined by searching for enough neighbour nodes such that matrix $\mathbf A$ in Equation (\ref{eq:mwls_system}) is invertible.}
+		\includegraphics[width=8cm]{Figures/weighs.pdf}
+		\caption{2D schematic example of arbitrary weight function of a Target Point of Approximation (TPA) located at with coordinates ${\boldsymbol {\rm x}}_{\rm t}$. 
+		The function is smooth, non-negative, reaches maximum at the TPA and decrease with distance $||{\boldsymbol {\rm x}}_{\rm t} - {\boldsymbol {\rm x}}_i||$. 
+		The boundary of the influence domain of the weight function is presented with dashed ellipsoid and the function take a constant value of zero outside of it.}
 		\label{fig:weight_func}
 	\end{centering}
 \end{figure}
+
+Many types of weight functions can be used for MLS method.
 As one possibility among others, commonly used in the meshless methods  \citep{belytschko1996meshless}, one-dimensional quartic spline was chosen in this work
 \begin{equation}
-w(||{\boldsymbol {\rm x}}-{\boldsymbol {\rm x}}_i||)=w(r)=\begin{cases} 1-6r^2+8r^3-3r^4 & \mathrm{for} \, r \leq 1\\ 0 & \mathrm{for} \, r > 0 \end{cases}
+w(||{\boldsymbol {\rm x}}-{\boldsymbol {\rm x}}_i||/d_{\rm {mi}})=w(r_i)=\begin{cases} 1-6r_i^2+8r_i^3-3r_i^4 & \mathrm{for} \, r_i \leq 1\\ 0 & \mathrm{for} \, r_i > 0 \end{cases}
 \end{equation}
 and its derivative with respect to the spatial coordinates, which is also required later on.
 \begin{equation}
-\frac{dw}{d{\boldsymbol {\rm x}}}= \frac{dw}{dr}\frac{dr}{d{\boldsymbol {\rm x}}} =\begin{cases} (-12r +24r^2 -12 r^3) \,  & \mathrm{for} \, r \leq 1, \\ 0 & \mathrm{for} \, r > 0  \end{cases}
+\frac{dw}{d{\boldsymbol {\rm x}}}= \frac{dw}{dr_i}\frac{dr_i}{d{\boldsymbol {\rm x}}} =\begin{cases} (-12r_i +24r_i^2 -12 r_i^3) \,  & \mathrm{for} \, r_i \leq 1, \\ 0 & \mathrm{for} \, r_i > 0  \end{cases}
 \end{equation}
-Here $r = ||{\boldsymbol {\rm x}}-{\boldsymbol {\rm x}}_i||/d_{\rm {mi}} $ is the normalised radius, where the distance between the node $i$  and point of interest $x$ is divided by scaling parameter $d_{\rm {mi}}$. This coefficient is governing the size of influence domain at given node. 
+Here $r_i = ||{\boldsymbol {\rm x}}-{\boldsymbol {\rm x}}_i||/d_{\rm {mi}}$ is the normalised radius associated to the $i-{\rm{th}}$ point evaluated as its distance from the TPA divided by scaling parameter $d_{\rm {mi}}$. 
+This coefficient is governing the size of influence domain. 
+
+%The vector of unknowns $\mathbf a({\boldsymbol {\rm x}}_{\rm t}) = \Big[ a_1({\boldsymbol {\rm x}}_{\rm t} ), a_2({\boldsymbol {\rm x}}_{\rm t} ), \dots a_q({\boldsymbol {\rm x}}_{\rm t} ) \Big]$ in Equation (\ref{eq:mwls_approx}) can be obtained from a minimization of 
+With the above tools at hand, the vector of unknowns $\mathbf a({\boldsymbol {\rm x}}_{\rm t})$ associated to the TPA can be evaluated through minimisation the weighted discrete $L_2$ norm:
+\begin{equation}
+J({{\boldsymbol {\rm x}}}_{\rm t})=\frac{1}{2} \sum_i^{n_{\rm w}} w(r_i) \left( \mathbf p^{\rm T} ({\boldsymbol {\rm x}}_i)\mathbf a({\boldsymbol {\rm x}}_{\rm t}) - v({\boldsymbol{\rm x}}_i) \right)^2
+\label{eq:mwls_l2}
+\end{equation}
+where $v({\boldsymbol{\rm x}}_i)$ is the value of the given field at the $i-{\rm {th}}$ point, $\mathbf p^{\rm T} ({\boldsymbol {\rm x}}_i)$ is the vector of shape function of the $i-{\rm {th}}$ point and $n_{\rm w}$ is the total number of points located within the domain of influence of the TPA. 
+ 
+
+
 The minimisation of norm $J$ in Equation (\ref{eq:mwls_l2}) is found by ${\partial J}/{\partial \mathbf a}$ and leads to a system of linear equations as:
 \begin{equation}
-\mathbf{ { A }} ({\boldsymbol {\rm x}}) \mathbf{ { a}} ({\boldsymbol {\rm x}}) = \mathbf{ { B }}({\boldsymbol {\rm x}}) \mathbf{ { u}}
-\end{equation} \label{eq:mwls_system}
-where matrices $\mathbf{ { A }}({\boldsymbol {\rm x}})$ and \textbf{$\mathbf{ { B}}({\boldsymbol {\rm x}})$} are of size $(m \times m )$ and $(m \times n )$ and are defined as follows:
+\mathbf{ { A }} ({\boldsymbol {\rm x}}_{\rm t}) \mathbf{ { a}} ({\boldsymbol {\rm x}}_{\rm t}) = \mathbf{ { B }}({\boldsymbol {\rm x}}_{\rm t}) \mathbf{ { v}}
+\label{eq:mwls_system}
+\end{equation} 
+where matrices $\mathbf{ { A }}({\boldsymbol {\rm x}}_{\rm {t}})$ and \textbf{$\mathbf{ { B}}({\boldsymbol {\rm x}}_{\rm t})$} are of size $(q \times q )$ and $(q \times n_{\rm w} )$ and are defined as follows:
 \begin{equation} 
 \begin{aligned}
-& \mathbf{ { A }}({\boldsymbol {\rm x}}) = \sum_i^n w_i ({\boldsymbol {\rm x}})\mathbf{p} (\mathrm  x_i)\mathbf p^{\rm T} ({\boldsymbol {\rm x}}_i) \\
-& \mathbf{ { B }}({\boldsymbol {\rm x}}) = \Big[   w_1({\boldsymbol {\rm x}}) \mathbf p ({\boldsymbol {\rm x}}_1) \quad w_2({\boldsymbol {\rm x}}) \mathbf p ({\boldsymbol {\rm x}}_2) \quad \dots \quad  w_n({\boldsymbol {\rm x}}) \mathbf p ({\boldsymbol {\rm x}}_n)  \Big]
+& \mathbf{ { A }}({\boldsymbol {\rm x}}_{\rm t}) = \sum_i^{n_{\rm w}} w (r_i)\mathbf{p} ( {\boldsymbol {\rm x}}_i)\mathbf p^{\rm T} ({\boldsymbol {\rm x}}_i) \\
+& \mathbf{ { B }}({\boldsymbol {\rm x}}_{\rm t}) = \Big[   w(r_1) \mathbf p ({\boldsymbol {\rm x}}_1), w(r_2) \mathbf p ({\boldsymbol {\rm x}}_2), \dots ,  w(r_{n_{\rm w}}) \mathbf p ({\boldsymbol {\rm x}}_{n_{\rm w}})  \Big]
 \end{aligned}
 \end{equation}
-and $\mathbf u$ is $(n \times 1)$ vector of nodal parameters given as 
+and $\mathbf v$ is $(n_{\rm w} \times 1)$ vector of the given field values at the points within the influence domain given as 
 \begin{equation}
-\mathbf u = \big[ u_1 \quad u_2 \quad \dots \quad u_n \big]^{\rm T}
+\mathbf v = \big[ v({\boldsymbol {\rm x}}_{\rm 1}), v({\boldsymbol {\rm x}}_{\rm 2}), \dots, v({\boldsymbol {\rm x}}_{n_{\rm w}}) \big]^{\rm T}
 \end{equation}
-Next, Eq. (\ref{eq:mwls_approx}) combined with Eq. (\ref{eq:mwls_system}) can be rewritten as 
+At this point it should be mentioned that parameter $d_{\rm{mi}}$ is chosen so that $n_{\rm w}$ value is such that the resulting matrix $\boldsymbol {\rm A}$ is invertible. 
+Next, Eq. (\ref{eq:mwls_approx}) combined with Eq. (\ref{eq:mwls_system}) can be rewritten as: 
 \begin{equation}
-u^h({\boldsymbol {\rm x}} )=\sum^n_{i=1} \phi_i({\boldsymbol {\rm x}}) u_i = \mathbf \phi^{\rm T} ({\boldsymbol {\rm x}}) \mathbf u
+v^h({\boldsymbol {\rm x}}_{\rm t} )= \sum^{n_{\rm w}}_{i=1} \omega_i({\boldsymbol {\rm x}}_i) v_i = \mathbf {\bm {\upomega}}^{\rm T} ({\boldsymbol {\rm x}}_{\rm t}) \mathbf v 
 \end{equation}
-where $ \mathbf \phi ({\boldsymbol {\rm x}})$ is the vector of shape functions.
+where $ {\boldsymbol {\rm {\upomega}}} ({\boldsymbol {\rm x}}_{\rm t})$ is a resulting vector of shape functions associated to TPA defined as
 \begin{equation}
-\mathbf \phi ({\boldsymbol {\rm x}}) = \mathbf p^{\rm T} ({\boldsymbol {\rm x}}) \mathbf{A}^{-1} ({\boldsymbol {\rm x}}) \mathbf B ({\boldsymbol {\rm x}}) \mathbf u
+{\boldsymbol \upomega}^{\rm T} ({\boldsymbol {\rm x}}_{\rm t}) = \mathbf p^{\rm T} ({\boldsymbol {\rm x}}_{\rm t}) \mathbf{A}^{-1} ({\boldsymbol {\rm x}}_{\rm t}) \mathbf B ({\boldsymbol {\rm x}}_{\rm t})
 \end{equation}
-For approximating the field of density, it would be of benefit to calculate its gradient as well. Therefore, the first derivative of the shape function with respect to the spatial coordinates is derived as follows: 
+For approximating the field of density, it would be of benefit to calculate its gradient as well. 
+Therefore, the first derivative of the shape function with respect to the spatial coordinates is derived along the $j-{\rm{th}}$ direction  
 \begin{equation}
-\phi_{,i} = \mathbf p^{\rm T}_{,i} \mathbf A^{-1} \mathbf B + \mathbf p^{\rm T} ( \mathbf A_{,i}^{-1} \mathbf B + \mathbf A^{-1} \mathbf B_{,i} )
+{\boldsymbol {\upomega}}^{\rm T}_{,j} = \mathbf p^{\rm T}_{,j} \mathbf A^{-1} \mathbf B + \mathbf p^{\rm T} ( \mathbf A_{,j}^{-1} \mathbf B + \mathbf A^{-1} \mathbf B_{,j} )
 \end{equation}
-where a comma in the subscript denotes the partial derivative and 
+where $j = 1,\, 2$~or~$3$ that denote each spatial direction, the commas in the subscripts denote the partial derivative the inverse of the spatial derivative of matrix $\boldsymbol {\rm A}$ is evaluated as 
 \begin{equation}
-\mathbf A_{,i}^{-1} = -\mathbf A^{-1} \mathbf A_{,i} \mathbf A^{-1}
+\mathbf A_{,j}^{-1} = -\mathbf A^{-1} \mathbf A_{,j} \mathbf A^{-1}
 \end{equation}
-It is worth to mention that MLS shape functions do not satisfy Kronecker delta property: $\phi_i({\boldsymbol {\rm x}}_j \neq \delta_{ij}) $. The values obtained from the MLS approximation are, therefore, not the same as the nodal values, i.e. $u^h({\boldsymbol {\rm x}}_i) \neq u_i $ as presented in Figure \ref{fig:mwls_approxi}.
+It is worth to mention that for any TPA located at ${\boldsymbol {\rm x}}_{\beta}$, MLS shape functions do not satisfy Kronecker delta: $\omega_i({\boldsymbol {\rm x}}_{\beta}) \neq \delta_{i\beta}$. 
+The values obtained from the MLS approximation are, therefore, as the given field values, i.e. $v^h({\boldsymbol {\rm x}}_{\beta}) \neq v({\boldsymbol {\rm x}}_{\beta}) $ as presented with a 1D example in Figure \ref{fig:mwls_approxi}.
 \begin{figure}[h!]
 	\begin{centering}
-		\includegraphics[width=10cm]{Figures/mwls_approxi.png}
-		\caption{Moving least squares approximations.}
+		\includegraphics[width=7cm]{Figures/1dMWLS.pdf}
+		\caption{1D example of moving least squares method.}
 		\label{fig:mwls_approxi}
 	\end{centering}
 \end{figure}
 %Since the MLS shape functions do not satisfy Kronecker-delta property on the boundaries of the problem; it can be quite a challenge to enforce essential boundary conditions, however, here approximation is used for simple mapping hence this problem can be neglected. 
-One of the concerns arising when analysing medical images are Partial Volume Artifacts \citep{adams2009quantitative}. To eliminate mapping spurious bone densities, some researchers proposed to 
-redefine data at any node of the mesh surface to data assigned on the nearest internal node \citep{helgason2008modified, chen2010new} or resurface the mesh geometry \citep{peleg2014can}. In this study, a more elegant solution is proposed; every CT scan data point positioned outside the geometry of the bone is simply removed from the domain of influence, thereby only points that fall inside the volume are approximated. 
+\\
+A common problem arising from CT scanning is generation of Partial Volume Artifacts \citep{adams2009quantitative}. 
+To eliminate mapping spurious bone densities, some researchers proposed to redefine data at any node of the mesh surface to data assigned on the nearest internal node \citep{helgason2008modified, chen2010new} or resurface the mesh geometry \citep{peleg2014can}. 
+In this study, a more elegant solution is proposed; every CT scan data point positioned outside the geometry of the bone is simply removed from the domain of influence, thereby only points that fall inside the volume are approximated. 
 %Determining whether a given point is inside a polyhedron is a classic computer graphics problem.  It can be solved by casting a ray originating from the given point to an arbitrary direction and determine the number of intersections of the ray with the polyhedron. If the ray intersects the shape an even number of times, then the point is outside the shape. It is important to choose a random direction. (should I describe why based on measure theory?) In MoFEM implementation standard C++ $rand()$ function was used, however without the seed in order to ensure that the code remains deterministic. 
 The procedure is computationally expensive, however it has to be performed only once for each influence domain and can be easily parallelized. %is 'embarrasingly parrallel' 
 \section{Release energy rate of remodelled bones}\label{sec:release_energy}
@@ -345,7 +405,7 @@ In the context of configurational mechanics, an elastic body with an initial cra
 \begin{equation}
 \mathbf u = \mathbf x - \mathbf X
 \end{equation}
-The reference configuration represents the body before crack extensions with mapping $\mathbf \Xi( { \boldsymbol {\rm \chi}}, t)$ of the reference coordinates ${ \boldsymbol {\rm \chi}}$ on to the material coordinates $\mathbf X$. This mapping describes a material structural change like extensions of the crack as a result of the crack front movement. 
+The reference configuration represents the body before crack extensions with mapping $\mathbf \Xi( { \boldsymbol {\rm \upchi}}, t)$ of the reference coordinates ${ \boldsymbol {\rm \upchi}}$ on to the material coordinates $\mathbf X$. This mapping describes a material structural change like extensions of the crack as a result of the crack front movement. 
 \begin{figure}[h!]
 	\begin{centering}
 		\includegraphics[width=10cm]{Figures/Configurations.pdf}
@@ -353,17 +413,17 @@ The reference configuration represents the body before crack extensions with map
 		\label{fig:frac_kinematics}
 	\end{centering}
 \end{figure}
-Finally, mapping $\mathbf \Phi ({ \boldsymbol {\rm \chi}},t)$ transforms reference coordinates on to the spatial coordinates ${\boldsymbol {\rm x}}$. The current material and spatial displacements are:
+Finally, mapping $\mathbf \Phi ({ \boldsymbol {\rm \upchi}},t)$ transforms reference coordinates on to the spatial coordinates ${\boldsymbol {\rm x}}$. The current material and spatial displacements are:
 \begin{equation}
-\mathbf W = \mathbf X - { \boldsymbol {\rm \chi}} \quad \mathrm{and} \quad \mathbf w = \mathbf x - { \boldsymbol {\rm \chi}}
+\mathbf W = \mathbf X - { \boldsymbol {\rm \upchi}} \quad \mathrm{and} \quad \mathbf w = \mathbf x - { \boldsymbol {\rm \upchi}}
 \end{equation}
 $\mathbf H$ and $\mathbf h$  gradients of the material and spatial maps are defined as:
 \begin{equation}
-\mathbf H = \nabla_{\boldsymbol {\rm \chi}} {\boldsymbol {\rm \Xi}}, \quad \mathbf  h =   \nabla_{\boldsymbol {\rm \chi}} {\boldsymbol {\rm \Phi}}
+\mathbf H = \nabla_{\boldsymbol {\rm \upchi}} {\boldsymbol {\rm \Xi}}, \quad \mathbf  h =   \nabla_{\boldsymbol {\rm \upchi}} {\boldsymbol {\rm \Phi}}
 \end{equation}
 Corresponding deformation gradient $\mathbf F $ is derived as follows:
 \begin{equation}
-\mathbf F =  { \boldsymbol {\rm \chi}} \phi=\mathbf h \mathbf H^{-1}
+\mathbf F =  { \boldsymbol {\rm \upchi}} \phi=\mathbf h \mathbf H^{-1}
 \end{equation}
 Since physical material cannot penetrate itself or reverse the orientation of material coordinates, the following constraint has to be imposed:
 \begin{equation}
@@ -391,7 +451,7 @@ The crack surface is denoted as $\Gamma$ with a crack front $\partial \Gamma$, s
 \end{equation}
 where $ \mathbf A_{\partial \Gamma}$ is a kinematic state variable that defines the current crack front orientation. It should be noted that any change in the crack surface area $\dot A_\Gamma $ and the crack front velocity $\mathbf {\dot W}$ in the material configuration can only take place when the crack propagates. 
 %\begin{equation}
-%\mathbf \Xi : \mathcal B_0 \to \mathcal B_t, \quad \mathbf X = \mathbf \Xi(\mathbf \chi, t)
+%\mathbf \Xi : \mathcal B_0 \to \mathcal B_t, \quad \mathbf X = \mathbf \Xi(\mathbf \upchi, t)
 %\end{equation}
 \subsection{Dissipation of energy at the crack front}
 Crack propagation problem can be considered as a thermodynamic system consisting of a solid deformable body with an imperfection. Traction applied on the boundary of the body $\partial \mathcal B_t$ performs work on the system. Following the first law of thermodynamics, it can be assumed that all energy within the volume of the body is used for mechanical work and it can be expressed as 
@@ -406,7 +466,9 @@ where
 \begin{equation}
 \mathbf P = \frac{\partial \Psi (\mathbf F, \rho)}{\partial \mathbf F} \quad \mathrm{and } \quad {\bm {\Sigma}} = \Psi(\mathbf F) \mathbf  1 - \mathbf F^{\rm T} \mathbf P
 \end{equation}
-are the first Piola-Kirchhoff stress and Eshelby stress tensors, respectively. The first one is a well-known driving force for elastic deformation in the spatial domain. It is worth noting that in case of the previously presented bone material model, it also depends on density $\rho$. The Eshelby stress is Piola's material counterpart and is the driving force for local configurational changes in the material domain. Local form of the first law in Equation (\ref{eq:crack_first_law})
+are the first Piola-Kirchhoff stress and Eshelby stress tensors, respectively. The first one is a well-known driving force for elastic deformation in the spatial domain. 
+It is worth noting that in case of the previously presented bone material model, it also depends on density $\rho$. 
+The Eshelby stress is Piola's material counterpart and is the driving force for local configurational changes in the material domain. Local form of the first law in Equation (\ref{eq:crack_first_law})
 can be obtained by applying the divergence theorem to the last integral resulting in the following expression:
 \begin{equation}\label{eq:crack_local_gauss}
 \begin{aligned}
@@ -452,13 +514,13 @@ This equation represents the equilibrium condition for the crack front. The term
 The finite element approximation is applied to both the material and physical space:
 \begin{equation}
 \begin{aligned}
-& \mathbf{ X^h} = \mathbf \Phi({\boldsymbol {\rm {\chi}}}) \tilde {\mathbf{ X}}, \quad \mathbf{x^h} = \mathbf{\Phi}({\boldsymbol {\chi}}) {\tilde{\mathbf{x}}} \\
-& \mathbf{ W^h} = \mathbf \Phi(\chi) {\dot { \tilde {\boldsymbol {\rm W} } }}, \quad \mathbf{w^h} = \mathbf{\Phi}({\boldsymbol {\chi}}){\dot { \tilde {\boldsymbol {\rm w} } }}
+& \mathbf{ X^h} = \mathbf \Phi({\boldsymbol {\rm {\upchi}}}) \tilde {\mathbf{ X}}, \quad \mathbf{x^h} = \mathbf{\Phi}({\boldsymbol {\upchi}}) {\tilde{\mathbf{x}}} \\
+& \mathbf{ W^h} = \mathbf \Phi(\upchi) {\dot { \tilde {\boldsymbol {\rm W} } }}, \quad \mathbf{w^h} = \mathbf{\Phi}({\boldsymbol {\upchi}}){\dot { \tilde {\boldsymbol {\rm w} } }}
 \end{aligned}
 \end{equation}
 where superscript h indicates approximation and $(\tilde \cdot)$ nodal values. Three-dimensional domains are discretised with tetrahedral finite elements with hierarchical basis functions of arbitrary polynomial order, following the work of Ainsworth and Coyle \citep{Ainsworth2003}. The higher-order approximations are only applied for displacements in the spatial configuration, whereas a linear approximation is used for displacements in the material space. The material and spatial gradients of deformation are expressed as:
 \begin{equation}
-\mathbf H^h = \mathbf{B_x}(\chi) {\tilde{\mathbf{X}}}, \quad \mathbf h^h = \mathbf{B_x} ({\boldsymbol {\chi}}) { \tilde{\mathbf{x}}}, \quad \mathbf F^h = \mathbf h^h (\mathbf H^h)^{-1} = \mathbf{B_x} \mathbf{\tilde x}
+\mathbf H^h = \mathbf{B_x}(\upchi) {\tilde{\mathbf{X}}}, \quad \mathbf h^h = \mathbf{B_x} ({\boldsymbol {\upchi}}) { \tilde{\mathbf{x}}}, \quad \mathbf F^h = \mathbf h^h (\mathbf H^h)^{-1} = \mathbf{B_x} \mathbf{\tilde x}
 \end{equation}
 The residual force vector in spatial domain has the classical form:
 \begin{equation}
