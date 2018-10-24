@@ -466,10 +466,11 @@ where
 \begin{equation}
 \mathbf P = \frac{\partial \Psi (\mathbf F, \rho)}{\partial \mathbf F} \quad \mathrm{and } \quad {\bm {\Sigma}} = \Psi(\mathbf F) \mathbf  1 - \mathbf F^{\rm T} \mathbf P
 \end{equation}
-are the first Piola-Kirchhoff stress and Eshelby stress tensors, respectively. The first one is a well-known driving force for elastic deformation in the spatial domain. 
+are the first Piola-Kirchhoff stress and Eshelby stress tensors, respectively. 
+The first one is a well-known driving force for elastic deformation in the spatial domain. 
 It is worth noting that in case of the previously presented bone material model, it also depends on density $\rho$. 
-The Eshelby stress is Piola's material counterpart and is the driving force for local configurational changes in the material domain. Local form of the first law in Equation (\ref{eq:crack_first_law})
-can be obtained by applying the divergence theorem to the last integral resulting in the following expression:
+The Eshelby stress is Piola's material counterpart and is the driving force for local configurational changes in the material domain. 
+Local form of the first law in Equation (\ref{eq:crack_first_law}) can be obtained by applying the divergence theorem to the last integral resulting in the following expression:
 \begin{equation}\label{eq:crack_local_gauss}
 \begin{aligned}
 &  \int_{\partial \Gamma } \gamma \mathbf A_{\partial \Gamma} \cdot {\dot {\boldsymbol {\rm W} } } \mathrm d L = \int_{\mathcal B_t} {\dot {\boldsymbol {\rm w} } } \cdot \big( \nabla_{\mathbf x} \cdot \mathbf P  \big) \mathrm d V + \int_{\mathcal B_t} {\dot {\boldsymbol {\rm W} } } \cdot \big( \nabla_{\mathbf x} \cdot {\bm {\Sigma}} \big) \mathrm d V \\
@@ -486,15 +487,18 @@ The spatial conservation law of linear momentum balance, for any point inside th
 \nabla_{\mathbf X} \cdot \mathbf P = 0
 \end{equation}
 Therefore, the first term on the right-hand side in Equation (\ref{eq:crack_local_gauss}) vanishes. 
-However, the material conservation law is not equal to zero in case of heterogeneous materials like bones. Following \citep{kienzler2014configurational}, material defects and inhomogeneities can create additional configurational forces; hence, material momentum balance can be expressed as:
+However, the material conservation law is not equal to zero in case of heterogeneous materials like bones. 
+Following \citep{kienzler2014configurational}, material defects and inhomogeneities can create additional configurational forces; hence, material momentum balance can be expressed as:
 \begin{equation}
 \nabla_{\mathbf X } \cdot {\bm {\Sigma}}= \mathbf f^{\mathrm {inh}}
 \end{equation}
-where $ \mathbf f^{\mathrm {inh}}$ is a fictitious force, directed from the $ \textit {harder}$ part of the material to the $ \textit {softer}$ part. It represents a vector of the spatial variation of material properties, and in the context of heterogeneous bodies considered in this study it has the following form:
+where $ \mathbf f^{\mathrm {inh}}$ is a fictitious force, directed from the $ \textit {harder}$ part of the material to the $ \textit {softer}$ part. 
+It represents a vector of the spatial variation of material properties, and in the context of heterogeneous bodies considered in this study it has the following form:
 \begin{equation}
 \mathbf f^{\mathrm {inh}} = - \left( \frac{\partial \Psi }{ \partial \mathbf X} \right)_{\mathrm{expl}} = - \left. \left( \frac{\partial \Psi}{\partial \rho} \right) \left( \frac{\partial \rho}{\partial \mathbf X} \right) \right|_{\mathbf x= \mathrm{const}}
 \end{equation}
-where $\Psi$ is the free energy that depends on density as noted in Equation (\ref{eq:free_energ}). Above expression is an explicit derivative - it does not depend on the spatial configuration $\mathbf x$. \\
+where $\Psi$ is the free energy that depends on density as noted in Equation (\ref{eq:free_energ}). 
+Above expression is an explicit derivative - it does not depend on the spatial configuration $\mathbf x$. \\
 Furthermore, considering only admissible velocity fields and stress fields in equilibrium with external forces, the following expression can be obtained. 
 \begin{equation}
 \int_{\partial \Gamma } \gamma \mathbf A_{\partial \Gamma} \cdot {\dot {\boldsymbol {\rm W} } } \mathrm d L -\int_{\partial \Gamma} {\dot {\boldsymbol {\rm W} } } \cdot \lim_{|\mathcal L_n| \to 0 }  \int_{\mathcal L_n } {\bm {\Sigma}}\mathbf{N} \mathrm d S  = 0
@@ -509,7 +513,8 @@ Next, the local form of the first law presented in Equation (\ref{eq:crack_local
 \begin{equation}\label{eq:crack_local_first_law}
 {\dot {\boldsymbol {\rm W} } } \cdot \left( \gamma \mathbf A_{\partial \Gamma} - \mathbf G \right) = 0
 \end{equation}
-This equation represents the equilibrium condition for the crack front. The term $ \gamma \mathbf A_{ \partial \Gamma }$ can be considered as material resistance. However, the crack evolution is not within the scope of this study. \\
+This equation represents the equilibrium condition for the crack front. 
+The term $ \gamma \mathbf A_{ \partial \Gamma }$ can be considered as material resistance. However, the crack evolution is not within the scope of this study. \\
 \subsection{Spatial and material discretisation}
 The finite element approximation is applied to both the material and physical space:
 \begin{equation}
@@ -518,7 +523,10 @@ The finite element approximation is applied to both the material and physical sp
 & \mathbf{ W^h} = \mathbf \Phi(\upchi) {\dot { \tilde {\boldsymbol {\rm W} } }}, \quad \mathbf{w^h} = \mathbf{\Phi}({\boldsymbol {\upchi}}){\dot { \tilde {\boldsymbol {\rm w} } }}
 \end{aligned}
 \end{equation}
-where superscript h indicates approximation and $(\tilde \cdot)$ nodal values. Three-dimensional domains are discretised with tetrahedral finite elements with hierarchical basis functions of arbitrary polynomial order, following the work of Ainsworth and Coyle \citep{Ainsworth2003}. The higher-order approximations are only applied for displacements in the spatial configuration, whereas a linear approximation is used for displacements in the material space. The material and spatial gradients of deformation are expressed as:
+where superscript h indicates approximation and $(\tilde \cdot)$ nodal values. 
+Three-dimensional domains are discretised with tetrahedral finite elements with hierarchical basis functions of arbitrary polynomial order, following the work of Ainsworth and Coyle \citep{Ainsworth2003}. 
+The higher-order approximations are only applied for displacements in the spatial configuration, whereas a linear approximation is used for displacements in the material space. 
+The material and spatial gradients of deformation are expressed as:
 \begin{equation}
 \mathbf H^h = \mathbf{B_x}(\upchi) {\tilde{\mathbf{X}}}, \quad \mathbf h^h = \mathbf{B_x} ({\boldsymbol {\upchi}}) { \tilde{\mathbf{x}}}, \quad \mathbf F^h = \mathbf h^h (\mathbf H^h)^{-1} = \mathbf{B_x} \mathbf{\tilde x}
 \end{equation}
@@ -538,11 +546,13 @@ The nodal material forces $\mathbf{\tilde G}^h$ are the driving force for the cr
 \begin{equation}\label{eq:crack_material_force_dis}
 \mathbf{\tilde G}^h = \aoperator_{\text{TET}}^{n_{\rm {el}}} \int_\text{TET} (\mathbf{B_x})^{\rm T} {\bm {\Sigma}}^h +   \left.\left( \frac{\partial \Psi}{\partial \rho} \right)\right|_{\mathbf{x}= \text {const}} \mathbf B^{\rm T} \rho \mathrm \,d V
 \end{equation}
-The explicit derivative of energy with respect to density in Equation (\ref{eq:crack_material_force_dis}) is derived automatically by means of ADOL-C library~\citep{Walther2009}. Furthermore, $\mathbf f^h_{\text {res}}$ is the vector of nodal material resistance (Griffith) forces, given as:
+The explicit derivative of energy with respect to density in Equation (\ref{eq:crack_material_force_dis}) is derived automatically by means of ADOL-C library~\citep{Walther2009}. 
+Furthermore, $\mathbf f^h_{\text {res}}$ is the vector of nodal material resistance (Griffith) forces, given as:
 \begin{equation}
 \mathbf f^h_{\text{res}} = \frac{1}{2} (\mathbf{\tilde A}^h_\Gamma)^{\rm T} \mathbf g_c
 \end{equation}
-where $ \mathbf g_c$ is a vector with zero for all components except those associated with nodes on the crack front, where the value is equal to $g_c$. It is a material parameter specifying the critical threshold of energy release per unit area of the crack surface $\Gamma$, also known as the Griffith energy.
+where $ \mathbf g_c$ is a vector with zero for all components except those associated with nodes on the crack front, where the value is equal to $g_c$. 
+It is a material parameter specifying the critical threshold of energy release per unit area of the crack surface $\Gamma$, also known as the Griffith energy.
 \subsection{Linearised system of equations}
 The nonlinear coupled system of equations is linearised and solved monolithically, following a standard Newton-Raphson iterative strategy. \\
 
