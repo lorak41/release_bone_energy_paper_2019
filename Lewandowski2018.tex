@@ -112,21 +112,21 @@ In particular, Finite Element Method has been used to improve understanding of t
 The goals of this study are to explore the potential of a computational framework based on FEM to predict bone density profiles 
 (bone adaptation) for the undergoing exercise (training) and subsequently quantify fracture resistance of 
 adapted bones using linear fracture mechanics for brittle materials. 
-A schematic of the procedure is presented in Figure \ref{fig:framework}.
+A schematic of the procedure is presented in Figure~\ref{fig:framework}.
 %(The aim for this study is the establishment and implementation of FEM based framework suitable for clinical practice that will help to simulate density evolution, quantify current and future fracture risk based on CT scanning data derived from horses in training.) 
 Bone adaptation process, within the developed framework, is incorporated by using computational algorithm in open system thermodynamics 
 \citep{Kuhl2003a}.
 
 The rest of the article is structured as follows.
-A brief review of open system thermodynamics is presented in Section \ref{sec:bone_remodel}.
+A brief review of open system thermodynamics is presented in Section~\ref{sec:bone_remodel}.
 Moreover, a novel approach to assign heterogeneous mechanical bone properties, derived from CT scans,
-to the FE model by means of the Moving Least Squares (MLS) method is proposed in Section \ref{sec:dens_mapping}.
+to the FE model by means of the Moving Least Squares (MLS) method is proposed in Section~\ref{sec:dens_mapping}.
 Examples and verification of the proposed approach are also demonstrated. 
-Thereafter, Section \ref{sec:release_energy} encompasses extension of recently established energy consistent approach 
+Thereafter, Section~\ref{sec:release_energy} encompasses extension of recently established energy consistent approach 
 for evolving crack propagation in the context of configurational mechanics. 
 The method is utilised to calculate release energy of bones under quasi-static loading during different stages of adaptation. 
-Section \ref{sec:numerical_examples} brings together all the developments of the framework in the form of numerical examples. 
-Finally, in Section \ref{sec:discussion} a brief summary of the work is presented and areas for further research are identified.
+Section~\ref{sec:numerical_examples} brings together all the developments of the framework in the form of numerical examples. 
+Finally, in Section~\ref{sec:discussion} a brief summary of the work is presented and areas for further research are identified.
 \begin{figure}[h!]
 \begin{center}
 \includegraphics[width=12cm,height=12cm]{Figures/framework.png}
@@ -221,7 +221,7 @@ Following Harrigan and Hamilton \citep{Harrigan1993}, the constitutive relation 
 \label{eq:mass_source}
 \end{equation}
 where $\rho_0^\ast$ and $\psi_{0}^\ast$ represent reference values of the density, $\rho$ and free energy, $\psi_0$, respectively.  
-Eq. (\ref{eq:mass_source}) demonstrates energy-type saturation for the density changes, i.e. the driving term $\left[ \rho / \rho_0^\ast \right]^{-m}\psi_0$ tends to converge to the value of $\psi_{0}^\ast$. 
+Eq.~(\ref{eq:mass_source}) demonstrates energy-type saturation for the density changes, i.e. the driving term $\left[ \rho / \rho_0^\ast \right]^{-m}\psi_0$ tends to converge to the value of $\psi_{0}^\ast$. 
 Exponent $m$ is a dimensionless scalar introduced to guarantee uniqueness and stability \citep{Harrigan1993} . 
 Furthermore, coefficient $c$ controls the rate of the remodelling process with units $[t/m]$. 
 Following classical structural optimisation formulations, as presented in \citep{Waffenschmidt2012}, it could often be beneficial to prescribe an upper and lower bound for the density%. 
@@ -239,8 +239,8 @@ c=\frac{1}{1 + \left[  (\rho - \rho^{\mathrm{mid}}) / (\rho{^\mathrm{max}} - \rh
 %is b an intiger?? please define
 %restricting the density between $ \rho{^\mathrm{max}}$ and $ \rho{^\mathrm{min}}$.
 where $\rho^{\rm {mid}}$ is the mean of $\rho{^\mathrm{max}}$ and $\rho{^\mathrm{min}}$ are the maximum and minimum truncation values of $\rho$, respectively.
-The bell function (\ref{eq:bell_function}) is demonstrated in Fig. \ref{fig:bell_func} for different values of the integer exponent $b$. 
-Its application and influence on the overall results are elaborated in section \ref{sec:bell}.
+The bell function (\ref{eq:bell_function}) is demonstrated in Figure~\ref{fig:bell_func} for different values of the integer exponent $b$. 
+Its application and influence on the overall results are elaborated in Section~\ref{sec:numerical_examples:bone_adap}.
 \begin{figure}[h!]
 	\begin{centering}
 		\includegraphics[width=7cm]{Figures/graphs/bell_func.png}
@@ -263,7 +263,7 @@ Moreover, the exponent $n$ is a non physical parameter that typically varies bet
 Finally, to iteratively solve the system of nonlinear equations monolithic solution scheme is chosen. Following classical Newton method, both mass and momentum balance equations are linearised. 
 To ensure quadratic convergence of the algorithm, the consistent material tangent matrix is derived by means of automatic differentiation provided with ADOL-C library~\citep{Walther2009}. 
 For the time discretisation of the governing equations, backward Euler method was utilised. 
-Application of the proposed model for equine metacarpal is demonstrated by two numerical examples in Section \ref{sec:numerical_examples}.
+Application of the proposed model for equine metacarpal is demonstrated by two numerical examples in Section~\ref{sec:numerical_examples}.
 \section{Density mapping}
 \label{sec:dens_mapping}
 Subject-specific finite element (FE) modelling has been commonly used to assess the stresses and fracture risk of bones~\citep{poelert2013patient,Helgason2008b,Yosibash2010}. 
@@ -305,7 +305,7 @@ In the current implementation, for each TPA, three types of basis functions are 
 \label{eq:mwls_basis}
 \end{equation}
 For each TPA, the process to evaluate the vector of unknowns $\mathbf a({\boldsymbol {\rm x}}_{\rm t}) = \Big[ a_1({\boldsymbol {\rm x}}_{\rm t} ), a_2({\boldsymbol {\rm x}}_{\rm t} ), \dots a_q({\boldsymbol {\rm x}}_{\rm t} ) \Big]$ in Equation (\ref{eq:mwls_approx}), involve consideration of the rest of the set of points that $v({\boldsymbol {\rm x}})$ will be approximated and a weight function $w(r)$ is constructed, where $r$ is the radial distance from the TPA.
-Example of an arbitrary weight function for a 2D domain is presented in Figure \ref{fig:weight_func} with shaded area.
+Example of an arbitrary weight function for a 2D domain is presented in Figure~\ref{fig:weight_func} with shaded area.
 All points where the given field is going to be evaluated and the TPA are presented with dots and a cylindrical local coordinate system is presented with $r$ and $w$ axes with origin located at ${\boldsymbol {\rm x}}_{\rm t}$. 
 For the 2D case, the weight function is the 3D surface area (shaded area) resulting from the full rotation around $w$ axis of the 1D shape function, $w_{\rm r}$, presented with solid line.
 The boundary of the domain of influence of $w(r)$ is presented with dashed ellipsoid (that is a circle from a top view).
@@ -361,7 +361,7 @@ and $\mathbf v$ is $(n_{\rm w} \times 1)$ vector of the given field values at th
 \mathbf v = \big[ v({\boldsymbol {\rm x}}_{\rm 1}), v({\boldsymbol {\rm x}}_{\rm 2}), \dots, v({\boldsymbol {\rm x}}_{n_{\rm w}}) \big]^{\rm T}
 \end{equation}
 At this point it should be mentioned that parameter $d_{\rm{mi}}$ is chosen so that $n_{\rm w}$ value is such that the resulting matrix $\boldsymbol {\rm A}$ is invertible. 
-Next, Eq. (\ref{eq:mwls_approx}) combined with Eq. (\ref{eq:mwls_system}) can be rewritten as: 
+Next, Eq.~(\ref{eq:mwls_approx}) combined with Eq.~(\ref{eq:mwls_system}) can be rewritten as: 
 \begin{equation}
 v^h({\boldsymbol {\rm x}}_{\rm t} )= \sum^{n_{\rm w}}_{i=1} \omega_i({\boldsymbol {\rm x}}_i) v_i = \mathbf {\bm {\upomega}}^{\rm T} ({\boldsymbol {\rm x}}_{\rm t}) \mathbf v 
 \end{equation}
@@ -379,7 +379,7 @@ where $j = 1,\, 2$~or~$3$ that denote each spatial direction, the commas in the 
 \mathbf A_{,j}^{-1} = -\mathbf A^{-1} \mathbf A_{,j} \mathbf A^{-1}
 \end{equation}
 It is worth to mention that for any TPA located at ${\boldsymbol {\rm x}}_{\beta}$, MLS shape functions do not satisfy Kronecker delta: $\omega_i({\boldsymbol {\rm x}}_{\beta}) \neq \delta_{i\beta}$. 
-The values obtained from the MLS approximation are, therefore, as the given field values, i.e. $v^h({\boldsymbol {\rm x}}_{\beta}) \neq v({\boldsymbol {\rm x}}_{\beta}) $ as presented with a 1D example in Figure \ref{fig:mwls_approxi}.
+The values obtained from the MLS approximation are, therefore, as the given field values, i.e. $v^h({\boldsymbol {\rm x}}_{\beta}) \neq v({\boldsymbol {\rm x}}_{\beta}) $ as presented with a 1D example in Figure~\ref{fig:mwls_approxi}.
 \begin{figure}[h!]
 	\begin{centering}
 		\includegraphics[width=7cm]{Figures/1dMWLS.pdf}
@@ -401,7 +401,7 @@ The variation could be explained due to main attention on the local failure init
 Many methods are currently available to numerically solve the problem of fracture initiation and growth. They can be divided into two categories: discrete and smeared approaches. Discrete crack models originally were limited to describe crack formation only on element boundaries \citep{Scordelis1967}. More recently, in the presence of automatic mesh generators, the extended finite element method (xFEM) separated the crack path from underlying mesh, see e.g. \citep{Belytschko1999} where xFEM was applied to model brittle fracture. Another novel approach in isogeometric analysis field introduces knot insertions that lower the order of continuity to introduce cracks in solids \citep{Hosseini2014}. The continuum damage, or diffused crack approach, incorporates a damage parameter into the model that controls the strength of the material. An advantage of this approach is that it does not require interface tracking since the damage parameter varies continuously over the domain (see, e.g. \citep{deBorst2004}). Closely related to continuum damage models are the phase-field models which have become extremely popular over the last decade. The numerical solution of these models is based on an approximate potential developed by Mumford \citep{Mumford1989}. The main advantage is that the fracture problem can be described purely by partial differential equations \citep{Miehe2010a,Borst2014}. \\
 This paper presents a modified formulation and associated computational framework for brittle fracture in elastic solids within the context of configurational mechanics in heterogeneous materials like bones, extending the authors' previous work \citep{kaczmarczyk2017energy}. Configurational mechanics utilises a concept of material (configurational) forces originally introduced by Eshelby~\citep{eshelby1951force}. Unlike physical forces, material forces act on the material manifold and represent the tendency of imperfections like cracks, voids or material inhomogeneities to move relative to the surrounding material. The past two decades have seen a growing interest in this approach for analysis of material imperfections \citep{maugin2016configurational} and in particular for evaluation of crack-driving forces \citep{steinmann2001application, ozencc2016configurational, kaczmarczyk2017energy}. Such implementations in the framework of Finite Element analysis have proven to be accurate, robust and capable of handling a propagation of complex 3D non-planar crack surfaces. However, until recently the approach have never been used to effectively assess material forces in a heterogeneous body with a crack. For this purpose, in the current study, additional material forces arising from inhomogeneities are introduced into the formulation. Such modification allows for identification of the liability of an arbitrary crack to propagate and in the future can be extended to simulate full fracture propagation in bone. An additional goal is to investigate bone failure at different stages of bone adaptation, utilising the results from bone remodelling analysis or data directly taken from CT scans. Similar concept of combined remodelling and fracture analyses has been presented before \citep{hambli2013integrated}. However, it utilised a different remodelling model and continuum damage mechanics approach for fracture, both of which require many more parameters to calibrate. 
 \subsection{Kinematics}\label{sec:Kinematics}
-In the context of configurational mechanics, an elastic body with an initial crack, as visualised in Figure \ref{fig:frac_kinematics}, is considered. To independently observe the deformation of the material in physical space $\Omega_t$ and the evolution of the crack surface in material space $\mathcal B_t $ it is convenient to decompose the problem into separate configurations. First, propagation of the crack is described by the mapping from the reference configuration to the current material domain, $\Xi$. Next, purely elastic deformation is mapped from the current material to spatial domain, $\mathbf \phi$. Let $\mathbf x = \phi(\mathbf X,t)$ describe the motion of the body, which transforms material positions $\mathbf X$ to their spatial counterparts $\mathbf x$. The physical displacements are derived as follows:
+In the context of configurational mechanics, an elastic body with an initial crack, as visualised in Figure~\ref{fig:frac_kinematics}, is considered. To independently observe the deformation of the material in physical space $\Omega_t$ and the evolution of the crack surface in material space $\mathcal B_t $ it is convenient to decompose the problem into separate configurations. First, propagation of the crack is described by the mapping from the reference configuration to the current material domain, $\Xi$. Next, purely elastic deformation is mapped from the current material to spatial domain, $\mathbf \phi$. Let $\mathbf x = \phi(\mathbf X,t)$ describe the motion of the body, which transforms material positions $\mathbf X$ to their spatial counterparts $\mathbf x$. The physical displacements are derived as follows:
 \begin{equation}
 \mathbf u = \mathbf x - \mathbf X
 \end{equation}
@@ -445,7 +445,7 @@ and
 	\end{centering}
 \end{figure}
 \subsection{Crack front}
-The crack surface is denoted as $\Gamma$ with a crack front $\partial \Gamma$, see Figure \ref{fig:frac_crack_con}.  Following \citep{kaczmarczyk2014three}, a kinematic relationship between the change in crack surface area $\dot A_\Gamma$ and the crack front velocity $\mathbf{\dot W}$ can be defined as:
+The crack surface is denoted as $\Gamma$ with a crack front $\partial \Gamma$, see Figure~\ref{fig:frac_crack_con}.  Following \citep{kaczmarczyk2014three}, a kinematic relationship between the change in crack surface area $\dot A_\Gamma$ and the crack front velocity $\mathbf{\dot W}$ can be defined as:
 \begin{equation}\label{eq:crack_front}
 \dot A_\Gamma = \int_{\partial \Gamma} \mathbf A_{\partial \Gamma} \cdot {\dot {\boldsymbol {\rm W} } } \mathrm d L 
 \end{equation}
@@ -478,7 +478,7 @@ Local form of the first law in Equation (\ref{eq:crack_first_law}) can be obtain
 & - \lim_{\mathcal C \to 0} \int_{\mathcal C} {\dot {\boldsymbol {\rm w} } } \cdot \mathbf {PN} \mathrm d S + \lim_{\mathcal C \to 0} \int_{\mathcal C} {\dot {\boldsymbol {\rm W} } } \cdot {\bm {\Sigma}}\mathbf{N} \mathrm d S
 \end{aligned}
 \end{equation}
-Moreover, it can be recognised that, in the limit, the surface $\mathcal C$ (Figure \ref{fig:frac_crack_con}) collapses to the crack front $\partial \Gamma $ and integrals over the crack front are simplified as follows:
+Moreover, it can be recognised that, in the limit, the surface $\mathcal C$ (Figure~\ref{fig:frac_crack_con}) collapses to the crack front $\partial \Gamma $ and integrals over the crack front are simplified as follows:
 \begin{equation}
 \lim_{\mathcal C \to 0} \int_{\mathcal C} (\cdot ) \mathrm d S = \lim_{\mathcal C \to 0} \int_{\mathcal L_t} \int_{\mathcal L_n} (\cdot) \mathrm d S = \int_{\partial \Gamma} \lim_{|\mathcal{ L }|\to 0} \int_{\mathcal L_n } (\cdot ) \mathrm d S
 \end{equation}
@@ -560,23 +560,27 @@ The nonlinear coupled system of equations is linearised and solved monolithicall
 
 \section{Numerical examples}
 \label{sec:numerical_examples}
-A numerical example of a full framework for evaluating release energy rate in remodelled bones is presented in this section. 
-First analysis considers the bone adaptation of an equine 3rd metacarpal bone. 
-In the second one, results of mapping data onto FE mesh are presented. 
-The last subsection demonstrates the results of release energy rate for simple finite plate problem and metacarpal bone verifying the implementation. 
+In this section, a numerical example is presented for each aspect of the proposed framework for evaluating release energy rate in remodelled bones. 
+The first set of analyses, presented in Subsection~\ref{sec:numerical_examples:bone_adap}, consider the bone adaptation of an equine 3rd metacarpal bone. 
+In the second set, results of mapping data onto FE mesh are presented in Subsection~\ref{sec:mals_mapping}. 
+Finally, the results of release energy rate for simple finite plate problem and metacarpal bone are presented in Subsection~\ref{sec:release_energy_rate} verifying the implementation. 
 Additionally, convergence study is conducted with and without quarter point elements at the crack tip.
 \subsection{Bone adaptation examples}
 \label{sec:numerical_examples:bone_adap}
-This section covers the example of equine 3rd metacarpal bone adaptation. 
-The full-scale model of equine MCIII bone is derived from CT scan data. 
-The segmented geometry is discretised into 17041 tetrahedral elements. 
-The material parameters used for the following examples are summarised in Table \ref{tab:parameters_mc3}. 
+This subsection covers the example of equine 3rd metacarpal bone adaptation.
+Three cases are studied where they all have the same material parameters presented in Table \ref{tab:parameters_mc3}.
 The values are adopted based on previous studies of human tibia \citep{Pang2012,Waffenschmidt2012}. 
-Higher stiffness of equine bones, derived from mechanical testing studies \citep{Les1994}, is also taken into account. 
-The initial density is homogeneous, since in the thermodynamic-based model, the starting density does not have a significant effect on the final bone density distribution (at biological equilibrium), similar to some other models \citep{kuhl2003theory}. % is not sensitive to the initial density
-Boundary conditions are simplified to two representative forces (5 kN each) spanning over a small area based on pressure film studies \citep{Brama2001} as demonstrated in Figure \ref{fig:mc3_BC}. 
+Higher stiffness of equine bones, derived from mechanical testing studies \citep{Les1994}, is also taken into account.
+
+For each case considered, one analysis is presented for a different coefficient, $c$, that is used to compute the mass source, $\mathcal{R}_0$, according to Eq.~\ref{eq:mass_source}.
+In Case~1, $c$ is evaluated in absence of bell function (Eq.~(\ref{eq:bell_function})) while Case~2 and Case~3 different bell functions are used.
+Input parameters related to evaluation of $c$ for each case are presented in Table~\ref{tab:three_cases} 
+The mesh used in all cases was acquired from a full-scale model of equine MCIII bone is derived from CT scan data where the resulting segmented geometry is then discretised into 17041 tetrahedral elements.
+
+For each analysis, initial density is chosen to be homogeneous since in the thermodynamic-based model the starting density does not have a significant effect on the final bone density distribution (at biological equilibrium), similar to other models \citep{kuhl2003theory}. % is not sensitive to the initial density
+Boundary conditions are simplified to two representative forces (5~$\text{[kN]}$~each) spanning over a small area based on pressure film studies \citep{Brama2001} as demonstrated in Figure~\ref{fig:mc3_BC}. 
 They are often considered as an equivalent of peak force at the mid-stance of a horse gait. %Obviously, with such simplified loading case the analysis is not sufficient to produce any quantitative results regarding remodelling of the metacarpal but rather to demonstrate the potential of this approach. 
-Adaptive time stepping provided with PETSc package \citep{petsc-web} is used in all the simulations with starting time step $\Delta t = 0.5$ and maximum and minimum $\Delta t_{\text {max}} = 50$ and $\Delta t_{\text {min}} = 0.05$, respectively.
+Adaptive time stepping provided with PETSc package \citep{petsc-web} is used in all the simulations with starting time step $\Delta t = 0.5$~$[\text d]$ and maximum and minimum $\Delta t_{\text {max}} = 50$~$[\text d]$ and $\Delta t_{\text {min}} = 0.05$~$[\text d]$, respectively.
 \begin{table}[h]
 	\centering
 	\begin{tabular}{lll}
@@ -585,7 +589,7 @@ Adaptive time stepping provided with PETSc package \citep{petsc-web} is used in 
 		$E  $                 & Young's modulus              & $4700 \,\mathrm{ [MPa]}$  \citep{Les1994} \\
 		$\nu  $               & Poisson ratio                & $0.3 \,\mathrm{ [-]}$ \\
 		$\rho_0 ^\ast  $      & Initial density              & $1.0 \,\mathrm{[ g/cm^{3}]}$  \\
-		$\psi_{0}^\ast $      & Target energy                & $0.0275\,\mathrm{ [MPa]}$   \citep{Waffenschmidt2012}  \\
+		$\psi_{0}^\ast $      & Target energy densidy        & $0.0275\,\mathrm{ [MPa]}$   \citep{Waffenschmidt2012}  \\
 		$c$                   & Density growth velocity      & $1.0 \,\mathrm{ [d/cm^{2}]}$   \\
 		$m$                   & Algorithmic exponent         & $ 3.25 \,\mathrm{ [-]}$          \\
 		$n$                   & Porosity exponent            & $2.25 \,\mathrm{ [-]}$      \citep{Les1994}   \\ 
@@ -594,6 +598,23 @@ Adaptive time stepping provided with PETSc package \citep{petsc-web} is used in 
 	\caption{Material parameters used for the simulations of MC3 bone remodelling.}
 	\label{tab:parameters_mc3}
 \end{table}
+
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{lllll}
+		\hline
+		Case                  & $c$              				       & $b$     &$\rho_\mathrm{max}$               &$\rho_\mathrm{max}$ \\ \hline
+		1                     & 1              								 & -       & -                                & -\\
+		2                     & Eq.~(\ref{eq:bell_function})   & 1000    & 2.5~$[{\text{g/cm}}^3]$          & 0.3~$[{\text{g/cm}}^3]$\\
+		3                     & Eq.~(\ref{eq:bell_function})   & 30      & 1.8~$[{\text{g/cm}}^3]$          &1.0~$[{\text{g/cm}}^3]$ \\
+		\hline
+	\end{tabular} 
+	\caption{Presentation of three cases input parameters for the evaluation of coefficient $c$ to compute the mass source, $\mathcal{R}_0$, as presented in Eq.~\ref{eq:mass_source}. All cases have common material input parameters presented in Table~\ref{tab:parameters_mc3}.}
+	\label{tab:three_cases}
+\end{table}
+
+
 \begin{figure}[h!]
 	\begin{centering}
 		\includegraphics[width=8cm]{Figures/mc3_BC.png}
@@ -601,11 +622,12 @@ Adaptive time stepping provided with PETSc package \citep{petsc-web} is used in 
 		\label{fig:mc3_BC}
 	\end{centering}
 \end{figure}
-Results of the analysis are presented in Figure \ref{fig:mc3_density} where density maps at five different points in time (0, 10, 40, 100, 700) are visualised. 
+
+Results of Case~1 are presented in Figure~\ref{fig:mc3_density} where density maps at five different points in time $(\text{0, 10, 40, 100, 700})$~$[\text d]$ are visualised. 
 Great densification occurred right after reaching the maximum level of the loading, particularly in the proximity of applied forces, where the high levels of strain energy are expected. 
 In the areas not affected by the loading, material degradation can be observed. 
-After time 100 density levels on entire bone became saturated, biological equilibrium was achieved; hence, no changes in mass appear thereafter. 
-The resulting maximum density has the value of $2.8 \text g \text / {cm}^3$, whereas the minimum is close to zero (unloaded regions).
+After time 100~$[{\text d}]$, density levels on entire bone became saturated, biological equilibrium was achieved; hence, no changes in mass appear thereafter. 
+The resulting maximum density has the value of 2.8~$[{\text {g/cm}}^3]$, whereas the minimum is close to zero (unloaded regions).
 \begin{figure}[h!]
 	\begin{centering}
 		\includegraphics[width=15cm]{Figures/graphs/mc3_density.png}
@@ -613,57 +635,65 @@ The resulting maximum density has the value of $2.8 \text g \text / {cm}^3$, whe
 		\label{fig:mc3_density}
 	\end{centering}
 \end{figure}
-When adaptation converges to an equilibrium state, an interesting phenomenon is observed; as a direct consequence of the constitutive Equation \ref{eq:mass_source}, for each density level there is a corresponding value of constant strain energy density $\psi$. 
+When adaptation converges to an equilibrium state, an interesting phenomenon is observed.
+For each density level there is a corresponding value of constant strain energy density $\psi$
+This result is a direct consequence of the constitutive Equation \ref{eq:mass_source}. 
 This feature can be visualized by plotting the strain energy density on the contours of constant density levels as presented in Figure~\ref{fig:mc3_biol_eq}. 
 \begin{figure}[h!]
 	\begin{centering}
 		\includegraphics[width=12cm]{Figures/mc3_biol_eq.png}
-		\caption{Biological equilibrium state. a) Density map. b) Contours of density. c) Strain energy plotted on contours.}
+		\caption{Case~1: Biological equilibrium state. a) Density map. b) Contours of density. c) Strain energy plotted on contours.}
 		\label{fig:mc3_biol_eq}
 	\end{centering}
 \end{figure}
 
-\subsubsection{Bell function}
-\label{sec:bell}
-The resulting maximum densities in the analysis demonstrated above are noticeably higher than in the actual equine bones \citep{yamada2015experimental}, whereas minimum density is unrealistically close to zero. 
+The resulting maximum densities in Case~1 analysis are noticeably higher than in the actual equine bones \citep{yamada2015experimental}, whereas minimum density is unrealistically close to zero. 
 There is clearly a need to somewhat constrain upper and lower bounds for density in order to produce more realistic outcomes.
-Therefore, in the following section, the results of two analyses with the application of the bell function (see Eq. \ref{eq:bell_function}) are presented. 
-In the first one, the parameters for the function are: $b = 1000$, $\rho_\mathrm{max} = 2.5$, $\rho_\mathrm{min} = 0.3$. 
-All the rest of parameters remain unchanged. The results of the modification are plotted in Figure \ref{fig:density_bell1} below.
+For achieve this, the bell shape function presented in Eq.~(\ref{eq:bell_function}) for the next two analyses (Case~2 and Case~3). 
+%Therefore, in the following section, the results of two analyses with the application of the bell function (see Eq.~\ref{eq:bell_function}) are presented. 
+%In the first one, the parameters for the function are: $b = 1000$, $\rho_\mathrm{max} = 2.5$~$[{\text{g/cm}}^3]$, $\rho_\mathrm{min} = 0.3$~$[{\text{g/cm}}^3]$. 
+%All the rest of parameters remain unchanged. 
+
 \begin{figure}[h!]
 	\begin{centering}
 		\includegraphics[width=15cm]{Figures/graphs/density_bell1.png}
-		\caption{Change in overall mass of the bone over time with applied bell function ($b = 1000$, $\rho_\mathrm{max} = 2.5$, $\rho_\mathrm{min} = 0.3$). Density distribution contours in 3rd metacarpal bone at the last converged step.}
+		\caption{Case~2: Change in overall mass of the bone over time with applied bell function with input parameters presented in Table~\ref{tab:three_cases}. Density distribution contours in 3rd metacarpal bone at the last converged step.}
 		\label{fig:density_bell1}
 	\end{centering}
 \end{figure}
-The last converged step takes places at $t=93$. 
-By setting a high value of $b$, the transition between densities is very sharp; therefore the algorithm encounters difficulties to obtain derivative of the balance of mass (see Eq. (\ref{eq:mass_balance})), even with adaptive time-stepping. 
-The biological equilibrium cannot be achieved in this case. However, by looking at the range of obtained densities, it is evident that they slowly converge to the same solution as without the restriction of the bell function (Fig. \ref{fig:mc3_density}). 
-In the next example, moderate value for the exponent $b$ in the bell function was chosen along with a more strict range for density.
+
+The results for Case~2 are plotted in Figure~\ref{fig:density_bell1}.
+The last converged step takes places at $t=93$~$[{\text{d}}]$. 
+By setting a high value of $b$, the transition between densities is very sharp. 
+Therefore, the algorithm encounters difficulties to obtain derivative of the balance of mass (see Eq.~(\ref{eq:mass_balance})), even with adaptive time-stepping. 
+The biological equilibrium cannot be achieved in this case. 
+However, by observing the range of obtained densities, it is evident that they slowly converge to the same solution as without the restriction of the bell function (Figure~\ref{fig:mc3_density}). 
 \begin{figure}[h!]
 	\begin{centering}
 		\includegraphics[width=15cm]{Figures/graphs/density_bell2.png}
-		\caption{Change in overall mass of the bone over time with applied bell function ($b = 30$, $\rho_\mathrm{max} = 1.8$, $\rho_\mathrm{min} = 1.0$). Density distribution contours in 3rd metacarpal bone at time step $t=1600$.}
+		\caption{Case~3: Change in overall mass of the bone over time with applied bell function with input parameters presented in Table~\ref{tab:three_cases}. Density distribution contours in 3rd metacarpal bone at time step $t=1600$~$[{\text{d}}]$.}
 		\label{fig:density_bell2}
 	\end{centering}
 \end{figure}
-The plot above demonstrates how set values for bell function influence the results of the analysis. 
+
+For the example in Case~3, a more moderate value for the exponent in the bell function was chosen along with a narrower density range than those chosen for Case~2 (see Table~\ref{fig:mc3_biol_eq}).
+The plot presented in Figure~\ref{fig:density_bell2} demonstrates how set values for bell function influence the results of the analysis. 
 It is evident that with much lower value for exponent $b$, algorithm no longer has problems with calculating the derivative. 
-More strict values of minimum and maximum density clearly have a significant impact on the results. 
+More strict values of $\rho_\mathrm{max}$ and $\rho_\mathrm{min}$ clearly have a significant impact on the results. 
 The dense cortical shaft on the dorsal side of the bone is less dense and covers a much larger region. 
 Furthermore, unrealistically low values of densities have been eliminated as well. 
 However, just like the previous case, a tendency can be noticed that the overall solution still converges to the exact same mass (and density distribution) as in the case without the bell function; though it would require significantly more time steps. \\
 %In the next sections, the methods will be presented on how to map the resulting density patterns from bone adaptation analysis on different meshes by using moving least squares approximation. Subsequently, the new model will be used to estimate the propensity to fracture, by calculating material forces on the introduced crack tip.
 \subsection{MLS mapping examples}
+\label{sec:mals_mapping}
 \subsubsection{Simple prism}
 In this section, an example of simple mapping of analytical field ($f({\boldsymbol {\rm x}})=x + y^2 + z^3 $) %(simulating CT scan data). 
 onto nodes of finite element mesh is presented. 
-At each node of the mesh, the spherical domains of influence are defined (reduced in size for clarity) as shown in Figure \ref{fig:mwlsprism}a). 
+At each node of the mesh, the spherical domains of influence are defined (reduced in size for clarity) as shown in Figure~\ref{fig:mwlsprism}a). 
 The size of the domain is determined by increasing its radius until matrix $\mathbf A$ in Equation (\ref{eq:mwls_system}) is invertible for all the points. 
-The approximated field data, with its gradient, is saved on corresponding nodes as demonstrated in Figure \ref{fig:mwlsprism}c) for $m=10$. 
+The approximated field data, with its gradient, is saved on corresponding nodes as demonstrated in Figure~\ref{fig:mwlsprism}c) for $m=10$. 
 Subsequently, the relative approximation error for gradient is calculated for three cases: constant ($m=1$), linear ($m=4$) and quadratic ($m=10$) basis functions. 
-It is clear from presented results in Figure \ref{fig:prism_error} that constant functions are not sufficient for evaluating the gradient. 
+It is clear from presented results in Figure~\ref{fig:prism_error} that constant functions are not sufficient for evaluating the gradient. 
 The maximum error for a linear and quadratic basis has the value of $1.0e-2$ and $1.0e-4$, respectively. 
 These results are satisfactory for the application of mapping data fields onto the mesh and prove the correctness of the implementation.
 \begin{figure}[h!]
@@ -686,7 +716,7 @@ In this section, the results of density approximation from CT data are presented
 	\caption{Comparison of a CT data with the corresponding approximation. A cut-view along the Y axis for CT scan data a) and density mapped onto FE mesh. b)}
 	\label{fig:mwlsmapping_cross}
 \end{figure}
-The results of the mapping procedures are presented in Figure \ref{fig:mwlsmapping_cross}. Comparison to CT data and the standard Least Squares (LS) Approximation technique in classical finite element method framework are demonstrated in Figure \ref{fig:mwlsmappingcomparisons}.
+The results of the mapping procedures are presented in Figure~\ref{fig:mwlsmapping_cross}. Comparison to CT data and the standard Least Squares (LS) Approximation technique in classical finite element method framework are demonstrated in Figure~\ref{fig:mwlsmappingcomparisons}.
 \begin{figure}
 	\centering
 	\includegraphics[width=0.7\linewidth]{Figures/mwls_mapping_comparisons.png}
@@ -701,6 +731,7 @@ Gradients form MLS, on the contrary, are smooth, which can be of great importanc
 It can also be seen that mesh boundary does not suffer from Partial Volume Artifacts.
 %try more meshes maybe?
 \subsection{Release energy rate examples}
+\label{sec:release_energy_rate}
 In this section five numerical examples of calculating material forces are presented. 
 To validate the correctness of the implementation, first, a simple quasi-two-dimensional plate with homogeneous material distribution is considered. 
 The convergence study is performed by comparing results to the analytical solution. 
@@ -708,7 +739,7 @@ In the next section, quarter point elements are presented and their influence on
 In the third subsection, the results with the heterogeneous material are presented, along with proposed validation. 
 The last two examples demonstrate the calculation of material forces for bones.  
 \subsubsection{Finite plate with a horizontal crack}\label{sec:plate_section}
-This example considers finite plate with a horizontal through-thickness crack that is subjected to uniaxial stress as indicated in Figure \ref{fig:plate_load_mesh}. 
+This example considers finite plate with a horizontal through-thickness crack that is subjected to uniaxial stress as indicated in Figure~\ref{fig:plate_load_mesh}. 
 \begin{figure}
 	\centering
 	\includegraphics[width=0.5\linewidth]{Figures/plate_load_mesh.png}
@@ -720,7 +751,7 @@ The goal is to calculate the Mode I stress intensity factor $ K_I $ and compare 
 K_t=\sigma \sqrt{\pi a} \left[  \frac{1 - \frac{a}{2b} + 0.326 (\frac{a}{b})^2 }{\sqrt{1-\frac{a}{b}}}  \right]
 \end{equation}
 where $\sigma $ is the applied stress. 
-Dimensions of the specimen are presented in Figure \ref{fig:plate_load_mesh} along with the finite element model consisting of 1384 tetrahedral elements. 
+Dimensions of the specimen are presented in Figure~\ref{fig:plate_load_mesh} along with the finite element model consisting of 1384 tetrahedral elements. 
 In addition to the lading shown above, displacement constraints at three vertices of the plate are applied, to prevent rigid body motions. 
 Young's modulus $E$ and Poisson's ratio $\nu$ are $1000$ and $0.3$, respectively. 
 Hierarchical approximation basis functions enable to use the elements with variable, non-uniform orders of approximation. 
@@ -730,7 +761,7 @@ The Mode I stress intensity factor ($K_I$) can be calculated directly from the o
 \begin{equation}
 K_I = \sqrt{GE}
 \end{equation}
-Figure \ref{fig:plate_conv_no_sing} shows the deformed shape of the plate for the 2nd order of approximation. From the graph, it is evident that for the same coarse mesh and number of nodes the solution can improve drastically when the order of approximation is increased. It is worth to note the well known pathological nature of the 1st order solution, which has a much higher error due to shear locking. The minimum achieved error is $0.6\%$ for all the cases with an order of approximation set to 7. Therefore, it can be observed that the same level of accuracy can be accomplished when using a low order of global approximation with only local p-refinement as with high order on the entire mesh. Moreover, by looking at the number of degrees of freedom, it is clear that using higher order elements locally can give the same accuracy at a much lower cost of computation time since the global matrix has a much lower size.
+Figure~\ref{fig:plate_conv_no_sing} shows the deformed shape of the plate for the 2nd order of approximation. From the graph, it is evident that for the same coarse mesh and number of nodes the solution can improve drastically when the order of approximation is increased. It is worth to note the well known pathological nature of the 1st order solution, which has a much higher error due to shear locking. The minimum achieved error is $0.6\%$ for all the cases with an order of approximation set to 7. Therefore, it can be observed that the same level of accuracy can be accomplished when using a low order of global approximation with only local p-refinement as with high order on the entire mesh. Moreover, by looking at the number of degrees of freedom, it is clear that using higher order elements locally can give the same accuracy at a much lower cost of computation time since the global matrix has a much lower size.
 \begin{figure}
 	\centering
 	\includegraphics[width=0.7\linewidth]{Figures/graphs/plate_conv_no_sing.png}
@@ -771,7 +802,7 @@ This section briefly describes the reproduction of the square root singularity i
 \end{center}
 \end{figure}
 
-The principle of quarter-point element can be straightforwardly introduced by using simple one-dimensional element as presented in Figure \ref{fig:1d-quarter} \citep{kuna2013finite}.
+The principle of quarter-point element can be straightforwardly introduced by using simple one-dimensional element as presented in Figure~\ref{fig:1d-quarter} \citep{kuna2013finite}.
 Let the demonstrated element be a quarter-point type at the crack tip, the distance between three nodes 1,3 and 2 is given by the coordinate $r$. The position of the middle node 3 is controlled by the parameter $\kappa$. The quadratic 1D displacement function of this element is: 
 \begin{equation}\label{eq:crack_disp_func}
 \begin{aligned}
@@ -779,24 +810,24 @@ Let the demonstrated element be a quarter-point type at the crack tip, the dista
 & u^{(3)} + \frac{1}{2}(u^{(2)} - u^{(1)})\xi + \left[ \frac{1}{2} (u^{(1)} + u^{(2)}) - u^{(3)} \right] \xi^2 
 \end{aligned}
 \end{equation}
-Note that equation above is ordered by powers of $\xi$ - element natural coordinate. In the classical isoparametric formulation, the same interpolation functions are also used for the coordinates, i.e. as well for the radius $r$ with the nodal values $r^{(1)} = 0$, $r^{(3)} = \kappa L$, $r^{(2)} = L$:
+Note that equation above is ordered by powers of $\xi$ - element natural coordinate. In the classical isoparametric formulation, the same interpolation functions are also used for the coordinates, i.e. as well for the radius $r$ with the nodal values $r^{(1)} = 0$, $r^{(3)} = \kappa l$, $r^{(2)} = l$:
 \begin{equation}\label{eq:crack_radius_dep}
-r(\xi) = \sum_{a=1}^3 N_a (\xi) r^{(a)} = \kappa L + \frac{1}{2} L \xi  + \left(  \frac{1}{2} - \kappa \right) L \xi^2.
+r(\xi) = \sum_{a=1}^3 N_a (\xi) r^{(a)} = \kappa l + \frac{1}{2} l \xi  + \left(  \frac{1}{2} - \kappa \right) l \xi^2.
 \end{equation}
 From Equation (\ref{eq:crack_radius_dep}) above it can be easily derived that for $ \kappa=1/4$, the radius $r(\xi(-1)) = 0$, providing the following relations:
 \begin{equation}
-r= \frac{L}{4}(1+\xi)^2 \quad \rightarrow \quad \xi = 2 \sqrt{\frac{r}{L}} -1,
+r= \frac{l}{4}(1+\xi)^2 \quad \rightarrow \quad \xi = 2 \sqrt{\frac{r}{l}} -1,
 \end{equation}
 which substituted into Equation (\ref{eq:crack_disp_func}) renders the desired radial dependence of the displacements $u$ and strains $\varepsilon$:
 \begin{equation*}
-u(r) = u^{(1)} + \left( -3u^{(1)} - u^{(2)} +4u^{(3)} \right) \sqrt{\frac{r}{L}} + 2 \left( u^{(1)} + u^{(2)} -2 u^{(3)} \right) \frac{r}{L}
+u(r) = u^{(1)} + \left( -3u^{(1)} - u^{(2)} +4u^{(3)} \right) \sqrt{\frac{r}{l}} + 2 \left( u^{(1)} + u^{(2)} -2 u^{(3)} \right) \frac{r}{l}
 \end{equation*}
 \begin{equation}
 \varepsilon(r) = \frac{\partial u}{ \partial r} = + \left( - \frac{3}{2}u^{(1)} - \frac{1}{2}u^{(2)} +2u^{(3)} \right) \frac{1}{\sqrt{Lr}} + 2 \left( u^{(1)} + u^{(2)} -2 u^{(3)} \right) \frac{1}{L}
 \end{equation}
 The displacement function contains now a constant (rigid body motion) and linear function also a $\sqrt r$ term, which reproduces the displacement field at the crack tip. The strain in the quarter-point element possess of the square root $\frac{1}{\sqrt r}$ singularity.
 \subsubsection{Hierarchical shape functions}
-In hierarchical shape functions \citep{Ainsworth2003} no extra nodes are added for functions of order higher than the first one (see Figure \ref{fig:shape_funcs}). The hierarchical shape functions' values for an arbitrary high-order shape function are created in a hierarchical algorithm. This feature makes greatly simplifies the p- and hp- adaptivity implementation. In contrast to standard shape functions, a hierarchical counterpart of Equation~(\ref{eq:crack_disp_func}) can be written simply as:
+In hierarchical shape functions \citep{Ainsworth2003} no extra nodes are added for functions of order higher than the first one (see Figure~\ref{fig:shape_funcs}). The hierarchical shape functions' values for an arbitrary high-order shape function are created in a hierarchical algorithm. This feature makes greatly simplifies the p- and hp- adaptivity implementation. In contrast to standard shape functions, a hierarchical counterpart of Equation~(\ref{eq:crack_disp_func}) can be written simply as:
 \begin{equation}
 u(\xi) = \sum_{a=1}^3 N_a (\xi) u^{(a)} = (1 -\xi)u^{(1)} + \xi(1 - \xi)u^{(3)}\gamma + \xi u^{(2)}
 \end{equation}
@@ -819,7 +850,7 @@ Further, emerging equations have the necessary terms to reproduce rigid body mot
 This should enable the elements adjacent to the crack front to reproduce strain singularity resulting in a more accurate finite element solution \citep{nejati2015use}. 
 The influence of the similar procedure with tetrahedral elements will is tested in the following section.
 \subsubsection{Convergence with quarter-point elements}
-In this section results of the convergence upon p-refinement will be presented with the same problem as demonstrated in Section \ref{sec:plate_section}. 
+In this section results of the convergence upon p-refinement will be presented with the same problem as demonstrated in Section~\ref{sec:plate_section}. 
 This time, however, quarter-point tetrahedral elements were applied around the crack front.
 \begin{figure}[h!]
 	\centering
@@ -827,7 +858,7 @@ This time, however, quarter-point tetrahedral elements were applied around the c
 	\caption{Convergence plot for stress intensity factor $K_I$ Error (\%) versus no. of DOF (log10). It is evident that using quarter-point element enhances convergence rate.}
 	\label{fig:plate_conv_singularity}
 \end{figure}
-Based on the results in Figure \ref{fig:plate_conv_singularity}, it is evident that using quarter-point elements improves the convergence rate to the analytical solution significantly. 
+Based on the results in Figure~\ref{fig:plate_conv_singularity}, it is evident that using quarter-point elements improves the convergence rate to the analytical solution significantly. 
 Introducing the singularity at the crack tip elements lowered the error by an order of magnitude, down to 0.02\%. 
 However, it can be seen from the plot in Figure~\ref{fig:plate_conv_singularity} that for each case, just after reaching the minimum error, it starts increasing up to a certain value. 
 This suggests that the solution cannot be further improved beyond that point only by enhancing the order of approximation. 
@@ -838,7 +869,7 @@ Overall, these results indicate that it is of great benefit to use quarter-point
 \subsubsection{Validation of material forces in the heterogeneous body}
 So far this paper has focused on cracks in homogeneous bodies. 
 The following sections will discuss the influence of including inhomogeneities into the domain. 
-Considering the same problem of the finite plate with horizontal crack, as in the previous analyses, a density field $\mathbf{\rho}(x,y,z) = 0.125y + 1$ is approximated directly onto integration (Gauss) points of each tetrahedral element, by using MLS method, demonstrated in Section \ref{sec:mwls}. 
+Considering the same problem of the finite plate with horizontal crack, as in the previous analyses, a density field $\mathbf{\rho}(x,y,z) = 0.125y + 1$ is approximated directly onto integration (Gauss) points of each tetrahedral element, by using MLS method, demonstrated in Section~\ref{sec:mwls}. 
 Once again, stretching the specimen introduces some material forces at the crack tip and also on the entire domain due to inhomogeneity. 
 Since the stress intensity factor loses its meaning in the case of heterogeneous bodies, how to correctly validate those forces remains an open question. 
 To the best of the authors' knowledge, the current state of literature lacks in numerical methods to verify the results of material forces or stress intensity factors for heterogeneous solids other than functionally graded materials \citep{kim2002finite}. \\
@@ -850,7 +881,9 @@ where $\psi$ is the elastic energy of the system, and $a$ is the crack length. M
 \begin{equation}
  \frac{\partial \psi}{\partial a} = \lim_{\Delta a \to 0} \frac{\psi(a + \Delta a) - \psi(a -\Delta a)}{2\Delta a}
 \end{equation}
-where the elastic strain energies $\psi(a \pm \Delta a)$ can by obtained simply by running two additional analyses of the finite plate with horizontal cracks of lengths: ($a + \Delta a$) and ($a - \Delta a$), where $\Delta a$ is a very small value. Next, knowing the resulting release energy with the crack length of $a$, an relative error can be calculated. 26 sets of three analyses (for different p-refinements) have been performed in order to determine the error in the release energy. The results are presented in Figure \ref{fig:covergencefdm}.
+where the elastic strain energies $\psi(a \pm \Delta a)$ can by obtained simply by running two additional analyses of the finite plate with horizontal cracks of lengths: ($a + \Delta a$) and ($a - \Delta a$), where $\Delta a$ is a very small value. 
+Next, knowing the resulting release energy with the crack length of $a$, an relative error can be calculated. 26 sets of three analyses (for different p-refinements) have been performed in order to determine the error in the release energy. 
+The results are presented in Figure~\ref{fig:covergencefdm}.
 \begin{figure}
 	\centering
 	\includegraphics[width=0.7\linewidth]{Figures/graphs/covergence_FDM.png}
@@ -860,17 +893,17 @@ where the elastic strain energies $\psi(a \pm \Delta a)$ can by obtained simply 
 It is apparent from this plot that for most of the refinements the error in release energy is less than 5\%, which is a well known capacity of FDM.  %% REFERENCE?
 Therefore, it can be deduced that the presented implementation allows for estimation of release energy for heterogeneous domains with a satisfactory level of accuracy.
 \subsubsection{Release energy rate for metacarpal bone from CT}
-This numerical example considers the same bone as presented in Section \ref{sec:numerical_examples:bone_adap}. 
+This numerical example considers the same bone as presented in Section~\ref{sec:numerical_examples:bone_adap}. 
 The generated mesh with an initial crack is shown in Figure~\ref{fig:bone_ct_mesh_cut} and consists of 6069 tetrahedral elements. 
 The notch is situated at the origin of the most common location of lateral condyle fracture \citep{jacklin2012frequency}. 
 The numerical analyses were undertaken using three meshes (6069, 10032, 21189) and repeated for 1st, 2nd and 3rd-order of local p-refinement at the crack tip. 
 Boundary conditions and material parameters remain the same as in Table \ref{tab:parameters_mc3}. Using a $ \mathrm {K_2 HPO_4  }$ calibration phantom, gray scale values from CT are converted to bone mineral density using five tubes with reference densities. 
 The mechanical material properties were mapped onto the integration points of the metacarpal mesh using the MLS method described earlier. 
 Applying load onto the bone surface introduces some material forces in the entire domain, with the highest values at the singularity i.e notch tip. 
-Resulting nodal material forces are illustrated in Figure \ref{fig:crackfrontforce}. 
+Resulting nodal material forces are illustrated in Figure~\ref{fig:crackfrontforce}. 
 The direction of the vectors also indicates the direction of crack propagation.
 %When these forces, attain the critical value, crack growth is spontaneous and catastrophic.  
-The values of numerically predicted maximal nodal release energy rates in Mode I (crack opening) for subsequent meshes are plotted in Figure \ref{fig:max_g1_convergece}. 
+The values of numerically predicted maximal nodal release energy rates in Mode I (crack opening) for subsequent meshes are plotted in Figure~\ref{fig:max_g1_convergece}. 
 It can be seen that with increasing order of approximation material forces converge.
 \begin{figure}
 	\centering
@@ -897,14 +930,14 @@ Assuming that bone's resistance is 2.0 $\mathrm{ kJ/m^2}$ ) \citep{gasser2007num
 \subsubsection{Release energy rate for remodelled bone}
 The numerical example described in this section presents an application of the developed framework to estimate the crack propensity of the equine metacarpal bone at different phases of adaptation during training. 
 The same geometry and boundary conditions as in the previous example are used here. 
-However, this time, densities from bone adaptation (Section \ref{sec:numerical_examples:bone_adap}) are mapped on a mesh consisting of 6069 elements as demonstrated in Figure \ref{fig:frackmeshcutting}. 
+However, this time, densities from bone adaptation (Section~\ref{sec:numerical_examples:bone_adap}) are mapped on a mesh consisting of 6069 elements as demonstrated in Figure~\ref{fig:frackmeshcutting}. 
 \begin{figure}
 	\centering
 	\includegraphics[width=0.4\linewidth]{Figures/frack_mesh_cutting.png}
 	\caption{Cut in the mesh of the remodelled 3rd metacarpal bone. The resulting density from the bone adaptation analysis is approximated directly onto integration points of the new model by using MLS method described earlier in Section~\ref{sec:mwls}. }
 	\label{fig:frackmeshcutting}
 \end{figure}
-The resulting energy rate at different points in time of bone adaptation are illustrated in Figure \ref{fig:crackmc3release} for three different local p-refinements. The difference between analysis with increased order at the crack tip is very small. 
+The resulting energy rate at different points in time of bone adaptation are illustrated in Figure~\ref{fig:crackmc3release} for three different local p-refinements. The difference between analysis with increased order at the crack tip is very small. 
 \begin{figure}
 	\centering
 	\includegraphics[width=1\linewidth]{Figures/graphs/crack_mc3_release.png}
