@@ -271,15 +271,17 @@ Geometry and material properties are two crucial components of subject-specific 
 Generation of the three-dimensional (3D) geometry of a~bone segment with an accurate material distribution from CT data might be laboured and time-consuming depending on the micro-structural complexity of the considered bone. 
 In this contribution, a new approach to assign bone density from CT scan data into FE models is presented. 
 Most of the previously proposed density mapping algorithms simply average~\citep{zannoni1999material} or integrate~\citep{taddei2007material, schileo2008subject} voxel data from CT scans onto finite elements supplying a constant density within their volume. 
-Herein, the data is spatially approximated by means of the Moving Least Squares (MLS) method. 
+In the present framework, density that corresponds to each 3D voxel resulted from CT scan data are mapped on points located at the center of the voxel.
+This results to a given discrete field, $v({\boldsymbol{\rm x}}_i)$, where ${\boldsymbol{\rm x}}_i$ is the position vector of each voxel center.
+Thereafter, $v({\boldsymbol{\rm x}}_i)$ is mapped on target points (e.g. mesh nodes or gauss points) by means of the Moving Least Squares (MLS) method. 
 The main advantage of MLS is that it provides smooth density field and gradient over the entire domain leading to significant reduction of noise and improves the quality of FE solution. 
 \subsection{Moving Least Squares (MLS)}
 \label{sec:mwls}
-The Moving Least Squares method is used to construct interpolation functions on a set of points to approximate a given spatially varying field, $v(\boldsymbol{\rm v} )$, and is widely used for various meshless methods \citep{belytschko1996meshless}. 
+The Moving Least Squares method is used to construct interpolation functions on a set of points to approximate a given spatially varying field discrete field, $v({\boldsymbol{\rm x}}_{i})$, and is widely used for various meshless methods \citep{belytschko1996meshless}. 
 In computer graphics, it is useful to reconstruct a surface from a set of points \citep{lancaster1981surfaces} through downsampling or upsampling. 
 Numerous studies have also attempted to utilise the method within the context of Element-Free Galerkin approach as trial and test functions \citep{belytschko1996dynamic,wong2010meshfree, ullah2013finite}.\\
 In this study, MLS is used to approximate density and calculate its gradient obtained from clinical CT scan data.
-To approximate a given field, $v({\boldsymbol{\rm x}})$, with MLS method at a set of points (e.g. nodes or gauss points), each point is separately considered and denoted as Target Point of Approximation (TPA). 
+To approximate a given discrete field, $v({\boldsymbol{\rm x}}_i)$, with MLS method at a set of points (e.g. nodes or gauss points), each point is separately considered and denoted as Target Point of Approximation (TPA). 
 For a each TPA, its coordinates are denoted with vector ${\boldsymbol {\rm {x}}}_{\rm t}$ and the approximated field at that location is evaluated as:
 \begin{equation}
 v^h({\boldsymbol {\rm x}}_{\rm t})=\sum^q_{\alpha=1}p_{\alpha}({\boldsymbol {\rm x}}_{\rm t} )a_{\alpha}({\boldsymbol {\rm x}}_{\rm t} ) =\mathbf p^{\rm T}({\boldsymbol {\rm x}}_{\rm t} )\mathbf a({\boldsymbol {\rm x}}_{\rm t} )
@@ -304,18 +306,21 @@ In the current implementation, for each TPA, three types of basis functions are 
 \end{centering}
 \label{eq:mwls_basis}
 \end{equation}
-For each TPA, the process to evaluate the vector of unknowns $\mathbf a({\boldsymbol {\rm x}}_{\rm t}) = \Big[ a_1({\boldsymbol {\rm x}}_{\rm t} ), a_2({\boldsymbol {\rm x}}_{\rm t} ), \dots a_q({\boldsymbol {\rm x}}_{\rm t} ) \Big]$ in Equation (\ref{eq:mwls_approx}), involve consideration of the rest of the set of points that $v({\boldsymbol {\rm x}})$ will be approximated and a weight function $w(r)$ is constructed, where $r$ is the radial distance from the TPA.
+For each TPA, the process to evaluate the vector of unknowns $\mathbf a({\boldsymbol {\rm x}}_{\rm t}) = \Big[ a_1({\boldsymbol {\rm x}}_{\rm t} ), a_2({\boldsymbol {\rm x}}_{\rm t} ), \dots a_q({\boldsymbol {\rm x}}_{\rm t} ) \Big]$ in Equation (\ref{eq:mwls_approx}), involve consideration of neighbouring points of the discrete field $v({\boldsymbol {\rm x}}_i)$ and a weight function $w(r)$ is constructed, where $r$ is the radial distance from the TPA.
+
 Example of an arbitrary weight function for a 2D domain is presented in Figure~\ref{fig:weight_func} with shaded area.
-All points where the given field is going to be evaluated and the TPA are presented with dots and a cylindrical local coordinate system is presented with $r$ and $w$ axes with origin located at ${\boldsymbol {\rm x}}_{\rm t}$. 
+Points of the given field discrete field $v({\boldsymbol{\rm x}}_i)$ are presented with dots and points where $v({\boldsymbol{\rm x}}_i)$ is mapped are presented with circles. 
+Furthermore, the TPA is located at the origin of a cylindrical local coordinate system with $r$ and $w$ axes. 
 For the 2D case, the weight function is the 3D surface area (shaded area) resulting from the full rotation around $w$ axis of the 1D shape function, $w_{\rm r}$, presented with solid line.
 The boundary of the domain of influence of $w(r)$ is presented with dashed ellipsoid (that is a circle from a top view).
-Typically, the size of the domain of influence is determined by searching for enough neighbour points so that no numerical issues will arise for computing the approximation as explained later.
+Typically, the size of the domain of influence is determined by searching for enough neighbour points so that solution of approximation of the given field at the TPA can be computed as explained later.
 Outside the domain of influence the $w(r)$ is equal to zero.
 Value of the weight function, $w(||{\boldsymbol {\rm x}}_{\rm t} - {\boldsymbol {\rm x}}_{i}||)$, at each $i-{\rm{th}}$ point located within the domain of influence with position vector ${\boldsymbol {\rm x}}_{i}$, depends on its distance from the TPA, $||{\boldsymbol {\rm x}}_{\rm t} - {\boldsymbol {\rm x}}_{i}||$.
 \begin{figure}[h!]
 	\begin{centering}
 		\includegraphics[width=8cm]{Figures/weighs.pdf}
-		\caption{2D schematic example of arbitrary weight function of a Target Point of Approximation (TPA) located at with coordinates ${\boldsymbol {\rm x}}_{\rm t}$. 
+		\caption{2D schematic example of arbitrary weight function of a Target Point of Approximation (TPA) located with position vector ${\boldsymbol {\rm x}}_{\rm t}$. 
+		Points of the discrete field $v({\boldsymbol{\rm x}}_i)$ are presented with dots and points that $v({\boldsymbol{\rm x}}_i)$ is mapped are presented with circles.
 		The function is smooth, non-negative, reaches maximum at the TPA and decrease with distance $||{\boldsymbol {\rm x}}_{\rm t} - {\boldsymbol {\rm x}}_i||$. 
 		The boundary of the influence domain of the weight function is presented with dashed ellipsoid and the function take a constant value of zero outside of it.}
 		\label{fig:weight_func}
@@ -331,7 +336,7 @@ and its derivative with respect to the spatial coordinates, which is also requir
 \begin{equation}
 \frac{dw}{d{\boldsymbol {\rm x}}}= \frac{dw}{dr_i}\frac{dr_i}{d{\boldsymbol {\rm x}}} =\begin{cases} (-12r_i +24r_i^2 -12 r_i^3) \,  & \mathrm{for} \, r_i \leq 1, \\ 0 & \mathrm{for} \, r_i > 0  \end{cases}
 \end{equation}
-Here $r_i = ||{\boldsymbol {\rm x}}-{\boldsymbol {\rm x}}_i||/d_{\rm {mi}}$ is the normalised radius associated to the $i-{\rm{th}}$ point evaluated as its distance from the TPA divided by scaling parameter $d_{\rm {mi}}$. 
+Here $r_i = ||{\boldsymbol {\rm x}}-{\boldsymbol {\rm x}}_i||/d_{\rm {mi}}$ is the normalised radius associated to the $i-{\rm{th}}$ point of the given field evaluated as its distance from the TPA divided by scaling parameter $d_{\rm {mi}}$. 
 This coefficient is governing the size of influence domain. 
 
 %The vector of unknowns $\mathbf a({\boldsymbol {\rm x}}_{\rm t}) = \Big[ a_1({\boldsymbol {\rm x}}_{\rm t} ), a_2({\boldsymbol {\rm x}}_{\rm t} ), \dots a_q({\boldsymbol {\rm x}}_{\rm t} ) \Big]$ in Equation (\ref{eq:mwls_approx}) can be obtained from a minimization of 
@@ -686,16 +691,25 @@ However, just like the previous case, a tendency can be noticed that the overall
 %In the next sections, the methods will be presented on how to map the resulting density patterns from bone adaptation analysis on different meshes by using moving least squares approximation. Subsequently, the new model will be used to estimate the propensity to fracture, by calculating material forces on the introduced crack tip.
 \subsection{MLS mapping examples}
 \label{sec:mals_mapping}
+Here, validation of the implementation of the MLS method (described in Section~\ref{sec:mwls}) is presented via two examples.
+The first example involves presentation of analytical scalar field mapped on the nodes of a prism shape mesh.
+For this case, relative error between the analytical input scalar field and MLS results are compared for three target order of approximation of MLS.
+In the second example, mapping of CT scan data of a bone onto a bone shape mesh is presented.
+For this challenging mesh geometry, results for MLS method are compared with the direct CT scan data as well as results of LS method.
+    
 \subsubsection{Simple prism}
 In this section, an example of simple mapping of analytical field ($f({\boldsymbol {\rm x}})=x + y^2 + z^3 $) %(simulating CT scan data). 
-onto nodes of finite element mesh is presented. 
-At each node of the mesh, the spherical domains of influence are defined (reduced in size for clarity) as shown in Figure~\ref{fig:mwlsprism}a). 
-The size of the domain is determined by increasing its radius until matrix $\mathbf A$ in Equation (\ref{eq:mwls_system}) is invertible for all the points. 
-The approximated field data, with its gradient, is saved on corresponding nodes as demonstrated in Figure~\ref{fig:mwlsprism}c) for $m=10$. 
-Subsequently, the relative approximation error for gradient is calculated for three cases: constant ($m=1$), linear ($m=4$) and quadratic ($m=10$) basis functions. 
-It is clear from presented results in Figure~\ref{fig:prism_error} that constant functions are not sufficient for evaluating the gradient. 
-The maximum error for a linear and quadratic basis has the value of $1.0e-2$ and $1.0e-4$, respectively. 
-These results are satisfactory for the application of mapping data fields onto the mesh and prove the correctness of the implementation.
+onto nodes of prism shape finite element mesh is presented (see Figure~\ref{fig:mwlsprism}a)).
+The analytical field $f({\boldsymbol {\rm x}})$ is mapped to a discrete field of points, $v({\boldsymbol{\rm x}}_i)$, presented in Figure~\ref{fig:mwlsprism}b) with coloured points.
+Higher values of the discrete field are presented with red colour and lower values are presented with blue.
+The FE mesh is placed within the discrete field (Figure~\ref{fig:mwlsprism}b)) and the spherical domains of influence are presented (reduced in size for clearer visual presentation) in Figure~\ref{fig:mwlsprism}c). 
+The size of the influence domain is determined by increasing its radius until matrix $\mathbf A$ in Eq.~(\ref{eq:mwls_system}) is invertible for all mesh nodes. 
+The approximated field data, with its gradient, is saved on corresponding nodes as demonstrated in Figure~\ref{fig:mwlsprism}c) for $q=10$. 
+Subsequently, the relative approximation error between the analytical gradient of the given field $f({\boldsymbol {\rm x}})$ at the coordinates of each mesh node and the gradient calculated with MLS at the same node is evaluated and presented in Figure~\ref{fig:prism_error}.
+The error is evaluated for three cases: constant ($q=1$), linear ($q=4$) and quadratic ($q=10$) basis functions. 
+For the case of constant functions, the error of the gradient is too high. 
+The maximum error for a linear and quadratic basis has values of $10^{-2}$ and $10^{-4}$, respectively. 
+These results are satisfactory for the application of mapping data fields onto the mesh and suggests correctness of the implementation.
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.8\linewidth]{Figures/mwls_prism.png}
@@ -709,21 +723,22 @@ These results are satisfactory for the application of mapping data fields onto t
 	\label{fig:prism_error}
 \end{figure}
 \subsubsection{Metacarpal bone}
-In this section, the results of density approximation from CT data are presented. Geometry and finite element mesh of an equine 3rd metacarpal bone was obtained in ScanIP (Synopsys Simpleware, Exeter) from medical 3D images. The data was subsequently used to approximate the density values onto finite element mesh nodes by using implemented moving least squares method. The mesh consisted of approximately 7000 tetrahedral elements. \\
+In this section, the results of density approximation from CT data are presented. Geometry and finite element mesh of an equine 3rd metacarpal bone was obtained in ScanIP (Synopsys Simpleware, Exeter) from medical 3D images. The data was subsequently used to approximate the density values onto finite element mesh nodes by using implemented MLS method. 
+The mesh used is consisted of approximately 7000 tetrahedral elements. \\
 \begin{figure}
 	\centering
 	\includegraphics[width=0.5\linewidth]{Figures/mwlsmapping_cross.pdf}
-	\caption{Comparison of a CT data with the corresponding approximation. A cut-view along the Y axis for CT scan data a) and density mapped onto FE mesh. b)}
+	\caption{Comparison of a CT data with the corresponding approximation. a) A cut-view along the $y$ axis for CT scan data and b) density mapped onto FE mesh.}
 	\label{fig:mwlsmapping_cross}
 \end{figure}
-The results of the mapping procedures are presented in Figure~\ref{fig:mwlsmapping_cross}. Comparison to CT data and the standard Least Squares (LS) Approximation technique in classical finite element method framework are demonstrated in Figure~\ref{fig:mwlsmappingcomparisons}.
+Results of the mapping procedures are presented in Figure~\ref{fig:mwlsmapping_cross}. Comparison to CT data and the standard Least Squares (LS) Approximation technique in classical finite element method framework are demonstrated in Figure~\ref{fig:mwlsmappingcomparisons}.
 \begin{figure}
 	\centering
 	\includegraphics[width=0.7\linewidth]{Figures/mwls_mapping_comparisons.png}
 	\caption{Mapping results of bone density (left) and density gradient (right). a) Least squares approximation. b)~Moving least squares approximation.}
 	\label{fig:mwlsmappingcomparisons}
 \end{figure}
-It is clear that mapped density pattern from both methods is very similar. 
+Mapped density pattern from both methods is very similar. 
 Thanks to the approximation, the obtained field is continuous despite the fact that the mesh is relatively coarse. 
 It is especially beneficial in case of hierarchical basis framework where larger elements with high order approximation are more desired. 
 Classic finite element method provides only ${C^0}$-continuity; therefore the results of gradients obtained with LS are only piecewise continuous. 
@@ -739,33 +754,56 @@ In the next section, quarter point elements are presented and their influence on
 In the third subsection, the results with the heterogeneous material are presented, along with proposed validation. 
 The last two examples demonstrate the calculation of material forces for bones.  
 \subsubsection{Finite plate with a horizontal crack}\label{sec:plate_section}
-This example considers finite plate with a horizontal through-thickness crack that is subjected to uniaxial stress as indicated in Figure~\ref{fig:plate_load_mesh}. 
-\begin{figure}
-	\centering
-	\includegraphics[width=0.5\linewidth]{Figures/plate_load_mesh.png}
-	\caption{Finite plate with a horizontal crack. a) Dimensions of the specimen. b) Finite element mesh and applied stress}
-	\label{fig:plate_load_mesh}
+All input parameters presented in this study are dimensionless. 
+This example involves finite plate with height, $h_{\rm {pl}} = 10$, thickness $t_{\rm {pl}=1}$ and half width $b_{\rm{pl}} = 2.5$ and a horizontal through-thickness crack with half width $a_{\rm {pl}} = 1$ as presented in Figure~\ref{fig:plate_load_mesh}a).
+The finite plate is spatially discretised using 1384 tetrahedral elements and subjected to uniaxial stress along the height direction as indicated in Figure~\ref{fig:plate_load_mesh}b). 
+Furthermore, displacements are constrained at three vertices of the plate to prevent rigid body motions. 
+%\includegraphics[width=0.5\linewidth]{Figures/plate_load_mesh.png}
+
+\begin{figure}[h!]
+\begin{center}
+\begin{tabular}{c c c c}
+ \includegraphics[height=8.5cm]{Figures/InfSlab.pdf} & &   & {\includegraphics[height=8.5cm]{Figures/InfSlabMeshs.pdf}}\\  
+(a) & &  & (b) 
+\end{tabular}
+\caption{Finite plate with a horizontal crack. a) Specimen and through thickness crack dimensions. b) Applied uniaxial stress $\sigma$ and finite element mesh where elements presented with gray colour have approximation order $p_{\rm g}$ and elements that have vertices at crack tip, presented with yellow colour, have approximation order $p_{\rm l}+p_{\rm g}$.}
+\label{fig:plate_load_mesh}
+\end{center}
 \end{figure}
-The goal is to calculate the Mode I stress intensity factor $ K_I $ and compare the results to the following analytical solution \citep{rooke1976compendium} for infinite plate:
+
+The purpose of this analysis is to calculate the Mode I stress intensity factor $ K_{\rm I} $ and compare the results to the following analytical solution \citep{rooke1976compendium} for infinite plate:
 \begin{equation}\label{eq:frac_analytical}
-K_t=\sigma \sqrt{\pi a} \left[  \frac{1 - \frac{a}{2b} + 0.326 (\frac{a}{b})^2 }{\sqrt{1-\frac{a}{b}}}  \right]
+K_{\rm I}=\sigma \sqrt{\pi a_{\rm {pl}}} \left[  \frac{1 - \frac{a_{\rm {pl}}}{2b_{\rm {pl}}} + 0.326 (\frac{a_{\rm {pl}}}{b_{\rm {pl}}})^2 }{\sqrt{1-\frac{a_{\rm {pl}}}{b_{\rm {pl}}}}}  \right]
 \end{equation}
 where $\sigma $ is the applied stress. 
-Dimensions of the specimen are presented in Figure~\ref{fig:plate_load_mesh} along with the finite element model consisting of 1384 tetrahedral elements. 
-In addition to the lading shown above, displacement constraints at three vertices of the plate are applied, to prevent rigid body motions. 
+%Dimensions of the specimen are presented in Figure~\ref{fig:plate_load_mesh} along with the finite element model consisting of 1384 tetrahedral elements. 
 Young's modulus $E$ and Poisson's ratio $\nu$ are $1000$ and $0.3$, respectively. 
-Hierarchical approximation basis functions enable to use the elements with variable, non-uniform orders of approximation. 
-Hence, the influence of local and global p-refinement is investigated. 
-The numerical analyses were taken using the same mesh, but repeated for the 1-6th order of approximations with local p-refinements up to the total order of 7, since this is the current limitation of used quadrature rule. 
-The Mode I stress intensity factor ($K_I$) can be calculated directly from the output material forces using the following relationship: 
+
+
+Hierarchical approximation basis functions allows for usage of elements with different orders of approximation. 
+Hence, the influence of local and global $p$~-~refinement is investigated.
+In general, all tetrahedrons of the mesh have a global order of approximation, $p_{\rm g}$, and the elements that are subjected to local refinement have order from $p_{\rm{l}} + 1$~to~$p_{\rm{l}} + p_{\rm{g}}$.
+When $p_{\rm l}+p_{\rm g}\leq3$, two types of tetrahedral elements are considered where local order of approximation is increased to $p_{\rm l}+p_{\rm g}$ only at elements with common vertex with crack tip as presented in Figure~\ref{fig:plate_load_mesh}b).
+Otherwise, a number of sets of tetrahedrals with different orders of approximation are considered.
+Similar to the previous refinement case, the first set of elements is composed of the tetrahedrals with common vertex with crack tip and have approximation order $p_{\rm l}+p_{\rm g}$.
+The second set of elements is consisted of the tetrahedrons adjacent to the first set elements, with approximation order that is one less than the previous set, i.e. $p_{\rm l}+p_{\rm g}-1$.
+This process continues for each next adjacent set of tetrahedrons until the approximation order reaches the global order of approximation $p_{\rm {g}}$.
+
+The numerical analyses were taken using the same mesh, but repeated for the 1st up to the 6th order of approximation with local $p$~-~refinements up to the total order of 7, since this is the current limitation of implemented quadrature rule. 
+The Mode I stress intensity factor ($K_{\rm I}$) can be calculated directly from the output material forces using the following relationship: 
 \begin{equation}
-K_I = \sqrt{GE}
+K_{\rm I} = \sqrt{GE}
 \end{equation}
-Figure~\ref{fig:plate_conv_no_sing} shows the deformed shape of the plate for the 2nd order of approximation. From the graph, it is evident that for the same coarse mesh and number of nodes the solution can improve drastically when the order of approximation is increased. It is worth to note the well known pathological nature of the 1st order solution, which has a much higher error due to shear locking. The minimum achieved error is $0.6\%$ for all the cases with an order of approximation set to 7. Therefore, it can be observed that the same level of accuracy can be accomplished when using a low order of global approximation with only local p-refinement as with high order on the entire mesh. Moreover, by looking at the number of degrees of freedom, it is clear that using higher order elements locally can give the same accuracy at a much lower cost of computation time since the global matrix has a much lower size.
+The deformed shape of the plate is illustrated in Figure~\ref{fig:plate_conv_no_sing}  for the 2nd order of approximation.
+From the graph, it is evident that for the same coarse mesh and number of nodes the solution can improve drastically when the order of approximation is increased. 
+It is worth to note the well known pathological nature of the 1st order solution, which has a much higher error due to shear locking. 
+The minimum achieved error is $0.6\%$ for all the cases with an order of approximation set to 7. 
+Therefore, it can be observed that the same level of accuracy can be accomplished when using a low order of global approximation with only local p-refinement as with high order on the entire mesh. 
+Moreover, by looking at the number of degrees of freedom, it is clear that using higher order elements locally can give the same accuracy at a much lower cost of computation time since the global matrix has a much lower size.
 \begin{figure}
 	\centering
 	\includegraphics[width=0.7\linewidth]{Figures/graphs/plate_conv_no_sing.png}
-	\caption{Convergence plot for stress intensity factor $K_I$ Error (\%) versus no. of DOF (log10) and deformed shape of the plate (bottom left).}
+	\caption{Convergence plot for stress intensity factor $K_{\rm I}$ Error (\%) versus no. of DOF (log10) and deformed shape of the plate (bottom left).}
 	\label{fig:plate_conv_no_sing}
 \end{figure}
 \textcolor{red}{Should I put more emphasis on this part of the work?}
@@ -773,29 +811,28 @@ Figure~\ref{fig:plate_conv_no_sing} shows the deformed shape of the plate for th
 \subsubsection{Quarter point elements} %should that be in appendix?
 \begin{figure}[h!]
 \begin{center}
-\begin{tabular}{c c c}
-\includegraphics[height=1.3cm]{Figures/StandardElement.pdf} &   & \includegraphics[height=2.cm]{Figures/QuarterPoint.pdf}  \\  
- (a) & & (b)
+\begin{tabular}{c c c c}
+\includegraphics[height=1.3cm]{Figures/StandardElement.pdf} & \includegraphics[height=2.1cm]{Figures/2ndOrderNodeOr.pdf} &   & \includegraphics[height=2.cm]{Figures/QuarterPoint.pdf}  \\  
+ (a) & (b)& &(c)
 \end{tabular}
 \caption{One-dimensional quarter-point element: a) natural coordinates, b) local Cartesian coordinates}
 \label{fig:1d-quarter}
 \end{center}
 \end{figure}
 The use of finite element method to analyse fracture problems is complicated for many reasons. 
-One of them is stress field singularity which exists at the crack tip.
-Conventional finite elements are interpolated by polynomials which are not able to reproduce the infinite stress. 
-In the mid-1970s, two independent contributors \citep{barsoum1976use,henshell1975crack} showed that the singularity at the crack tip can be modelled by placing the mid-node near the tip or front at the quarter-point position. 
+One of them is stress field singularity located at the crack tip.
+Conventional finite elements are interpolated by polynomials which are not able to reproduce infinite stresses. 
+In the mid-1970s, two independent contributors \citep{barsoum1976use,henshell1975crack} showed that, for 2-nd order of approximation, the singularity at the crack tip can be modelled by considering shifting the mid-node of all edges connected to crack tip nodes.
+The new mid-node position is at a quarter of edge length distance from the crack tip node known as the quarter-point position. 
 This results in a nonlinear mapping between natural (isoparametric) and local coordinates $\xi \rightarrow x$ which produces the square root singularity. 
-Stress and strain fields are dependent on the radial function of the crack tip, reaching infinity as $ r \rightarrow 0$. \\
+Stress and strain fields are dependent on the radial function of the crack tip, reaching infinity as $ r_{\rm q} \rightarrow 0$. \\
 This section briefly describes the reproduction of the square root singularity in quarter-point one-dimensional finite elements. 
 
 \begin{figure}[h!]
 \begin{center}
-\begin{tabular}{c c c}
-(a) & \includegraphics[height=2.cm]{Figures/LinearShapeFunction.pdf}  & {\includegraphics[height=2.cm]{Figures/2ndOrderNodeOr.pdf}}\\  
- &  & \\  
-  &  & \\
-(b) & \includegraphics[height=2.cm]{Figures/LinearShapeFunction.pdf}  & {\includegraphics[height=2.cm]{Figures/Hierarchical2nd.pdf}}
+\begin{tabular}{c c c c}
+\includegraphics[height=1.3cm]{Figures/HierarchicalNaturals.pdf} & {\includegraphics[height=2.cm]{Figures/Hierarchical2nd.pdf}} & &\includegraphics[height=2.cm]{Figures/QuarterPointHierarchical.pdf} \\  
+ (a) & (b) & & (c)\\  
 \end{tabular}
 \caption{a) Node oriented shape functions of a 1D element. b) Hierarchical shape functions of a 1D element}
 \label{fig:shape_funcs}
@@ -803,50 +840,54 @@ This section briefly describes the reproduction of the square root singularity i
 \end{figure}
 
 The principle of quarter-point element can be straightforwardly introduced by using simple one-dimensional element as presented in Figure~\ref{fig:1d-quarter} \citep{kuna2013finite}.
-Let the demonstrated element be a quarter-point type at the crack tip, the distance between three nodes 1,3 and 2 is given by the coordinate $r$. The position of the middle node 3 is controlled by the parameter $\kappa$. The quadratic 1D displacement function of this element is: 
+Let the demonstrated element be a quarter-point type at the crack tip, the distance between three nodes 0,2 and 1 is given by the coordinate $r_{\rm q}$. 
+The position of the middle node 3 is controlled by the parameter $\kappa$. 
+The quadratic 1D displacement function of this element is: 
 \begin{equation}\label{eq:crack_disp_func}
 \begin{aligned}
-&u(\xi) = \sum_{a=1}^3 N_a (\xi) u^{(a)} = \frac{1}{2} \xi (\xi - 1)u^{(1)} + (1 - \xi^2)u^{(3)} + \frac{1}{2} \xi (\xi + 1)u^{(2)} =\\
-& u^{(3)} + \frac{1}{2}(u^{(2)} - u^{(1)})\xi + \left[ \frac{1}{2} (u^{(1)} + u^{(2)}) - u^{(3)} \right] \xi^2 
+&u(\xi) = \sum_{a=0}^2 N_a (\xi) u^{(a)} = \frac{1}{2} \xi (\xi - 1)u^{(0)} + (1 - \xi^2)u^{(2)} + \frac{1}{2} \xi (\xi + 1)u^{(1)} =\\
+& u^{(2)} + \frac{1}{2}(u^{(1)} - u^{(0)})\xi + \left[ \frac{1}{2} (u^{(0)} + u^{(1)}) - u^{(2)} \right] \xi^2 
 \end{aligned}
 \end{equation}
-Note that equation above is ordered by powers of $\xi$ - element natural coordinate. In the classical isoparametric formulation, the same interpolation functions are also used for the coordinates, i.e. as well for the radius $r$ with the nodal values $r^{(1)} = 0$, $r^{(3)} = \kappa l$, $r^{(2)} = l$:
+Note that equation above is ordered by powers of $\xi$ - element natural coordinate. In the classical isoparametric formulation, the same interpolation functions are also used for the coordinates, i.e. as well for the radius $r_{\rm q}$ with the nodal values $r^{(0)}_{\rm q} = 0$, $r^{(2)}_{\rm q} = \kappa l$, $r^{(1)}_{\rm q} = l$:
 \begin{equation}\label{eq:crack_radius_dep}
-r(\xi) = \sum_{a=1}^3 N_a (\xi) r^{(a)} = \kappa l + \frac{1}{2} l \xi  + \left(  \frac{1}{2} - \kappa \right) l \xi^2.
+r_{\rm q}(\xi) = \sum_{a=0}^2 N_a (\xi) r^{(a)}_{\rm q} = \kappa l + \frac{1}{2} l \xi  + \left(  \frac{1}{2} - \kappa \right) l \xi^2.
 \end{equation}
-From Equation (\ref{eq:crack_radius_dep}) above it can be easily derived that for $ \kappa=1/4$, the radius $r(\xi(-1)) = 0$, providing the following relations:
+From Eq.~(\ref{eq:crack_radius_dep}) above it can be easily derived that for $ \kappa=1/4$, the radius $r_{\rm q}(\xi(-1)) = 0$, providing the following relations:
 \begin{equation}
-r= \frac{l}{4}(1+\xi)^2 \quad \rightarrow \quad \xi = 2 \sqrt{\frac{r}{l}} -1,
+r_{\rm q}= \frac{l}{4}(1+\xi)^2 \quad \rightarrow \quad \xi = 2 \sqrt{\frac{r_{\rm q}}{l}} -1,
 \end{equation}
 which substituted into Equation (\ref{eq:crack_disp_func}) renders the desired radial dependence of the displacements $u$ and strains $\varepsilon$:
 \begin{equation*}
-u(r) = u^{(1)} + \left( -3u^{(1)} - u^{(2)} +4u^{(3)} \right) \sqrt{\frac{r}{l}} + 2 \left( u^{(1)} + u^{(2)} -2 u^{(3)} \right) \frac{r}{l}
+u(r_{\rm q}) = u^{(0)} + \left( -3u^{(0)} - u^{(1)} +4u^{(2)} \right) \sqrt{\frac{r}{l}} + 2 \left( u^{(0)} + u^{(1)} -2 u^{(2)} \right) \frac{r_{\rm q}}{l}
 \end{equation*}
 \begin{equation}
-\varepsilon(r) = \frac{\partial u}{ \partial r} = + \left( - \frac{3}{2}u^{(1)} - \frac{1}{2}u^{(2)} +2u^{(3)} \right) \frac{1}{\sqrt{Lr}} + 2 \left( u^{(1)} + u^{(2)} -2 u^{(3)} \right) \frac{1}{L}
+\varepsilon(r_{\rm q}) = \frac{\partial u}{ \partial r_{\rm q}} = + \left( - \frac{3}{2}u^{(0)} - \frac{1}{2}u^{(1)} +2u^{(2)} \right) \frac{1}{\sqrt{lr_{\rm q}}} + 2 \left( u^{(0)} + u^{(1)} -2 u^{(2)} \right) \frac{1}{l}
 \end{equation}
-The displacement function contains now a constant (rigid body motion) and linear function also a $\sqrt r$ term, which reproduces the displacement field at the crack tip. The strain in the quarter-point element possess of the square root $\frac{1}{\sqrt r}$ singularity.
+The displacement function contains now a constant (rigid body motion) and linear function also a $\sqrt r_{\rm q}$ term, which reproduces the displacement field at the crack tip. 
+The strain in the quarter-point element possess of the square root $1/{\sqrt r_{\rm q}}$ singularity.
 \subsubsection{Hierarchical shape functions}
-In hierarchical shape functions \citep{Ainsworth2003} no extra nodes are added for functions of order higher than the first one (see Figure~\ref{fig:shape_funcs}). The hierarchical shape functions' values for an arbitrary high-order shape function are created in a hierarchical algorithm. This feature makes greatly simplifies the p- and hp- adaptivity implementation. In contrast to standard shape functions, a hierarchical counterpart of Equation~(\ref{eq:crack_disp_func}) can be written simply as:
+In hierarchical shape functions \citep{Ainsworth2003} no extra nodes are added for functions of order higher than the first one (see Figure~\ref{fig:shape_funcs}). 
+The hierarchical shape functions' values for an arbitrary high-order shape function are created in a hierarchical algorithm. This feature makes greatly simplifies the p- and hp- adaptivity implementation. In contrast to standard shape functions, a hierarchical counterpart of Equation~(\ref{eq:crack_disp_func}) can be written simply as:
 \begin{equation}
-u(\xi) = \sum_{a=1}^3 N_a (\xi) u^{(a)} = (1 -\xi)u^{(1)} + \xi(1 - \xi)u^{(3)}\gamma + \xi u^{(2)}
+u(\xi) = \sum_{a=0}^2 N_a (\xi) u^{(a)} = (1 -\xi)u^{(0)} + \xi(1 - \xi)u^{(2)}\gamma + \xi u^{(1)}
 \end{equation}
 Since there is no middle node, rewriting the above equation in terms of the radius $r$ takes the form:
 \begin{equation}
-r(\xi) = \sum_{a=1}^3 N_a (\xi) r^{(a)} = \xi L + \xi(1-\xi)  L  \gamma
+r_{\rm q}(\xi) = \sum_{a=0}^2 N_a (\xi) r^{(a)} = \xi l + \xi(1-\xi)  l  \gamma
 \end{equation}
 Solving the above quadratic equation for coefficient $\gamma$ gives the value of $-1$, providing relation:
 \begin{equation}
-r= \xi L - \xi(1-\xi)L \quad \rightarrow \quad \xi = \sqrt{\frac{r}{L}},
+r_{\rm q}= \xi l - \xi(1-\xi)l \quad \rightarrow \quad \xi = \sqrt{\frac{r_{\rm q}}{l}},
 \end{equation}
 which yields the following radial dependence for displacements and strains:
 \begin{equation*}
-u(r) = u^{(1)} + \left( -u^{(1)} + u^{(2)} - u^{(3)} \right) \sqrt \frac{r}{L} - u^{(3)} \frac{r}{L}
+u(r_{\rm q}) = u^{(0)} + \left( -u^{(0)} + u^{(1)} - u^{(2)} \right) \sqrt \frac{r_{\rm q}}{l} - u^{(2)} \frac{r_{\rm q}}{l}
 \end{equation*}
 \begin{equation}
-\varepsilon(r) = \frac{\partial u}{\partial r} = \left( u^{(1)}  + u^{(2)} - u^{(3)}  \right) \frac{1}{2} \sqrt \frac{L}{r} + u^{(3)} \frac{1}{L}
+\varepsilon(r_{\rm q}) = \frac{\partial u}{\partial r_{\rm q}} = \left( u^{(0)}  + u^{(1)} - u^{(2)}  \right) \frac{1}{2} \sqrt \frac{l}{r_{\rm q}} + u^{(2)} \frac{1}{l}
 \end{equation}
-Further, emerging equations have the necessary terms to reproduce rigid body motion and pass the patch tests, as well as the desired $1 / \sqrt r$ term.
+Further, emerging equations have the necessary terms to reproduce rigid body motion and pass the patch tests, as well as the desired $1 / \sqrt r_{\rm q}$ term.
 This should enable the elements adjacent to the crack front to reproduce strain singularity resulting in a more accurate finite element solution \citep{nejati2015use}. 
 The influence of the similar procedure with tetrahedral elements will is tested in the following section.
 \subsubsection{Convergence with quarter-point elements}
@@ -855,7 +896,7 @@ This time, however, quarter-point tetrahedral elements were applied around the c
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.7\linewidth]{Figures/graphs/plate_conv_singularity.png}
-	\caption{Convergence plot for stress intensity factor $K_I$ Error (\%) versus no. of DOF (log10). It is evident that using quarter-point element enhances convergence rate.}
+	\caption{Convergence plot for stress intensity factor $K_{\rm I}$ Error (\%) versus no. of DOF (log10). It is evident that using quarter-point element enhances convergence rate.}
 	\label{fig:plate_conv_singularity}
 \end{figure}
 Based on the results in Figure~\ref{fig:plate_conv_singularity}, it is evident that using quarter-point elements improves the convergence rate to the analytical solution significantly. 
@@ -875,13 +916,13 @@ Since the stress intensity factor loses its meaning in the case of heterogeneous
 To the best of the authors' knowledge, the current state of literature lacks in numerical methods to verify the results of material forces or stress intensity factors for heterogeneous solids other than functionally graded materials \citep{kim2002finite}. \\
 It was decided that a straightforward verification can be performed by using simple numerical differentiation method like centered Finite Difference Method (FDM). Following Griffith's work \citep{Griffith163}, the release energy rate for crack growth can be calculated as the change in elastic strain energy per unit area of crack growth, i.e.
 \begin{equation}
-\mathbf G = \frac{\partial \psi}{\partial a}
+\mathbf G = \frac{\partial \psi}{\partial a_{\rm {pl}}}
 \end{equation}
 where $\psi$ is the elastic energy of the system, and $a$ is the crack length. Moving on, this derivative can be calculated by aforementioned FDM as follows:
 \begin{equation}
- \frac{\partial \psi}{\partial a} = \lim_{\Delta a \to 0} \frac{\psi(a + \Delta a) - \psi(a -\Delta a)}{2\Delta a}
+ \frac{\partial \psi}{\partial a_{\rm {pl}}} = \lim_{\Delta a_{\rm {pl}} \to 0} \frac{\psi(a_{\rm {pl}} + \Delta a_{\rm {pl}}) - \psi(a_{\rm {pl}} -\Delta a_{\rm {pl}})}{2\Delta a_{\rm {pl}}}
 \end{equation}
-where the elastic strain energies $\psi(a \pm \Delta a)$ can by obtained simply by running two additional analyses of the finite plate with horizontal cracks of lengths: ($a + \Delta a$) and ($a - \Delta a$), where $\Delta a$ is a very small value. 
+where the elastic strain energies $\psi(a_{\rm {pl}} \pm \Delta a_{\rm {pl}})$ can by obtained simply by running two additional analyses of the finite plate with horizontal cracks of lengths: ($a + \Delta a_{\rm {pl}}$) and ($a - \Delta a_{\rm {pl}}$), where $\Delta a_{\rm {pl}}$ is a very small value. 
 Next, knowing the resulting release energy with the crack length of $a$, an relative error can be calculated. 26 sets of three analyses (for different p-refinements) have been performed in order to determine the error in the release energy. 
 The results are presented in Figure~\ref{fig:covergencefdm}.
 \begin{figure}

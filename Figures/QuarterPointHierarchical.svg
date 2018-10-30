@@ -11,7 +11,7 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="QuarterPoint.svg"
+   sodipodi:docname="QuarterPointHierarchical.svg"
    inkscape:version="0.91 r13725"
    version="1.1"
    id="svg11351"
@@ -40,9 +40,9 @@
      showgrid="false"
      inkscape:current-layer="layer1"
      inkscape:document-units="px"
-     inkscape:cy="248.26371"
-     inkscape:cx="857.3276"
-     inkscape:zoom="0.24748737"
+     inkscape:cy="203.5681"
+     inkscape:cx="-130.24943"
+     inkscape:zoom="0.35"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="1.0"
@@ -190,28 +190,17 @@
        cy="600.72705"
        r="18.93041" />
     <circle
-       r="18.93041"
-       cy="602.74738"
-       cx="86.429047"
-       id="circle13228"
-       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#010001;stroke-width:7.59332085;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-    <circle
        style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#010001;stroke-width:7.59332085;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="circle13230"
        cx="694.54089"
        cy="604.7677"
        r="18.93041" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
-       d="m -294.39873,600.83688 358.328051,1.80067"
+       style="fill:none;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m -294.39873,600.83688 969.75663,1.80067"
        id="path13232"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
-       d="m 106.0718,602.81086 569.89776,1.89336"
-       id="path13234"
-       inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m -614.17275,528.09303 c 61.91895,7.12056 205.18857,18.35287 280.82241,60.60916"
@@ -224,52 +213,6 @@
        id="path13238"
        d="m -610.63722,676.93996 c 61.91895,-7.12056 205.18857,-18.35287 280.82241,-60.60916"
        style="fill:none;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <g
-       ns0:text="2"
-       ns0:preamble="/Users/ignathanas/Documents/Contributions/Contact_1/AMA-stix/ama/figures/textext.preambleArial.tex"
-       transform="matrix(11.496885,0,0,11.496885,-2477.9508,-983.97734)"
-       id="g13539">
-      <defs
-         id="defs13541">
-        <g
-           id="g13543">
-          <symbol
-             style="overflow:visible"
-             overflow="visible"
-             id="textext-913d634e-0">
-            <path
-               inkscape:connector-curvature="0"
-               style="stroke:none"
-               d=""
-               id="path13546" />
-          </symbol>
-          <symbol
-             style="overflow:visible"
-             overflow="visible"
-             id="textext-913d634e-1">
-            <path
-               inkscape:connector-curvature="0"
-               style="stroke:none"
-               d="m 5.046875,-0.875 -3.71875,0 c 0.09375,-0.578125 0.40625,-0.9375 1.28125,-1.453125 L 3.59375,-2.859375 C 4.578125,-3.40625 5.09375,-4.125 5.09375,-5 5.09375,-5.578125 4.859375,-6.125 4.4375,-6.515625 4.015625,-6.890625 3.5,-7.0625 2.828125,-7.0625 1.9375,-7.0625 1.265625,-6.75 0.875,-6.15625 0.625,-5.765625 0.515625,-5.328125 0.5,-4.609375 l 0.875,0 c 0.03125,-0.484375 0.09375,-0.78125 0.203125,-1 0.234375,-0.4375 0.6875,-0.6875 1.21875,-0.6875 0.796875,0 1.40625,0.5625 1.40625,1.328125 0,0.546875 -0.328125,1.03125 -0.96875,1.390625 L 2.328125,-3.0625 C 0.84375,-2.21875 0.421875,-1.5625 0.34375,0 l 4.703125,0 z m 0,0"
-               id="path13549" />
-          </symbol>
-        </g>
-      </defs>
-      <g
-         id="textext-913d634e-2">
-        <g
-           style="fill:#000000;fill-opacity:1"
-           id="g13552">
-          <use
-             height="100%"
-             width="100%"
-             xlink:href="#textext-913d634e-1"
-             x="223.43201"
-             y="134.765"
-             id="use13554" />
-        </g>
-      </g>
-    </g>
     <g
        id="g13656"
        transform="matrix(11.016512,0,0,11.016512,-2301.675,-1328.3345)"
@@ -316,69 +259,6 @@
         </g>
       </g>
     </g>
-    <g
-       ns0:text="$\\kappa l$"
-       ns0:preamble="/Users/ignathanas/Documents/Contributions/Contact_1/AMA-stix/ama/figures/textext.preambleArial.tex"
-       transform="matrix(11.016512,0,0,11.016512,-2620.7207,-1110.1416)"
-       id="g13797">
-      <defs
-         id="defs13799">
-        <g
-           id="g13801">
-          <symbol
-             style="overflow:visible"
-             overflow="visible"
-             id="textext-d0f51293-0">
-            <path
-               inkscape:connector-curvature="0"
-               style="stroke:none"
-               d=""
-               id="path13804" />
-          </symbol>
-          <symbol
-             style="overflow:visible"
-             overflow="visible"
-             id="textext-d0f51293-1">
-            <path
-               inkscape:connector-curvature="0"
-               style="stroke:none"
-               d="M 0.59375,-0.390625 C 0.546875,-0.25 0.546875,-0.234375 0.546875,-0.15625 c 0,0.171875 0.140625,0.265625 0.296875,0.265625 0.296875,0 0.359375,-0.234375 0.4375,-0.5625 C 1.375,-0.8125 1.3125,-0.625 1.75,-2.296875 c 0.828125,0.03125 1.703125,0.203125 1.703125,0.84375 0,0.078125 0,0.125 -0.03125,0.234375 C 3.390625,-1.0625 3.375,-0.953125 3.375,-0.875 c 0,0.578125 0.40625,0.984375 0.921875,0.984375 0.3125,0 0.578125,-0.171875 0.78125,-0.515625 0.25,-0.421875 0.359375,-1 0.359375,-1.015625 0,-0.109375 -0.078125,-0.109375 -0.109375,-0.109375 -0.109375,0 -0.109375,0.046875 -0.140625,0.1875 C 5,-0.65625 4.765625,-0.109375 4.3125,-0.109375 4.109375,-0.109375 4,-0.234375 4,-0.59375 4,-0.734375 4.03125,-0.984375 4.078125,-1.140625 4.09375,-1.234375 4.125,-1.359375 4.125,-1.46875 4.125,-2.40625 2.75,-2.484375 2.1875,-2.5 c 0.328125,-0.1875 0.65625,-0.453125 0.921875,-0.6875 0.453125,-0.375 0.75,-0.625 1.140625,-0.796875 -0.015625,0.0625 -0.046875,0.171875 -0.046875,0.21875 0,0.125 0.078125,0.359375 0.375,0.359375 0.328125,0 0.546875,-0.296875 0.546875,-0.546875 0,-0.078125 -0.046875,-0.34375 -0.40625,-0.34375 -0.609375,0 -1.1875,0.5 -1.625,0.875 -0.6875,0.578125 -0.921875,0.71875 -1.28125,0.84375 C 1.84375,-2.6875 1.96875,-3.1875 2.015625,-3.359375 2.078125,-3.625 2.1875,-4.09375 2.1875,-4.140625 2.1875,-4.3125 2.078125,-4.40625 1.90625,-4.40625 c -0.03125,0 -0.3125,0 -0.40625,0.359375 z m 0,0"
-               id="path13807" />
-          </symbol>
-          <symbol
-             style="overflow:visible"
-             overflow="visible"
-             id="textext-d0f51293-2">
-            <path
-               inkscape:connector-curvature="0"
-               style="stroke:none"
-               d="m 2.578125,-6.8125 c 0,0 0,-0.109375 -0.140625,-0.109375 -0.21875,0 -0.953125,0.078125 -1.21875,0.109375 -0.078125,0 -0.1875,0.015625 -0.1875,0.203125 0,0.109375 0.109375,0.109375 0.25,0.109375 0.484375,0 0.5,0.09375 0.5,0.171875 L 1.75,-6.125 0.484375,-1.140625 C 0.453125,-1.03125 0.4375,-0.96875 0.4375,-0.8125 c 0,0.578125 0.4375,0.921875 0.90625,0.921875 0.328125,0 0.578125,-0.203125 0.75,-0.5625 0.171875,-0.375 0.296875,-0.953125 0.296875,-0.96875 0,-0.109375 -0.09375,-0.109375 -0.125,-0.109375 -0.09375,0 -0.109375,0.046875 -0.125,0.1875 C 1.96875,-0.703125 1.78125,-0.109375 1.375,-0.109375 c -0.296875,0 -0.296875,-0.3125 -0.296875,-0.453125 0,-0.25 0.015625,-0.296875 0.0625,-0.484375 z m 0,0"
-               id="path13810" />
-          </symbol>
-        </g>
-      </defs>
-      <g
-         id="textext-d0f51293-3">
-        <g
-           style="fill:#000000;fill-opacity:1"
-           id="g13813">
-          <use
-             height="100%"
-             width="100%"
-             xlink:href="#textext-d0f51293-1"
-             x="223.43201"
-             y="134.765"
-             id="use13815" />
-          <use
-             height="100%"
-             width="100%"
-             xlink:href="#textext-d0f51293-2"
-             x="229.17245"
-             y="134.765"
-             id="use13817" />
-        </g>
-      </g>
-    </g>
     <path
        style="fill:none;stroke:#000000;stroke-width:7.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m -315.16759,623.04734 0,166.67517"
@@ -400,20 +280,10 @@
        id="path14162"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
-       d="m 83.842661,540.71992 0,-176.92917"
-       id="path14164"
-       inkscape:connector-curvature="0" />
-    <path
        style="fill:none;stroke:#000000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;marker-end:url(#marker14198);marker-start:url(#Arrow2Mstart)"
        d="m -311.42857,192.36218 1002.37291,0"
        id="path14166"
        inkscape:connector-curvature="0" />
-    <path
-       inkscape:connector-curvature="0"
-       id="path14244"
-       d="m -306.51653,428.77849 381.947515,0"
-       style="fill:none;stroke:#000000;stroke-width:4.97765684;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker14246);marker-end:url(#marker14256)" />
     <g
        ns0:text="surfaces"
        ns0:preamble="/Users/ignathanas/Documents/Contributions/Contact_1/AMA-stix/ama/figures/textext.preambleArial.tex"
