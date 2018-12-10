@@ -1,0 +1,25 @@
+\documentclass[12pt]{article}
+\usepackage{mwe,tikz}
+\usepackage[percent]{overpic}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{figure}
+  \centering
+   \begin{overpic}[scale=0.75]{example-image-a}
+     \put(3,3){\includegraphics[scale=0.21]{example-image-b}}
+  \end{overpic}
+\caption{Using Overpic}
+\end{figure}
+
+\begin{figure}
+ \centering
+   \begin{tikzpicture}[overlay]
+     \node at (1,1) {\includegraphics[scale=1]{my_example}};
+     \node at (1.5,1) {\includegraphics[scale=0.25]{my_example}};
+  \end{tikzpicture}
+\caption{Using Tikz Overlay}
+\end{figure}
+
+\end{document}  

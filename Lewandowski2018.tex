@@ -7,6 +7,17 @@
 \usepackage{newtxtext,newtxmath}
 \usepackage{hyperref}
 
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+%% the following commands are needed for some matlab2tikz features
+\usetikzlibrary{plotmarks}
+\usetikzlibrary{arrows.meta}
+%\usepgfplotslibrary{patchplots}
+%\usepackage{grffile}
+\usepackage{amsmath}
+
+
 \usepackage{amsmath}
 \usepackage{color}
 \usepackage{amsfonts}
@@ -92,6 +103,14 @@
 
 \textcolor{red}{All the figures are still in draft mode.}
 \section{Introduction}
+
+\begin{figure}
+	
+	\input{myfile.tex}
+	\caption{hue hue hue}
+	\end{figure}
+
+
 Fractures of the third metacarpal bone are one of the main reasons for euthanasia of Thoroughbred racehorses on racecourses in the UK \citep{Parkin2004risk}.
 Most of these fractures occur due to the accumulation of tissue fatigue as a result of repetitive loading \citep{Parkin2005} rather than specific traumatic event.
 Remodelling is the on-going complex biological process of replacing old bone tissue by new bone and thus repairing the fatigue damage\citep{hughes2017role}.
