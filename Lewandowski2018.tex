@@ -137,9 +137,9 @@ Section~\ref{sec:numerical_examples} brings together all the developments of the
 Finally, a brief summary of the work is presented in Section~\ref{sec:discussion} and areas for further research are identified.
 \begin{figure}[h!]
 \begin{center}
-\includegraphics[width=12cm,height=12cm]{Figures/framework.png}
-\caption{Framework for estimating crack propensity in MoFEM \citep{mofem2017}. Density derived from Quantitative Computed Tomography (qCT) is mapped onto finite element mesh, which is subsequently used for bone remodelling analysis. 
-Next, utilizing the fracture mechanics module the released energy of an initial crack is computed at different time steps.}
+\includegraphics[width=16cm]{Figures/framework.png}
+\caption{Framework for estimating crack propensity in MoFEM \citep{mofem2017}. Density derived from Quantitative Computed Tomography (qCT) is mapped onto finite element mesh~a), which is subsequently used for bone remodelling analysis~b). 
+Next, utilizing the fracture mechanics module the released energy of an initial crack is computed at different time steps~c).}
 \label{fig:framework}
 \end{center}
 \end{figure}
@@ -206,12 +206,7 @@ Moreover, it is assumed that the rate of change of the time-dependent material d
 \frac{\partial\rho}{\partial t}= \nabla_{\boldsymbol {\rm X}} \cdot \mathbf{R} + \mathcal{R}_0
 \label{eq:mass_balance}
 \end{equation}
-
-where $\rho$ is mass density, $\mathbf{R}$ is the mass flux and $\mathcal{R}_0$ is the locally created mass.
-
-\textcolor{red}{In Kuhl and Steinmann $\mathcal{R}_0$ it is called locally created mass but isn't it more accurate as locally produces density rate?}
-
-The mass flux $\mathbf{R}$ is assumed to vanish, such that only the mass source $\mathcal{R}_0$ contributes to the changes in density. 
+where $\rho$ is mass density, $\mathbf{R}$ is the mass flux and $\mathcal{R}_0$ is the locally created mass. The mass flux $\mathbf{R}$ is assumed to vanish, such that only the mass source $\mathcal{R}_0$ contributes to the changes in density. 
 The mechanical equilibrium of a solid can be represented by the balance of linear momentum which, for the quasi-static case and in the absence of volume forces, takes the following representation:
 \begin{equation}
 \nabla_{\boldsymbol {\rm X}} \cdot \mathbf{{\mathbf{P}}} = 0
@@ -252,8 +247,8 @@ The bell function (\ref{eq:bell_function}) is demonstrated in Figure~\ref{fig:be
 Its application and influence on the overall results are elaborated in Section~\ref{sec:numerical_examples:bone_adap}.
 \begin{figure}[h!]
 	\begin{centering}
-		\includegraphics[width=7cm]{Figures/graphs/bell_func.png}
-		\caption{Bell function plotted for different values of the integer exponent $b$. As $b \rightarrow \infty$, bell-shape curve becomes infinitely steep at $ \rho{^\mathrm{min}}$ and $ \rho{^\mathrm{max}}$ sharpen.}
+		\includegraphics[width=9cm]{Figures/graphs/bell_func.png}
+		\caption{Bell function plotted for different values of the integer exponent $b$. As $b \rightarrow \infty$, bell-shape curve becomes infinitely steep at $ \rho{^\mathrm{min}}$ and $ \rho{^\mathrm{max}}$.}
 		\label{fig:bell_func}
 	\end{centering}
 \end{figure}
@@ -328,7 +323,7 @@ Outside the domain of influence the $w(r)$ is equal to zero.
 Value of the weight function, $w(||{\boldsymbol {\rm x}}_{\rm t} - {\boldsymbol {\rm x}}_{i}||)$, at each $i-{\rm{th}}$ point located within the domain of influence with position vector ${\boldsymbol {\rm x}}_{i}$, depends on its distance from the TPA, $||{\boldsymbol {\rm x}}_{\rm t} - {\boldsymbol {\rm x}}_{i}||$.
 \begin{figure}[h!]
 	\begin{centering}
-		\includegraphics[width=8cm]{Figures/weighs.pdf}
+		\includegraphics[width=7cm]{Figures/weighs.pdf}
 		\caption{2D schematic example of arbitrary weight function of a Target Point of Approximation (TPA) located with position vector ${\boldsymbol {\rm x}}_{\rm t}$. 
 		Points of the discrete field $v({\boldsymbol{\rm x}}_i)$ are presented with dots and points that $v({\boldsymbol{\rm x}}_i)$ is mapped (TPAs) are presented with circles.
 		The function is smooth, non-negative, reaches maximum at the TPA and decreases with distance $||{\boldsymbol {\rm x}}_{\rm t} - {\boldsymbol {\rm x}}_i||$. 
@@ -557,6 +552,7 @@ Next, the local form of the first law presented in Equation (\ref{eq:crack_local
 This equation represents the equilibrium condition for the crack front. 
 The term $ \gamma \mathbf A_{ \partial \Gamma }$ can be considered as material resistance. However, the crack evolution is not within the scope of this study. \\
 \subsection{Spatial and material discretisation}
+\textcolor{red}{This section will be corrected by Lukasz.} \\
 The finite element approximation is applied to both the material and physical space:
 \begin{equation}
 \begin{aligned}
@@ -585,7 +581,7 @@ Therein, the operator $ \aoperator$ symbolises the assembly of all contributions
 \end{equation}
 The nodal material forces $\mathbf{\tilde G}^h$ are the driving force for the crack front propagation and have the following form:
 \begin{equation}\label{eq:crack_material_force_dis}
-\mathbf{\tilde G}^h = \aoperator_{\text{TET}}^{n_{\rm {el}}} \int_\text{TET} (\mathbf{B_x})^{\rm T} {\bm {\Sigma}}^h +   \left.\left( \frac{\partial \Psi}{\partial \rho} \right)\right|_{\mathbf{x}= \text {const}} \mathbf B^{\rm T} \rho \mathrm \,d V
+\mathbf{\tilde G}^h = \aoperator_{\text{TET}}^{n_{\rm {el}}} \int_\text{TET} (\mathbf{B_x})^{\rm T} {\bm {\Sigma}}^h +   \left.\left( \frac{\partial \Psi}{\partial \rho} \right)\right|_{\mathbf{x}= \text {const}} \mathbf{B_x}^{\rm T} \rho \mathrm \,d V
 \end{equation}
 The explicit derivative of energy with respect to density in Equation (\ref{eq:crack_material_force_dis}) is derived automatically by means of ADOL-C library~\citep{Walther2009}. 
 Furthermore, $\mathbf f^h_{\text {res}}$ is the vector of nodal material resistance (Griffith) forces, given as:
@@ -594,10 +590,6 @@ Furthermore, $\mathbf f^h_{\text {res}}$ is the vector of nodal material resista
 \end{equation}
 where $ \mathbf g_c$ is a vector with zero for all components except those associated with nodes on the crack front, where the value is equal to $g_c$. 
 It is a material parameter specifying the critical threshold of energy release per unit area of the crack surface $\Gamma$, also known as the Griffith energy.
-\subsection{Linearised system of equations}
-The nonlinear coupled system of equations is linearised and solved monolithically, following a standard Newton-Raphson iterative strategy. \\
-
-\textcolor{red}{The details of this section has to be discussed with Lukasz}
 
 \section{Numerical examples}
 \label{sec:numerical_examples}
@@ -687,8 +679,8 @@ This result is a direct consequence of the constitutive Eq.~\ref{eq:mass_source}
 This feature can be visualized by plotting the strain energy density on the contours of constant density levels as presented in Figure~\ref{fig:mc3_biol_eq}. 
 \begin{figure}[h!]
 	\begin{centering}
-		\includegraphics[width=12cm]{Figures/mc3_biol_eq.png}
-		\caption{Case~1: Biological equilibrium state. a) Density map. b) Contours of density. c) Strain energy plotted on contours.}
+		\includegraphics[width=15cm]{Figures/mc3_biol_eq.png}
+		\caption{Case 1: Biological equilibrium state. a) Density map. b) Contours of density. c) Strain energy plotted on contours of density.}
 		\label{fig:mc3_biol_eq}
 	\end{centering}
 \end{figure}
@@ -702,7 +694,7 @@ For achieve this, the bell shape function presented in Eq.~(\ref{eq:bell_functio
 
 \begin{figure}[h!]
 	\begin{centering}
-		\includegraphics[width=15cm]{Figures/graphs/density_bell1.png}
+		\includegraphics[width=10cm]{Figures/graphs/density_bell1.png}
 		\caption{Case~2: Change in overall mass of the bone over time with applied bell function with input parameters presented in Table~\ref{tab:three_cases}. Density distribution contours in 3rd metacarpal bone at the last converged step.}
 		\label{fig:density_bell1}
 	\end{centering}
@@ -716,7 +708,7 @@ The biological equilibrium cannot be achieved in this case.
 However, by observing the range of obtained densities, it is evident that they slowly converge to the same solution as without the restriction of the bell function (Figure~\ref{fig:mc3_density}). 
 \begin{figure}[h!]
 	\begin{centering}
-		\includegraphics[width=15cm]{Figures/graphs/density_bell2.png}
+		\includegraphics[width=10cm]{Figures/graphs/density_bell2.png}
 		\caption{Case~3: Change in overall mass of the bone over time with applied bell function with input parameters presented in Table~\ref{tab:three_cases}. Density distribution contours in 3rd metacarpal bone at time step $t=1600$~$[{\text{d}}]$.}
 		\label{fig:density_bell2}
 	\end{centering}
@@ -753,13 +745,13 @@ The maximum error for a linear and quadratic basis has values of $10^{-2}$ and $
 These results are satisfactory for the application of mapping data fields onto the mesh and suggests correctness of the implementation.
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=0.8\linewidth]{Figures/mwls_prism.png}
-	\caption{a) Finite element tetrahedral mesh with corresponding nodes and spherical domain of influence. b) Analytical field $f({\boldsymbol {\rm x}}) = x + y^2 + z^3$. c) Outcomes of the approximation for $m=10$.}
+	\includegraphics[width=16cm]{Figures/mwls_prism.png}
+	\caption{a) Finite element tetrahedral mesh. b) Mesh inside analytical discrete field $f({\boldsymbol {\rm x}}) = x + y^2 + z^3$. c) Mesh with corresponding nodes and spherical domain of influence. d) Outcomes of the approximation for $m=10$.}
 	\label{fig:mwlsprism}
 \end{figure}
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=0.8\linewidth]{Figures/prism_error.png}
+	\includegraphics[width=10cm]{Figures/prism_error.png}
 	\caption{Contour plot of relative error of approximated gradient field for constant a), linear b) and quadratic c) basis functions. The logarithmic scale represents the magnitude of relative error.}
 	\label{fig:prism_error}
 \end{figure}
@@ -768,7 +760,7 @@ In this section, the results of density approximation from CT data are presented
 The mesh used is consisted of approximately 7000 tetrahedral elements. \\
 \begin{figure}
 	\centering
-	\includegraphics[width=0.5\linewidth]{Figures/mwlsmapping_cross.pdf}
+	\includegraphics[width=0.5\linewidth]{Figures/mwlsmapping_cross.png}
 	\caption{Comparison of a CT data with the corresponding approximation. a) A cut-view along the $y$ axis for CT scan data and b) density mapped onto FE mesh.}
 	\label{fig:mwlsmapping_cross}
 \end{figure}
@@ -1041,7 +1033,7 @@ The same geometry and boundary conditions as in the previous example are used he
 However, this time, densities from bone adaptation (Section~\ref{sec:numerical_examples:bone_adap}) are mapped on a mesh consisting of 6069 elements as demonstrated in Figure~\ref{fig:frackmeshcutting}. 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.4\linewidth]{Figures/frack_mesh_cutting.png}
+	\includegraphics[width=0.8\linewidth]{Figures/frack_mesh_cutting.png}
 	\caption{Cut in the mesh of the remodelled 3rd metacarpal bone. The resulting density from the bone adaptation analysis is approximated directly onto integration points of the new model by using MLS method described earlier in Section~\ref{sec:mwls}. }
 	\label{fig:frackmeshcutting}
 \end{figure}
