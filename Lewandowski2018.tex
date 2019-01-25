@@ -17,6 +17,15 @@
 \pagenumbering{arabic}
 
 
+%Packages for Matlab2TikZ
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usetikzlibrary{plotmarks}
+\usetikzlibrary{arrows.meta}
+\usepgfplotslibrary{patchplots}
+\usepackage{grffile}
+
+
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{5pt plus 2pt minus 1 pt}
 
@@ -132,13 +141,16 @@ Thereafter, Section~\ref{sec:release_energy} presents an extension of a recently
 for evolving crack propagation in the context of configurational mechanics. The method is utilised to calculate the energy release rate of bones under quasi-static loading during different stages of adaptation. 
 Section~\ref{sec:numerical_examples} brings together all the developments of the framework in the form of numerical examples. 
 Finally, a brief summary of the work is presented in Section~\ref{sec:discussion} and areas for further research are identified.
-\begin{figure}[h!]
-\begin{center}
-\includegraphics[width=16cm]{Figures/framework.png}
+
+\begin{figure}[h]
+	\centering
+	   \begin{tikzpicture}
+		\node at (0,4) {\includegraphics[width=14cm]{Figures/framework.png}};
+		\node at(0,0.6){\hspace{1cm} a) Density mapping. \hspace{1.3cm} b) Bone remodelling.  \hspace{1cm} c) Crack propagation analysis.  };
+\end{tikzpicture}
 \caption{Framework for estimating crack propensity in MoFEM~\citep{mofem2017}. a) Density derived from Quantitative Computed Tomography (qCT) is mapped onto finite element mesh, which is subsequently used for bone remodelling analysis~b). 
 Next, utilizing the fracture mechanics module the released energy of an initial crack is computed at different time steps~c).}
 \label{fig:framework}
-\end{center}
 \end{figure}
 
 \section{Bone remodelling} 
@@ -231,12 +243,11 @@ c = & \frac{1}{1 + \left[  (\rho - \rho^{\mathrm{mid}}) / (\rho{^\mathrm{max}} -
 where $\rho{^\mathrm{max}}$ and $\rho{^\mathrm{min}}$ are the maximum and minimum values of $\rho$, and $\rho^{\rm {mid}}$ is their average.
 The bell function (\ref{eq:bell_function}) is illustrated in Figure~\ref{fig:bell_func} for different values of the integer exponent, $b$. 
 Its application and influence on the overall results are elaborated in Section~\ref{sec:numerical_examples:bone_adap}.
-\begin{figure}[h!]
-	\begin{centering}
-		\includegraphics[width=9cm]{Figures/graphs/bell_func.png}
+\begin{figure}[!htb]
+	\centering
+		\input{Figures/tikz/myfile_bell.tex}
 		\caption{Bell function plotted for different values of the integer exponent $b$. As $b \rightarrow \infty$, bell-shape curve becomes infinitely steep at $ \rho{^\mathrm{min}}$ and $ \rho{^\mathrm{max}}$.}
 		\label{fig:bell_func}
-	\end{centering}
 \end{figure}
 
 In the context of porous materials like bones, the free energy $\psi_0$ is equal to:
@@ -440,7 +451,9 @@ The reference configuration represents the body before crack extensions with map
 This mapping describes a material structural change like extensions of the crack as a result of the crack front movement. 
 \begin{figure}[h!]
 	\begin{centering}
-		\includegraphics[width=10cm]{Figures/Configurations.pdf}
+	%	\includegraphics[width=10cm]{Figures/Configurations.pdf}
+	\def\svgwidth{10cm}
+	\input{Figures/Configurations.pdf_tex}
 		\caption{Decomposition of crack propagation in an elastically deforming body.}
 		\label{fig:frac_kinematics}
 	\end{centering}
@@ -471,7 +484,9 @@ and
 \end{equation}
 \begin{figure}
 	\begin{centering}
-		\includegraphics[width=10cm]{Figures/CrackSurface.pdf}
+	%	\includegraphics[width=12cm]{Figures/CrackSurface.pdf}
+		\def\svgwidth{12cm}
+		\input{Figures/CrackSurface.pdf_tex}
 		\caption{Crack construction~\citep{kaczmarczyk2017energy}.}
 		\label{fig:frac_crack_con}
 	\end{centering}
@@ -653,13 +668,16 @@ An adaptive time stepping scheme, provided by the PETSc package~\citep{petsc-web
 	\label{tab:three_cases}
 \end{table}
 
-
-\begin{figure}[h!]
-	\begin{centering}
-		\includegraphics[width=8cm]{Figures/mc3_BC.png}
+\begin{figure}[h]
+	\begin{center}
+		   \begin{tikzpicture}
+				\node at (0,0) {\includegraphics[width=8cm]{Figures/mc3_BC.png}};
+				\node at(-3.5,-1.8){$F = 5 \mathrm{kN}$ };
+				\node at(-4.1,-0.7){ $F = 5 \mathrm{kN}$ };
+	\end{tikzpicture}
 		\caption{Finite element mesh of the equine 3rd metacarpal bone. The subject specific three-dimensional mesh consists of 14,041 quadratic tetrahedral elements and 70,901 degrees of freedom. To simulate the peak load of a gallop, 5 kN forces are applied on the lateral and medial side of the distal condyle.}
 		\label{fig:mc3_BC}
-	\end{centering}
+	\end{center}
 \end{figure}
 
 Results of Case~1 are presented in Figure~\ref{fig:mc3_density} where density maps at five different points in time $(\text{0, 10, 40, 100, 700})$~$[\text d]$ are visualised. 
@@ -667,24 +685,40 @@ Significant densification occurred immediately after reaching the maximum level 
 After 100~$[{\text d}]$, biological equilibrium was achieved and no further changes in density took place. 
 The resulting maximum density is 2.8~$[{\text {g/cm}}^3]$ and the minimum is close to zero.
 \begin{figure}[h!]
-	\begin{centering}
-		\includegraphics[width=15cm]{Figures/graphs/mc3_density.png}
-		\caption{Change in overall mass of the bone over time with density evolution contours in the 3rd metacarpal at five different time points.}
-		\label{fig:mc3_density}
-	\end{centering}
+	\centering
+	\begin{tikzpicture}
+	\node at (0,0) {	\input{Figures/tikz/mc3_density.tex} };
+	\node at(0.,1.5){ \includegraphics[width=9cm]{Figures/tikz/mc3_density_fig.png}};
+	\node at(3,3){                    	\def\svgwidth{5cm} 	\input{Figures/scale_bars/scale_bar_density_rainbow.pdf_tex}  } ;
+	
+	\end{tikzpicture}
+	%	\includegraphics[width=15cm]{Figures/graphs/mc3_density.png}
+	\caption{Change in overall mass of the bone over time with density evolution contours in the 3rd metacarpal at five different time points.}
+	\label{fig:mc3_density}
 \end{figure}
+
+
 
 When adaptation converges to an equilibrium state, an interesting phenomenon is observed.
 For each density level there is a corresponding value of constant strain energy density $\psi$
 This result is a direct consequence of the constitutive Eq.~(\ref{eq:mass_source}).
 This feature can be visualised by plotting the strain energy density on the contours of constant density levels as presented in Figure~\ref{fig:mc3_biol_eq}. 
-\begin{figure}[h!]
-	\begin{centering}
-		\includegraphics[width=15cm]{Figures/mc3_biol_eq.png}
-		\caption{Case 1: Biological equilibrium state. a) Density map. b) Contours of density. c) Strain energy plotted on contours of density.}
-		\label{fig:mc3_biol_eq}
-	\end{centering}
+
+
+\begin{figure}
+	\centering
+%	\begin{tikzpicture}
+%	\node at (2,0) {	\includegraphics[width=16cm]{Figures/mc3_biol_eq.png} };
+%	\node at (0.4,-0.6) {\includegraphics[width=3cm]{Figures/scale_bars/mc3_biol_eq_scale1.pdf}};
+%	\node at (9,2)  {\includegraphics[width=4.5cm]{Figures/scale_bars/mc3_biol_eq_scale2.pdf}};
+%	\node at (1,-2)  { a) \hspace{5cm} b) \hspace{5cm} c) };
+	\def\svgwidth{14cm}
+	\input{Figures/mc3_biol_eq.pdf_tex}
+%	\end{tikzpicture}
+	\caption{Case 1: Biological equilibrium state. a) Density map. b) Contours of density. c) Strain energy plotted on contours of density.}
+	\label{fig:mc3_biol_eq}
 \end{figure}
+
 
 The maximum density for Case~1 is noticeably higher than in the actual equine bones~\citep{yamada2015experimental} and the minimum density is unrealistically close to zero. 
 There is clearly a need to somewhat constrain upper and lower bounds for density in order to produce more realistic outcomes.
@@ -694,11 +728,15 @@ To achieve this, the bell shape function presented in Eq.~(\ref{eq:bell_function
 %All the rest of parameters remain unchanged. 
 
 \begin{figure}[h!]
-	\begin{centering}
-		\includegraphics[width=10cm]{Figures/graphs/density_bell1.png}
+\centering
+	%	\includegraphics[width=10cm]{Figures/graphs/density_bell1.png}
+			\begin{tikzpicture}
+		\node at (0,0) {	\input{Figures/tikz/density_bell1.tex} };
+		\node at(0.,1.5){ \includegraphics[width=4cm]{Figures/tikz/density_bell1_imag.png}};
+		\node at(3,3){                    	\def\svgwidth{5cm} 	\input{Figures/scale_bars/scale_bar_density_rainbow.pdf_tex}  } ;
+		\end{tikzpicture}
 		\caption{Case~2: Change in overall mass of the bone over time with applied bell function with input parameters presented in Table~\ref{tab:three_cases}. Density distribution contours in 3rd metacarpal bone at the last converged step.}
 		\label{fig:density_bell1}
-	\end{centering}
 \end{figure}
 
 The results for Case~2 are plotted in Figure~\ref{fig:density_bell1}.
@@ -706,11 +744,16 @@ The last converged step takes place at $t=93$~$[{\text{d}}]$.
 By setting a high value of $b$, the transition between densities is very sharp and the algorithm encounters convergence difficulties, even with adaptive time-stepping, and biological equilibrium cannot be achieved in this case. 
 However, by observing the range of densities obtained, it is evident that they slowly converge to the same solution as Case~1 (Figure~\ref{fig:mc3_density}). 
 \begin{figure}[h!]
-	\begin{centering}
-		\includegraphics[width=10cm]{Figures/graphs/density_bell2.png}
+\centering
+	%	\includegraphics[width=10cm]{Figures/graphs/density_bell2.png}
+				\begin{tikzpicture}
+	\node at (0,0) {	\input{Figures/tikz/density_bell2.tex} };
+	\node at(0.,1.5){ \includegraphics[width=4cm]{Figures/tikz/density_bell2_imag.png}};
+	\node at(3,3){                    	\def\svgwidth{5cm} 	\input{Figures/scale_bars/scale_bar_density_rainbow.pdf_tex}  } ;
+	\end{tikzpicture}
+	
 		\caption{Case~3: Change in overall mass of the bone over time with applied bell function with input parameters presented in Table~\ref{tab:three_cases}. Density distribution contours in 3rd metacarpal bone at time step $t=1600$~$[{\text{d}}]$.}
 		\label{fig:density_bell2}
-	\end{centering}
 \end{figure}
 
 For Case~3, a more moderate value for the exponent in the bell function was chosen along with a narrower density range than those chosen for Case~2 (see Table~\ref{fig:mc3_biol_eq}).
@@ -743,13 +786,19 @@ The maximum error for a linear and quadratic basis has values of $10^{-2}$ and $
 These results are satisfactory for the application of mapping data fields onto the mesh and suggests correctness of the implementation.
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=16cm]{Figures/mwls_prism.png}
+%	\includegraphics[width=16cm]{Figures/mwls_prism.png}
+	\begin{tikzpicture}
+	%	\node at (0,0) {		\includegraphics[width=14cm]{Figures/mwls_prism.png} };
+		\node at(-1,-2){a) \hspace{3cm} b)  \hspace{4.5cm}   c)  \hspace{3cm}  d)     };
+	\end{tikzpicture}
 	\caption{a) Finite element tetrahedral mesh. b) Mesh inside analytical discrete field $f({\boldsymbol {\rm x}}) = x + y^2 + z^3$. c) Mesh with corresponding nodes and spherical domain of influence. d) Outcomes of the approximation for $q=10$.}
 	\label{fig:mwlsprism}
 \end{figure}
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=10cm]{Figures/prism_error.png}
+	%\includegraphics[width=10cm]{Figures/prism_error.png}
+		\def\svgwidth{14cm}
+	\input{Figures/prism_error.pdf_tex}
 	\caption{Contour plot of relative error of approximated gradient field for constant a), linear b) and quadratic c) basis functions. The logarithmic scale represents the magnitude of relative error.}
 	\label{fig:prism_error}
 \end{figure}
