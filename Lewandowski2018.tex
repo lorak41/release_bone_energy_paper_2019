@@ -788,7 +788,7 @@ These results are satisfactory for the application of mapping data fields onto t
 	\centering
 %	\includegraphics[width=16cm]{Figures/mwls_prism.png}
 	\begin{tikzpicture}
-	%	\node at (0,0) {		\includegraphics[width=14cm]{Figures/mwls_prism.png} };
+		\node at (0,0) {		\includegraphics[width=14cm]{Figures/mwls_prism.png} };
 		\node at(-1,-2){a) \hspace{3cm} b)  \hspace{4.5cm}   c)  \hspace{3cm}  d)     };
 	\end{tikzpicture}
 	\caption{a) Finite element tetrahedral mesh. b) Mesh inside analytical discrete field $f({\boldsymbol {\rm x}}) = x + y^2 + z^3$. c) Mesh with corresponding nodes and spherical domain of influence. d) Outcomes of the approximation for $q=10$.}
@@ -807,14 +807,18 @@ In this section, the results of density approximation from CT data are presented
 The mesh used is consisted of approximately 7000 tetrahedral elements.
 \begin{figure}
 	\centering
-	\includegraphics[width=0.5\linewidth]{Figures/mwlsmapping_cross.png}
+%	\includegraphics[width=1\linewidth]{Figures/mwlsmapping_cross.png}
+	\def\svgwidth{10cm}
+	\input{Figures/mwlsmapping_cross.pdf_tex}
 	\caption{Comparison of a CT data with the corresponding approximation. a) A cut-view along the $x-y$ plane for CT scan data and b) density mapped onto FE mesh.}
 	\label{fig:mwlsmapping_cross}
 \end{figure}
 Results of the mapping procedures are presented in Figure~\ref{fig:mwlsmapping_cross}. Comparison to CT data and the standard Least Squares (LS) method in classical finite element method framework are demonstrated in Figure~\ref{fig:mwlsmappingcomparisons}.
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{Figures/mwls_mapping_comparisons.png}
+%	\includegraphics[width=0.7\linewidth]{Figures/mwls_mapping_comparisons.png}
+		\def\svgwidth{12cm}
+		\input{Figures/mwls_mapping_comparisons.pdf_tex}
 	\caption{Mapping results of bone density (left) and density gradient (right). a) Least squares approximation. b)~Moving least squares approximation.}
 	\label{fig:mwlsmappingcomparisons}
 \end{figure}
@@ -883,10 +887,14 @@ Therefore, it can be observed that the same level of accuracy can be accomplishe
 Moreover, by looking at the number of degrees of freedom, it can be observed that using higher order elements locally results to the same accuracy at a much lower cost of computation time since the global matrix has a much lower size.
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{Figures/graphs/plate_conv_no_sing.png}
-	\caption{Convergence plot for stress intensity factor $K_{\rm I}$ Error (\%) versus no. of DOF (log10) and deformed shape of the plate (bottom left).}
-	\label{fig:plate_conv_no_sing}
+	\begin{tikzpicture}
+	\node at (0,0)   {		\input{Figures/tikz/plate_conv_no_sing.tex} };
+	\node at (-3.4,-0.9)   {		\def\svgwidth{3.6cm}	 	\input{Figures/tikz/plate_conv_no_sing_fig.pdf_tex} };
+	\end{tikzpicture}
+	\caption{Decomposition of crack propagation in an elastically deforming body.}
+	\label{fig:frac_kinematics}
 \end{figure}
+
 
 %The use of finite element method to analyse fracture problems is complicated for many reasons. 
 %One of them is stress field singularity located at the crack tip.
@@ -996,7 +1004,8 @@ Here, results of the convergence upon $p$~-~refinement will be presented with th
 This time, however, quarter-point tetrahedral elements were applied around the crack front.
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=0.7\linewidth]{Figures/graphs/plate_conv_singularity.png}
+%	\includegraphics[width=0.7\linewidth]{Figures/graphs/plate_conv_singularity.png}
+	\input{Figures/tikz/plate_conv_singularity.tex} 
 	\caption{Convergence plot for stress intensity factor $K_{\rm I}$ Error (\%) versus no. of DOF (log10).}
 	\label{fig:plate_conv_singularity}
 \end{figure}
@@ -1032,8 +1041,12 @@ Twenty-six sets of three analyses (for different $p$~-~refinements) have been pe
 The results are presented in Figure~\ref{fig:covergencefdm}.
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{Figures/graphs/covergence_FDM.png}
-	\caption{Convergence of error in release energy rate from Finite Difference Method. Density distribution (bottom left).}
+%	\includegraphics[width=0.7\linewidth]{Figures/graphs/covergence_FDM.png}
+	\begin{tikzpicture}
+		\node at (0,0){\input{Figures/tikz/covergence_FDM.tex}};
+		\node at (5,-1.5) {	\includegraphics[width=2cm]{Figures/tikz/gradient.png}};
+		\end{tikzpicture}
+	\caption{Convergence of error in release energy rate from Finite Difference Method. Density distribution (bottom right).}
 	\label{fig:covergencefdm}
 \end{figure}
 It is apparent from this plot that for most of the refinements the error in release energy is less than 5\%.
@@ -1055,21 +1068,26 @@ It can be seen that, for the same mesh, as approximation order increases materia
 %with increasing order of approximation material forces converge.
 \begin{figure}
 	\centering
-	\includegraphics[width=0.5\linewidth]{Figures/bone_ct_mesh_cut.png}
+		\def\svgwidth{10cm}
+		\input{Figures/bone_ct_mesh_cut.pdf_tex}
+%	\includegraphics[width=0.5\linewidth]{Figures/bone_ct_mesh_cut.png}
 	\caption{Bone geometry with mapped density from CT by using MLS. In order to calculate the material forces, an initial crack is introduced by cutting the mesh with a circular surface. The cutting algorithm is not limited to planar cracks. }
 	\label{fig:bone_ct_mesh_cut}
 \end{figure}
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.9\linewidth]{Figures/crack_front_force.png}
+	\def\svgwidth{12cm}
+	\input{Figures/crack_front_force.pdf_tex}
+	%\includegraphics[width=0.9\linewidth]{Figures/crack_front_force.png}
 	\caption{Crack surface and vectors of material (crack driving) forces at the front.}
 	\label{fig:crackfrontforce}
 \end{figure}
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{Figures/graphs/max_g1_convergece.png}
+	\input{Figures/tikz/max_g1_convergece.tex}
+	%\includegraphics[width=0.7\linewidth]{Figures/graphs/max_g1_convergece.png}
 	\caption{Convergence plot of maximum material force in Mode-I versus no of DOF (log10) for subsequent discretisations and $p$~-~refinements. Results are mesh independent since they all converge to the value for release energy of approximately $ G_{\rm I} = 0.9 \, [\mathrm{kJ} / \mathrm{m}^2]$ for increasing approximation order. }
 	\label{fig:max_g1_convergece}
 \end{figure}
@@ -1081,14 +1099,22 @@ The same geometry and boundary conditions as in the previous example are used he
 However, this time, densities from bone adaptation (Section~\ref{sec:numerical_examples:bone_adap}) are mapped on a mesh consisting of 6069 elements as demonstrated in Figure~\ref{fig:frackmeshcutting}. 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.8\linewidth]{Figures/frack_mesh_cutting.png}
+	%\includegraphics[width=0.8\linewidth]{Figures/frack_mesh_cutting.png}
+			\def\svgwidth{12cm}
+		\input{Figures/frack_mesh_cutting.pdf_tex}
 	\caption{Cut in the mesh of the remodelled 3rd metacarpal bone. The resulting density from the bone adaptation analysis is approximated directly onto integration points of the new model by using MLS method described earlier in Section~\ref{sec:mwls}. }
 	\label{fig:frackmeshcutting}
 \end{figure}
 The resulting energy rate at different points in time of bone adaptation are illustrated in Figure~\ref{fig:crackmc3release} for three different local $p$~-~refinements. The difference between analysis with increased order at the crack tip is very small. 
 \begin{figure}
 	\centering
-	\includegraphics[width=1\linewidth]{Figures/graphs/crack_mc3_release.png}
+%	\includegraphics[width=1\linewidth]{Figures/graphs/crack_mc3_release.png}
+		\begin{tikzpicture}
+			\node at (0,0) {	\input{Figures/tikz/crack_mc3_release.tex} };
+			\node at(0.,0){ \includegraphics[width=9cm]{Figures/tikz/density_for_g1_conv.png}};
+			\node at(2,-1){                    	\def\svgwidth{3cm} 	\input{Figures/scale_bars/scale_bar_density_rainbow.pdf_tex}  } ;
+		
+		\end{tikzpicture}
 	\caption{Material forces for remodelled bones for three local $p$~-~refinements.}
 	\label{fig:crackmc3release}
 \end{figure}

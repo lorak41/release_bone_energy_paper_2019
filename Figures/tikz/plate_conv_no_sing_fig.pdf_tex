@@ -1,6 +1,6 @@
 %% Creator: Inkscape inkscape 0.91, www.inkscape.org
 %% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
-%% Accompanies image file 'scale_bar_test.pdf' (pdf, eps, ps)
+%% Accompanies image file 'Figures/tikz/plate_conv_no_sing_fig.pdf' (pdf, eps, ps)
 %%
 %% To include the image in your LaTeX document, write
 %%   \input{<filename>.pdf_tex}
@@ -36,7 +36,7 @@
   }%
   \providecommand\rotatebox[2]{#2}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{200bp}%
+    \setlength{\unitlength}{193.16269531bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -48,14 +48,16 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,1.3165625)%
-    \put(0,0){\includegraphics[width=\unitlength,page=1]{Figures/scale_bar_test.svg}}%
-    \put(0.4614745,0.0060545){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{0.50}}}%
-    \put(0.4614745,1.0510535){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{0.90}}}%
-    \put(0.4614745,0.2660555){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{0.60}}}%
-    \put(0.4614745,0.5260565){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{0.70}}}%
-    \put(0.4614745,0.7860575){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{0.80}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=2]{Figures/scale_bar_test.svg}}%
-    \put(0.10714282,1.195){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{asd}}}%
+  \begin{picture}(1,1.04255023)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{Figures/tikz/plate_conv_no_sing_fig.pdf}}%
+    \put(0.77797214,0.09166761){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{0.0e+0}}}%
+    \put(0.77797214,0.85371952){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{6.8e-03}}}%
+    \put(0.77797214,0.31531328){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{2.0e-3}}}%
+    \put(0.77797214,0.53895895){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{4.0e-3}}}%
+    \put(0.77797214,0.76260461){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{6.0e-3}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{Figures/tikz/plate_conv_no_sing_fig.pdf}}%
+    \put(1.17926189,0.11665287){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{}}}%
+    \put(0.70217484,0.94846614){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{UY [-]}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{Figures/tikz/plate_conv_no_sing_fig.pdf}}%
   \end{picture}%
 \endgroup%

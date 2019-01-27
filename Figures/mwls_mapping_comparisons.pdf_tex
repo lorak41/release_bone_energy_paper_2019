@@ -1,6 +1,6 @@
 %% Creator: Inkscape inkscape 0.91, www.inkscape.org
 %% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
-%% Accompanies image file 'scale_bar_density_rainbow.pdf' (pdf, eps, ps)
+%% Accompanies image file 'Figures/mwls_mapping_comparisons.pdf' (pdf, eps, ps)
 %%
 %% To include the image in your LaTeX document, write
 %%   \input{<filename>.pdf_tex}
@@ -36,7 +36,7 @@
   }%
   \providecommand\rotatebox[2]{#2}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{192.85bp}%
+    \setlength{\unitlength}{628.27006836bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -48,13 +48,16 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.26136884)%
-    \put(0,0){\includegraphics[width=\unitlength,page=1]{Figures/scale_bars/scale_bar_density_rainbow.pdf}}%
-    \put(0.04407571,0.12693793){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{0.0}}}%
-    \put(0.9567021,0.12693793){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{2.5}}}%
-    \put(0.40912626,0.12693793){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{1.0}}}%
-    \put(0.77417682,0.12693793){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{2.0}}}%
-    \put(0.5003889,0.25990397){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Density $[\mathrm{g/cm^3}]$}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=2]{Figures/scale_bars/scale_bar_density_rainbow.pdf}}%
+  \begin{picture}(1,0.67037767)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{Figures/mwls_mapping_comparisons.pdf}}%
+    \put(0.31985861,0.39200539){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{0.5}}}%
+    \put(0.66938695,0.39200539){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{2.5}}}%
+    \put(0.40630118,0.39200539){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{1.0}}}%
+    \put(0.49399641,0.39200539){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{1.5}}}%
+    \put(0.58169172,0.39200539){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{2.0}}}%
+    \put(0.49462282,0.42506117){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Density $[\mathrm{g/cm^3}]$}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{Figures/mwls_mapping_comparisons.pdf}}%
+    \put(-0.00210306,0.44737025){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{a)}}}%
+    \put(-0.00210306,0.0781023){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{b)}}}%
   \end{picture}%
 \endgroup%
