@@ -54,7 +54,7 @@
     \put(0.9567021,0.12693793){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{2.5}}}%
     \put(0.40912626,0.12693793){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{1.0}}}%
     \put(0.77417682,0.12693793){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{2.0}}}%
-    \put(0.5003889,0.25990397){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Density $[\mathrm{g/cm^3}]$}}}%
+    \put(0.5003889,0.22990397){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Density $[\mathrm{g/cm^3}]$}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=2]{Figures/scale_bars/scale_bar_density_rainbow.pdf}}%
   \end{picture}%
 \endgroup%

@@ -299,7 +299,7 @@ It should be noted that in MLS method, $\mathbf a({\boldsymbol {\rm x}}_{\rm t})
 Moreover, $q$ is the number of base shape functions that are built from Pascal's tetrahedron via multiplicative combinations of unity with monomials equal to the spatial coordinates $x_{\rm t}$, $y_{\rm t}$ and $z_{\rm t}$ of the TPA.
 For maximum target order of shape functions, $k$, the total number of non-orthogonal base shape functions is determined by the binomial coefficient as:
 \begin{equation}
-q = \binom{k+3}{3}
+q = \binom{k+3}{3} = \frac{(k+3)!}{6k!}
 \end{equation}
  
 In the current implementation, three types of basis functions are used:
@@ -569,7 +569,7 @@ Next, the local form of the first law presented in Eq.~(\ref{eq:crack_local_gaus
 This equation represents the equilibrium condition for the crack front. 
 The term $ \gamma \mathbf A_{ \partial \Gamma }$ can be considered as material resistance. However, the crack evolution is not within the scope of this study. \\
 \subsection{Spatial and material discretisation}
-\textcolor{red}{This section will be corrected by Lukasz.} \\
+\textcolor{red}{This section will be corrected and reduced by Lukasz.} \\
 The finite element approximation is applied to both the material and physical space:
 \begin{equation}
 \begin{aligned}
@@ -607,6 +607,105 @@ Furthermore, $\mathbf f^h_{\text {res}}$ is the vector of nodal material resista
 \end{equation}
 where $ \mathbf g_c$ is a vector with zero for all components except those associated with nodes on the crack front, where the value is equal to $g_c$. 
 It is a material parameter specifying the critical threshold of energy release per unit area of the crack surface $\Gamma$, also known as the Griffith energy.
+
+\subsection{Quarter point elements} %should that be in appendix?
+
+The use of finite element method to analyse fracture problems is complicated for many reasons. One of them is stress field singularity located at the crack tip.
+Conventional finite elements are interpolated by polynomials which are not able to reproduce infinite stresses at the crack tip. 
+In the mid-1970s, two independent contributors~\citep{barsoum1976use,henshell1975crack} showed that, the singularity at the crack tip can be modelled by considering shifting the mid-node of all edges connected to crack tip nodes.
+The new mid-node position is at a quarter of edge length distance from the crack tip node known as the quarter-point position and the resulting element is known as quarter-point element. 
+This results in a nonlinear mapping between natural (isoparametric) and local coordinates $\xi \rightarrow x$ which produces  the square root singularity. Stress and strain fields are dependent on the radial function of the crack tip, reaching infinity as $ r \rightarrow 0$. \\
+
+\subsubsection{Standard shape functions} 
+The concept of quarter point element is briefly described by means of 1D 2-nd order finite element with standard base shape functions. 
+Global configuration of 2-nd order element with nodes 0, 2 and 1 is schematically presented in Figure~\ref{fig:1d-quarter}(a) where node 0 coincides with the crack tip.
+Furthermore, the natural coordinate system of the element is presented in Figure~\ref{fig:1d-quarter}b and the corresponding standard shape functions $N_0$, $N_2$ and $N_1$ are presented in Figure~\ref{fig:1d-quarter}c.  
+\begin{figure}[h!]
+	\begin{center}
+		\begin{tabular}{c c c c}
+			\includegraphics[height=2.cm]{Figures/QuarterPoint.pdf}  & \includegraphics[height=2.1cm]{Figures/2ndOrderNodeOr.pdf} &   &  \includegraphics[height=1.3cm]{Figures/StandardElement.pdf}\\  
+			(a) & (b)& &(c)
+		\end{tabular}
+		\caption{1D 2-nd order quarter-point element with standard shape functions:a) global configuration, b) natural coordinates, c) base shape functions }
+		\label{fig:1d-quarter}
+	\end{center}
+\end{figure}
+Let the demonstrated element be a quarter-point type, the distance between node 0 with nodes 2 and 1 is given by radial coordinate $r_{\rm q}$ (see Figure~\ref{fig:1d-quarter}(a)). 
+The position of the middle node 2 is controlled by the parameter $\kappa$. 
+The quadratic 1D displacement function of this element is: 
+\begin{equation}\label{eq:crack_disp_func}
+\begin{aligned}
+&u(\xi) = \sum_{a=0}^2 N_a (\xi) u^{(a)} = \frac{1}{2} \xi (\xi - 1)u^{(0)} + (1 - \xi^2)u^{(2)} + \frac{1}{2} \xi (\xi + 1)u^{(1)} =\\
+& u^{(2)} + \frac{1}{2}(u^{(1)} - u^{(0)})\xi + \left[ \frac{1}{2} (u^{(0)} + u^{(1)}) - u^{(2)} \right] \xi^2 
+\end{aligned}
+\end{equation}
+Note that Eq.~(\ref{eq:crack_disp_func}) is ordered by powers of $\xi$ that is element natural coordinate. 
+In the classical isoparametric formulation, the same interpolation functions are also used for the coordinates, i.e. as well for the radius $r_{\rm q}$ with the nodal values $r^{(0)}_{\rm q} = 0$, $r^{(2)}_{\rm q} = \kappa l$, $r^{(1)}_{\rm q} = l$:
+\begin{equation}\label{eq:crack_radius_dep}
+r_{\rm q}(\xi) = \sum_{a=0}^2 N_a (\xi) r^{(a)}_{\rm q} = \kappa l + \frac{1}{2} l \xi  + \left(  \frac{1}{2} - \kappa \right) l \xi^2.
+\end{equation}
+Any value chosen for $\kappa$ would fulfil equality $r_{\rm q}(\xi=-1) = 0$ in Eq.~(\ref{eq:crack_radius_dep}).
+However, the aim of quarter point element is to generate an approximated displacement field, $u(r_{\rm q})$, so that the resulting strains evaluated as $\varepsilon (r_{\rm q}) = \partial u(r_{\rm q})/\partial r_{\rm q}$.
+To achieve this, a $r^{\theta}_{\rm q}$ term with $\theta < 1$ in Eq.~(\ref{eq:crack_disp_func}) should be pursued.
+Here, value $\kappa = 1/4$ is used providing the following relations:
+%From Eq.~(\ref{eq:crack_radius_dep}) it can be derived that radius $r_{\rm q}(\xi=-1) = 0$ for $ \kappa=1/4$, providing the following relations:
+\begin{equation}
+r_{\rm q}= \frac{l}{4}(1+\xi)^2 \quad \Rightarrow \quad \xi = 2 \sqrt{\frac{r_{\rm q}}{l}} -1,
+\end{equation}
+which substituted into Eq.~(\ref{eq:crack_disp_func}) results to an expression with a term $r^{0.5}_{\rm q}= \sqrt{r_{\rm q}}$ renders the desired radial dependence of the displacements $u(r_{\rm q})$ and strains $\varepsilon(r_{\rm q})$:
+\begin{equation}
+\begin{aligned}
+u(r_{\rm q}) = u^{(0)} &+ \left( -3u^{(0)} - u^{(1)} +4u^{(2)} \right) \sqrt{\frac{r_{\rm q}}{l}} + 2 \left( u^{(0)} + u^{(1)} -2 u^{(2)} \right) \frac{r_{\rm q}}{l}\\
+\varepsilon(r_{\rm q}) = \frac{\partial u}{ \partial r_{\rm q}} = &+ \left( - \frac{3}{2}u^{(0)} - \frac{1}{2}u^{(1)} +2u^{(2)} \right) \frac{1}{\sqrt{lr_{\rm q}}} + 2 \left( u^{(0)} + u^{(1)} -2 u^{(2)} \right) \frac{1}{l}
+\end{aligned}
+\end{equation}
+The displacement function contains now a constant (rigid body motion) and linear function also a $\sqrt r_{\rm q}$ term, which reproduces the displacement field at the crack tip. 
+The strain in the quarter-point element possesses the square root $1/{\sqrt r_{\rm q}}$ singularity.
+\subsubsection{Hierarchical shape functions}
+In this subsection, the concept of 1D 2-nd order quarter-point element formulation with standard shape function is extended to the case of hierarchical shape functions.
+It should be mentioned that quarter-point elements used in the present contribution are for 3D and arbitrary order.
+Presentation of 1D/2-nd order is merely done to convey main element attributes, i.e. reproduction of infinite stresses at crack tip.
+A more detailed description for higher dimensions can be found for example in~\citep{nejati2015use}.
+
+Here, global configuration of quarter-point element presented in Figure~\ref{fig:shape_funcs}(a) is considered.
+In hierarchical shape functions~\citep{Ainsworth2003} no extra nodes are added for functions of order higher than the first one therefore the element under considerations is consisted of two nodes (0 and 1 in Figure~\ref{fig:shape_funcs}a)). 
+%The hierarchical shape functions' values for an arbitrary high-order shape function are created in a hierarchical algorithm. 
+This feature greatly simplifies $p$~- and $hp$~- adaptivity implementation.
+Moreover, natural coordinate system and hierarchical shape functions $N_0$, $N_1$ and $N_2$ are presented in Figure~\ref{fig:shape_funcs}b and Figure~\ref{fig:shape_funcs}c, respectively.
+\begin{figure}[h!]
+	\begin{center}
+		\begin{tabular}{c c c c}
+			\includegraphics[height=2.cm]{Figures/QuarterPointHierarchical.pdf}  & {\includegraphics[height=2.cm]{Figures/Hierarchical2nd.pdf}} & &\includegraphics[height=1.3cm]{Figures/HierarchicalNaturals.pdf}\\  
+			(a) & (b) & & (c)\\  
+		\end{tabular}
+		\caption{1D 2-nd order quarter-point element with hierarchical shape functions: a) global configuration b) natural coordinates, c) base shape functions.}
+		\label{fig:shape_funcs}
+	\end{center}
+\end{figure}
+
+Since $u^{(2)}$ degree of freedom associated to the 2-nd order shape functions $N_2$ is not related to a physical node, fictitious location of the degree of freedom can be achieved through multiplication of shape function with coefficient $\kappa$. 
+Therefore, Eq.~(\ref{eq:crack_disp_func}) can be written for hierarchical shape functions as:
+\begin{equation}\label{eq:hierarchical_u}
+u(\xi) = \sum_{a=0}^2 N_a (\xi) u^{(a)} = (1 -\xi)u^{(0)} + \xi(1 - \xi)u^{(2)}\kappa + \xi u^{(1)}
+\end{equation}
+Rewriting the above Eq.~(Eq.~(\ref{eq:hierarchical_u})) in terms of the radius $r$ takes the form:
+\begin{equation}\label{eq:hierarchical_r}
+r_{\rm q}(\xi) = \sum_{a=0}^2 N_a (\xi) r^{(a)} = \xi l + \xi(1-\xi)  l  \kappa
+\end{equation}
+To achieve generation of a $\sqrt{r_{\rm q}}$ term in Eq.~(\ref{eq:hierarchical_u}) by substitution of $\xi$ by an expression of $r_{\rm q}$, $\kappa = -1$ is chosen and solving Eq.~(\ref{eq:hierarchical_r}) results to relation:
+\begin{equation}
+r_{\rm q}= \xi l - \xi(1-\xi)l \quad \Rightarrow \quad \xi = \sqrt{\frac{r_{\rm q}}{l}},
+\end{equation}
+which yields the following radial dependence for displacements and strains:
+\begin{equation}\label{eq:singstrain}
+\begin{aligned}
+u(r_{\rm q}) &= u^{(0)} + \left( -u^{(0)} + u^{(1)} - u^{(2)} \right) \sqrt \frac{r_{\rm q}}{l} - u^{(2)} \frac{r_{\rm q}}{l}\\
+\varepsilon(r_{\rm q}) &= \frac{\partial u}{\partial r_{\rm q}} = \left( u^{(0)}  + u^{(1)} - u^{(2)}  \right) \frac{1}{2} \sqrt \frac{l}{r_{\rm q}} + u^{(2)} \frac{1}{l}
+\end{aligned}
+\end{equation}
+Expressions in Eq.~(\ref{eq:singstrain}) have the necessary terms to reproduce rigid body motion and pass the patch tests, as well as the desired $1 / \sqrt r_{\rm q}$ singularity.
+This should enable the elements adjacent to the crack front to reproduce strain singularity resulting in a more accurate finite element solution~\citep{nejati2015use}. 
+The influence of the similar procedure with tetrahedral elements will be investigated in Section~\ref{sec:quarter_point_results}.
 
 \section{Numerical examples}
 \label{sec:numerical_examples}
@@ -814,7 +913,7 @@ The mesh used is consisted of approximately 7000 tetrahedral elements.
 	\label{fig:mwlsmapping_cross}
 \end{figure}
 Results of the mapping procedures are presented in Figure~\ref{fig:mwlsmapping_cross}. Comparison to CT data and the standard Least Squares (LS) method in classical finite element method framework are demonstrated in Figure~\ref{fig:mwlsmappingcomparisons}.
-\begin{figure}
+\begin{figure}[h!]
 	\centering
 %	\includegraphics[width=0.7\linewidth]{Figures/mwls_mapping_comparisons.png}
 		\def\svgwidth{12cm}
@@ -891,115 +990,13 @@ Moreover, by looking at the number of degrees of freedom, it can be observed tha
 	\node at (0,0)   {		\input{Figures/tikz/plate_conv_no_sing.tex} };
 	\node at (-3.4,-0.9)   {		\def\svgwidth{3.6cm}	 	\input{Figures/tikz/plate_conv_no_sing_fig.pdf_tex} };
 	\end{tikzpicture}
-	\caption{Decomposition of crack propagation in an elastically deforming body.}
-	\label{fig:frac_kinematics}
+	\caption{Convergence plot for stress intensity factor $K_{\rm I}$ Error (\%) versus no. of DOF (log10) and deformed shape of the plate (bottom left).}
+	\label{fig:plate_conv_no_sing}
 \end{figure}
 
 
-%The use of finite element method to analyse fracture problems is complicated for many reasons. 
-%One of them is stress field singularity located at the crack tip.
-Conventional finite elements are interpolated by polynomials which are not able to reproduce infinite stresses at the crack tip. 
-In the mid-1970s, two independent contributors~\citep{barsoum1976use,henshell1975crack} showed that, the singularity at the crack tip can be modelled by considering shifting the mid-node of all edges connected to crack tip nodes.
-The new mid-node position is at a quarter of edge length distance from the crack tip node known as the quarter-point position and the resulting element is known as quarter-point element. 
-This results in a nonlinear mapping between natural (isoparametric) and local coordinates $\xi \rightarrow x$ which produces the singularity. 
-%Ignatios: it is too early to use radius r_q this will be used later Stress and strain fields are dependent on the radial function of the crack tip, reaching infinity as $ r_{\rm q} \rightarrow 0$. \\
-
-The concept of quarter point element is briefly described by means of 1D 2-nd order finite element with standard base shape functions. 
-Global configuration of 2-nd order element with nodes 0, 2 and 1 is schematically presented in Figure~\ref{fig:1d-quarter}(a) where node 0 coincides with the crack tip.
-Furthermore, the natural coordinate system of the element is presented in Figure~\ref{fig:1d-quarter}b and the corresponding standard shape functions $N_0$, $N_2$ and $N_1$ are presented in Figure~\ref{fig:1d-quarter}c.  
-Let the demonstrated element be a quarter-point type, the distance between node 0 with nodes 2 and 1 is given by radial coordinate $r_{\rm q}$ (see Figure~\ref{fig:1d-quarter}(a)). 
-The position of the middle node 2 is controlled by the parameter $\kappa$. 
-The quadratic 1D displacement function of this element is: 
-\begin{equation}\label{eq:crack_disp_func}
-\begin{aligned}
-&u(\xi) = \sum_{a=0}^2 N_a (\xi) u^{(a)} = \frac{1}{2} \xi (\xi - 1)u^{(0)} + (1 - \xi^2)u^{(2)} + \frac{1}{2} \xi (\xi + 1)u^{(1)} =\\
-& u^{(2)} + \frac{1}{2}(u^{(1)} - u^{(0)})\xi + \left[ \frac{1}{2} (u^{(0)} + u^{(1)}) - u^{(2)} \right] \xi^2 
-\end{aligned}
-\end{equation}
-
-\subsubsection{Quarter point elements} %should that be in appendix?
-\begin{figure}[h!]
-\begin{center}
-\begin{tabular}{c c c c}
-\includegraphics[height=2.cm]{Figures/QuarterPoint.pdf}  & \includegraphics[height=2.1cm]{Figures/2ndOrderNodeOr.pdf} &   &  \includegraphics[height=1.3cm]{Figures/StandardElement.pdf}\\  
- (a) & (b)& &(c)
-\end{tabular}
-\caption{1D 2-nd order quarter-point element with standard shape functions:a) global configuration, b) natural coordinates, c) base shape functions }
-\label{fig:1d-quarter}
-\end{center}
-\end{figure}
-
-Note that Eq.~(\ref{eq:crack_disp_func}) is ordered by powers of $\xi$ that is element natural coordinate. 
-In the classical isoparametric formulation, the same interpolation functions are also used for the coordinates, i.e. as well for the radius $r_{\rm q}$ with the nodal values $r^{(0)}_{\rm q} = 0$, $r^{(2)}_{\rm q} = \kappa l$, $r^{(1)}_{\rm q} = l$:
-\begin{equation}\label{eq:crack_radius_dep}
-r_{\rm q}(\xi) = \sum_{a=0}^2 N_a (\xi) r^{(a)}_{\rm q} = \kappa l + \frac{1}{2} l \xi  + \left(  \frac{1}{2} - \kappa \right) l \xi^2.
-\end{equation}
-Any value chosen for $\kappa$ would fulfil equality $r_{\rm q}(\xi=-1) = 0$ in Eq.~(\ref{eq:crack_radius_dep}).
-However, the aim of quarter point element is to generate an approximated displacement field, $u(r_{\rm q})$, so that the resulting strains evaluated as $\varepsilon (r_{\rm q}) = \partial u(r_{\rm q})/\partial r_{\rm q}$.
-To achieve this, a $r^{\theta}_{\rm q}$ term with $\theta < 1$ in Eq.~(\ref{eq:crack_disp_func}) should be pursued.
-Here, value $\kappa = 1/4$ is used providing the following relations:
-%From Eq.~(\ref{eq:crack_radius_dep}) it can be derived that radius $r_{\rm q}(\xi=-1) = 0$ for $ \kappa=1/4$, providing the following relations:
-\begin{equation}
-r_{\rm q}= \frac{l}{4}(1+\xi)^2 \quad \Rightarrow \quad \xi = 2 \sqrt{\frac{r_{\rm q}}{l}} -1,
-\end{equation}
-which substituted into Eq.~(\ref{eq:crack_disp_func}) results to an expression with a term $r^{0.5}_{\rm q}= \sqrt{r_{\rm q}}$ renders the desired radial dependence of the displacements $u(r_{\rm q})$ and strains $\varepsilon(r_{\rm q})$:
-\begin{equation}
-\begin{aligned}
-u(r_{\rm q}) = u^{(0)} &+ \left( -3u^{(0)} - u^{(1)} +4u^{(2)} \right) \sqrt{\frac{r_{\rm q}}{l}} + 2 \left( u^{(0)} + u^{(1)} -2 u^{(2)} \right) \frac{r_{\rm q}}{l}\\
-\varepsilon(r_{\rm q}) = \frac{\partial u}{ \partial r_{\rm q}} = &+ \left( - \frac{3}{2}u^{(0)} - \frac{1}{2}u^{(1)} +2u^{(2)} \right) \frac{1}{\sqrt{lr_{\rm q}}} + 2 \left( u^{(0)} + u^{(1)} -2 u^{(2)} \right) \frac{1}{l}
-\end{aligned}
-\end{equation}
-The displacement function contains now a constant (rigid body motion) and linear function also a $\sqrt r_{\rm q}$ term, which reproduces the displacement field at the crack tip. 
-The strain in the quarter-point element possesses the square root $1/{\sqrt r_{\rm q}}$ singularity.
-\subsubsection{Hierarchical shape functions}
-In this subsection, the concept of 1D 2-nd order quarter-point element formulation with standard shape function is extended to the case of hierarchical shape functions.
-It should be mentioned that quarter-point elements used in the present contribution are for 3D and arbitrary order.
-Presentation of 1D/2-nd order is merely done to convey main element attributes, i.e. reproduction of infinite stresses at crack tip.
-A more detailed description for higher dimensions can be found for example in~\citep{nejati2015use}.
-
-Here, global configuration of quarter-point element presented in Figure~\ref{fig:shape_funcs}(a) is considered.
-In hierarchical shape functions~\citep{Ainsworth2003} no extra nodes are added for functions of order higher than the first one therefore the element under considerations is consisted of two nodes (0 and 1 in Figure~\ref{fig:shape_funcs}a)). 
-%The hierarchical shape functions' values for an arbitrary high-order shape function are created in a hierarchical algorithm. 
-This feature greatly simplifies $p$~- and $hp$~- adaptivity implementation.
-Moreover, natural coordinate system and hierarchical shape functions $N_0$, $N_1$ and $N_2$ are presented in Figure~\ref{fig:shape_funcs}b and Figure~\ref{fig:shape_funcs}c, respectively.
-
-Since $u^{(2)}$ degree of freedom associated to the 2-nd order shape functions $N_2$ is not related to a physical node, fictitious location of the degree of freedom can be achieved through multiplication of shape function with coefficient $\kappa$. 
-Therefore, Eq.~(\ref{eq:crack_disp_func}) can be written for hierarchical shape functions as:
-
-\begin{figure}[h!]
-\begin{center}
-\begin{tabular}{c c c c}
-\includegraphics[height=2.cm]{Figures/QuarterPointHierarchical.pdf}  & {\includegraphics[height=2.cm]{Figures/Hierarchical2nd.pdf}} & &\includegraphics[height=1.3cm]{Figures/HierarchicalNaturals.pdf}\\  
- (a) & (b) & & (c)\\  
-\end{tabular}
-\caption{1D 2-nd order quarter-point element with hierarchical shape functions: a) global configuration b) natural coordinates, c) base shape functions.}
-\label{fig:shape_funcs}
-\end{center}
-\end{figure}
-
-
-\begin{equation}\label{eq:hierarchical_u}
-u(\xi) = \sum_{a=0}^2 N_a (\xi) u^{(a)} = (1 -\xi)u^{(0)} + \xi(1 - \xi)u^{(2)}\kappa + \xi u^{(1)}
-\end{equation}
-Rewriting the above Eq.~(Eq.~(\ref{eq:hierarchical_u})) in terms of the radius $r$ takes the form:
-\begin{equation}\label{eq:hierarchical_r}
-r_{\rm q}(\xi) = \sum_{a=0}^2 N_a (\xi) r^{(a)} = \xi l + \xi(1-\xi)  l  \kappa
-\end{equation}
-To achieve generation of a $\sqrt{r_{\rm q}}$ term in Eq.~(\ref{eq:hierarchical_u}) by substitution of $\xi$ by an expression of $r_{\rm q}$, $\kappa = -1$ is chosen and solving Eq.~(\ref{eq:hierarchical_r}) results to relation:
-\begin{equation}
-r_{\rm q}= \xi l - \xi(1-\xi)l \quad \Rightarrow \quad \xi = \sqrt{\frac{r_{\rm q}}{l}},
-\end{equation}
-which yields the following radial dependence for displacements and strains:
-\begin{equation}\label{eq:singstrain}
-\begin{aligned}
-u(r_{\rm q}) &= u^{(0)} + \left( -u^{(0)} + u^{(1)} - u^{(2)} \right) \sqrt \frac{r_{\rm q}}{l} - u^{(2)} \frac{r_{\rm q}}{l}\\
-\varepsilon(r_{\rm q}) &= \frac{\partial u}{\partial r_{\rm q}} = \left( u^{(0)}  + u^{(1)} - u^{(2)}  \right) \frac{1}{2} \sqrt \frac{l}{r_{\rm q}} + u^{(2)} \frac{1}{l}
-\end{aligned}
-\end{equation}
-Expressions in Eq.~(\ref{eq:singstrain}) have the necessary terms to reproduce rigid body motion and pass the patch tests, as well as the desired $1 / \sqrt r_{\rm q}$ singularity.
-This should enable the elements adjacent to the crack front to reproduce strain singularity resulting in a more accurate finite element solution~\citep{nejati2015use}. 
-The influence of the similar procedure with tetrahedral elements will be investigated in the following section.
 \subsubsection{Convergence with quarter-point elements}
+\label{sec:quarter_point_results}
 Here, results of the convergence upon $p$~-~refinement will be presented with the same problem as demonstrated in Section~\ref{sec:plate_section}. 
 This time, however, quarter-point tetrahedral elements were applied around the crack front.
 \begin{figure}[h!]
@@ -1112,7 +1109,7 @@ The resulting energy rate at different points in time of bone adaptation are ill
 		\begin{tikzpicture}
 			\node at (0,0) {	\input{Figures/tikz/crack_mc3_release.tex} };
 			\node at(0.,0){ \includegraphics[width=9cm]{Figures/tikz/density_for_g1_conv.png}};
-			\node at(2,-1){                    	\def\svgwidth{3cm} 	\input{Figures/scale_bars/scale_bar_density_rainbow.pdf_tex}  } ;
+			\node at(2,-1){                    	\def\svgwidth{4cm} 	\input{Figures/scale_bars/scale_bar_density_rainbow.pdf_tex}  } ;
 		
 		\end{tikzpicture}
 	\caption{Material forces for remodelled bones for three local $p$~-~refinements.}
