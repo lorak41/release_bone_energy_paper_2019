@@ -2,13 +2,11 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:ns0="http://www.iki.fi/pav/software/textext/"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    sodipodi:docname="HierarchicalNaturals.svg"
@@ -40,8 +38,8 @@
      showgrid="false"
      inkscape:current-layer="layer1"
      inkscape:document-units="px"
-     inkscape:cy="705.76169"
-     inkscape:cx="406.17569"
+     inkscape:cy="455.76169"
+     inkscape:cx="152.26944"
      inkscape:zoom="0.64"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -238,320 +236,41 @@
        cx="-643.10382"
        cy="542.14893"
        r="21.061823" />
-    <g
-       transform="matrix(11.496885,0,0,11.496885,-3246.8315,-876.93831)"
-       id="g43837">
-      <g
-         style="fill:#000000;fill-opacity:1"
-         id="g43839">
-        <use
-           height="100%"
-           width="100%"
-           xlink:href="#textext-3b5955e5-1"
-           x="223.43201"
-           y="134.765"
-           id="use43841" />
-      </g>
-    </g>
-    <g
-       id="g44049"
-       ns0:preamble="/Users/ignathanas/Documents/Contributions/Contact_1/AMA-stix/ama/figures/textext.preambleArial.tex"
-       ns0:text="+1"
-       transform="matrix(12.222718,0,0,11.539462,-2207.7777,-881.9508)">
-      <defs
-         id="defs44051">
-        <g
-           id="g44053">
-          <symbol
-             style="overflow:visible"
-             id="textext-07f3cda5-0"
-             overflow="visible">
-            <path
-               inkscape:connector-curvature="0"
-               id="path44056"
-               d=""
-               style="stroke:none" />
-          </symbol>
-          <symbol
-             style="overflow:visible"
-             id="textext-07f3cda5-1"
-             overflow="visible">
-            <path
-               inkscape:connector-curvature="0"
-               id="path44059"
-               d="m 5.328125,-2.65625 -2.0625,0 0,-2.0625 -0.703125,0 0,2.0625 -2.0625,0 0,0.6875 2.0625,0 0,2.0625 0.703125,0 0,-2.0625 2.0625,0 z m 0,0"
-               style="stroke:none" />
-          </symbol>
-          <symbol
-             style="overflow:visible"
-             id="textext-07f3cda5-2"
-             overflow="visible">
-            <path
-               inkscape:connector-curvature="0"
-               id="path44062"
-               d="m 2.578125,-5.03125 0,5.03125 0.875,0 0,-7.0625 -0.578125,0 c -0.296875,1.078125 -0.5,1.234375 -1.859375,1.40625 l 0,0.625 z m 0,0"
-               style="stroke:none" />
-          </symbol>
-        </g>
-      </defs>
-      <g
-         id="textext-07f3cda5-3">
-        <g
-           id="g44065"
-           style="fill:#000000;fill-opacity:1">
-          <use
-             height="100%"
-             width="100%"
-             id="use44067"
-             y="134.765"
-             x="223.43201"
-             xlink:href="#textext-07f3cda5-1" />
-          <use
-             height="100%"
-             width="100%"
-             id="use44069"
-             y="134.765"
-             x="229.25015"
-             xlink:href="#textext-07f3cda5-2" />
-        </g>
-      </g>
-    </g>
-    <g
-       transform="matrix(12.222718,0,0,11.539462,-2207.7777,-881.9508)"
-       ns0:text="+1"
-       ns0:preamble="/Users/ignathanas/Documents/Contributions/Contact_1/AMA-stix/ama/figures/textext.preambleArial.tex"
-       id="g44209">
-      <defs
-         id="defs44211">
-        <g
-           id="g44213">
-          <symbol
-             style="overflow:visible"
-             overflow="visible"
-             id="symbol44215">
-            <path
-               inkscape:connector-curvature="0"
-               style="stroke:none"
-               d=""
-               id="path44217" />
-          </symbol>
-          <symbol
-             style="overflow:visible"
-             overflow="visible"
-             id="symbol44219">
-            <path
-               inkscape:connector-curvature="0"
-               style="stroke:none"
-               d="m 5.328125,-2.65625 -2.0625,0 0,-2.0625 -0.703125,0 0,2.0625 -2.0625,0 0,0.6875 2.0625,0 0,2.0625 0.703125,0 0,-2.0625 2.0625,0 z m 0,0"
-               id="path44221" />
-          </symbol>
-          <symbol
-             style="overflow:visible"
-             overflow="visible"
-             id="symbol44223">
-            <path
-               inkscape:connector-curvature="0"
-               style="stroke:none"
-               d="m 2.578125,-5.03125 0,5.03125 0.875,0 0,-7.0625 -0.578125,0 c -0.296875,1.078125 -0.5,1.234375 -1.859375,1.40625 l 0,0.625 z m 0,0"
-               id="path44225" />
-          </symbol>
-        </g>
-      </defs>
-      <g
-         id="g44227">
-        <g
-           style="fill:#000000;fill-opacity:1"
-           id="g44229">
-          <use
-             height="100%"
-             width="100%"
-             xlink:href="#textext-07f3cda5-1"
-             x="223.43201"
-             y="134.765"
-             id="use44231" />
-          <use
-             height="100%"
-             width="100%"
-             xlink:href="#textext-07f3cda5-2"
-             x="229.25015"
-             y="134.765"
-             id="use44233" />
-        </g>
-      </g>
-    </g>
-    <g
-       id="g44408"
-       ns0:preamble="/Users/ignathanas/Documents/Contributions/Contact_1/AMA-stix/ama/figures/textext.preambleArial.tex"
-       ns0:text="+1"
-       transform="matrix(12.222718,0,0,11.539462,-2207.7777,-881.9508)">
-      <defs
-         id="defs44410">
-        <g
-           id="g44412">
-          <symbol
-             style="overflow:visible"
-             id="symbol44414"
-             overflow="visible">
-            <path
-               inkscape:connector-curvature="0"
-               id="path44416"
-               d=""
-               style="stroke:none" />
-          </symbol>
-          <symbol
-             style="overflow:visible"
-             id="symbol44418"
-             overflow="visible">
-            <path
-               inkscape:connector-curvature="0"
-               id="path44420"
-               d="m 5.328125,-2.65625 -2.0625,0 0,-2.0625 -0.703125,0 0,2.0625 -2.0625,0 0,0.6875 2.0625,0 0,2.0625 0.703125,0 0,-2.0625 2.0625,0 z m 0,0"
-               style="stroke:none" />
-          </symbol>
-          <symbol
-             style="overflow:visible"
-             id="symbol44422"
-             overflow="visible">
-            <path
-               inkscape:connector-curvature="0"
-               id="path44424"
-               d="m 2.578125,-5.03125 0,5.03125 0.875,0 0,-7.0625 -0.578125,0 c -0.296875,1.078125 -0.5,1.234375 -1.859375,1.40625 l 0,0.625 z m 0,0"
-               style="stroke:none" />
-          </symbol>
-        </g>
-      </defs>
-      <g
-         id="g44426">
-        <g
-           id="g44428"
-           style="fill:#000000;fill-opacity:1">
-          <use
-             height="100%"
-             width="100%"
-             id="use44430"
-             y="134.765"
-             x="223.43201"
-             xlink:href="#textext-07f3cda5-1" />
-          <use
-             height="100%"
-             width="100%"
-             id="use44432"
-             y="134.765"
-             x="229.25015"
-             xlink:href="#textext-07f3cda5-2" />
-        </g>
-      </g>
-    </g>
-    <g
-       transform="matrix(12.222718,0,0,11.539462,-2207.7777,-881.9508)"
-       ns0:text="+1"
-       ns0:preamble="/Users/ignathanas/Documents/Contributions/Contact_1/AMA-stix/ama/figures/textext.preambleArial.tex"
-       id="g44630">
-      <defs
-         id="defs44632">
-        <g
-           id="g44634">
-          <symbol
-             style="overflow:visible"
-             overflow="visible"
-             id="symbol44636">
-            <path
-               inkscape:connector-curvature="0"
-               style="stroke:none"
-               d=""
-               id="path44638" />
-          </symbol>
-          <symbol
-             style="overflow:visible"
-             overflow="visible"
-             id="symbol44640">
-            <path
-               inkscape:connector-curvature="0"
-               style="stroke:none"
-               d="m 5.328125,-2.65625 -2.0625,0 0,-2.0625 -0.703125,0 0,2.0625 -2.0625,0 0,0.6875 2.0625,0 0,2.0625 0.703125,0 0,-2.0625 2.0625,0 z m 0,0"
-               id="path44642" />
-          </symbol>
-          <symbol
-             style="overflow:visible"
-             overflow="visible"
-             id="symbol44644">
-            <path
-               inkscape:connector-curvature="0"
-               style="stroke:none"
-               d="m 2.578125,-5.03125 0,5.03125 0.875,0 0,-7.0625 -0.578125,0 c -0.296875,1.078125 -0.5,1.234375 -1.859375,1.40625 l 0,0.625 z m 0,0"
-               id="path44646" />
-          </symbol>
-        </g>
-      </defs>
-      <g
-         id="g44648">
-        <g
-           style="fill:#000000;fill-opacity:1"
-           id="g44650">
-          <use
-             height="100%"
-             width="100%"
-             xlink:href="#textext-07f3cda5-1"
-             x="223.43201"
-             y="134.765"
-             id="use44652" />
-          <use
-             height="100%"
-             width="100%"
-             xlink:href="#textext-07f3cda5-2"
-             x="229.25015"
-             y="134.765"
-             id="use44654" />
-        </g>
-      </g>
-    </g>
-    <g
-       ns0:text="$\\xi$"
-       ns0:preamble="/Users/ignathanas/Documents/Contributions/Contact_1/AMA-stix/ama/figures/textext.preamble.tex"
-       transform="matrix(11.906333,0,0,11.906333,-3188.0701,-1266.4865)"
-       id="g53442">
-      <defs
-         id="defs53444">
-        <g
-           id="g53446">
-          <symbol
-             overflow="visible"
-             id="symbol53448"
-             style="overflow:visible">
-            <path
-               style="stroke:none"
-               d=""
-               id="path53450"
-               inkscape:connector-curvature="0" />
-          </symbol>
-          <symbol
-             overflow="visible"
-             id="symbol53452"
-             style="overflow:visible">
-            <path
-               style="stroke:none"
-               d="m 4.640625,-5.90625 c 0,-0.140625 -0.046875,-0.234375 -0.21875,-0.234375 -0.6875,0 -1.046875,0.640625 -1.4375,0.640625 -0.265625,0 -0.34375,-0.265625 -0.34375,-0.46875 0,-0.265625 0.328125,-0.46875 0.484375,-0.546875 l -0.515625,0 C 2.59375,-6.515625 2.25,-6.3125 2.25,-5.96875 c 0,0.4375 0.25,0.5 0.46875,0.609375 l 0,0.015625 c -0.015625,0 -1.6875,0.421875 -1.6875,1.46875 0,0.828125 1.015625,0.890625 1.03125,0.890625 l 0,0.03125 c -0.015625,0 -2.125,0.4375 -2.125,1.96875 0,0.9375 0.734375,1.1875 1.515625,1.1875 0.71875,0 1.375,0.03125 1.375,0.53125 0,0.625 -0.75,1.09375 -1.265625,1.09375 C 1.171875,1.828125 1.15625,1.5 1.15625,1.375 1.046875,1.421875 0.671875,1.59375 0.671875,1.8125 c 0,0.171875 0.265625,0.25 0.4375,0.25 1.1875,0 2.09375,-0.59375 2.09375,-1.6875 0,-0.6875 -0.734375,-0.765625 -1.203125,-0.765625 -0.703125,0 -1.078125,-0.3125 -1.078125,-0.828125 0,-1.078125 1.046875,-1.578125 1.6875,-1.578125 0.546875,0 0.796875,0.109375 0.953125,0.109375 0.25,0 0.5,-0.140625 0.5,-0.46875 0,-0.171875 -0.03125,-0.265625 -0.25,-0.265625 -0.28125,0 -0.578125,0.25 -1.265625,0.25 -0.59375,0 -0.65625,-0.390625 -0.65625,-0.671875 0,-0.921875 1.015625,-1.390625 1.03125,-1.390625 0.3125,0.0625 0.5625,0.078125 0.765625,0.078125 0.8125,0 0.953125,-0.390625 0.953125,-0.75 z m 0,0"
-               id="path53454"
-               inkscape:connector-curvature="0" />
-          </symbol>
-        </g>
-      </defs>
-      <g
-         id="g53456">
-        <g
-           style="fill:#000000;fill-opacity:1"
-           id="g53458">
-          <g
-             id="use53460"
-             transform="translate(223.532,134.765)">
-            <path
-               style="stroke:none"
-               d="m 4.640625,-5.90625 c 0,-0.140625 -0.046875,-0.234375 -0.21875,-0.234375 -0.6875,0 -1.046875,0.640625 -1.4375,0.640625 -0.265625,0 -0.34375,-0.265625 -0.34375,-0.46875 0,-0.265625 0.328125,-0.46875 0.484375,-0.546875 l -0.515625,0 C 2.59375,-6.515625 2.25,-6.3125 2.25,-5.96875 c 0,0.4375 0.25,0.5 0.46875,0.609375 l 0,0.015625 c -0.015625,0 -1.6875,0.421875 -1.6875,1.46875 0,0.828125 1.015625,0.890625 1.03125,0.890625 l 0,0.03125 c -0.015625,0 -2.125,0.4375 -2.125,1.96875 0,0.9375 0.734375,1.1875 1.515625,1.1875 0.71875,0 1.375,0.03125 1.375,0.53125 0,0.625 -0.75,1.09375 -1.265625,1.09375 C 1.171875,1.828125 1.15625,1.5 1.15625,1.375 1.046875,1.421875 0.671875,1.59375 0.671875,1.8125 c 0,0.171875 0.265625,0.25 0.4375,0.25 1.1875,0 2.09375,-0.59375 2.09375,-1.6875 0,-0.6875 -0.734375,-0.765625 -1.203125,-0.765625 -0.703125,0 -1.078125,-0.3125 -1.078125,-0.828125 0,-1.078125 1.046875,-1.578125 1.6875,-1.578125 0.546875,0 0.796875,0.109375 0.953125,0.109375 0.25,0 0.5,-0.140625 0.5,-0.46875 0,-0.171875 -0.03125,-0.265625 -0.25,-0.265625 -0.28125,0 -0.578125,0.25 -1.265625,0.25 -0.59375,0 -0.65625,-0.390625 -0.65625,-0.671875 0,-0.921875 1.015625,-1.390625 1.03125,-1.390625 0.3125,0.0625 0.5625,0.078125 0.765625,0.078125 0.8125,0 0.953125,-0.390625 0.953125,-0.75 z m 0,0"
-               id="path53468"
-               inkscape:connector-curvature="0" />
-          </g>
-        </g>
-      </g>
-    </g>
-  </g>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot6728"
+       style="font-style:normal;font-weight:normal;font-size:125px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="translate(-195.3125,-85.9375)"><flowRegion
+         id="flowRegion6730"><rect
+           id="rect6732"
+           width="126.5625"
+           height="164.0625"
+           x="-518.75"
+           y="646.11218"
+           style="font-size:125px;text-align:center;text-anchor:middle" /></flowRegion><flowPara
+         id="flowPara6734">0</flowPara></flowRoot>    <flowRoot
+       style="font-style:normal;font-weight:normal;font-size:125px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot6736"
+       xml:space="preserve"
+       transform="translate(975,-92.5)"><flowRegion
+         id="flowRegion6738"><rect
+           style="font-size:125px;text-align:center;text-anchor:middle"
+           y="646.11218"
+           x="-518.75"
+           height="181.25"
+           width="243.75"
+           id="rect6740" /></flowRegion><flowPara
+         id="flowPara6742">+1</flowPara></flowRoot>    <flowRoot
+       transform="translate(-222.25,-423.4375)"
+       style="font-style:normal;font-weight:normal;font-size:125px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot6752"
+       xml:space="preserve"><flowRegion
+         id="flowRegion6754"><rect
+           style="font-size:125px;text-align:center;text-anchor:middle"
+           y="646.11218"
+           x="-518.75"
+           height="209.375"
+           width="435.9375"
+           id="rect6756" /></flowRegion><flowPara
+         id="flowPara6758">$\xi$</flowPara></flowRoot>  </g>
 </svg>

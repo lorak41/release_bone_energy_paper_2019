@@ -1,0 +1,76 @@
+%% Creator: Inkscape inkscape 0.91, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'QuarterPoint.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{3628.80246763bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.21118528)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{Figures/QuarterPoint.pdf}}%
+    \put(-0.00149346,0.15479093){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.13227503\unitlength}\raggedright Opposite\end{minipage}}}%
+    \put(-0.00149346,0.12569041){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.13227503\unitlength}\raggedright crack\end{minipage}}}%
+    \put(-0.00149346,0.09835357){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.11148895\unitlength}\raggedright surface\end{minipage}}}%
+    \put(0.27489839,0.21771607){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04913072\unitlength}\centering $l$\end{minipage}}}%
+    \put(0.16749147,0.08417419){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.18987498\unitlength}\centering $r_{\rm q}$\end{minipage}}}%
+    \put(0.14172581,0.16738663){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.18987498\unitlength}\centering $\kappa l$\end{minipage}}}%
+    \put(0.17699916,0.13526268){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04122303\unitlength}\centering 0\end{minipage}}}%
+    \put(0.26650352,0.13591109){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04122303\unitlength}\centering 2\end{minipage}}}%
+    \put(0.40270431,0.1350203){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04122303\unitlength}\centering 3\end{minipage}}}%
+    \put(0.45089021,0.09300723){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04122303\unitlength}\centering 0\end{minipage}}}%
+    \put(0.56580166,0.09322993){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04122303\unitlength}\centering 2\end{minipage}}}%
+    \put(0.67562042,0.09330994){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04122303\unitlength}\centering 1\end{minipage}}}%
+    \put(0.84761853,0.09065172){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04122303\unitlength}\centering 0\end{minipage}}}%
+    \put(0.73455485,0.09380113){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04122303\unitlength}\centering -1\end{minipage}}}%
+    \put(0.96162701,0.09405308){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04122303\unitlength}\centering +1\end{minipage}}}%
+    \put(0.84824841,0.16592252){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.09224341\unitlength}\centering $\xi$\end{minipage}}}%
+    \put(0.42742821,0.2068987){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.09224341\unitlength}\centering $N_0$\end{minipage}}}%
+    \put(0.53898016,0.2068987){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.09224341\unitlength}\centering $N_2$\end{minipage}}}%
+    \put(0.65317762,0.2068987){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.09224341\unitlength}\centering $N_1$\end{minipage}}}%
+    \put(0.1747464,0.03110092){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04122303\unitlength}\centering a)\end{minipage}}}%
+    \put(0.56754743,0.03200961){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04122303\unitlength}\centering b)\end{minipage}}}%
+    \put(0.85085334,0.03155079){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04122303\unitlength}\centering c)\end{minipage}}}%
+  \end{picture}%
+\endgroup%
