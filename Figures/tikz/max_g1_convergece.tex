@@ -1,0 +1,78 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{1.00000,0.00000,1.00000}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=12cm,
+height=8cm,
+at={(1.011in,0.799in)},
+scale only axis,
+xmode=log,
+xmin=3000,
+xmax=600000,
+xminorticks=true,
+xlabel style={font=\color{white!15!black}},
+xlabel={DOFs $\mathrm{log}_{10}$},
+ymin=0.5,
+ymax=1,
+ylabel style={font=\color{white!15!black}},
+ylabel={Release energy [$\mathrm{kN} / \mathrm{m}$]},
+axis background/.style={fill=white},
+legend style={at={(0.97,0.03)}, anchor=south east, legend cell align=left, align=left, fill=none, draw=none}
+]
+\addplot [color=blue, line width=2.0pt, mark size=2.7pt, mark=triangle, mark options={solid, blue}]
+  table[row sep=crcr]{%
+4957	0.596\\
+6946	0.783\\
+12787	0.865\\
+26038	0.89\\
+31033	0.838\\
+35248	0.883\\
+46615	0.893\\
+96553	0.887\\
+103867	0.895\\
+122743	0.9\\
+};
+\addlegendentry{$p_{\rm l}= 1-6, \: p_{\rm g}=1,$ coarse mesh}
+
+\addplot [color=green, line width=2.0pt, mark size=4.0pt, mark=o, mark options={solid, green}]
+  table[row sep=crcr]{%
+7816	0.701\\
+10405	0.809\\
+17692	0.876\\
+50146	0.895\\
+55684	0.9\\
+69757	0.898\\
+157240	0.907\\
+166900	0.906\\
+190165	0.905\\
+};
+\addlegendentry{$p_{\rm l}= 0-5, \: p_{\rm g}=2,$ base mesh}
+
+\addplot [color=mycolor1, line width=2.0pt, mark size=4.0pt, mark=+, mark options={solid, mycolor1}]
+  table[row sep=crcr]{%
+15313	0.69\\
+18406	0.821\\
+27412	0.861\\
+102265	0.885\\
+108895	0.888\\
+126496	0.896\\
+324598	0.891\\
+336172	0.898\\
+365473	0.899\\
+};
+\addlegendentry{$p_{\rm l}= 0-4, \: p_{\rm g}=3,$ fine mesh}
+
+\addplot [color=black, dashed, line width=2.0pt, forget plot]
+  table[row sep=crcr]{%
+3000	0.91\\
+600000	0.91\\
+};
+\end{axis}
+\end{tikzpicture}%

@@ -1,0 +1,96 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{1.00000,0.00000,1.00000}%
+\definecolor{mycolor2}{rgb}{0.00000,1.00000,1.00000}%
+\definecolor{mycolor3}{rgb}{0.30100,0.74500,0.93300}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=12cm,
+height=8cm,
+at={(1.011in,0.799in)},
+scale only axis,
+xmode=log,
+xmin=1000,
+xmax=5000000,
+xminorticks=true,
+xlabel style={font=\color{white!15!black}},
+xlabel={DOFs $\mathrm{log}_{10}$},
+ymode=log,
+ymin=0.2,
+ymax=100,
+yminorticks=true,
+ylabel style={font=\color{white!15!black}},
+ylabel={Error [\%]},
+axis background/.style={fill=white},
+legend style={legend cell align=left, align=left, fill=none, draw=none}
+]
+\addplot [color=blue, line width=2.0pt, mark size=2.7pt, mark=triangle, mark options={solid, blue}]
+  table[row sep=crcr]{%
+1243	97.6\\
+1693	40.34\\
+3718	1.667\\
+8956	3.654\\
+19717	1.381\\
+38938	5.778\\
+70213	6.173\\
+};
+\addlegendentry{$p_{\rm l}= 1-6 \: p_{\rm g}=1$}
+
+\addplot [color=green, line width=2.0pt, mark size=4.0pt, mark=o, mark options={solid, green}]
+  table[row sep=crcr]{%
+7681	7.867\\
+8614	8.256\\
+12889	5.9\\
+22726	4.171\\
+41026	8.532\\
+71353	3.639\\
+};
+\addlegendentry{$p_{\rm l}= 0-5 \: p_{\rm g}=2$}
+
+\addplot [color=gray, line width=2.0pt, mark size=4.0pt, mark=+, mark options={solid, gray}]
+  table[row sep=crcr]{%
+23596	8.231\\
+25186	7.266\\
+32590	5.481\\
+48586	8.557\\
+76615	3.639\\
+};
+\addlegendentry{$p_{\rm l}= 0-4 \: p_{\rm g}=3$}
+
+\addplot [color=mycolor1, line width=2.0pt, mark size=4.0pt, mark=asterisk, mark options={solid, mycolor1}]
+  table[row sep=crcr]{%
+53269	0.9286\\
+55690	2.94\\
+67102	5.877\\
+90817	1.2\\
+};
+\addlegendentry{$p_{\rm l}= 0-3 \: p_{\rm g}=4$}
+
+\addplot [color=mycolor2, line width=2.0pt, mark size=6.9pt, mark=diamond, mark options={solid, mycolor2}]
+  table[row sep=crcr]{%
+100981	10.99\\
+104407	11.38\\
+120706	4.902\\
+};
+\addlegendentry{$p_{\rm l}= 0-2 \: p_{\rm g}=5$}
+
+\addplot [color=mycolor3, line width=2.0pt, mark size=4.0pt, mark=x, mark options={solid, mycolor3}]
+  table[row sep=crcr]{%
+171013	0.2791\\
+175618	1.126\\
+};
+\addlegendentry{$p_{\rm l}= 0-1 \: p_{\rm g}=6$}
+
+\addplot [color=black, dashed, line width=2.0pt, forget plot]
+  table[row sep=crcr]{%
+1000	5\\
+5000000	5\\
+};
+\end{axis}
+\end{tikzpicture}%
