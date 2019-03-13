@@ -33,16 +33,16 @@
      inkscape:bbox-paths="true"
      inkscape:snap-bbox="true"
      inkscape:window-maximized="0"
-     inkscape:window-y="25"
-     inkscape:window-x="18"
+     inkscape:window-y="58"
+     inkscape:window-x="187"
      inkscape:window-height="755"
      inkscape:window-width="1280"
      showgrid="false"
      inkscape:current-layer="layer1"
      inkscape:document-units="px"
-     inkscape:cy="544.39627"
-     inkscape:cx="343.69442"
-     inkscape:zoom="1"
+     inkscape:cy="614.86584"
+     inkscape:cx="231.17802"
+     inkscape:zoom="0.70710678"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="1.0"
@@ -695,12 +695,12 @@
        transform="translate(8.125,35.375)"><flowRegion
          id="flowRegion5220"><rect
            id="rect5222"
-           width="146"
-           height="43.5"
+           width="242"
+           height="37.5"
            x="-280"
            y="159.8622"
            style="font-size:28.75px" /></flowRegion><flowPara
-         id="flowPara5224">Material</flowPara></flowRoot>    <flowRoot
+         id="flowPara5224">Current material</flowPara></flowRoot>    <flowRoot
        transform="translate(8.125,65.375)"
        style="font-style:normal;font-weight:normal;font-size:28.75px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="flowRoot5258"
@@ -721,10 +721,10 @@
            style="font-size:28.75px"
            y="159.8622"
            x="-280"
-           height="43.5"
-           width="146"
+           height="42.085785"
+           width="219.53911"
            id="rect5414" /></flowRegion><flowPara
-         id="flowPara5416">Spatial</flowPara></flowRoot>    <flowRoot
+         id="flowPara5416">Current spatial</flowPara></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot5418"
        style="font-style:normal;font-weight:normal;font-size:28.75px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -892,5 +892,17 @@
            height="55.650757"
            width="771.51892"
            id="rect5886" /></flowRegion><flowPara
-         id="flowPara5888">$\mathbf F=\mathbf h \mathbf H^{-1}$</flowPara></flowRoot>  </g>
+         id="flowPara5888">$\mathbf F=\mathbf h \mathbf H^{-1}$</flowPara></flowRoot>    <flowRoot
+       transform="translate(8.125,7.375)"
+       style="font-style:normal;font-weight:normal;font-size:28.75px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot4661"
+       xml:space="preserve"><flowRegion
+         id="flowRegion4663"><rect
+           style="font-size:28.75px"
+           y="159.8622"
+           x="-280"
+           height="43.5"
+           width="146"
+           id="rect4665" /></flowRegion><flowPara
+         id="flowPara4667" /></flowRoot>  </g>
 </svg>
