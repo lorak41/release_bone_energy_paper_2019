@@ -22,7 +22,7 @@
 \pgfplotsset{compat=newest}
 \usetikzlibrary{plotmarks}
 \usetikzlibrary{arrows.meta}
-\tikzset{every picture/.style={/utils/exec={\sffamily}}}
+%\tikzset{every picture/.style={/utils/exec={\sffamily}}}
 \usepgfplotslibrary{patchplots}
 \usepackage{grffile}
 
@@ -229,7 +229,7 @@ $\Omega_t$ and the evolution of the crack surface in material space $\mathcal
 B_t$ it is convenient to decompose the problem into separate configurations.
 First, propagation of the crack is described by the mapping from the
 reference configuration to the current material domain, $\Xi$. Next, purely
-elastic deformation is mapped from the current material to spatial domain,
+elastic deformation is mapped from the current material to current spatial domain,
 $\mathbf \varphi$. Let $\mathbf x = \varphi(\mathbf X,t)$ describe the motion
 of the body, which transforms material positions, $\mathbf X$, to their
 spatial counterparts, $\mathbf x$. The physical displacements are derived as
@@ -240,7 +240,7 @@ follows:
 
 The reference configuration represents the body before crack extensions with
 mapping $\Xi( { \boldsymbol {\rm \upchi}}, t)$ of the reference
-coordinates, ${ \boldsymbol {\rm \upchi}}$, on to the material coordinates,
+coordinates, ${ \boldsymbol {\rm \upchi}}$, on to the current material coordinates,
 $\mathbf X$. This mapping describes a material structural change like
 extensions of the crack as a result of the crack front movement.
 \begin{figure}[h!]
@@ -290,36 +290,46 @@ and
 
 \subsection{Conservation of mass}
 
-Note that the density is current material filed, defined
-as
+Density is a field that evolves in the current material configuration and defined as
 \begin{equation}
 	\rho = \rho(\mathbf{X},t) 
 	= \rho\left(
 		\mathbf \Xi( { \boldsymbol {\rm \upchi}}, t), t
 	\right)
+\label{eq:density_material}	
 \end{equation}
 
 Following Kuhl and Steinmann~\citep{kuhl2003computational}, we assume that
 the rate of change of the time-dependent material density is in equilibrium
-with the mass flux evaluated as:
+with mass flux evaluated as:
 \begin{equation}
 \frac{\partial\rho}{\partial t}  + \dot{\mathbf{W}} \cdot  \nabla_\mathbf{X} \rho = 
 \nabla_{\boldsymbol {\rm X}} \cdot \mathbf{R} + \mathcal{R}_0
 \label{eq:mass_balance}
 \end{equation}
-where $\rho$ is mass density, $\mathbf{R}$ is the mass flux and
-$\mathcal{R}_0$ is the locally created mass. The term on the right hand side
-is material time derivative associated which evolving current material
-configuration, as result of changing topology accounting for crack
-propagation. However, if it is assumed that the mass flux $\mathbf{R}$ is zero,
-such that only the local mass source $\mathcal{R}_0$ contributes to the
-changes in density. 
+where $\rho$ is mass density and $\mathcal{R}_0$ is the locally created mass
+Furthermore, $\mathbf{R}$ is the mass flux defined as:
 
-Description of remodelling in the context configurational mechanics has
-theoretical and practical implications, the density field has to be
+\begin{equation}
+\mathbf{R} = \mathcal{R} \nabla_\mathbf{X} \rho
+\label{eq:mass_flux}
+\end{equation}
+
+where $\mathcal{R}$ is mass conductivity.
+
+The term on the right hand side
+is material time derivative associated with evolving current material
+configuration, as result of changing topology resulted from crack
+propagation. However, in the present work it is assumed that the mass flux $\mathbf{R}$ is zero.
+Hence, only the local mass source $\mathcal{R}_0$ contributes to the
+changes in density.
+
+Description of remodelling in the context of configurational mechanics has
+theoretical and practical implications.
+Density field (see Eq.~(\ref{eq:density_material})) has to be
 approximated on the moving mesh in current material configuration. However,
 assuming that fracture process takes place much faster than the process of
-bone remodelling, i.e. both are separated by time scales, both problems,
+bone remodelling, i.e. both are separated by time scales. Therefore, both problems,
 fracture and bone remodelling, can be calculated in a staggered manner.
 Moreover, to avoid numerical difficulties associated with the approximation
 of densities in current material configuration and the necessity for
@@ -328,7 +338,7 @@ choose to approximate bone density using MWLS approximation on fixed
 reference configuration. That enables us to map bone density and its
 gradients of bone density on finite element mesh integration point, and
 account for moving background current material mesh, as is shown in following
-sections. In that case 
+sections.
 
 \subsection{Crack front kinematics}
 
@@ -342,8 +352,9 @@ sections. In that case
 	\end{centering}
 \end{figure}
 
-The crack surface is denoted as $\Gamma$ with a crack front $\partial
-\Gamma$, see Figure~\ref{fig:frac_crack_con}.
+The crack surface is denoted by $\Gamma$ (having two sides distinguished through superscripts $+$ and $-$) with a crack front $\partial
+\Gamma$, see Figure~\ref{fig:frac_crack_con}. 
+Moreover, unit vector, $\mathbf N$, is defined to be normal along the body boundary $\partial {\mathcal{B}}_t$ and the crack boundary $\Gamma^{+} \cup \Gamma^{+} \cup \partial \Gamma$.
 Following~\citep{kaczmarczyk2014three}, a kinematic relationship between the
 change in crack surface area $\dot A_\Gamma$ and the crack front velocity
 $\mathbf{\dot W}$ can be defined as:
@@ -399,11 +410,11 @@ where
 \mathbf f^{\mathrm {inh}} = 
 \left.
 \frac{\partial \Psi}{\partial \rho}
-\right|_{(\mathbf{F} = const)}
+\right|_{(\mathbf{F} = {\rm{const}})}
 \frac{\partial \rho}{\partial \mathbf X} 
 \end{equation}
 are the first Piola-Kirchhoff stress and Eshelby stress tensors, respectively. 
-$\mathbf f^{\mathrm {inh}}$ is a fictitious force, directed from the 
+Furthermore, $\mathbf f^{\mathrm {inh}}$ is a fictitious force, directed from the 
 $\textit {harder}$ part of the material to the $ \textit {softer}$ part. 
 
 Following similar derivations like in \citep{kaczmarczyk2017energy}; adding
@@ -412,7 +423,7 @@ volume integrals and boundary integrals, and grouping terms work conjugated
 to spatial and material velocities we get local conservation laws. The
 spatial conservation law of linear momentum balance, for any point inside the
 body, is expressed as follows:
-\begin{equation} \label{eq:linear_momentun}
+\begin{equation} \label{eq:linear_momentum}
 \nabla_{\mathbf X} \cdot \mathbf P = 0
 \;
 \forall \mathbf{X}\in\mathcal B_t,
@@ -420,9 +431,8 @@ body, is expressed as follows:
 \mathbf{P}\mathbf{N} = \mathbf{t}\;
 \forall \mathbf{X}\in\partial\mathcal B_t^\sigma
 \end{equation}
-where $\partial\mathcal B_t^\sigma$ is where tractions are applied. 
-Therefore, the first term on the right-hand side in
-Eq.~(\ref{eq:crack_local_gauss}) vanishes. However, the material conservation
+where $\partial\mathcal B_t^\sigma$ is the region of the boundary where tractions are applied. 
+However, the material conservation
 law is not equal to zero in case of heterogeneous materials like bones.
 Similarly to~\citep{kienzler2014configurational}, material defects and
 inhomogeneities can create additional configurational forces; hence, material
@@ -437,7 +447,7 @@ momentum balance can be expressed as:
 \end{equation}
 Equations for linear conservation momentum and material momentum, are a local
 form first thermodynamic law which needs to be satisfied at every material
-point in current material configuration to make the body in equilibrium.
+point in current material configuration to satisfy equilibrium.
 
 Noting that, the surface $\mathcal C$ (Figure~\ref{fig:frac_crack_con})
 collapses to the crack front $\partial \Gamma $ and integrals over the crack
@@ -460,72 +470,74 @@ and material resistance is
 \begin{equation}
 	\gamma \mathbf A_{\partial \Gamma}
 \end{equation}
-This equation represents the equilibrium condition for the crack front. From
-the above equation, two important observations can be concluded. One, crack
-front is in equilibrium where the crack is not propagating, i.e. material
+The last equation represents the equilibrium condition for the crack front. From 
+Eq.~(\ref{eq:crack_local_first_law}), two important observations can be made. 
+Firstly, crack front is in equilibrium where the crack is not propagating, i.e. material
 velocity at the crack front is zero, or crack front is propagating and driving
-force is in equilibrium with an material force. Two, front equilibrium takes
-a similar form to presented in \citep{kaczmarczyk2017energy}, that as will be
-shown later justifies the use of the Griffith criterion, originally proposed
+force is in equilibrium with material forces. Secondly, front equilibrium takes
+a similar form to that presented in \citep{kaczmarczyk2017energy}, that (as will be
+shown later) justifies the use of the Griffith criterion, originally proposed
 for homogenous materials.
 
-Note that in this work we take into account dissipation energy associated
-only with topology evolution, for materials like a bone that could be further
-extended to dissipation associated with crack opening, i.e. cohesive effects. 
-However above equations will be still valid.
+Note that in this work we take into account dissipation of energy associated
+only with topology evolution. For materials like bone, dissipative mechanism 
+could be further extended to dissipation associated with crack opening, i.e. 
+cohesive effects where above equations would still be valid.
 
 \subsection{Constitutive equations}
 
 \subsubsection{Fracture process}
 
-Fracture process takes place in a direction which results in energy
-dissipation, and in this work, we are limiting yourself only to crack growth.
-Do not consider the healing process or additional dissipation due to crack
-opening as observed in quasi-brittle materials. That could be in future
-extended to there processes, associated with crack opening, i.e. accounting
-for finite fracture zone. At that point, our brittle model assumes that
-trabecular element break at once at the crack front only.
+In the present work, propensity of fracture process evolution 
+in directions that result to maximal energy dissipation is 
+considered only for mechanisms related to perfectly brittle crack growth.
+Healing processes or additional dissipation arising from cohesive forces or 
+plastic flow due to crack opening as observed in quasi-brittle materials are 
+not taken into account. Hence, the main assumption of the presented brittle model
+is that trabecular bone breaks at once at the crack front only.
+Future extension of the present mode could include such processes,
+e.g. accounting for finite fracture zone. 
 
-It can be noted that equation (\ref{eq:crack_local_first_law}) has
-bifurcation the point, i.e. more that one solution at equilibrium; the crack
-can or not propagate. One way to distinguish between those two answers is by
-supplementing equations by Griffith criterion as is shown in
+It can be noted that Eq.~(\ref{eq:crack_local_first_law}) has a
+bifurcation point, i.e. there are more that one solution at equilibrium, where the crack
+can or not propagate. One way to identify the correct solution between those two answers is by
+supplementing equations by Griffith criterion as proposed in
 \citep{kaczmarczyk2017energy}, or any other appropriate for cyclic loading.
-The crack will propagate if crack release energy is equal to material
-toughness and not if is lower than it. The state than crack release energy is
-larger than material toughness is the inadmissible state.
+The crack will propagate only when crack release energy is equal to material
+toughness (and will be arrested when it is lower than toughness). The state 
+that crack release energy is larger than material toughness is an inadmissible state.
 
 Another issue is the direction of the fracture process itself, that is
 constrained by second thermodynamic law, which is not straightforward for
-open leaving system. However with the assumption that fracture takes place
-relatively fast comparing to the process of remodelling, no healing takes
-places, one can write dissipation at the crack front has to be positive
+open leaving system. However, with the assumption that fracture takes place
+relatively fast comparing to the process of remodelling (no healing takes
+place), non negative dissipation at the crack front can be expressed as
 \begin{equation}
 	\mathcal{D} = \gamma \dot{\mathbf{W}} \cdot \mathbf{A}_{\partial\Gamma}
 \end{equation}
-From all possible crack propagation direction, one can choose that one which
-maximises discussion of energy which leads to the equation
+From all possible crack propagation directions, one can choose the one which
+maximises dissipation of energy which leads to the following equation
 \begin{equation}
 	\gamma \mathbf{A}_{\partial\Gamma} = \mathbf{G}
 \end{equation} 
 where the magnitude of $\mathbf{G}$ can be interpreted as crack release
-energy $g$, in crack propagation direction $\mathbf{A}_{\partial\Gamma}$;
+energy $g = 2\gamma$, in crack propagation direction $\mathbf{A}_{\partial\Gamma}$;
 	\begin{equation}
-	2 g = \mathbf{G} \cdot \mathbf{A}_{\partial\Gamma}
+	 g/2 = \mathbf{G} \cdot \mathbf{A}_{\partial\Gamma}
 \end{equation}
 
-Note, the use of well-established stress intensity factors in case of
-heterogeneous material is not applicable since that demands the existence of
-an analytical solution for stress filed in the vicinity of the crack front,
-independent on arbitrary distribution of density. Similarly, use of
+It should be noted that the use of well-established stress intensity factors in case of
+heterogeneous materials is not applicable since it demands for the existence of
+an analytical solution for stress field in the vicinity of the crack front that is
+independent of arbitrary distribution of density. Similarly, use of
 J-integral, demands integration over the closed surface without
 inhomogeneities except crack front. However, heterogeneous density is viewed as
 inhomogeneity, so that technique of calculation of crack release energy is
 not applicable for the considered case. 
 
-Also, note that we present equations in general large displacements and large
-strains setting, and presented formulation is valid crack release energy
-in such general case.
+Moreover, it is important to stress that this framework was formulated within 
+the realm of large displacements and large strains, hence the presented formulation 
+is generally valid for crack release energy under any assumption for strain and displacements.
 
 \subsubsection{Remodelling process}
 
@@ -548,7 +560,8 @@ stability~\citep{Harrigan1993} . Furthermore, the coefficient $c$ controls
 the rate of the remodelling process with units~$[\rm{s/cm^2}]$. As shown
 in~\citep{Waffenschmidt2012}, it is beneficial to prescribe an upper and
 lower bound for bone density, thereby avoiding spurious or non-physical
-values. In this paper, the constant $c$ is replaced by a bell function
+values. In this paper, the parameter $c$ that is conventionally considered 
+to be constant is here replaced by a bell function
 defined as:
 \begin{equation}
 \begin{aligned}
@@ -584,8 +597,7 @@ equal to:
 \psi_{0}=\left[\frac{\rho}{\rho_{0}^{\ast}}\right]^{n}\psi_{0}^{\mathrm{neo}},
 \label{eq:free_energ}
 \end{equation}
-where $\psi^{\rm {neo}}_0$ is the Helmholtz free energy chosen to be of
-Neo-hookean type defined as: %where Helmholtz free energy $\psi$ was chosen
+where $\psi^{\rm {neo}}_0$ is the Helmholtz free energy chosen
 to be of Neo-hookean type, which is expressed in terms of the right
 Cauchy-Green deformation tensor:
 \begin{equation}
@@ -597,76 +609,81 @@ non-physical parameter that typically varies between $1 \leq n \leq 3.5$
 depending on the porosity of the material~\citep{Gibson2005}. This isotropic
 constitutive law can be extended for the case of anisotropy, if required,
 using the micro-sphere framework~\citep{Waffenschmidt2012}.
-\subsubsection{Remarks on physical equation implementation}
 
 \section{Discretisation}
 
-We were solving bone remodelling problem and calculation of crack release
-forces. In this paper, we do not study crack propagation itself. Since the
-issue of bone remodelling takes places in longer time scales, and demand
-problem discretisation with different mesh than the problem of calculation of
-crack release energy, density from one mesh to another is mapped using MWLS
-approximation. Mapped density filed has higher regularity than one
-approximated directly on the mesh. That feature of higher regularity of MWLS
+All previously presented framework involved solving remodelling problem and
+and calculation of crack release forces. 
+In this paper, crack propagation is not concerned. Since the
+processes for bone remodelling take place at longer time scales than fracture,
+solution of the problem is split into two steps.
+Initially, bone remodelling problem is resolved on a mesh that does not include a notch
+and then the calculated densities are mapped on another mesh with same geometry but with an introduced crack
+in order to evaluate crack release energy.
+Mapping of density field from the first to the second mesh is achieved using MWLS  
+as will be described in detail in Section \ref{sec:mwls}. 
+This mapping approach was chosen since it offers higher regularity than when the field is
+directly approximated on the mesh. The higher regularity feature of MWLS
 approximation is not exploited here, however, is essential for the problem of
 crack propagation, where second derivatives of density filed $\partial^2
 \rho^h / \partial \mathbf{X}^2$ will appear in the tangent matrix.
 
-In the context of finite element method, we first approximate fields in spaces,
+In the context of finite element method, we first approximate fields in current material and current spacial spaces,
 following fields
 \begin{eqnarray}
-	\rho^h(\pmb\chi,t) = \pmb\Phi({\boldsymbol {\rm {\upchi}}}) {\tilde{\pmb\rho}}(t) \\
-	\mathbf{ X^h}(\pmb\chi,t) = \pmb\Phi({\boldsymbol {\rm {\upchi}}}) \tilde {\mathbf{ X}}(t), 
-	\quad \mathbf{x^h}(\pmb\chi,t) = \pmb\Phi({\boldsymbol {\upchi}}) {\tilde{\mathbf{x}}}(t) \\
-	\mathbf{ W^h}(\pmb\chi,t) = \pmb\Phi(\upchi) {\dot { \tilde {\boldsymbol {\rm W} } }}(t), 
-	\quad \mathbf{w^h}(\pmb\chi,t) = \pmb\Phi({\boldsymbol {\upchi}}){\dot { \tilde {\boldsymbol {\rm w} } }}(t)
+	\rho^h({\boldsymbol {\rm \upchi}},t) = \pmb\Phi({\boldsymbol {\rm {\upchi}}}) {\tilde{\pmb\uprho}}(t) \\
+	\mathbf{ X}^h({\boldsymbol {\rm \upchi}},t) = \pmb\Phi({\boldsymbol {\rm {\upchi}}}) \tilde {\mathbf{ X}}(t), 
+	\quad \mathbf{x}^h({\boldsymbol {\rm \upchi}},t) = \pmb\Phi({\boldsymbol {\upchi}}) {\tilde{\mathbf{x}}}(t) \\
+	\mathbf{ W}^h({\boldsymbol {\rm \upchi}},t) = \pmb\Phi({\boldsymbol {\rm \upchi}}) {\dot { \tilde {\boldsymbol {\rm W} } }}(t), 
+	\quad \mathbf{w}^h({\boldsymbol {\rm \upchi}},t) = \pmb\Phi({\boldsymbol {\upchi}}){\dot { \tilde {\boldsymbol {\rm w} } }}(t)
+	\label{eq:discretisation}
 \end{eqnarray}
-where superscript h indicates approximation and $(\tilde \cdot)$ nodal
+where superscript $h$ indicates approximation and $(\tilde \cdot)$ nodal
 values. Three-dimensional domains are discretised with tetrahedral finite
 elements with hierarchical basis functions of arbitrary polynomial order,
-following the work of Ainsworth and Coyle~\citep{Ainsworth2003}. In addition
-smoothed density filed approximated by MWLS shape functions
+following the work of Ainsworth and Coyle~\citep{Ainsworth2003}. Moreover,
+smoothed density filed is approximated by MWLS shape functions
 \begin{equation}
-	\rho^{h,\textrm{mwls}}(\mathbf{X},t) = \Phi^\textrm{mwls}(\mathbf{X}) 
-	\tilde{\pmb\rho}^h(\Xi(\pmb\chi),t) 
+	\rho^{h,\textrm{MWLS}}(\mathbf{X},t) = \Phi^\textrm{MWLS}(\mathbf{X}) 
+	\tilde{\pmb\uprho}^h(\Xi({\boldsymbol {\rm \upchi}}),t) 
 \end{equation}
-Note that shape functions $\Phi^\textrm{mwls}(\mathbf{X})$ are evaluated at
-current material points, and are a partition of unity. That this
-approximation is independent on changing the material configuration, i.e.
-changing mesh, and degrees of freedom $\tilde{\pmb\rho}^h(\Xi(\pmb\chi),t)$ are
+It should be noted that shape functions $\Phi^\textrm{MWLS}(\mathbf{X})$ are evaluated at
+current material points, $\mathbf{X}$, rather than reference points, $\pmb\upchi$, as presented in Eq.~(\ref{eq:discretisation}) with the property of partition of unity.
+Having density field evaluated at $\mathbf{X}$, approximation is independent of changes of the material configuration, i.e.
+changing mesh, and degrees of freedom $\tilde{\pmb\uprho}^h(\Xi({\boldsymbol {\rm \upchi}}),t)$ are
 values of density at evaluated points.
 
-\subsection{Bone remodeling problem in week form}
+\subsection{Bone remodeling problem in weak form}
 
 Since here we propose a staggered approach, we fix material configuration
 such that
 \begin{equation}
-	\tilde {\mathbf{ X}}(t)	= \tilde {\pmb\chi} =  \textrm{const},
-	\;\textrm{and}\,
+	\tilde {\mathbf{ X}}(t)	= \tilde {{\boldsymbol {\rm \upchi}}} =  \textrm{const}
+	\;\;\textrm{and}\;\;
 	\dot{\tilde {\mathbf{X}}}(t) = \dot{\tilde {\mathbf{W}}}(t) = 0
 \end{equation}
-where $\tilde {\pmb\chi}$ is vector of nodal positions. The semi-discrete
-form of equations (\ref{eq:mass_source}) and (\ref{eq:linear_momentun}) takes
+where $\tilde {{\boldsymbol {\rm \upchi}}}$ is vector of nodal positions. The semi-discrete
+form of equations (\ref{eq:mass_balance}) and (\ref{eq:linear_momentum}) takes
 the form of residuals
 \begin{equation}
 	\left\{
 	\begin{split}
-		\mathbf{r}^\rho(\tilde{\pmb\rho}(t), \tilde{\mathbf{x}}(t)) =
-		\int_{\mathcal{B}^h_t} \pmb{\Phi}^\textrm{T}\dot{\rho}^h(\pmb\chi,t) 
+		\mathbf{r}^\rho(\tilde{\pmb\uprho}(t), \tilde{\mathbf{x}}(t)) =
+		\int_{\mathcal{B}^h_t} \pmb{\Phi}^\textrm{T}\dot{\tilde{\pmb\uprho}}^h({\boldsymbol {\rm \upchi}},t) 
 		\textrm{d}V 
 		+
 		\int_{\mathcal{B}^h_t} \nabla_\mathbf{X} \pmb{\Phi}^\textrm{T} 
-		\mathcal{R} \pmb{\Phi}^\textrm{T} 
+		\mathcal{R} \nabla_\mathbf{X}\pmb{\Phi} \tilde{\pmb\uprho}
 		\textrm{d}V
 		-	
 		\int_{\mathcal{B}^h_t} \pmb{\Phi}^\textrm{T} \mathcal{R}^h_0 
 		\textrm{d}V	
 		-
 		\int_{\partial\mathcal{B}^h_t} \pmb{\Phi}^\textrm{T} 
-		\mathbf{r}^\textrm{external} 
+		\mathbf{q}^\textrm{external} 
 		\textrm{d}S	
 		= \mathbf{0}\\
-		\mathbf{r}^x(\tilde{\pmb\rho}(t), \tilde{\mathbf{x}}(t)) =
+		\mathbf{r}^x(\tilde{\pmb\uprho}(t), \tilde{\mathbf{x}}(t)) =
 		\int_{\mathcal{B}^h_t} \nabla_\mathbf{X}\pmb{\Phi}^\textrm{T}\mathbf{P}^h\textrm{d}V
 		-
 		\int_{\partial\mathcal{B}^h_t} \pmb{\Phi}^\textrm{T}\mathbf{f}^\textrm{external, remodelling}\textrm{d}S	
@@ -674,7 +691,9 @@ the form of residuals
 	\end{split}
 	\right.
 \end{equation}
-where $\mathbf{r}^\textrm{external}$ is influx of mass through boundary,
+where $\mathbf{r}^\rho$ is the vector of residuals related to mass density flux 
+equilibrium, $\mathbf{q}^\textrm{external}$ is influx of mass through boundary, 
+$\mathbf{r}^x$ is the vector of residuals associated with balance of linear momentum and
 $\mathbf{f}^\textrm{external, remodelling}$ are averaged long term forces
 mimicking mechanical load if the bone over long time period, rather scale of
 weeks than days, and $\mathcal{R}$ is mass conductivity. After expanding
@@ -683,8 +702,8 @@ linearization, we get algebraic system in semi-discrete form
 \begin{equation}
 	\left[
 		\begin{array}{c}
-			\mathbf{r}^\rho(\tilde{\pmb\rho}_i(t), \tilde{\mathbf{x}}_i(t))\\
-			\mathbf{r}^x(\tilde{\pmb\rho}_i(t), \tilde{\mathbf{x}}_i(t))
+			\mathbf{r}^\rho(\tilde{\pmb\uprho}_i(t), \tilde{\mathbf{x}}_i(t))\\
+			\mathbf{r}^x(\tilde{\pmb\uprho}_i(t), \tilde{\mathbf{x}}_i(t))
 		\end{array}
 	\right]
 	+
@@ -696,7 +715,7 @@ linearization, we get algebraic system in semi-discrete form
 	\right]
 	\left\{
 		\begin{array}{c}
-		\delta\dot{\tilde{\pmb\rho}}_{i+1}(t)\\
+		\delta\dot{\tilde{\pmb\uprho}}_{i+1}(t)\\
 		\delta\dot{\tilde{\mathbf{x}}}_{i+1}(t)
 		\end{array}
 	\right\}
@@ -709,7 +728,7 @@ linearization, we get algebraic system in semi-discrete form
 		\right]
 		\left\{
 			\begin{array}{c}
-			\delta\tilde{\pmb\rho}_{i+1}(t)\\
+			\delta\tilde{\pmb\uprho}_{i+1}(t)\\
 			\delta\tilde{\mathbf{x}}_{i+1}(t)
 			\end{array}
 		\right\}
@@ -720,74 +739,87 @@ linearization, we get algebraic system in semi-discrete form
 				\mathbf{0}
 			\end{array}
 		\right]
+		\label{eq:tangent_remodelling}
 \end{equation}
 where
 \begin{equation}
 \begin{split}
 \mathbf{M}_{\rho\rho} = 
 \left.
-\frac{\partial \mathbf{r}^\rho}{\partial \dot{\tilde{\pmb\rho}}}
-\right|_{(\tilde{\pmb\rho}_i(t),\tilde{\mathbf{x}}_i(t))},\,
+\frac{\partial \mathbf{r}^\rho}{\partial \dot{\tilde{\pmb\uprho}}}
+\right|_{(\tilde{\pmb\uprho}_i(t),\tilde{\mathbf{x}}_i(t))},\,
 \mathbf{K}_{\rho\rho} = 
 \left.
-\frac{\partial \mathbf{r}^\rho}{\partial \dot{\tilde{\mathbf{x}}}}
-\right|_{(\tilde{\pmb\rho}_i(t),\tilde{\mathbf{x}}_i(t))},\,
-\textrm{add rest}
+\frac{\partial \mathbf{r}^\rho}{\partial {\tilde{\pmb\uprho}}}
+\right|_{(\tilde{\pmb\uprho}_i(t),\tilde{\mathbf{x}}_i(t))},\,
+\mathbf{K}_{\rho x} = 
+\left.
+\frac{\partial \mathbf{r}^\rho}{\partial {\tilde{\mathbf{x}}}}
+\right|_{(\tilde{\pmb\uprho}_i(t),\tilde{\mathbf{x}}_i(t))},\,\\
+\mathbf{K}_{x \rho} = 
+\left.
+\frac{\partial \mathbf{r}^x}{\partial {\tilde{\pmb\uprho}}}
+\right|_{(\tilde{\pmb\uprho}_i(t),\tilde{\mathbf{x}}_i(t))},\,
+\mathbf{K}_{x x} = 
+\left.
+\frac{\partial \mathbf{r}^x}{\partial {\tilde{\mathbf{x}}}}
+\right|_{(\tilde{\pmb\uprho}_i(t),\tilde{\mathbf{x}}_i(t))},
 \end{split}
 \end{equation}
 and 
 \begin{equation}
-\tilde{\pmb\rho}_{i+i}(t) =
-\tilde{\pmb\rho}_{i}(t) + \delta\tilde{\pmb\rho}_{i+i}(t),\;
+\tilde{\pmb\uprho}_{i+i}(t) =
+\tilde{\pmb\uprho}_{i}(t) + \delta\tilde{\pmb\uprho}_{i+i}(t),\;
 	\tilde{\mathbf{x}}_{i+i}(t) =
 	\tilde{\mathbf{x}}_{i}(t) + \delta\tilde{\mathbf{x}}_{i+i}(t)
 \end{equation}
-where $(\dot)_i$ is quantity at Newton iteration $i$. Finally we discretise
+where $(\cdot)_i$ is quantity at Newton iteration $i$. Finally we discretise
 above semi-discrete problem in time using implicit Euler scheme 
 \begin{equation}
-	\dot{\tilde{\pmb\rho}}_{i+i}^{n+1}(t) =
+	\dot{\tilde{\pmb\uprho}}_{i+i}^{n+1}(t) =
 	\frac{
-	\tilde{\pmb\rho}_{i+i}^{n+1}-\tilde{\pmb\rho}^{n}
+	\tilde{\pmb\uprho}_{i+i}^{n+1}-\tilde{\pmb\uprho}^{n}
 	}{\Delta t}
 \end{equation}
 where $\Delta t$ is length of time step, and $n$ is time step number.
 
-Note that density is approximated one polynomial than spatial positions in
+Note that density is approximated one polynomial less than spatial positions in
 order to get stabile solution without oscillations.
 
 \subsection{Elastic problem with the crack}
 
 The problem of bone remodelling and crack propagation or calculation of crack
-release energy has different boundary conditions and geometry. First, is used
-to simulate bone remodelling under long applied effective loads and without
-initial crack, second, is the effect of short load or extreme cycling load
-with initial crack. That creates the necessity of running simulation on two
-different meshes, which are tailored for two different types of problems. As
+release energy has different boundary conditions and geometry. 
+To solve the staggered coupled problem, initially bone remodelling under 
+long-term effective loads applied without initial crack is simulated. Subsequently, an 
+initial crack is placed to the resulting mesh to compute the effect 
+of short-term loads or extreme cycling loading. The two different remodelling and crack propagation 
+meshes are tailored for the each type of problem analysed, respectively. As
 a consequence, we express approximated Piola stress tensor for bone
 remodelling in the form
 \begin{equation}
 	\mathbf{P}^\textrm{h} = 
 		\mathbf{P}(\mathbf{F}^\textrm{h}, \rho^h)
 \end{equation}
-whereas for elastic problem with the crack approximated Piola stress tensor is
+whereas for elastic problem with the crack approximated Piola-Kirchhoff stress tensor is
 \begin{equation}
-	\mathbf{P}^{\textrm{h},\textrm{mwls}} = 
+	\mathbf{P}^{\textrm{h},\textrm{MWLS}} = 
 		\mathbf{P}(
-		\mathbf{F}^\textrm{h}, \rho^{h,\textrm{mwls}})
+		\mathbf{F}^\textrm{h}, \rho^{h,\textrm{MWLS}})
 \end{equation}
 
 Note that in the presented approach, one can load initial density from CT
-scans, and run bone remodelling analysis, or introduce crack directly run
-elastic analysis to calculate stress release energy. In each case, initial
+scans and either introduce crack directly and run elastic analysis to calculate stress release energy or
+run bone remodelling analysis first and s, or. In each case, initial
 density would be approximated using MWLS and then projected on current
 material configuration.
 
 To conclude residual for elastic problem leading to calculate stress release 
 energy is
 \begin{equation}
-	\mathbf{r}^x(\tilde{\pmb\rho}(t), \tilde{\mathbf{x}}(t)) =
+	\mathbf{r}^x(\tilde{\pmb\uprho}(t), \tilde{\mathbf{x}}(t)) =
 	\int_{\mathcal{B}^h_t} \nabla_\mathbf{X} \pmb{\Phi}^\textrm{T}
-	\mathbf{P}^{h,\textrm{mwls}}\textrm{d}V
+	\mathbf{P}^{h,\textrm{MWLS}}\textrm{d}V
 	-
 	\int_{\partial\mathcal{B}^h_t} \pmb{\Phi}^\textrm{T}
 	\mathbf{f}^\textrm{external, elastic}
@@ -802,16 +834,17 @@ calculated as follows
 \begin{equation}
 	\mathbf{f}^\textrm{material,internal,front} = 
 	\int_{\mathcal{B}^h_t}
-		\nabla_\mathbf{X}\pmb{\Phi}^\textrm{T} {\pmb\Sigma}^{h,\textrm{mwls}}
+		\nabla_\mathbf{X}\pmb{\Phi}^\textrm{T} {\pmb\Sigma}^{h,\textrm{MWLS}}
 	\textrm{d}V
 	+
 	\int_{\mathcal{B}^h_t}
-		\pmb{\Phi}^\textrm{T} {\pmb\Sigma}^{h,\textrm{mwls}} 
+		\pmb{\Phi}^\textrm{T} \dfrac{\partial {\Psi}^{h,\textrm{MWLS}} }{\partial \rho^{h,\rm{MWLS}}}
 		\left(
 			\frac{\partial 
-			\rho^{h,\textrm{mwls}}}{\partial \mathbf{X}}
+			\rho^{h,\textrm{MWLS}}}{\partial \mathbf{X}}
 		\right)
-	\textrm{d}V	
+	\textrm{d}V
+	\label{eq:mat_int_front}
 \end{equation}
 where $\mathbf{f}^\textrm{material,internal,front}$ is vector of degrees of
 freedom only on crack front nodes and integration takes only place on
@@ -823,168 +856,185 @@ area tangent vectors matrix presented in the next subsection.
  Note that we evaluated nodal material forces 
  $\mathbf{f}^\textrm{material,internal,front}$ at
  the crack front nodes. Also, the dimension of material nodal force is
- $[J/m]$, but Griffith cracks release energy should be in units $[J/m^2]$.
+ $[\rm{J/m}]$, but Griffith cracks release energy should be in units $[{\rm{J/m}}^2]$.
  That discrepancy disappears in-plane stress analysis, in that case, material
  forces are divided by the thickness of the body. In that case magnitude of
- nodal material forces at the crack front node is value $J$ -integral. In the
+ nodal material forces at the crack front node is value J-integral. In the
  case of 3d analysis to remove that unit discrepancy in units some authors
- [cite Mieche] divide half of the adjacent edges. However, that gives the
+ divide adjacent edges into half \citep{GuersesMiehe2009}. However, that gives the
  correct value for crack release energy only for straight crack fronts.
 
-Let surface of domain approximation of body at current material configuration
-is given by ${\partial\mathcal{B}^h_t}$. Non overlapping triangles approximating, 
-covering whole domain ${\partial\mathcal{B}^h_t}$ are represented by 
+Let the whole surface ${\partial\mathcal{B}^h_t}$ of the body domain, ${\mathcal{B}^h_t}$, at current material
+configuration be discretised by non overlapping triangles $\mathcal{T}_i$ whose collection is defined as:
 \begin{equation}
 	\mathcal{T} := \left\{ 
 		\mathcal{T} \in {\partial\mathcal{B}^h_t} : 
-		\mathcal{T}_i \cap \mathcal{T}_i  = \O\;
-		\textrm{and}\,
-		{\partial\mathcal{B}^h_t} = \sum_i^N \mathcal{T}_i 
+		\mathcal{T}_i \cap \mathcal{T}_j  = \emptyset \;\;
+		\textrm{and}\;\;
+		{\partial\mathcal{B}^h_t} = \sum_i^\tau \mathcal{T}_i 
 	\right\}
 \end{equation}
-where crack front is approximated by edges $\Gamma^h$, defined in similar way
-like triangles, but only one dimension lower. With above at hand, we can
-define the triangulated domain, which triangles are part of body boundary and
-adjacent to crack front, as follows
+where $\tau$ is the total number of triangles on ${\partial\mathcal{B}^h_t}$.
+Furthermore, crack front is approximated by edges $\Gamma^h$, defined similarly to
+triangles, but with one dimension lower. With the above at hand, we can
+define the triangulated domain whose triangles are part of body boundary and
+adjacent to crack front as:
 \begin{equation}
  S^h_\Gamma :=
  \left\{
 	 \mathbf{X} \in \mathcal{T}
-	 : \partial \mathcal{T} \cap \Gamma^h \neq \O
+	 : \partial \mathcal{T} \cap \Gamma^h \neq \emptyset
  \right\}
 \end{equation}
 Next, we can define a matrix of  crack tangent vectors as follows
 \begin{equation}
-\mathcal{C}^\textrm{front} = 
+\mathbf{Z}^\textrm{front} = 
 \int_{S^h_\Gamma}
 \pmb{\Phi}^\textrm{T} 
-\frac{\partial \mathbf{A}^h_{\Gamma}}{
+\frac{\partial {A}^h_{\Gamma}}{
 \partial \tilde{\mathbf{X}}}
 \textrm{d}L
 \end{equation}
 where crack surface tangent vector is given by
 \begin{equation}
-\mathbf{A}^h_{\Gamma} = 
-	\int_\mathcal{T}
+A^h_{\Gamma} = 	
 	\| \mathbf{N}(\tilde{\mathbf{X}}) \|
-	\textrm{d}S
 =
-\int_\mathcal{T}
 \left\| 
 \epsilon_{ijk}
-\frac{\partial \Phi^\alpha_m}{\partial \xi_i}  
-\frac{\partial \Phi^\beta_n}{\partial \xi_j} 
-\tilde{X}^\alpha_m
-\tilde{X}^\beta_n
+\frac{\partial \Phi^\alpha_p}{\partial \xi_i}  
+\frac{\partial \Phi^\beta_r}{\partial \xi_j} 
+\tilde{X}^\alpha_p
+\tilde{X}^\beta_r
 \right\|
-\textrm{d}S
 \end{equation}
-where $\alpha, \beta \in \{0, \dots, N\}$ are number of base functions, and
-$i,j,k,l,m,n \in \{0,1,2\}$ are material indices. The total number of degrees
-of freedom on element is $3*(N+1)$. $\pmb\epsilon$ is Levi-Civita symbol.
+where $\alpha, \beta \in \{0, \dots, N_{\rm{base}}\}$ are number of base functions,
+$i,j,k,l,p,r \in \{0,1,2\}$ are material indices and $\boldsymbol{\upepsilon}$ is Levi-Civita tensor. 
+Moreover, the total number of degrees of freedom on element is $3*(N_{\rm{base}}+1)$ and the units of $\mathbf{Z}^{\rm{front}}$ are $[{\rm m}^{-1}]$.
 
-The nodal crack release energy $\mathbf{g}^\textrm{h}$ can be interpreted as
-lagrange multipliers constraining crack area increment, where by exploiting
-projection matrices, can be expressed exquisitely by $\mathcal{C}^\textrm{front}$
-and $\mathbf{f}^\textrm{material,internal,front}$ as follows
+Therefore, multiplication of $\mathbf{Z}^{\rm{front}}$ with nodal crack release energy ${\tilde{\mathbf{g}}}^h$ results to
+evaluation of crack material forces:
+
+
 \begin{equation}
-	\mathbf{g}^\textrm{h}
-	= 
+\mathbf{f}^\textrm{material,internal,crack}	= \dfrac{1}{2} {(\mathbf{Z}^\textrm{front})}^{\rm{T}} {\tilde{\mathbf{g}}}^h 
+	\label{eq:mat_int_crack}
+\end{equation}
+
+Combining Eqs.(\ref{eq:mat_int_crack}) and (\ref{eq:mat_int_front}) equilibrium at the crack front can be evaluated through the residual below
+
+\begin{equation}
+\mathbf{r}^h_{\textrm{material,crack}} = \dfrac{1}{2} {(\mathbf{Z}^\textrm{front})}^{\rm{T}} {\tilde{\mathbf{g}}}^h - \mathbf{f}^\textrm{material,internal,front} = \mathbf{0}
+	\label{eq:residual_crack}
+\end{equation}
+
+Multiplying Eq.~(\ref{eq:residual_crack}) on both sides with $\mathbf{Z}^\textrm{front}$ and solving for ${\tilde{\mathbf{g}}}^h$ the expression below is obtained
+
+
+\begin{equation}
+	{\tilde{\mathbf{g}}}^\textrm{h}
+	= 2
 	\left[
-	\left(\mathbf{C}\mathbf{C}^\textrm{T}\right)^{-1}
-	\mathbf{C}
+	\left(\mathbf{Z}^{\rm{front}}{(\mathbf{Z}^{\rm{front}})}^\textrm{T}\right)^{-1}
+	\mathbf{Z}^{\rm{front}}
 	\right]
 	\mathbf{f}^\textrm{material,internal,front}	
+\label{eq:gc_lagrange}
 \end{equation}
-see details for projection matrices here [cite Ainsworth essential]. Note
-that dimension term in brackets is $1/m$ which multiplied by dimension
-of material force $[J/m]$, give dimension of crack release energy, i.e.
-$J/m^2$. Also, advantage of presented approach is that crack release 
+
+It can be noticed that by comparison of Eq.~({\ref{eq:gc_lagrange}}) with Theorem 1(3.) in \citep{AinsworthEssential} 
+nodal Griffith surface energy ${\tilde{\mathbf{g}}}^h$ could be interpeted as a Lagrange multiplier constraining the crack area growth.
+Furthermore, dimension term in square brackets on LHS of Eq.~(\ref{eq:gc_lagrange}) is $[\rm{1/m}]$ which multiplied by dimension
+of material force $[\rm{J/m}]$, give dimension of crack release energy, i.e.
+$[{\rm{J/m^2}}]$. Also, advantage of presented approach is that crack release 
 energy is expressed exclusively in terms of nodal quantities, which enables
 implicit formulation of crack propagation algorithm, however this is 
-out of the scope of this peeper. 
+out of the scope of this work.
 
 \subsection{Comments about implementation}
 
-\textcolor{red}{Now you have ADOL-C and analytical, you can comment on
-performance of both and moved.} 
 The coupled system of nonlinear equations (mass
-balance~(\ref{eq:mass_balance}) and momentum
-balance~(\ref{eq:momentum_balance})) are discretised and solved iteratively
-using the Newton-Rephson method for the displacements and density. The
-tangent stiffness is derived by means of automatic differentiation using the
-ADOL-C library~\citep{Walther2009}. Spatial discretisation is achieved using
+balance~Eq.~(\ref{eq:mass_balance}) and momentum
+balance~Eq.~(\ref{eq:linear_momentum})) are discretised and solved iteratively
+using the Newton-Rephson method for the displacements and density.
+
+For this, two approaches have been implemented regarding evaluations of tangent stiffness,
+i.e by either analytically evaluating the higher dimentional derivatives of the residuals of $\mathbf{r}_{x}$ and $\mathbf{r}_{\rho}$ as 
+presented in Eq.~(\ref{eq:tangent_remodelling}) or by means of automatic differentiation using the ADOL-C 
+library~\citep{Walther2009}. At this point, it is interesting to note that analyses using automatic 
+differentiation is about 25~$\%$ slower than the analytical formulation.
+Spatial discretisation is achieved using
 hierarchical basis functions, implemented in the open source FEM library
 MoFEM~\citep{mofem2017}. Temporal discretisation of the governing equations
 is achieved using the backward Euler method. Application of the proposed
 model for equine metacarpal is demonstrated by two numerical examples in
 Section~\ref{sec:numerical_examples}.
 
-\section{Approximation}
-
-\subsection{Quarter point elements} %should that be in appendix?
+\section{Quarter point elements}
+%\section{Approximation}
+%\subsection{Quarter point elements} %should that be in appendix?
 
 The use of finite element method to analyse fracture problems is complicated for many reasons. One of them is stress field singularity located at the crack tip.
 Conventional finite elements are interpolated by polynomials which are not able to reproduce infinite stresses at the crack tip. 
-In the mid-1970s, two independent contributors~\citep{barsoum1976use,henshell1975crack} showed that, the singularity at the crack tip can be modelled by considering shifting the mid-node of all edges connected to crack tip nodes.
+In the mid-1970s, two independent contributors showed that, the singularity at the crack tip can be modelled by considering shifting the mid-node of all edges connected to crack tip nodes~\citep{barsoum1976use,henshell1975crack}.
 The new mid-node position is at a quarter of edge length distance from the crack tip node known as the quarter-point position and the resulting element is known as quarter-point element. 
 This results in a nonlinear mapping between natural (isoparametric) and local coordinates $\xi \rightarrow x$ which produces  the square root singularity. Stress and strain fields are dependent on the radial function of the crack tip, reaching infinity as $ r \rightarrow 0$. \\
 
-\subsubsection{Standard shape functions} 
+% \subsubsection{Standard shape functions} 
 
-\textcolor{red}{Only focus on hierarchical base functions, drop standard, that is not novel.} \\
+% %\textcolor{red}{Only focus on hierarchical base functions, drop standard, that is not novel.} \\
 
-The concept of quarter point element is briefly described by means of 1D 2-nd order finite element with standard base shape functions. 
-Global configuration of 2-nd order element with nodes 0, 2 and 1 is schematically presented in Figure~\ref{fig:1d-quarter}(a) where node 0 coincides with the crack tip.
-Furthermore, the natural coordinate system of the element is presented in Figure~\ref{fig:1d-quarter}b and the corresponding standard shape functions $N_0$, $N_2$ and $N_1$ are presented in Figure~\ref{fig:1d-quarter}c.  
-\begin{figure}[h!]
-	\begin{center}
-		\begin{tabular}{c}
-		{\def\svgwidth{15cm} \input{Figures/QuarterPoint.pdf_tex}}\\  %& \includegraphics[height=2.1cm]{Figures/2ndOrderNodeOr.pdf} &   &  \includegraphics[height=1.3cm]{Figures/StandardElement.pdf}\\
-		\end{tabular}
-		\caption{1D 2-nd order quarter-point element with standard shape functions:a) global configuration, b) natural coordinates, c) base shape functions }
-		\label{fig:1d-quarter}
-	\end{center}
-\end{figure}
-Let the demonstrated element be a quarter-point type, the distance between node 0 with nodes 2 and 1 is given by radial coordinate $r_{\rm q}$ (see Figure~\ref{fig:1d-quarter}(a)). 
-The position of the middle node 2 is controlled by the parameter $\kappa$. 
-The quadratic 1D displacement function of this element is: 
-\begin{equation}\label{eq:crack_disp_func}
-\begin{aligned}
-&u(\xi) = \sum_{a=0}^2 N_a (\xi) u^{(a)} = \frac{1}{2} \xi (\xi - 1)u^{(0)} + (1 - \xi^2)u^{(2)} + \frac{1}{2} \xi (\xi + 1)u^{(1)} =\\
-& u^{(2)} + \frac{1}{2}(u^{(1)} - u^{(0)})\xi + \left[ \frac{1}{2} (u^{(0)} + u^{(1)}) - u^{(2)} \right] \xi^2 
-\end{aligned}
-\end{equation}
-Note that Eq.~(\ref{eq:crack_disp_func}) is ordered by powers of $\xi$ that is element natural coordinate. 
-In the classical isoparametric formulation, the same interpolation functions are also used for the coordinates, i.e. as well for the radius $r_{\rm q}$ with the nodal values $r^{(0)}_{\rm q} = 0$, $r^{(2)}_{\rm q} = \kappa l$, $r^{(1)}_{\rm q} = l$:
-\begin{equation}\label{eq:crack_radius_dep}
-r_{\rm q}(\xi) = \sum_{a=0}^2 N_a (\xi) r^{(a)}_{\rm q} = \kappa l + \frac{1}{2} l \xi  + \left(  \frac{1}{2} - \kappa \right) l \xi^2.
-\end{equation}
-Any value chosen for $\kappa$ would fulfil equality $r_{\rm q}(\xi=-1) = 0$ in Eq.~(\ref{eq:crack_radius_dep}).
-However, the aim of quarter point element is to generate an approximated displacement field, $u(r_{\rm q})$, so that the resulting strains evaluated as $\varepsilon (r_{\rm q}) = \partial u(r_{\rm q})/\partial r_{\rm q}$.
-To achieve this, a $r^{\theta}_{\rm q}$ term with $\theta < 1$ in Eq.~(\ref{eq:crack_disp_func}) should be pursued.
-Here, value $\kappa = 1/4$ is used providing the following relations:
-%From Eq.~(\ref{eq:crack_radius_dep}) it can be derived that radius $r_{\rm q}(\xi=-1) = 0$ for $ \kappa=1/4$, providing the following relations:
-\begin{equation}
-r_{\rm q}= \frac{l}{4}(1+\xi)^2 \quad \Rightarrow \quad \xi = 2 \sqrt{\frac{r_{\rm q}}{l}} -1,
-\end{equation}
-which substituted into Eq.~(\ref{eq:crack_disp_func}) results to an expression with a term $r^{0.5}_{\rm q}= \sqrt{r_{\rm q}}$ renders the desired radial dependence of the displacements $u(r_{\rm q})$ and strains $\varepsilon(r_{\rm q})$:
-\begin{equation}
-\begin{aligned}
-u(r_{\rm q}) = u^{(0)} &+ \left( -3u^{(0)} - u^{(1)} +4u^{(2)} \right) \sqrt{\frac{r_{\rm q}}{l}} + 2 \left( u^{(0)} + u^{(1)} -2 u^{(2)} \right) \frac{r_{\rm q}}{l}\\
-\varepsilon(r_{\rm q}) = \frac{\partial u}{ \partial r_{\rm q}} = &+ \left( - \frac{3}{2}u^{(0)} - \frac{1}{2}u^{(1)} +2u^{(2)} \right) \frac{1}{\sqrt{lr_{\rm q}}} + 2 \left( u^{(0)} + u^{(1)} -2 u^{(2)} \right) \frac{1}{l}
-\end{aligned}
-\end{equation}
-The displacement function contains now a constant (rigid body motion) and linear function also a $\sqrt r_{\rm q}$ term, which reproduces the displacement field at the crack tip. 
-The strain in the quarter-point element possesses the square root $1/{\sqrt r_{\rm q}}$ singularity.
-\subsubsection{Hierarchical shape functions}
-In this subsection, the concept of 1D 2-nd order quarter-point element formulation with standard shape function is extended to the case of hierarchical shape functions.
+% The concept of quarter point element is briefly described by means of 1D 2-nd order finite element with standard base shape functions. 
+% Global configuration of 2-nd order element with nodes 0, 2 and 1 is schematically presented in Figure~\ref{fig:1d-quarter}(a) where node 0 coincides with the crack tip.
+% Furthermore, the natural coordinate system of the element is presented in Figure~\ref{fig:1d-quarter}b and the corresponding standard shape functions $N_0$, $N_2$ and $N_1$ are presented in Figure~\ref{fig:1d-quarter}c.  
+% \begin{figure}[h!]
+% 	\begin{center}
+% 		\begin{tabular}{c}
+% 		{\def\svgwidth{15cm} \input{Figures/QuarterPoint.pdf_tex}}\\  %& \includegraphics[height=2.1cm]{Figures/2ndOrderNodeOr.pdf} &   &  \includegraphics[height=1.3cm]{Figures/StandardElement.pdf}\\
+% 		\end{tabular}
+% 		\caption{1D 2-nd order quarter-point element with standard shape functions:a) global configuration, b) natural coordinates, c) base shape functions }
+% 		\label{fig:1d-quarter}
+% 	\end{center}
+% \end{figure}
+% Let the demonstrated element be a quarter-point type, the distance between node 0 with nodes 2 and 1 is given by radial coordinate $r_{\rm q}$ (see Figure~\ref{fig:1d-quarter}(a)). 
+% The position of the middle node 2 is controlled by the parameter $\kappa$. 
+% The quadratic 1D displacement function of this element is: 
+% \begin{equation}\label{eq:crack_disp_func}
+% \begin{aligned}
+% &u(\xi) = \sum_{a=0}^2 N_a (\xi) u^{(a)} = \frac{1}{2} \xi (\xi - 1)u^{(0)} + (1 - \xi^2)u^{(2)} + \frac{1}{2} \xi (\xi + 1)u^{(1)} =\\
+% & u^{(2)} + \frac{1}{2}(u^{(1)} - u^{(0)})\xi + \left[ \frac{1}{2} (u^{(0)} + u^{(1)}) - u^{(2)} \right] \xi^2 
+% \end{aligned}
+% \end{equation}
+% Note that Eq.~(\ref{eq:crack_disp_func}) is ordered by powers of $\xi$ that is element natural coordinate. 
+% In the classical isoparametric formulation, the same interpolation functions are also used for the coordinates, i.e. as well for the radius $r_{\rm q}$ with the nodal values $r^{(0)}_{\rm q} = 0$, $r^{(2)}_{\rm q} = \kappa l$, $r^{(1)}_{\rm q} = l$:
+% \begin{equation}\label{eq:crack_radius_dep}
+% r_{\rm q}(\xi) = \sum_{a=0}^2 N_a (\xi) r^{(a)}_{\rm q} = \kappa l + \frac{1}{2} l \xi  + \left(  \frac{1}{2} - \kappa \right) l \xi^2.
+% \end{equation}
+% Any value chosen for $\kappa$ would fulfil equality $r_{\rm q}(\xi=-1) = 0$ in Eq.~(\ref{eq:crack_radius_dep}).
+% However, the aim of quarter point element is to generate an approximated displacement field, $u(r_{\rm q})$, so that the resulting strains evaluated as $\varepsilon (r_{\rm q}) = \partial u(r_{\rm q})/\partial r_{\rm q}$.
+% To achieve this, a $r^{\theta}_{\rm q}$ term with $\theta < 1$ in Eq.~(\ref{eq:crack_disp_func}) should be pursued.
+% Here, value $\kappa = 1/4$ is used providing the following relations:
+% %From Eq.~(\ref{eq:crack_radius_dep}) it can be derived that radius $r_{\rm q}(\xi=-1) = 0$ for $ \kappa=1/4$, providing the following relations:
+% \begin{equation}
+% r_{\rm q}= \frac{l}{4}(1+\xi)^2 \quad \Rightarrow \quad \xi = 2 \sqrt{\frac{r_{\rm q}}{l}} -1,
+% \end{equation}
+% which substituted into Eq.~(\ref{eq:crack_disp_func}) results to an expression with a term $r^{0.5}_{\rm q}= \sqrt{r_{\rm q}}$ renders the desired radial dependence of the displacements $u(r_{\rm q})$ and strains $\varepsilon(r_{\rm q})$:
+% \begin{equation}
+% \begin{aligned}
+% u(r_{\rm q}) = u^{(0)} &+ \left( -3u^{(0)} - u^{(1)} +4u^{(2)} \right) \sqrt{\frac{r_{\rm q}}{l}} + 2 \left( u^{(0)} + u^{(1)} -2 u^{(2)} \right) \frac{r_{\rm q}}{l}\\
+% \varepsilon(r_{\rm q}) = \frac{\partial u}{ \partial r_{\rm q}} = &+ \left( - \frac{3}{2}u^{(0)} - \frac{1}{2}u^{(1)} +2u^{(2)} \right) \frac{1}{\sqrt{lr_{\rm q}}} + 2 \left( u^{(0)} + u^{(1)} -2 u^{(2)} \right) \frac{1}{l}
+% \end{aligned}
+% \end{equation}
+% The displacement function contains now a constant (rigid body motion) and linear function also a $\sqrt r_{\rm q}$ term, which reproduces the displacement field at the crack tip. 
+% The strain in the quarter-point element possesses the square root $1/{\sqrt r_{\rm q}}$ singularity.
+%\subsubsection{Hierarchical shape functions}
+In this section, the concept of 2-nd order quarter-point element formulation with standard shape function is extended to the case of hierarchical shape functions.
 It should be mentioned that quarter-point elements used in the present contribution are for 3D and arbitrary order.
 Presentation of 1D/2-nd order is merely done to convey main element attributes, i.e. reproduction of infinite stresses at crack tip.
 A more detailed description for higher dimensions can be found for example in~\citep{nejati2015use}.
 
 Here, global configuration of quarter-point element presented in Figure~\ref{fig:shape_funcs}(a) is considered.
-In hierarchical shape functions~\citep{Ainsworth2003} no extra nodes are added for functions of order higher than the first one therefore the element under considerations is consisted of two nodes (0 and 1 in Figure~\ref{fig:shape_funcs}a)). 
+In hierarchical shape functions~\citep{Ainsworth2003} no extra nodes are added for functions of order higher than the first one therefore the element under considerations is consisted of two nodes (0 and 1 in Figure~\ref{fig:shape_funcs}a)) and physical distance from the crack tip,$r_{\rm q}$ is considered. 
 %The hierarchical shape functions' values for an arbitrary high-order shape function are created in a hierarchical algorithm. 
 This feature greatly simplifies $p$~- and $hp$~- adaptivity implementation.
 Moreover, natural coordinate system and hierarchical shape functions $N_0$, $N_1$ and $N_2$ are presented in Figure~\ref{fig:shape_funcs}b and Figure~\ref{fig:shape_funcs}c, respectively.
@@ -998,14 +1048,14 @@ Moreover, natural coordinate system and hierarchical shape functions $N_0$, $N_1
 	\end{center}
 \end{figure}
 
-Since $u^{(2)}$ degree of freedom associated to the 2-nd order shape functions $N_2$ is not related to a physical node, fictitious location of the degree of freedom can be achieved through multiplication of shape function with coefficient $\kappa$. 
-Therefore, Eq.~(\ref{eq:crack_disp_func}) can be written for hierarchical shape functions as:
+Displavement $u^{(2)}$ is the degree of freedom associated to the 2-nd order shape functions $N_2$ and is not related to a physical node, fictitious location of the degree of freedom can be achieved through multiplication of shape function with coefficient $\kappa$. 
+Displacements for the local coordinate system $\xi$ can be written for hierarchical shape functions as:
 \begin{equation}\label{eq:hierarchical_u}
 u(\xi) = \sum_{a=0}^2 N_a (\xi) u^{(a)} = (1 -\xi)u^{(0)} + \xi(1 - \xi)u^{(2)}\kappa + \xi u^{(1)}
 \end{equation}
-Rewriting the above Eq.~(Eq.~(\ref{eq:hierarchical_u})) in terms of the radius $r$ takes the form:
+Rewriting the above (Eq.~(\ref{eq:hierarchical_u})) in terms of the physical distance from the crack tip $r_{\rm q}$ takes the form:
 \begin{equation}\label{eq:hierarchical_r}
-r_{\rm q}(\xi) = \sum_{a=0}^2 N_a (\xi) r^{(a)} = \xi l + \xi(1-\xi)  l  \kappa
+r_{\rm q}(\xi) = \sum_{a=0}^2 N_a (\xi) r_{\rm q}^{(a)} = \xi l + \xi(1-\xi)  l  \kappa
 \end{equation}
 To achieve generation of a $\sqrt{r_{\rm q}}$ term in Eq.~(\ref{eq:hierarchical_u}) by substitution of $\xi$ by an expression of $r_{\rm q}$, $\kappa = -1$ is chosen and solving Eq.~(\ref{eq:hierarchical_r}) results to relation:
 \begin{equation}
@@ -1045,7 +1095,8 @@ The Moving Weighted Least Squares (MWLS) method is used to construct interpolati
 In computer graphics, it is useful to reconstruct a surface from a set of points~\citep{lancaster1981surfaces} through downsampling or upsampling. 
 Numerous studies have also attempted to utilise the method within the context of Element-Free Galerkin approach as trial and test functions~\citep{belytschko1996dynamic,wong2010meshfree, ullah2013finite}.\\
 
-In this study, crack propensity is evaluated by computing nodal configurational forces $\mathbf{\tilde G}^h$ (see Eq. (\ref{eq:crack_material_force_dis})) that are dependent on the gradient of elastic energy over change of density, $\mathbf{B_x}^{\rm T} \rho$. 
+In this study, crack propensity is evaluated by computing nodal configurational forces $\mathbf{f}^\textrm{material,internal,front}$ 
+(see Eq.~(\ref{eq:mat_int_front})) that are dependent on the gradient of elastic energy over change of density, $\mathbf{B_x}^{\rm T} \rho$. 
 Therefore, generation of spatially smooth density field is of great importance to evaluate forces at the crack tip.   
 In this framework, MWLS is used to approximate density obtained from clinical CT scans and subsequently calculate its gradient.
 To approximate a given discrete field, $v({\boldsymbol{\rm x}}_i)$, with MWLS method at a set of points, each point is separately considered and denoted herein as a Target Point of Approximation (TPA). 
