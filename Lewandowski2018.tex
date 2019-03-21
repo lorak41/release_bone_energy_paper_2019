@@ -51,7 +51,7 @@
 \thispagestyle{fancy} 
 %\fancyhead[R]{{}
 \rhead{{\footnotesize
-		\it September 2018, Glasgow\\} }
+		\it March 2019, Glasgow\\} }
 \cfoot{}
 
 %\pagestyle{empty}
@@ -270,8 +270,8 @@ Corresponding deformation gradient $\mathbf F$ is derived as follows:
 \begin{equation}
 \mathbf F = \nabla_{\mathbf{X}} \varphi = \mathbf h \mathbf H^{-1}
 \end{equation}
-Moreover we define the right Cauchy-Green deformation tensor $\boldsymbol
-{\rm C}$ are denoted as follows:
+Moreover, the right Cauchy-Green deformation tensor $\boldsymbol
+{\rm C}$ is denoted by:
 \begin{equation}
 \mathbf{C}=\mathbf{F}^{\rm T}\mathbf{F}
 \end{equation}
@@ -290,7 +290,7 @@ and
 
 \subsection{Conservation of mass}
 
-Density is a field that evolves in the current material configuration and defined as
+Density is a field that evolves in the current material configuration and is defined as:
 \begin{equation}
 	\rho = \rho(\mathbf{X},t) 
 	= \rho\left(
@@ -299,15 +299,14 @@ Density is a field that evolves in the current material configuration and define
 \label{eq:density_material}	
 \end{equation}
 
-Following Kuhl and Steinmann~\citep{kuhl2003computational}, we assume that
+Following Kuhl and Steinmann~\citep{kuhl2003computational}, it is assumed that
 the rate of change of the time-dependent material density is in equilibrium
 with mass flux evaluated as:
-\begin{equation}
+\begin{equation} \label{eq:mass_balance}
 \frac{\partial\rho}{\partial t}  + \dot{\mathbf{W}} \cdot  \nabla_\mathbf{X} \rho = 
 \nabla_{\boldsymbol {\rm X}} \cdot \mathbf{R} + \mathcal{R}_0
-\label{eq:mass_balance}
 \end{equation}
-where $\rho$ is mass density and $\mathcal{R}_0$ is the locally created mass
+where $\rho$ is mass density and $\mathcal{R}_0$ is the locally created mass.
 Furthermore, $\mathbf{R}$ is the mass flux defined as:
 
 \begin{equation}
@@ -317,19 +316,20 @@ Furthermore, $\mathbf{R}$ is the mass flux defined as:
 
 where $\mathcal{R}$ is mass conductivity.
 
-The term on the right hand side
+The term on the right hand side in Eq. \ref{eq:mass_balance}
 is material time derivative associated with evolving current material
-configuration, as result of changing topology resulted from crack
+configuration, as a result of changing topology due to crack
 propagation. However, in the present work it is assumed that the mass flux $\mathbf{R}$ is zero.
 Hence, only the local mass source $\mathcal{R}_0$ contributes to the
 changes in density.
 
-Description of remodelling in the context of configurational mechanics has
+Description of remodelling process in the context of configurational mechanics has
 theoretical and practical implications.
+
 Density field (see Eq.~(\ref{eq:density_material})) has to be
 approximated on the moving mesh in current material configuration. However,
 assuming that fracture process takes place much faster than the process of
-bone remodelling, i.e. both are separated by time scales. Therefore, both problems,
+bone remodelling, i.e. both are separated by time scales. Therefore, both problems:
 fracture and bone remodelling, can be calculated in a staggered manner.
 Moreover, to avoid numerical difficulties associated with the approximation
 of densities in current material configuration, Moving Weighted Least Squares approximation 
@@ -371,7 +371,7 @@ surface.
 \subsection{Conservation of linear momentum and material momentum}
 
 Crack propagation problem can be considered as a thermodynamic system
-consisting of a solid deformable body with an imperfection, i.e. crack.
+consisting of a  deformable solid body with an imperfection, i.e. crack.
 Traction applied on the boundary of the body $\partial \mathcal B_t$ performs
 work on the system. Following the first law of thermodynamics, it can be
 assumed that all energy within the volume of the body is used for mechanical
@@ -417,12 +417,12 @@ are the first Piola-Kirchhoff stress and Eshelby stress tensors, respectively.
 Furthermore, $\mathbf f^{\mathrm {inh}}$ is a fictitious force, directed from the 
 $\textit {harder}$ part of the material to the $ \textit {softer}$ part. 
 
-Following similar derivations like in \citep{kaczmarczyk2017energy}; adding
+Following similar derivations like in \citep{kaczmarczyk2017energy}; by adding
 bone density terms and applying divergence theorem to gradient terms, taking
-volume integrals and boundary integrals, and grouping terms work conjugated
-to spatial and material velocities we get local conservation laws. The
+volume integrals and boundary integrals and grouping terms work conjugated
+to spatial and material velocities, the local conservation laws are obtained. The
 spatial conservation law of linear momentum balance, for any point inside the
-body, is expressed as follows:
+body is expressed as follows:
 \begin{equation} \label{eq:linear_momentum}
 \nabla_{\mathbf X} \cdot \mathbf P = 0
 \;
@@ -445,11 +445,11 @@ momentum balance can be expressed as:
 {\bm {\Sigma}}\mathbf{N} = \mathbf{F}^\textrm{T}\mathbf{t}\;
 \forall \mathbf{X}\in\partial\mathcal B_t^\sigma
 \end{equation}
-Equations for linear conservation momentum and material momentum, are a local
-form first thermodynamic law which needs to be satisfied at every material
-point in current material configuration to satisfy equilibrium.
+Equations for linear conservation momentum and material momentum are a local
+form of first thermodynamic law which needs to be satisfied at every material
+point in the current material configuration to satisfy the equilibrium.
 
-Noting that, the surface $\mathcal C$ (Figure~\ref{fig:frac_crack_con})
+Furthermore, the surface $\mathcal C$ (Figure~\ref{fig:frac_crack_con})
 collapses to the crack front $\partial \Gamma $ and integrals over the crack
 front are simplified as follows:
 \begin{equation}
@@ -474,13 +474,13 @@ The Eq~\ref{eq:crack_local_first_law} represents the equilibrium condition for t
  two important observations can be made. 
 Firstly, crack front is in equilibrium where the crack is not propagating, i.e. material
 velocity at the crack front is zero, or crack front is propagating and driving
-force is in equilibrium with material forces. Secondly, front equilibrium takes
+force is in equilibrium with configurational forces. Secondly, front equilibrium takes
 a similar form to that presented in \citep{kaczmarczyk2017energy}, that (as will be
 shown later) justifies the use of the Griffith criterion, originally proposed
 for homogenous materials.
 
-Note that in this work we take into account dissipation of energy associated
-only with topology evolution. For materials like bone, dissipative mechanism 
+Note that in this work, only dissipation of energy associated
+only with topology evolution is taken into account. For materials like bone, dissipative mechanism 
 could be further extended to dissipation associated with crack opening, i.e. 
 cohesive effects where above equations would still be valid.
 
@@ -498,17 +498,17 @@ Future extension of the present mode could include such processes,
 e.g. accounting for finite fracture zone. 
 
 It can be noted that Eq.~(\ref{eq:crack_local_first_law}) has a
-bifurcation point, i.e. there are more that one solution at equilibrium, where the crack either
+bifurcation point, i.e. there are more that one solution at the equilibrium, where the crack either
 does or does not propagate. One way to identify the correct solution between these two answers is by
 supplementing Griffith criterion equations as proposed in
-\citep{kaczmarczyk2017energy}, or any other appropriate for cyclic loading.
+\citep{kaczmarczyk2017energy}, or any other criterion appropriate for cyclic loading.
 The crack will propagate only when crack release energy is equal to material
 toughness (and will be arrested when it is lower than toughness). The state 
 that crack release energy is larger than material toughness is an inadmissible state.
 
 The direction of the fracture process is
-constrained by second law of thermodynamics, which is not straightforward for
-open-system. However, with the assumption that fracture takes place
+constrained by the second law of thermodynamics, which is not straightforward for
+open-systems. However, with the assumption that fracture takes place
 relatively fast compared to the process of remodelling (no healing takes
 place), non-negative dissipation at the crack front can be expressed as
 \begin{equation}
@@ -556,8 +556,8 @@ $\psi_{0}^\ast$ (see Eq.~(\ref{eq:mass_source})) when density saturation is
 achieved and locally generated bone mass ceases. The exponent $m$ is a
 dimensionless scalar introduced to guarantee uniqueness and
 stability~\citep{Harrigan1993} . Furthermore, the coefficient $c$ controls
-the rate of the remodelling process with units~$[\rm{s/cm^2}]$. As shown
-in~\citep{Waffenschmidt2012}, it is beneficial to prescribe an upper and
+the rate of the remodelling process with units~$[\rm{s/cm^2}]$. As proposed
+in~\citep{Waffenschmidt2012}, it can be beneficial to prescribe an upper and
 lower bound for bone density, thereby avoiding spurious or non-physical
 values. In this paper, the parameter $c$ that is conventionally considered 
 to be constant is here replaced by a bell function
@@ -611,15 +611,14 @@ using the micro-sphere framework~\citep{Waffenschmidt2012}.
 
 \section{Discretisation}
 
-All previously presented framework involved solving remodelling problem and
-and calculation of crack release forces. 
-In this paper, crack propagation is not concerned. Since the
-processes of bone remodelling takes place at longer time scales than fracture,
+The framework presented in the previous section involves solving remodelling problem
+and calculation of crack release forces. In this work, crack propagation is not considered since the
+processes of bone remodelling takes place at longer time scales than fracture, thus the
 solution of the problem is split into two steps.
 Initially, bone remodelling problem is resolved on a mesh that does not include a notch
 and then the calculated densities are mapped on another mesh with same geometry but with an introduced crack
 in order to evaluate crack release energy.
-Mapping of density field from the first to the second mesh is achieved using MWLS  
+Mapping of density field from the first to the second mesh is achieved by using MWLS  
 as will be described in detail in Section \ref{sec:mwls}. 
 This mapping approach was chosen since it offers higher regularity than when the field is
 directly approximated on the mesh. The higher regularity feature of MWLS
@@ -647,14 +646,13 @@ smoothed density filed is approximated by MWLS shape functions
 \end{equation}
 It should be noted that shape functions $\Phi^\textrm{MWLS}(\mathbf{X})$ are evaluated at
 current material points, $\mathbf{X}$, rather than reference points, $\pmb\upchi$, as presented in Eq.~(\ref{eq:discretisation}) with the property of partition of unity.
-Having density field evaluated at $\mathbf{X}$, approximation is independent of changes of the material configuration, i.e.
-changing mesh, and degrees of freedom $\tilde{\pmb\uprho}^h(\Xi({\boldsymbol {\rm \upchi}}),t)$ are
+Since the density field is evaluated at $\mathbf{X}$, the approximation is independent of changes of the material configuration (i.e.
+changing mesh) and degrees of freedom $\tilde{\pmb\uprho}^h(\Xi({\boldsymbol {\rm \upchi}}),t)$ are
 values of density at evaluated points.
 
-\subsection{Bone remodeling problem in weak form}
-
-Since here we propose a staggered approach, we fix material configuration
-such that
+\subsection{Bone remodelling problem in weak form}
+The bone remodelling problem is solved with a staggered approach, the material configuration is fixed
+such that:
 \begin{equation}
 	\tilde {\mathbf{ X}}(t)	= \tilde {{\boldsymbol {\rm \upchi}}} =  \textrm{const}
 	\;\;\textrm{and}\;\;
@@ -693,10 +691,9 @@ where $\mathbf{r}^\rho$ is the vector of residuals related to mass density flux
 equilibrium, $\mathbf{q}^\textrm{external}$ is influx of mass through boundary, 
 $\mathbf{r}^x$ is the vector of residuals associated with balance of linear momentum and
 $\mathbf{f}^\textrm{external, remodelling}$ are averaged long term forces
-mimicking mechanical load if the bone over long time period, rather scale of
-weeks than days, and $\mathcal{R}$ is mass conductivity. After expanding
+mimicking mechanical load on the bone over long time period and $\mathcal{R}$ is mass conductivity. After expanding
 residuals in Taylor series, and truncating after linear term, i.e.
-linearization, we get algebraic system in semi-discrete form
+linearisation, the algebraic system in semi-discrete form is obtained:
 \begin{equation}
 	\left[
 		\begin{array}{c}
@@ -739,7 +736,7 @@ linearization, we get algebraic system in semi-discrete form
 		\right]
 		\label{eq:tangent_remodelling}
 \end{equation}
-where
+with
 \begin{equation}
 \begin{split}
 \mathbf{M}_{\rho\rho} = 
@@ -782,14 +779,14 @@ above semi-discrete problem is discretised in time using implicit Euler scheme:
 where $\Delta t$ is length of time step, and $n$ is time step number.
 
 It is worth noting that density is approximated by base  function of one polynomial less than spatial positions in
-order to get stable solution without oscillations.
+order to produce stable solution without oscillations.
 
 \subsection{Elastic problem with the crack}
 
 The problem of bone remodelling and crack propagation or calculation of crack
 release energy has different boundary conditions and geometry. 
-To solve the staggered coupled problem, initially bone remodelling under 
-long-term effective loads applied without initial crack is simulated. Subsequently, an 
+To solve the staggered coupled problem, initially bone remodelling is simulated under 
+long-term effective loads applied without initial crack. Subsequently, an 
 initial crack is placed to the resulting mesh to compute the effect 
 of short-term loads or extreme cycling loading. The two different remodelling and crack propagation 
 meshes are tailored for the each type of problem analysed, respectively. As
@@ -807,7 +804,7 @@ whereas for elastic problem with the crack approximated Piola-Kirchhoff stress t
 \end{equation}
 
 Note that in the presented approach, one can load initial density from CT
-scans, run bone remodelling analysis and subsequently introduce crack and calculate the strain 
+scans, run bone remodelling analysis and subsequently introduce crack to calculate the 
 release energy. It is also possible to load densities directly onto mesh with a prescribed fracture.
 In each case, initial density is approximated using MWLS and then projected on current 
 material configuration.
@@ -824,10 +821,10 @@ energy is
 	\textrm{d}S	
 	= \mathbf{0}
 \end{equation}
-where $\mathbf{f}^\textrm{external, elastic}$ is an external force which leads 
-immediately to fracture or cycling loading which directly leads to fracture. 
+where $\mathbf{f}^\textrm{external, elastic}$ is an external force (or cycling loading) which leads 
+immediately to fracture. %spontaneous and catastrophic
 Since the scope of this paper is limited to the calculation crack release
-energy only, the nodal internal material forces on front crack nodes are
+energy only, the nodal internal configurational forces on front crack nodes are
 calculated as follows:
 \begin{equation}
 	\mathbf{f}^\textrm{material,internal,front} = 
@@ -844,21 +841,21 @@ calculated as follows:
 	\textrm{d}V
 	\label{eq:mat_int_front}
 \end{equation}
-where $\mathbf{f}^\textrm{material,internal,front}$ is vector of degrees of
-freedom only on crack front nodes and integration takes only place on
-tetrahedrons adjacent to crack front nodes, similarly to integration crack
+where $\mathbf{f}^\textrm{material,internal,front}$ is a vector of degrees of
+freedom only on crack front nodes and integration takes place only on
+tetrahedrons adjacent to crack front nodes, similarly to integration of the crack
 area tangent vectors matrix presented in the next subsection.
 
  \subsection{Material problem for crack release energy}
 
- The nodal material forces 
+ The nodal configurational forces 
  $\mathbf{f}^\textrm{material,internal,front}$ are evaluated at
- the crack front nodes. Moreover, the dimension of material nodal force is
+ the crack front nodes. Moreover, the dimension of configurational nodal force is
  $[\rm{J/m}]$, but Griffith cracks release energy should be in units $[{\rm{J/m}}^2]$.
- That discrepancy disappears in-plane stress analysis, in that case, material
- forces are divided by the thickness of the body. In that case magnitude of
- nodal material forces at the crack front node is the value of J-integral. In the
- case of 3d analysis to remove that unit discrepancy in units some authors
+ That discrepancy disappears in-plane stress analysis, where configurational
+ forces are divided by the thickness of the body. Subsequently, the magnitude of
+ nodal configurational forces at the crack front node is the value of J-integral. In the
+ case of 3D analysis, to remove that discrepancy in units some researchers
  divide adjacent edges into half \citep{GuersesMiehe2009}. However, that gives the
  correct value for crack release energy only for straight crack fronts.
 
@@ -883,7 +880,7 @@ adjacent to the crack front as:
 	 : \partial \mathcal{T} \cap \Gamma^h \neq \emptyset
  \right\}
 \end{equation}
-Next, we can define a matrix of  crack tangent vectors as follows:
+Next, a matrix of crack tangent vectors can be defined as follows:
 \begin{equation}
 \mathbf{Z}^\textrm{front} = 
 \int_{S^h_\Gamma}
@@ -910,7 +907,7 @@ $i,j,k,l,p,r \in \{0,1,2\}$ are material indices and $\boldsymbol{\upepsilon}$ i
 Moreover, the total number of degrees of freedom on element is $3(N_{\rm{base}}+1)$ and the units of $\mathbf{Z}^{\rm{front}}$ are $[{\rm m}^{-1}]$.
 
 Therefore, multiplication of $\mathbf{Z}^{\rm{front}}$ with nodal crack release energy ${\tilde{\mathbf{g}}}^h$ results in
-evaluation of crack material forces:
+evaluation of crack configurational forces:
 
 
 \begin{equation}
@@ -941,9 +938,9 @@ Subsequently. by multiplying Eq.~(\ref{eq:residual_crack}) on both sides with $\
 
 It can be noticed that by comparison of Eq.~({\ref{eq:gc_lagrange}}) with Theorem 1(3.) in \citep{AinsworthEssential} 
 nodal Griffith surface energy ${\tilde{\mathbf{g}}}^h$ could be interpeted as a Lagrange multiplier constraining the crack area growth.
-Furthermore, dimension term in square brackets on LHS of Eq.~(\ref{eq:gc_lagrange}) is $[\rm{1/m}]$ which multiplied by dimension
-of material force $[\rm{J/m}]$ gives dimension of crack release energy, i.e.
-$[{\rm{J/m^2}}]$. Furthermore, the main advantage of the presented approach is that crack release 
+Furthermore, dimension term in square brackets on left hand side of Eq.~(\ref{eq:gc_lagrange}) is $[\rm{1/m}]$ which multiplied by dimension
+of configurational force $[\rm{J/m}]$ gives dimension of crack release energy, i.e.
+$[{\rm{J/m^2}}]$. Thereby, the main advantage of the presented approach is that crack release 
 energy is expressed exclusively in terms of nodal quantities, which enables
 implicit formulation of crack propagation algorithm, however this is 
 out of the scope of this work.
@@ -952,7 +949,7 @@ out of the scope of this work.
 
 The coupled system of nonlinear equations (mass
 balance~Eq.~(\ref{eq:mass_balance}) and momentum
-balance~Eq.~(\ref{eq:linear_momentum})) are discretised and solved iteratively
+balance~Eq.~(\ref{eq:linear_momentum})) are discretised and solved iteratively by
 using the Newton-Rephson method for the displacements and density.
 
 Two approaches have been implemented regarding evaluations of tangent stiffness,
@@ -1391,7 +1388,7 @@ Subsequently, the relative approximation error between the norm of analytical gr
 The error is evaluated for three cases: constant ($q=1$), linear ($q=4$) and quadratic ($q=10$) basis functions. 
 It is clear from presented results in Figure~\ref{fig:prism_error} that constant functions are not sufficient for evaluating the gradient. 
 The maximum error for a linear and quadratic basis has values of $10^{-2}$ and $10^{-4}$, respectively. 
-These results are satisfactory for the application of mapping data fields onto the mesh and suggests correctness of the implementation.
+These results are satisfactory for the application of mapping data fields onto the mesh and suggest correctness of the implementation.
 \begin{figure}[h!]
 	\centering
 %	\includegraphics[width=16cm]{Figures/mwls_prism.png}
@@ -1434,7 +1431,7 @@ Mapped density pattern from both methods is very similar.
 Thanks to the approximation, the obtained field is continuous despite the fact that the mesh is relatively coarse. 
 It is especially beneficial in case of hierarchical basis framework where larger elements with high order approximation are more desired. 
 Classic finite element method provides only ${C^0}$-continuity; therefore the results of gradients obtained with LS are only piecewise continuous. 
-Gradients form MWLS, on the contrary, are smooth, which can be of great importance when the mapping is used in crack propagation analysis since it strongly influences the direction of a crack. 
+Gradients form MWLS, on the contrary, are smooth, which can be of great importance when the mapping is used in crack propagation.
 It can also be seen that mesh boundary does not suffer from Partial Volume Artifacts~\citep{adams2009quantitative}.
 %try more meshes maybe?
 \subsection{Stress intensity calculations}
@@ -1474,11 +1471,11 @@ Young's modulus $E$ and Poisson's ratio $\nu$ are $1000$ and $0.3$, respectively
 Hierarchical approximation basis functions allows for usage of elements with different orders of approximation. 
 Hence, the influence of local and global $p$~-~refinement is investigated.
 In general, all tetrahedrons of the mesh have a global order of approximation, $p_{\rm g}$, and the elements that are subjected to local refinement have order from $p_{\rm{l}} + 1$~to~$p_{\rm{l}} + p_{\rm{g}}$.
-When $p_{\rm l}+p_{\rm g}\leq3$, two types of tetrahedral elements are considered where local order of approximation is increased to $p_{\rm l}+p_{\rm g}$ only at elements with vertices at the crack tip as presented in Figure~\ref{fig:plate_load_mesh}b.
-Otherwise, a number of groups of tetrahedrals with different orders of approximation are considered.
-Similar to the case where $p_{\rm l} + p_{\rm g} \leq 3$, the first group of elements is composed of the tetrahedrals with vertices at the crack tip and have approximation order $p_{\rm l}+p_{\rm g}$.
-The second group of elements is consisted of the tetrahedrons adjacent to the first set elements, with approximation order that is one less than the previous set, i.e. $p_{\rm l}+p_{\rm g}-1$.
-This process continues for each next adjacent group of tetrahedrons until the approximation order reaches the global order of approximation, $p_{\rm {g}}$.
+%When $p_{\rm l}+p_{\rm g}\leq3$, two types of tetrahedral elements are considered where local order of approximation is increased to $p_{\rm l}+p_{\rm g}$ only at elements with vertices at the crack tip as presented in Figure~\ref{fig:plate_load_mesh}b.
+%Otherwise, a number of groups of tetrahedrals with different orders of approximation are considered.
+%Similar to the case where $p_{\rm l} + p_{\rm g} \leq 3$, the first group of elements is composed of the tetrahedrals with vertices at the crack tip and have approximation order $p_{\rm l}+p_{\rm g}$.
+%The second group of elements is consisted of the tetrahedrons adjacent to the first set elements, with approximation order that is one less than the previous set, i.e. $p_{\rm l}+p_{\rm g}-1$.
+%This process continues for each next adjacent group of tetrahedrons until the approximation order reaches the global order of approximation, $p_{\rm {g}}$.
 
 All analyses presented were run using the same mesh for 1st order up to 6th order of approximation with local $p$~-~refinements so that $p_{\rm l} + p_{\rm g} \leq 7$, since this is the current limitation of implemented quadrature rule. 
 The Mode I stress intensity factor, $K_{\rm I}$, can be calculated directly from the output configurational forces using the following relationship: 
@@ -1489,7 +1486,7 @@ where $G$ is the change of elastic strain energy per unit area of crack growth.
 The deformed shape of the plate is illustrated in Figure~\ref{fig:plate_conv_no_sing}.
 From the graph, it is evident that for the same coarse mesh and number of nodes the solution can improve drastically when the order of approximation is increased. 
 The well known pathological nature of the 1st order solution due to shear locking is observed since a much higher error than other orders is computed. 
-The minimum achieved error is $0.6\%$ for all the cases with total order of approximation  $p_{\rm l} + p_{\rm g} = 7$. 
+The minimum achieved error is $0.50\%$ for all the cases with total order of approximation  $p_{\rm l} + p_{\rm g} = 7$. 
 Therefore, it can be observed that the same level of accuracy can be accomplished when using a low order of global approximation with only local $p$~-~refinement as with high order on the entire mesh. 
 Moreover, by looking at the number of degrees of freedom, it can be observed that using higher order elements locally results to the same accuracy at a much lower cost of computation time since the global matrix has a much lower size.
 \begin{figure}
@@ -1521,8 +1518,8 @@ This time, however, quarter-point tetrahedral elements were applied around the c
 	\label{fig:plate_conv_singularity}
 \end{figure}
 Based on the results in Figure~\ref{fig:plate_conv_singularity}, it is evident that using quarter-point elements improves the convergence rate to the analytical solution significantly. 
-Introducing the singularity at the crack tip elements lowered the error by an order of magnitude, from 0.636\% down to 0.02\%. 
-However, it can be seen from the plot in Figure~\ref{fig:plate_conv_singularity} that for each $p_{\rm l} + p_{\rm g}$ case, just after reaching the minimum error, it starts increasing up to a certain value. 
+Introducing the singularity at the crack tip elements lowered the error by an order of magnitude, from 0.50\% down to 0.028\%. 
+However, it can be seen from the plot in Figure~\ref{fig:plate_conv_singularity} that for each $p_{\rm l} + p_{\rm g}$ combination, just after reaching the minimum error, it starts increasing up to a certain value. 
 This suggests that the solution cannot be further improved beyond that point only by enhancing the order of approximation. 
 Possibly, by refining the mesh and changing model dimensions (since an analytical solution is for infinite plate), the error could be decreased even more. 
 Nevertheless, such accuracy is redundant for engineering purposes. \\
@@ -1534,7 +1531,7 @@ So far, this article has focused on cracks in homogeneous bodies.
 The following subsections will discuss the influence of including inhomogeneities into the domain. 
 Considering the same problem of the finite plate with horizontal crack, as in the previous analyses, a density field $\mathbf{\rho}(x,y,z) = 0.125y + 1$ is directly assigned at integration (Gauss) points of each tetrahedral element.
 Once again, stretching the specimen introduces some configurational forces at the crack tip and also on the entire domain due to inhomogeneity. 
-Since the stress intensity factor loses its meaning in the case of heterogeneous bodies, correct validation of configurational forces still remains an open question. 
+Since the stress intensity factor loses its meaning in the case of heterogeneous bodies, correct validation of configurational forces remains an open question. 
 To the best of the authors' knowledge, the current state of literature lacks in numerical methods to verify the results of configurational forces or stress intensity factors for heterogeneous solids other than functionally graded materials~\citep{kim2002finite}.
 %, by using MWLS method, demonstrated in Section~\ref{sec:mwls}.
 
@@ -1561,7 +1558,7 @@ The results are presented in Figure~\ref{fig:covergencefdm}.
 	\caption{Convergence of error in release energy rate from Finite Difference Method. Density distribution (bottom right).}
 	\label{fig:covergencefdm}
 \end{figure}
-It is apparent from the plot that with increasing levels of refinement the error in release energy is converging down to 0.3\%. It is worth noting that for homogeneous case similar accuracy is attained.  Achieving higher precision with FDM is difficult due to accumulation of truncation, approximation and discretisation errors.
+It is apparent from the plot that with increasing levels of refinement the error in release energy is converging down to 0.3\%. It is worth noting that for homogeneous case similar accuracy was attained.  Achieving higher precision with FDM validation is difficult due to accumulation of truncation, approximation and discretisation errors.
 Therefore, it can be deduced that the presented implementation allows for estimation of release energy for heterogeneous domains with a satisfactory level of accuracy.
 \subsubsection{Release energy rate for metacarpal bone from CT}
 This numerical example considers the same bone as presented in Section~\ref{sec:numerical_examples:bone_adap}. 
@@ -1604,7 +1601,7 @@ It can be seen that, for the same mesh, as approximation order increases configu
 	\label{fig:max_g1_convergece}
 \end{figure}
 Crack extension occurs when the energy release rate $G$ equals the material's resistance, $g_{\rm c}$ to crack extension. 
-Assuming that bone's resistance is $g_{\rm c} = 2.0\,[\mathrm{ kJ/m^2}]$ )~\citep{gasser2007numerical} it can be estimated that this particular metacarpal can sustain loading of approximately 2.2 times greater before fracture starts to propagate. 
+Assuming that bone's resistance is $g_{\rm c} = 2.0\,[\mathrm{ kJ/m^2}]$~\citep{gasser2007numerical} it can be estimated that this particular metacarpal can sustain loading of approximately 2.2 times greater before fracture starts to propagate. 
 \subsubsection{Release energy rate for remodelled bone}
 The numerical example described in this section presents an application of the developed framework to estimate the crack propensity of the equine metacarpal bone at different phases of adaptation during training. 
 The same geometry and boundary conditions as in the previous example are used here. 
