@@ -623,7 +623,7 @@ as will be described in detail in Section \ref{sec:mwls}.
 This mapping approach was chosen since it offers higher regularity than when the field is
 directly approximated on the mesh. The higher regularity feature of MWLS
 approximation is not exploited here, however, is essential for the problem of
-crack propagation, where second derivatives of density filed $\partial^2
+crack propagation, where second derivatives of density field $\partial^2
 \rho^h / \partial \mathbf{X}^2$ will appear in the tangent matrix.
 
 In the context of finite element method, fields are approximated  in current material and current spacial spaces as follows: 
@@ -639,7 +639,7 @@ where superscript $h$ indicates approximation and $(\tilde \cdot)$ nodal
 values. Three-dimensional domains are discretised with tetrahedral finite
 elements with hierarchical basis functions of arbitrary polynomial order,
 following the work of Ainsworth and Coyle~\citep{Ainsworth2003}. Moreover,
-smoothed density filed is approximated by MWLS shape functions
+smoothed density field is approximated by MWLS shape functions
 \begin{equation}
 	\rho^{h,\textrm{MWLS}}(\mathbf{X},t) = \Phi^\textrm{MWLS}(\mathbf{X}) 
 	\tilde{\pmb\uprho}^h(\Xi({\boldsymbol {\rm \upchi}}),t) 
