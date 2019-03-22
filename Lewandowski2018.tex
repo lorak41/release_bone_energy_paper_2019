@@ -781,6 +781,27 @@ where $\Delta t$ is length of time step, and $n$ is time step number.
 It is worth noting that density is approximated by base  function of one polynomial less than spatial positions in
 order to produce stable solution without oscillations.
 
+\subsection{Implementation of the bone remodelling}
+
+The coupled system of nonlinear equations (mass
+balance~Eq.~(\ref{eq:mass_balance}) and momentum
+balance~Eq.~(\ref{eq:linear_momentum})) are discretised and solved iteratively by
+using the Newton-Rephson method for the displacements and density.
+
+Two approaches have been implemented regarding evaluations of tangent stiffness,
+i.e by either analytically evaluating the higher dimensional derivatives of the residuals of $\mathbf{r}_{x}$ and $\mathbf{r}_{\rho}$ as 
+presented in Eq.~(\ref{eq:tangent_remodelling}) or by means of automatic differentiation using the ADOL-C 
+library~\citep{Walther2009}. At this point, it is interesting to note that analyses presented in this paper using automatic 
+differentiation are about 25~$\%$ slower than the analytical formulation due to increased assembly time.
+Nevertheless, ADOL-C significantly simplifies the implementation process, it is then reasonable to use it at the early stages of development.
+
+Spatial discretisation is achieved using
+hierarchical basis functions, implemented in the open source FEM library
+MoFEM~\citep{mofem2017}. Temporal discretisation of the governing equations
+is carried out by using the backward Euler method. Application of the proposed
+model for equine metacarpal is demonstrated by two numerical examples in
+Section~\ref{sec:numerical_examples}.
+
 \subsection{Elastic problem with the crack}
 
 The problem of bone remodelling and crack propagation or calculation of crack
@@ -944,27 +965,6 @@ $[{\rm{J/m^2}}]$. Thereby, the main advantage of the presented approach is that 
 energy is expressed exclusively in terms of nodal quantities, which enables
 implicit formulation of crack propagation algorithm, however this is 
 out of the scope of this work.
-
-\subsection{Implementation}
-
-The coupled system of nonlinear equations (mass
-balance~Eq.~(\ref{eq:mass_balance}) and momentum
-balance~Eq.~(\ref{eq:linear_momentum})) are discretised and solved iteratively by
-using the Newton-Rephson method for the displacements and density.
-
-Two approaches have been implemented regarding evaluations of tangent stiffness,
-i.e by either analytically evaluating the higher dimensional derivatives of the residuals of $\mathbf{r}_{x}$ and $\mathbf{r}_{\rho}$ as 
-presented in Eq.~(\ref{eq:tangent_remodelling}) or by means of automatic differentiation using the ADOL-C 
-library~\citep{Walther2009}. At this point, it is interesting to note that analyses presented in this paper using automatic 
-differentiation are about 25~$\%$ slower than the analytical formulation due to increased assembly time.
-Nevertheless, ADOL-C significantly simplifies the implementation process, it is then reasonable to use it at the early stages of development.
-
-Spatial discretisation is achieved using
-hierarchical basis functions, implemented in the open source FEM library
-MoFEM~\citep{mofem2017}. Temporal discretisation of the governing equations
-is carried out by using the backward Euler method. Application of the proposed
-model for equine metacarpal is demonstrated by two numerical examples in
-Section~\ref{sec:numerical_examples}.
 
 \section{Quarter point elements}
 %\section{Approximation}
