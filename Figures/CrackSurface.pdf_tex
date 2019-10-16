@@ -1,4 +1,4 @@
-%% Creator: Inkscape inkscape 0.91, www.inkscape.org
+%% Creator: Inkscape inkscape 0.92.2, www.inkscape.org
 %% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
 %% Accompanies image file 'CrackSurface.pdf' (pdf, eps, ps)
 %%
@@ -36,7 +36,7 @@
   }%
   \providecommand\rotatebox[2]{#2}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{1423.575933bp}%
+    \setlength{\unitlength}{759.08363066bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -48,23 +48,21 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.24984078)%
+  \begin{picture}(1,0.46254566)%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{Figures/CrackSurface.pdf}}%
-    \put(0.742727,0.11068695){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.22886132\unitlength}\centering $\partial \Gamma$\end{minipage}}}%
-    \put(0.61735113,0.0749471){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.23897669\unitlength}\centering $\Gamma^{-}$\end{minipage}}}%
-    \put(0.59331613,0.13387072){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.24010062\unitlength}\centering $\Gamma^{+}$\end{minipage}}}%
-    \put(-0.05166358,0.05935411){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.86785461\unitlength}\centering $\Gamma^{+}, \Gamma^{-} \rightarrow {\color{red}\Gamma}$\end{minipage}}}%
-    \put(0.02551871,0.04286003){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.23672883\unitlength}\centering $\Gamma^{-}$\end{minipage}}}%
-    \put(0.01019418,0.0897014){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.2468442\unitlength}\centering $\Gamma^{+}$\end{minipage}}}%
-    \put(-0.06755483,0.13892841){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.48286955\unitlength}\centering ${\boldsymbol{\rm N}^{+}}$\end{minipage}}}%
-    \put(-0.05013391,0.05631954){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.48286955\unitlength}\centering ${\boldsymbol{\rm N}^{-}}$\end{minipage}}}%
-    \put(0.01349682,0.10890463){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.48286955\unitlength}\centering ${\boldsymbol{\rm N}}$\end{minipage}}}%
-    \put(-0.04212321,0.24576428){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.48286955\unitlength}\centering ${\boldsymbol{\rm N}}$\end{minipage}}}%
-    \put(0.02980832,0.21878995){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.19739127\unitlength}\centering $\mathcal B_t$\end{minipage}}}%
-    \put(0.57800104,0.23119797){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.5109678\unitlength}\centering ${\mathcal L_{\rm n}}(\eta)$\end{minipage}}}%
-    \put(0.57800104,0.23119797){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.5109678\unitlength}\centering ${\mathcal L_{\rm n}}(\eta)$\end{minipage}}}%
-    \put(0.95753452,0.21383284){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{}}}%
-    \put(0.46925252,0.25516821){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.5109678\unitlength}\centering ${\mathcal L_{\rm t}}(\xi)$\end{minipage}}}%
-    \put(0.63470304,0.19502625){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.5109678\unitlength}\centering ${\mathcal {C}}$\end{minipage}}}%
+    \put(0.62696985,0.32815709){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{${\mathcal L_{\rm t}}(\xi)$}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{Figures/CrackSurface.pdf}}%
+    \put(0.28916419,0.26178122){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\mathcal B_t$}}}%
+    \put(0.8527663,0.28193102){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{${\mathcal {\rm C}}$}}}%
+    \put(0.82609744,0.17703349){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\partial \Gamma$}}}%
+    \put(0.67912232,0.13258536){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\Gamma^{-}$}}}%
+    \put(0.62934043,0.19125688){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\Gamma^{+}$}}}%
+    \put(0.18011814,0.22207426){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\partial \mathcal B_t$}}}%
+    \put(0.17419175,0.38208744){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{${\mathcal {\rm C}}$}}}%
+    \put(0.0671457,0.27485742){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\Gamma^{-}$}}}%
+    \put(0.03988418,0.33526878){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\Gamma^{+}$}}}%
+    \put(0.11907606,0.38090215){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{${\boldsymbol{\rm N}^{+}}$}}}%
+    \put(0.14455965,0.30078517){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{${\boldsymbol{\rm N}^{-}}$}}}%
+    \put(0.73720114,0.29971028){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{${\mathcal L_{\rm n}}(\eta)$}}}%
   \end{picture}%
 \endgroup%
