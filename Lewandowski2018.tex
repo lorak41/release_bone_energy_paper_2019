@@ -71,7 +71,7 @@ T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \title{Numerical investigation into fracture risk of bone following adaptation}
 
 \author[gla]{Karol Lewandowski\corref{cor}}
-\ead{lukasz.kaczmarczyk@glasgow.ac.uk}
+\ead{karol.lewandowski@glasgow.ac.uk}
 \author[gla]{{\L}ukasz Kaczmarczyk}
 \ead{lukasz.kaczmarczyk@glasgow.ac.uk}
 \author[gla]{Ignatios Athanasiadis}
@@ -1583,8 +1583,31 @@ It can be seen that the crack has initially planar shape and curves the trajecto
 \end{figure}
 
 
-As previously demonstrated (in Figure~\ref{fig:plate_conv_singularity}) modelling singularity can significantly improve the accuracy of the configurational forces at the crack front. However, multiple tests have shown that accurate stress state at the tip has a negligible impact on the full crack propagation analysis. 
+As previously demonstrated (in Figure~\ref{fig:plate_conv_singularity}) modelling singularity can significantly improve the accuracy of the configurational forces at the crack front. In the Figure~\ref{fig:crack_singular_vs_non} results from crack analysis with and without Quarter PointEelements are reported. It is evident that accurate stress state at the tip has a negligible impact on the full crack propagation analysis and the resulting load factor. 
 
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}
+		\node at(0.,0){  	\input{Figures/tikz/fracture/remod_heter_singular.tex} };
+	\end{tikzpicture}
+	\caption{Load factor versus crack area for with and without modelled singularity at the tip.}
+	\label{fig:crack_singular_vs_non}
+\end{figure}
+
+...............................................................................................
+
+
+Both cases are solved for 2nd and 3rd global order of approximation. Consistently, the response fluctuates at the beginning of crack analysis when initial crack tries to find the most dissipative direction.
+
+
+Figure: Evolution of crack surface for homogeneous (green) and heterogeneous case (red); plots
+correspond to the squares in Fig. 321
+
+
+Fig Predicted crack formation: (a) fully developed curved 3D crack surface; (b) crack paths on the bone surface and comparison with CT scanned 3rd metacarpal bone fracture.
+
+In the process of moving the crack front nodes, the mesh quality can potentially deteriorate leading to numerical errors. One of the solutions to overcome this difficulty is to refine the mesh surrounding the crack tip after certain (usually three) number of load steps. 
 \begin{figure}
 	\centering
 	\begin{tikzpicture}
@@ -1599,7 +1622,7 @@ As previously demonstrated (in Figure~\ref{fig:plate_conv_singularity}) modellin
 \begin{figure}
 	\centering
 	\begin{tikzpicture}
- 	\node at(0.,0){ \input{Figures/tikz/fracture/real_fract_ct_h_ref.tex} };
+	 \node at(0.,0){ \input{Figures/tikz/fracture/real_fract_ct_h_ref.tex} };
 	\end{tikzpicture}
 	\caption{Load factor versus crack area for consecutive global $h$~-~refinements.}
 	\label{fig:crack_ct_h_ref}
@@ -1614,29 +1637,6 @@ As previously demonstrated (in Figure~\ref{fig:plate_conv_singularity}) modellin
 	\caption{Load factor versus crack area for consecutive $p$~-~refinements.}
 	\label{fig:crack_ct_p_ref}
 \end{figure}
-
-\begin{figure}
-	\centering
-	\begin{tikzpicture}
-\node at(0.,0){  	\input{Figures/tikz/fracture/remod_heter_singular.tex} };
-	\end{tikzpicture}
-	\caption{Load factor versus crack area for with and without modelled singularity at the tip.}
-	\label{fig:crack_singular}
-\end{figure}
-
-
-
-
-Both cases are solved for 2nd and 3rd global order of approximation. Consistently, the response fluctuates at the beginning of crack analysis when initial crack tries to find the most dissipative direction.
-
-
-Figure: Evolution of crack surface for homogeneous (green) and heterogeneous case (red); plots
-correspond to the squares in Fig. 321
-
-
-Fig Predicted crack formation: (a) fully developed curved 3D crack surface; (b) crack paths on the bone surface and comparison with CT scanned 3rd metacarpal bone fracture.
-
-In the process of moving the crack front nodes, the mesh quality can potentially deteriorate leading to numerical errors. One of the solutions to overcome this difficulty is to refine the mesh surrounding the crack tip after certain (usually three) number of load steps. 
 
 \begin{figure}[h!]
 	\begin{centering}
