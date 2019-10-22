@@ -1496,7 +1496,7 @@ An initial crack was generated in the mesh using a cutting plane, as shown in Fi
 The numerical analyses were undertaken using three meshes consisted of 6069, 10032 and 21189 tetrahedrons and repeated for 1\textsuperscript{st}, 2\textsuperscript{nd} and 3\textsuperscript{rd}-order of global and local $p$~-~refinement at the crack tip. 
 Boundary conditions and material parameters remain the same as in Table~\ref{tab:parameters_mc3}. 
 Using a $\mathrm {K_2 HPO_4}$ calibration phantom, grey scale values from CT are converted to bone mineral density using five tubes with reference densities. 
-The mechanical material properties were mapped onto the integration points of the metacarpal mesh using the MWLS method described earlier. 
+The mechanical material properties were mapped onto the integration points of the metacarpal mesh using the MWLS method described in \ref{sec:mwls}. 
 Applying load induces configurational forces at the crack front, as shown in Figure~\ref{fig:crackfrontforce}. 
 The direction of the vectors also indicates the direction of future crack propagation.
 %When these forces, attain the critical value, crack growth is spontaneous and catastrophic.  
@@ -1524,7 +1524,6 @@ It can be seen that, for the same mesh, as the order of approximation increases,
 \begin{figure}
 	\centering
 	\input{Figures/tikz/max_g1_convergece.tex}
-	%\includegraphics[width=0.7\linewidth]{Figures/tikz/max_g1_convergece.png}
 	\caption{Convergence plot of maximum configurational force in Mode-I versus no of DOF (log10) for subsequent discretisations and $p$~-~refinements. Results are mesh independent since they all converge to the value for energy release of approximately $ G_{\rm I} = 0.9 \, [\mathrm{kJ} / \mathrm{m}^2]$ for increasing orders of approximation. }
 	\label{fig:max_g1_convergece}
 \end{figure}
@@ -1539,15 +1538,15 @@ However, this time, densities from a bone adaptation analysis (Section~\ref{sec:
 	%\includegraphics[width=0.8\linewidth]{Figures/frack_mesh_cutting.png}
 			\def\svgwidth{12cm}
 		\input{Figures/frack_mesh_cutting.pdf_tex}
-	\caption{The resulting density distribution from the bone adaptation analysis is approximated directly onto integration points of the mesh used for fracture analysis using MWLS method described earlier in~\ref{sec:mwls}. The cutting circular plane used to create an initial crack is also shown.}
+	\caption{The resulting density distribution from the bone adaptation analysis is approximated directly onto integration points of the mesh used for fracture analysis using MWLS method described in~\ref{sec:mwls}. The cutting circular plane used to create an initial crack is also shown.}
 	\label{fig:frackmeshcutting}
 \end{figure}
 The resulting energy release rate at different points in time of bone adaptation are illustrated in Figure~\ref{fig:crackmc3release} for three different local $p$~-~refinements. It can be seen that the variation in energy release rate for increased orders of approximation at the crack front is very small. 
-\begin{figure}
+\begin{figure}[h]
 	\centering
 %	\includegraphics[width=1\linewidth]{Figures/tikz/crack_mc3_release.png}
 		\begin{tikzpicture}
-			\node at (0,0) {	\input{Figures/tikz/crack_mc3_release.tex} };
+			\node at(0,0){	\input{Figures/tikz/crack_mc3_release.tex} s};
 			\node at(0,0){ \includegraphics[width=9cm]{Figures/tikz/density_for_g1_conv.png}};
 			\node at(2,-1){                    	\def\svgwidth{4cm} 	\input{Figures/scale_bars/scale_bar_density_rainbow.pdf_tex}  } ;
 		
@@ -1563,12 +1562,12 @@ All five cases (time snapshots) are solved for 2nd-order of approximation.
 The numerically predicted crack paths are shown in Figure~\ref{fig:crack_snapshots}. 
 It can be seen that the crack has initially planar shape and curves the trajectory towards the lateral side of the bone. The simulated crack path compares well with fractures observed in radiographs \citep{whitton2010third}, especially considering oversimplified loading conditions. Load factor versus crack area plots are shown in Figure~\ref{fig:crack_remodel_frac_compar}. Consistent with the previous analysis in Section~\ref{sec:mc3_release_eng}, the metacarpal bone shows an increased propensity for fracture - for the same crack area, remodelled bone requires much lower force (load factor) to induce crack propagation. Low density levels at the biological equilibrium ($t=90$ and $t=200$) also alternates the crack path, as can be observed the crack starts to curve much earlier than in the initial stages of remodelling. 
 
-\begin{figure}
+\begin{figure}[h!]
 	\centering
 	\begin{tikzpicture}
 	\node at(0.,0){  	\input{Figures/tikz/fracture/remodel_frac_compar.tex} };
 	\node at (0.25,1.8) {	\includegraphics[width=7cm]{Figures/pngs/crack_surfaces_adapt.png}};
-	\node at (1,0) {	Crack surfaces};
+	\node at (1.5,0) {	Crack surfaces};
 	\end{tikzpicture}
 	\caption{Load factor versus crack area for different snapshots from bone remodelling analysis. It can be noticed that the heterogeneity of the bone inclueced both load factor and the resulting crack surface.}
 	\label{fig:crack_remodel_frac_compar}
@@ -1604,7 +1603,7 @@ As previously demonstrated (in Figure~\ref{fig:plate_conv_singularity}) modellin
 
 OPTIONAL RESULTS, SHOULD WE INCLUDE THEM?
 
-In the process of moving the crack front nodes, the mesh quality can potentially deteriorate leading to numerical errors. One of the solutions to overcome this difficulty is to refine the mesh surrounding the crack tip after certain (usually three) number of load steps. 
+%In the process of moving the crack front nodes, the mesh quality can potentially deteriorate leading to numerical errors. One of the solutions to overcome this difficulty is to refine the mesh surrounding the crack tip after certain (usually three) number of load steps. 
 \begin{figure}
 	\centering
 	\begin{tikzpicture}
@@ -1649,8 +1648,8 @@ In the process of moving the crack front nodes, the mesh quality can potentially
 \end{figure}
 
 
-A crack-surface controlled arc-length method was used to predict the crack pattern and limit load. 
-The mode I fracture enegy is approximated to be a constant value $\mathcal{G}_{I}=2 \mathrm{kN} / \mathrm{m}$
+%A crack-surface controlled arc-length method was used to predict the crack pattern and limit load. 
+%The mode I fracture enegy is approximated to be a constant value $\mathcal{G}_{I}=2 \mathrm{kN} / \mathrm{m}$
 %SIMPLY: energy release per unit length of a crack advancement has to be equal energy consumption for the creation of the new surface in the circuital conditions and its equal to %material parameter - fracture energy. Griffith theory
 %$-\frac{\partial \psi}{\partial a} = \frac{\partial S}{\partial a} = \mathcal\mathbf G_c$
 
