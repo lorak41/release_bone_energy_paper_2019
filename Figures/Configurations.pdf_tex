@@ -1,4 +1,4 @@
-%% Creator: Inkscape inkscape 0.91, www.inkscape.org
+%% Creator: Inkscape inkscape 0.92.2, www.inkscape.org
 %% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
 %% Accompanies image file 'Configurations.pdf' (pdf, eps, ps)
 %%
@@ -36,7 +36,7 @@
   }%
   \providecommand\rotatebox[2]{#2}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{963.90473822bp}%
+    \setlength{\unitlength}{964.17426695bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -48,26 +48,25 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.44956617)%
+  \begin{picture}(1,0.45722022)%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{Figures/Configurations.pdf}}%
-    \put(0.11793847,0.45522018){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.20084972\unitlength}\raggedright Current material\end{minipage}}}%
-    \put(0.11793847,0.43032145){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.15843995\unitlength}\raggedright configuration\end{minipage}}}%
-    \put(0.58769444,0.45522018){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.18220814\unitlength}\raggedright Current spatial\end{minipage}}}%
-    \put(0.58769444,0.43032145){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.15843995\unitlength}\raggedright configuration\end{minipage}}}%
-    \put(0.68804897,0.13528474){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.1211738\unitlength}\raggedright Reference\end{minipage}}}%
-    \put(0.68804897,0.11370585){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.15843995\unitlength}\raggedright configuration\end{minipage}}}%
-    \put(0.28475994,0.43779107){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.37514081\unitlength}\centering $\varphi(\mathbf X,t)$\end{minipage}}}%
-    \put(0.32309051,0.20207128){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.79533872\unitlength}\centering $\mathbf \Phi ({ \boldsymbol {\rm \upchi}},t)$\end{minipage}}}%
-    \put(0.34235892,0.06827386){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.20606887\unitlength}\centering $\rm \upchi$\end{minipage}}}%
-    \put(0.04108679,0.34343182){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.33459309\unitlength}\centering ${\boldsymbol {\rm x}}$\end{minipage}}}%
-    \put(0.47183476,0.3417719){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.33459309\unitlength}\centering ${\boldsymbol {\rm x}}$\end{minipage}}}%
-    \put(0.24943303,0.21203224){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.18259413\unitlength}\centering $\mathbf H$\end{minipage}}}%
-    \put(0.42040428,0.21203224){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.18259413\unitlength}\centering $\mathbf h$\end{minipage}}}%
-    \put(0.01174336,0.21901567){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.23189109\unitlength}\centering $\mathcal B_t$\end{minipage}}}%
-    \put(0.59893832,0.03435012){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.23189109\unitlength}\centering $\mathcal B_0$\end{minipage}}}%
-    \put(0.72096651,0.23390814){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.21839311\unitlength}\centering $\Omega_t$\end{minipage}}}%
-    \put(0.15508452,0.30893379){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.64032794\unitlength}\centering $\mathbf F=\mathbf h \mathbf H^{-1}$\end{minipage}}}%
-    \put(0.11793847,0.47845899){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.1211738\unitlength}\raggedright \end{minipage}}}%
-    \put(-0.15501256,0.14593327){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.79533872\unitlength}\centering $\mathbf \Xi ({ \boldsymbol {\rm \upchi}},t)$\end{minipage}}}%
+    \put(0.11804528,0.43509292){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.20079358\unitlength}\raggedright Current material\end{minipage}}}%
+    \put(0.11804528,0.41020115){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.15839566\unitlength}\raggedright domain\end{minipage}}}%
+    \put(0.59207021,0.4330915){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.1821572\unitlength}\raggedright Spatial domain\end{minipage}}}%
+    \put(0.6902959,0.10114472){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.23444724\unitlength}\raggedright Reference material\end{minipage}}}%
+    \put(0.6902959,0.07957186){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.15839566\unitlength}\raggedright domain\end{minipage}}}%
+    \put(0.28482011,0.43766868){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.37503594\unitlength}\centering $\varphi(\mathbf X,t)$\end{minipage}}}%
+    \put(0.32313996,0.20201479){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.79511639\unitlength}\centering $\mathbf \Phi ({ \boldsymbol {\rm \upchi}},t)$\end{minipage}}}%
+    \put(0.34240299,0.06825478){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.20601127\unitlength}\centering $\rm \upchi$\end{minipage}}}%
+    \put(0.04121508,0.34333581){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.33449956\unitlength}\centering ${\boldsymbol {\rm x}}$\end{minipage}}}%
+    \put(0.47184263,0.34167636){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.33449956\unitlength}\centering ${\boldsymbol {\rm x}}$\end{minipage}}}%
+    \put(0.24950307,0.21197296){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.18254308\unitlength}\centering $\mathbf H$\end{minipage}}}%
+    \put(0.42042653,0.21197296){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.18254308\unitlength}\centering $\mathbf h$\end{minipage}}}%
+    \put(0.2439797,0.26845764){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.23182627\unitlength}\centering $\mathcal B_t$\end{minipage}}}%
+    \put(0.51040817,0.0444129){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.23182627\unitlength}\centering $\mathcal B_0$\end{minipage}}}%
+    \put(0.66980467,0.26904503){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.21833206\unitlength}\centering $\Omega_t$\end{minipage}}}%
+    \put(0.15518094,0.33584742){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.64014894\unitlength}\centering $\mathbf F=\mathbf h \mathbf H^{-1}$\end{minipage}}}%
+    \put(0.11804528,0.47832524){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.12113993\unitlength}\raggedright  \end{minipage}}}%
+    \put(-0.12483784,0.10589248){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.79511639\unitlength}\centering $\mathbf \Xi ({ \boldsymbol {\rm \upchi}},t)$\end{minipage}}}%
   \end{picture}%
 \endgroup%
