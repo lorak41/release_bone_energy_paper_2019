@@ -91,6 +91,7 @@ T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 	Performance of the framework is demonstrated by means of a representative numerical simulations for bone remodelling and subsequent crack propagation in an equine 3rd metacarpal bone. Accurate representation of subject-specific geometry and material properties are obtained from CT scans. A new approach to assign bone density from CT scan data to the finite element models, using moving weighted least squares is utilised. 
 	The resulting framework provides a robust and energy consistent method for quantifying the influence of heterogeneity (resulting from bone adaptation) on fracture propensity. 
 
+	
 
 \textcolor{red} ABSTRACT TO BE REWRITTEN:
 
@@ -1451,7 +1452,7 @@ The same problem as in Section~\ref{sec:plate_section} is investigated. This tim
 Based on the results in Figure~\ref{fig:plate_conv_singularity}, it is evident that using singularity elements improves the convergence rate significantly and lowered the error by an order of magnitude, from 0.50\% down to 0.028\%. 
 However, it can be seen from the plot in Figure~\ref{fig:plate_conv_singularity} that for each $p_{\rm l} + p_{\rm g}$ combination, just after reaching the minimum error, it starts increasing again. 
 This suggests that the solution cannot be further improved beyond that point only by enhancing the order of approximation. 
-Possibly, by refining the mesh and changing the model dimensions (to better replicate the infinite plate used to determine the analytical solution), the error could be decreased even more. 
+Possibly, by refining the mesh and changing the model length (to better replicate the infinite plate used to determine the analytical solution), the error could be decreased even more. 
 Nevertheless, this is considered extremely accurate for the purpose at hand. \\
 %The critical thickness is that which causes the specimen to be dominated by a state of plane strain, as opposed to plane stress. The stress in the through-thickness z direction must become zero at the sides of the specimen since no traction is applied there, and in a thin specimen the stress will not have room to rise to appreciable values within the material. The strain in the z direction is not zero, of course, and the specimen will experience a Poisson contraction given by εz = ν(σx + σy). But when the specimen is thicker, material near the center will be unable to contract laterally due to the constraint of adjacent material. Now the z-direction strain is zero, so a tensile stress will arise as the material tries to contract but is prevented from doing so. 
 Overall, these results indicate that it is of great benefit to use the singularity elements, since they improve the accuracy of the solution with no extra cost.
