@@ -1477,7 +1477,7 @@ where the elastic strain energies $\psi(a_{\rm {pl}} \pm \Delta a_{\rm {pl}})$ c
 Next, knowing the resulting release energy with the crack length of $a_{\rm {pl}}$, a relative error can be calculated. 
 Twenty-four analyses for different levels of $p$~-~refinements and values of $\Delta a_{\rm {pl}}$ ) have been performed in order to determine the error in the release energy. 
 The results are presented in Figure~\ref{fig:covergencefdm}.
-\begin{figure}
+\begin{figure}[h]
 	\centering
 %	\includegraphics[width=0.7\linewidth]{Figures/tikz/covergence_FDM.png}
 	\begin{tikzpicture}
@@ -1504,7 +1504,7 @@ The direction of the vectors also indicates the direction of future crack propag
 The values of numerically predicted maximal nodal energy release rates in Mode I (crack opening) for subsequent meshes are plotted in Figure~\ref{fig:max_g1_convergece}. 
 It can be seen that, for the same mesh, as the order of approximation increases, the energy release rate converges. 
 %with increasing order of approximation material forces converge.
-\begin{figure}
+\begin{figure}[h]
 	\centering
 		\def\svgwidth{10cm}
 		\input{Figures/bone_ct_mesh_cut.pdf_tex}
@@ -1513,7 +1513,7 @@ It can be seen that, for the same mesh, as the order of approximation increases,
 	\label{fig:bone_ct_mesh_cut}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h!]
 	\centering
 	\def\svgwidth{12cm}
 	\input{Figures/crack_front_force.pdf_tex}
@@ -1522,7 +1522,7 @@ It can be seen that, for the same mesh, as the order of approximation increases,
 	\label{fig:crackfrontforce}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h!]
 	\centering
 	\input{Figures/tikz/max_g1_convergece.tex}
 	\caption{Convergence plot of maximum configurational force in Mode-I versus no of DOF (log10) for subsequent discretisations and $p$~-~refinements. Results are mesh independent since they all converge to the value for energy release of approximately $ G_{\rm I} = 0.9 \, [\mathrm{kJ} / \mathrm{m}^2]$ for increasing orders of approximation. }
@@ -1534,7 +1534,7 @@ Crack will propagate when the energy release rate $G$ equals the material's resi
 The likelihood of fracture in an equine metacarpal bone at different phases of adaptation during training is investigated here.
 The same geometry and boundary conditions as in the previous example are used. 
 However, this time, densities from a bone adaptation analysis (Section~\ref{sec:numerical_examples:bone_adap}) are mapped onto the mesh consisting of 6069 elements as shown in Figure~\ref{fig:frackmeshcutting}. 
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	%\includegraphics[width=0.8\linewidth]{Figures/frack_mesh_cutting.png}
 			\def\svgwidth{12cm}
@@ -1543,7 +1543,7 @@ However, this time, densities from a bone adaptation analysis (Section~\ref{sec:
 	\label{fig:frackmeshcutting}
 \end{figure}
 The resulting energy release rate at different points in time of bone adaptation are illustrated in Figure~\ref{fig:crackmc3release} for three different local $p$~-~refinements. It can be seen that the variation in energy release rate for increased orders of approximation at the crack front is very small. 
-\begin{figure}[h]
+\begin{figure}[h!]
 	\centering
 %	\includegraphics[width=1\linewidth]{Figures/tikz/crack_mc3_release.png}
 		\begin{tikzpicture}
@@ -1600,9 +1600,31 @@ As previously demonstrated (in Figure~\ref{fig:plate_conv_singularity}) modellin
 	\label{fig:crack_singular_vs_non}
 \end{figure}
 
-..................................................................................................................................................................
 
-OPTIONAL RESULTS, SHOULD WE INCLUDE THEM?
+Finally, we investigated the h and p convergence. The results presented on the Figures \ref{fig:crack_ct_h_ref} and \ref{fig:crack_ct_p_ref} show good numerical convergence for consecutive refinements. It can be concluded that our formulation predicts crack path accurately with minimal effect from original mesh or order of approximation. 
+
+\begin{figure}
+	\centering
+	\begin{minipage}{.5\textwidth}
+		\begin{tikzpicture}
+			\node at(0.,0){ \input{Figures/tikz/fracture/real_fract_ct_h_ref.tex} };
+		 \end{tikzpicture}
+		 \caption{Load factor versus crack area ($h$~-~refinement).}
+		 \label{fig:crack_ct_h_ref}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		\begin{tikzpicture}
+			\node at(0,0){         \input{Figures/tikz/fracture/real_fract_ct_p_ref.tex} };
+		\end{tikzpicture}
+		\caption{Load factor versus crack area ($p$~-~refinement).}
+		\label{fig:crack_ct_p_ref}
+	\end{minipage}
+	\end{figure}
+
+
+% ..................................................................................................................................................................
+
+% OPTIONAL RESULTS - GRAPHICS, SHOULD WE INCLUDE THEM?
 
 %In the process of moving the crack front nodes, the mesh quality can potentially deteriorate leading to numerical errors. One of the solutions to overcome this difficulty is to refine the mesh surrounding the crack tip after certain (usually three) number of load steps. 
 \begin{figure}
@@ -1616,37 +1638,40 @@ OPTIONAL RESULTS, SHOULD WE INCLUDE THEM?
 \end{figure}
 
 
-\begin{figure}
-	\centering
-	\begin{tikzpicture}
-	 \node at(0.,0){ \input{Figures/tikz/fracture/real_fract_ct_h_ref.tex} };
-	\end{tikzpicture}
-	\caption{Load factor versus crack area for consecutive global $h$~-~refinements.}
-	\label{fig:crack_ct_h_ref}
-\end{figure}
+% \begin{figure}
+% 	\centering
+% 	\begin{tikzpicture}
+% 	 \node at(0.,0){ \input{Figures/tikz/fracture/real_fract_ct_h_ref.tex} };
+% 	\end{tikzpicture}
+% 	\caption{Load factor versus crack area for consecutive global $h$~-~refinements.}
+% 	\label{fig:crack_ct_h_ref}
+% \end{figure}
 
 
-\begin{figure}
-	\centering
-	\begin{tikzpicture}
-		\node at(0,0){         \input{Figures/tikz/fracture/real_fract_ct_p_ref.tex} };
-	\end{tikzpicture}
-	\caption{Load factor versus crack area for consecutive $p$~-~refinements.}
-	\label{fig:crack_ct_p_ref}
-\end{figure}
+% \begin{figure}
+% 	\centering
+% 	\begin{tikzpicture}
+% 		\node at(0,0){         \input{Figures/tikz/fracture/real_fract_ct_p_ref.tex} };
+% 	\end{tikzpicture}
+% 	\caption{Load factor versus crack area for consecutive $p$~-~refinements.}
+% 	\label{fig:crack_ct_p_ref}
+% \end{figure}
 
-\begin{figure}[h!]
-	\begin{centering}
-			\begin{tikzpicture}
-		\node at (0,0) {			\includegraphics[width=10cm]{Figures/crack_procedure.pdf} };
-		\node at(0,1){a) \hspace{4.5cm} b)  \hspace{4.5cm} };
-		\node at(0,-3){c) \hspace{4.5cm} d)  \hspace{4.5cm} };
-		\end{tikzpicture}
+
+..................................................................................................................................................................
+
+% \begin{figure}[h!]
+% 	\begin{centering}
+% 			\begin{tikzpicture}
+% 		\node at (0,0) {			\includegraphics[width=10cm]{Figures/crack_procedure.pdf} };
+% 		\node at(0,1){a) \hspace{4.5cm} b)  \hspace{4.5cm} };
+% 		\node at(0,-3){c) \hspace{4.5cm} d)  \hspace{4.5cm} };
+% 		\end{tikzpicture}
 		
-	\end{centering}		
-		\caption{a) Nodal configurational force. b) Crack front extension. c) Mesh refinement. d) MWLS density mapping onto new elements.}
-		\label{fig:crack_procedure}
-\end{figure}
+% 	\end{centering}		
+% 		\caption{a) Nodal configurational force. b) Crack front extension. c) Mesh refinement. d) MWLS density mapping onto new elements.}
+% 		\label{fig:crack_procedure}
+% \end{figure}
 
 
 %A crack-surface controlled arc-length method was used to predict the crack pattern and limit load. 
