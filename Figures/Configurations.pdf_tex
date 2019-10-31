@@ -58,7 +58,7 @@
     \put(0.28482011,0.43766868){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.37503594\unitlength}\centering $\varphi(\mathbf X,t)$\end{minipage}}}%
     \put(0.32313996,0.20201479){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.79511639\unitlength}\centering $\mathbf \Phi ({ \boldsymbol {\rm \upchi}},t)$\end{minipage}}}%
     \put(0.34240299,0.06825478){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.20601127\unitlength}\centering $\rm \upchi$\end{minipage}}}%
-    \put(0.04121508,0.34333581){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.33449956\unitlength}\centering ${\boldsymbol {\rm x}}$\end{minipage}}}%
+    \put(0.04121508,0.34333581){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.33449956\unitlength}\centering ${\boldsymbol {\rm X}}$\end{minipage}}}%
     \put(0.47184263,0.34167636){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.33449956\unitlength}\centering ${\boldsymbol {\rm x}}$\end{minipage}}}%
     \put(0.24950307,0.21197296){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.18254308\unitlength}\centering $\mathbf H$\end{minipage}}}%
     \put(0.42042653,0.21197296){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.18254308\unitlength}\centering $\mathbf h$\end{minipage}}}%

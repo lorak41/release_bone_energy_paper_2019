@@ -13,7 +13,7 @@
 \usepackage{color}
 \usepackage{amsfonts}
 %\DeclareMathOperator*{\Aoperator}{ \mathlarger{\mathlarger{\mathlarger{\boldsymbol{\mathsf{A}}}}} }
-\DeclareMathOperator*{\aoperator}{ \text{\huge${\mathsf{A}}$}}
+% \DeclareMathOperator*{\aoperator}{ \text{\huge${\mathsf{A}}$}}
 \pagenumbering{arabic}
 
 
@@ -22,7 +22,7 @@
 \pgfplotsset{compat=newest}
 \usetikzlibrary{plotmarks}
 \usetikzlibrary{arrows.meta}
-%\tikzset{every picture/.style={/utils/exec={\sffamily}}}
+%\tikzset{every picture/.style={/utils/exec={\boldsymbol{\rm X}}{\sffamily}}}
 \usepgfplotslibrary{patchplots}
 \usepackage{grffile}
 
@@ -205,7 +205,7 @@ The reference material domain describes the body before crack extension. ${\bold
 \mathbf{W} = \mathbf{X} - {\boldsymbol\chi}\quad\textrm{and}\quad
 \mathbf{w} = \mathbf{x} - {\boldsymbol\chi}
 \end{equation}
-$\mathbf{H}$ and $\mathbf{h}$ are the gradients of the material and spatial maps and $\mathbf{F}$ the deformation gradient~\cite{R31}, defined as:
+$\mathbf{H}$ and $\mathbf{h}$ are the gradients of the material and spatial maps and $\mathbf{F}$ the deformation gradient~\cite{kaczmarczyk2014three}, defined as:
 \begin{equation}
 \mathbf{H}=\frac{\partial {\boldsymbol\Xi}}{\partial {\boldsymbol\chi}},\quad\mathbf{h}=\frac{\partial {\boldsymbol\Phi}}{\partial {\boldsymbol\chi}},\quad\mathbf{F} = \frac{\partial \boldsymbol\varphi}{\partial \mathbf{X}} = \mathbf{h}\mathbf{H}^{-1}
 \end{equation}
