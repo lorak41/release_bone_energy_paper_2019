@@ -258,7 +258,7 @@ Furthermore, $\mathbf{R}$ is the mass flux defined as:
 
 where $\mathcal{R}$ is mass conductivity. The term on the right hand side of Eq. \ref{eq:mass_balance}
 is the material time derivative associated with the evolving current material
-configuration, as a result of changing topology due to crack propagation. 
+configuration. 
 However, in the present work it is assumed that the mass flux $\mathbf{R}$ is zero and hence only the local mass source $\mathcal{R}_0$ contributes to the changes in density.
 
 
@@ -670,10 +670,10 @@ is generally valid under any assumption for strains and displacements.
 
 \subsection{Density field}
 \label{sec:dens_mapping}
-The previous subsections have shown that  fracture modelling of bone is influenced by the density distribution in the material configuration. This density field can be generated from either (a) a bone adaptation analysis, solving Eq~(\ref{eq:mass_flux,eq:linear_momentum}), or (b) subject-specific data (geometry and material properties) available from, for example, computed tomography (CT) scans. Previous examples in the literature of subject-specific modelling to assess the stresses and fracture risk of bones can be found in~\citep{poelert2013patient,Helgason2008b,Yosibash2010}. Most algorithms that use voxel data have simply averaged~\citep{zannoni1999material} or integrated data onto finite elements, thereby supplying a constant density within their volume~\citep{taddei2007material, schileo2008subject}. In this paper, radiopacity associated with each 3D voxel from CT scan data is spatially approximated. 
+The previous subsections have shown that  fracture modelling of bone is influenced by the density distribution in the material configuration. This density field can be generated from either (a) a bone adaptation analysis, solving Eq~(\ref{eq:mass_flux},\ref{eq:linear_momentum}), or (b) subject-specific data (geometry and material properties) available from, for example, computed tomography (CT) scans. Previous examples in the literature of subject-specific modelling to assess the stresses and fracture risk of bones can be found in~\citep{poelert2013patient,Helgason2008b,Yosibash2010}. Most algorithms that use voxel data have simply averaged~\citep{zannoni1999material} or integrated data onto finite elements, thereby supplying a constant density within their volume~\citep{taddei2007material, schileo2008subject}. In this paper, radiopacity associated with each 3D voxel from CT scan data is spatially approximated. 
 
 In the numerical examples described later, both sources of density data are used. It will be shown in the next section that, in order to evaluate the configurational forces at the crack front, it is necessary to have a spatially smooth density field. Therefore, discrete density data will need to be approximated as a smooth density field, and this will be achieved by adopting the Moving Weighted Least Squares (MWLS) method. This mapping approach was chosen since it offers higher regularity (i.e. higher derivatives exist) than when the field is
-directly approximated on the finite element mesh. Full details are given in Appendix ??. 
+directly approximated on the finite element mesh. Full details are given in \ref{sec:mwls}. 
 %The higher regularity is essential for the crack propagation problem, whereby the second derivative of the density field $\partial^2 \rho^h / \partial \mathbf{X}^2$ appears in the tangent stiffness.
 
 
