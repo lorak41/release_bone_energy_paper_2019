@@ -11,9 +11,9 @@
 \begin{tikzpicture}
 
 \begin{axis}[%
-width=12cm,
-height=8cm,
-at={(1.011in,0.799in)},
+width=6cm,
+height=4cm,
+% at={(1.011in,0.799in)},
 scale only axis,
 xmode=log,
 xmin=1000,
@@ -28,9 +28,10 @@ yminorticks=true,
 ylabel style={font=\color{white!15!black}},
 ylabel={Error [\%]},
 axis background/.style={fill=white},
-legend style={legend cell align=left, align=left, fill=none, draw=none}
+legend style={legend cell align=left, align=left, fill=none, draw=none},
+legend columns=2
 ]
-\addplot [color=blue, line width=2.0pt, mark size=2.7pt, mark=triangle, mark options={solid, blue}]
+\addplot [color=blue, line width=2.0pt, mark size=1.5pt, mark=triangle, mark options={solid, blue}]
   table[row sep=crcr]{%
 1219	978.472\\
 1633	7.424\\
@@ -40,9 +41,9 @@ legend style={legend cell align=left, align=left, fill=none, draw=none}
 36721	0.019\\
 66427	0.172\\
 };
-\addlegendentry{$p_{\rm l}= 1-6 \: p_{\rm g}=1$}
+% \addlegendentry{$p_{\rm l}= 1 \, \mathrm{to} \, 6 \: p_{\rm g}=1$}
 
-\addplot [color=green, line width=2.0pt, mark size=4.0pt, mark=o, mark options={solid, green}]
+\addplot [color=green, line width=2.0pt, mark size=1.5pt, mark=o, mark options={solid, green}]
   table[row sep=crcr]{%
 7501	3.128\\
 8353	0.779\\
@@ -51,9 +52,9 @@ legend style={legend cell align=left, align=left, fill=none, draw=none}
 38785	0.027\\
 67582	0.185\\
 };
-\addlegendentry{$p_{\rm l}= 0-5 \: p_{\rm g}=2$}
+% \addlegendentry{$p_{\rm l}= 0 \, \mathrm{to} \, 5 \: p_{\rm g}=2$}
 
-\addplot [color=gray, line width=2.0pt, mark size=4.0pt, mark=+, mark options={solid, gray}]
+\addplot [color=gray, line width=2.0pt, mark size=1.5pt, mark=+, mark options={solid, gray}]
   table[row sep=crcr]{%
 22999	0.776\\
 24445	0.589\\
@@ -61,31 +62,31 @@ legend style={legend cell align=left, align=left, fill=none, draw=none}
 46189	0.029\\
 72775	0.186\\
 };
-\addlegendentry{$p_{\rm l}= 0-4 \: p_{\rm g}=3$}
+% \addlegendentry{$p_{\rm l}= 0 \, \mathrm{to} \, 4 \: p_{\rm g}=3$}
 
-\addplot [color=mycolor1, line width=2.0pt, mark size=4.0pt, mark=asterisk, mark options={solid, mycolor1}]
+\addplot [color=mycolor1, line width=2.0pt, mark size=1.5pt, mark=asterisk, mark options={solid, mycolor1}]
   table[row sep=crcr]{%
 51865	0.553\\
 54061	0.155\\
 64510	0.029\\
 86686	0.186\\
 };
-\addlegendentry{$p_{\rm l}= 0-3 \: p_{\rm g}=4$}
+% \addlegendentry{$p_{\rm l}= 0 \, \mathrm{to} \, 3 \: p_{\rm g}=4$}
 
-\addplot [color=mycolor2, line width=2.0pt, mark size=4.0pt, mark=diamond, mark options={solid, mycolor2}]
+\addplot [color=mycolor2, line width=2.0pt, mark size=1.5pt, mark=diamond, mark options={solid, mycolor2}]
   table[row sep=crcr]{%
 98251	0.143\\
 101353	0.029\\
 116257	0.186\\
 };
-\addlegendentry{$p_{\rm l}= 0-2 \: p_{\rm g}=5$}
+% \addlegendentry{$p_{\rm l}= 0 \, \mathrm{to} \, 2 \: p_{\rm g}=5$}
 
-\addplot [color=mycolor3, line width=2.0pt, mark size=4.0pt, mark=x, mark options={solid, mycolor3}]
+\addplot [color=mycolor3, line width=2.0pt, mark size=1.5pt, mark=x, mark options={solid, mycolor3}]
   table[row sep=crcr]{%
 166309	0.035\\
 170473	0.186\\
 };
-\addlegendentry{$p_{\rm l}= 0-1 \: p_{\rm g}=6$}
+% \addlegendentry{$p_{\rm l}= 0 \, \mathrm{to} \, 1 \: p_{\rm g}=6$}
 
 \addplot [color=black, dashed, line width=2.0pt, forget plot]
   table[row sep=crcr]{%
