@@ -664,7 +664,7 @@ is generally valid under any assumption for strains and displacements.
 The previous subsections have shown that  fracture modelling of bone is influenced by the density distribution in the material configuration. This density field can be generated from either (a) a bone adaptation analysis, solving Eq~(\ref{eq:mass_flux},\ref{eq:linear_momentum}), or (b) subject-specific data (geometry and material properties) available from, for example, computed tomography (CT) scans. Previous examples in the literature of subject-specific modelling to assess the stresses and fracture risk of bones can be found in~\citep{poelert2013patient,Helgason2008b,Yosibash2010}. Most algorithms that use voxel data have simply averaged~\citep{zannoni1999material} or integrated data onto finite elements, thereby supplying a constant density within their volume~\citep{taddei2007material, schileo2008subject}. In this paper, radiopacity associated with each 3D voxel from CT scan data is spatially approximated. 
 
 In the numerical examples described later, both sources of density data are used. It will be shown in the next section that, in order to evaluate the configurational forces at the crack front, it is necessary to have a spatially smooth density field. Therefore, discrete density data will need to be approximated as a smooth density field, and this will be achieved by adopting the Moving Weighted Least Squares (MWLS) method. This mapping approach was chosen since it offers higher regularity (i.e. higher derivatives exist) than when the field is
-directly approximated on the finite element mesh. Full details are given in \citep{REF}.  %LINK TO ZENODO
+directly approximated on the finite element mesh. Full details are given in \citep{karol_lewandowski_moving_2019}.  %LINK TO ZENODO
 %The higher regularity is essential for the crack propagation problem, whereby the second derivative of the density field $\partial^2 \rho^h / \partial \mathbf{X}^2$ appears in the tangent stiffness.
 
 
@@ -1658,7 +1658,9 @@ Moreover, the code used for all numerical analyses was developed keeping in mind
 Entire framework can be executed on parallel computer system in order to fit in an efficient patient-specific modelling routine that can handle many patients within a practical time window. \\
 
 Numerical examples demonstrated the accuracy of the proposed framework. 
-Convergence has been validated for all examples, in particular, the use of quarter point elements was shown to improve the convergence of calculated release energy rates. However, it was also confirmed that improved accuracy of the stress at the tip has no impact on the crack propagation analysis.
+Convergence has been validated for all examples, in particular, the use of quarter point elements was shown to improve the convergence of calculated release energy rates. However, it was also confirmed that improved accuracy of the stress at the tip has no impact on the crack propagation analysis. \\
+Supplementary data (ct scans, meshfiles, command lines) necessary to reproduce results demonstrated in this work can be found in~\citep{karol_lewandowski_2019_dataset}. Presented bone remodelling and fracture mechanics approaches are submodules in MoFEM library, which can be easily installed using multiplatform Spack package manager~\citep{spack2015}. 
+
 \subsection{Limitations and future work}
 The methods presented in this paper have several important limitations. 
 Considerably more work has to be done to determine bone loading, since using simplified input results in unrealistically low densities in non load-bearing regions. 
