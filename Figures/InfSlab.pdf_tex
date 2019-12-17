@@ -1,4 +1,4 @@
-%% Creator: Inkscape inkscape 0.91, www.inkscape.org
+%% Creator: Inkscape 1.0beta1 (32d4812, 2019-09-19), www.inkscape.org
 %% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
 %% Accompanies image file 'InfSlab.pdf' (pdf, eps, ps)
 %%
@@ -35,8 +35,10 @@
     \renewcommand\transparent[1]{}%
   }%
   \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{1762.66425735bp}%
+    \setlength{\unitlength}{1829.17149458bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -48,22 +50,24 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.67262308)%
+  \begin{picture}(1,0.5277804)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{Figures/InfSlab.pdf}}%
-    \put(0.25938636,0.46873845){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.11771953\unitlength}\raggedright Horizontal\end{minipage}}}%
-    \put(0.25903181,0.44781842){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.18083421\unitlength}\raggedright through-thickness\end{minipage}}}%
-    \put(0.25903181,0.42851269){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.05441294\unitlength}\raggedright crack\end{minipage}}}%
-    \put(0.68385036,0.55853859){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.1319026\unitlength}\raggedright Elements with\end{minipage}}}%
-    \put(0.68349581,0.53761856){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.2359369\unitlength}\raggedright global order $p_{\rm g}$\end{minipage}}}%
-    \put(0.68385036,0.45687431){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.1319026\unitlength}\raggedright Elements with\end{minipage}}}%
-    \put(0.68349581,0.43595427){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.32419167\unitlength}\raggedright local order $p_{\rm l}+p_{\rm g}$\end{minipage}}}%
-    \put(0.50730952,0.67692497){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.1319026\unitlength}\centering $\sigma = 1$\end{minipage}}}%
-    \put(0.5075069,0.16952978){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.1319026\unitlength}\centering $\sigma = 1$\end{minipage}}}%
-    \put(-0.01883127,0.39403001){\color[rgb]{0,0,0}\rotatebox{-5.80231243}{\makebox(0,0)[lt]{\begin{minipage}{0.26858607\unitlength}\centering 2$a_{\rm{pl}}$ = 2\end{minipage}}}}%
-    \put(-0.02237538,0.23007454){\color[rgb]{0,0,0}\rotatebox{-9.92341797}{\makebox(0,0)[lt]{\begin{minipage}{0.27067239\unitlength}\centering 2$b_{\rm{pl}}$ = 5\end{minipage}}}}%
-    \put(0.18897015,0.15696133){\color[rgb]{0,0,0}\rotatebox{51.23975592}{\makebox(0,0)[lt]{\begin{minipage}{0.15119489\unitlength}\centering $t_{\rm{pl}}$ = 1\end{minipage}}}}%
-    \put(-0.00430189,0.36061949){\color[rgb]{0,0,0}\rotatebox{90}{\makebox(0,0)[lt]{\begin{minipage}{0.08580761\unitlength}\centering $h_{\rm{pl}} = 10$\end{minipage}}}}%
-    \put(0.14885409,0.09008048){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.11771953\unitlength}\centering a)\end{minipage}}}%
-    \put(0.59635849,0.09008048){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.11771953\unitlength}\centering b)\end{minipage}}}%
+    \put(0.26448938,0.32966118){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.11343934\unitlength}\raggedright Horizontal\end{minipage}}}%
+    \put(0.26414772,0.30950178){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.17425922\unitlength}\raggedright through-thickness\end{minipage}}}%
+    \put(0.26414772,0.290898){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.05243453\unitlength}\raggedright crack\end{minipage}}}%
+    \put(0.6735202,0.41619626){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.12710673\unitlength}\raggedright Elements~with\end{minipage}}}%
+    \put(0.67317854,0.39603686){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.24727375\unitlength}\raggedright global order $p_{\mathrm g}$\end{minipage}}}%
+    \put(0.6735202,0.31822841){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.12710673\unitlength}\raggedright Elements~with\end{minipage}}}%
+    \put(0.67317854,0.29806901){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.34637755\unitlength}\raggedright local order $p_{\mathrm l}+p_{\mathrm gd}$\end{minipage}}}%
+    \put(0.50339824,0.53027819){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.12710673\unitlength}\centering $\sigma = 1$\end{minipage}}}%
+    \put(0.50241695,0.03781703){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.12710673\unitlength}\centering $\sigma = 1$\end{minipage}}}%
+    \put(0.00013219,0.25766908){\color[rgb]{0,0,0}\rotatebox{-5.8023124}{\makebox(0,0)[lt]{\begin{minipage}{0.2563894\unitlength}\centering 2$a_{\rm{pl}}$ = 2\end{minipage}}}}%
+    \put(-0.00243088,0.1){\color[rgb]{0,0,0}\rotatebox{-9.923418}{\makebox(0,0)[lt]{\begin{minipage}{0.26012585\unitlength}\centering 2$b_{\rm{pl}}$ = 5\end{minipage}}}}%
+    \put(0.1877816,0.00916765){\color[rgb]{0,0,0}\rotatebox{51.239756}{\makebox(0,0)[lt]{\begin{minipage}{0.19365306\unitlength}\centering $t_{\rm{pl}}$ = 1\end{minipage}}}}%
+    \put(-0.00249779,0.11707764){\color[rgb]{0,0,0}\rotatebox{90}{\makebox(0,0)[lt]{\begin{minipage}{0.28018149\unitlength}\centering $h_{\rm{pl}} = 10$\end{minipage}}}}%
+    \put(-0.01540462,0.11947952){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.11343934\unitlength}\centering a)\end{minipage}}}%
+    \put(0.41582885,0.01947952){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.11343934\unitlength}\centering b)\end{minipage}}}%
   \end{picture}%
 \endgroup%
