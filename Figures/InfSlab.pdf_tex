@@ -60,7 +60,7 @@
     \put(0.6735202,0.41619626){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.12710673\unitlength}\raggedright Elements~with\end{minipage}}}%
     \put(0.67317854,0.39603686){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.24727375\unitlength}\raggedright global order $p_{\mathrm g}$\end{minipage}}}%
     \put(0.6735202,0.31822841){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.12710673\unitlength}\raggedright Elements~with\end{minipage}}}%
-    \put(0.67317854,0.29806901){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.34637755\unitlength}\raggedright local order $p_{\mathrm l}+p_{\mathrm gd}$\end{minipage}}}%
+    \put(0.67317854,0.29806901){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.34637755\unitlength}\raggedright local order $p_{\mathrm l}+p_{\mathrm g}$\end{minipage}}}%
     \put(0.50339824,0.53027819){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.12710673\unitlength}\centering $\sigma = 1$\end{minipage}}}%
     \put(0.50241695,0.03781703){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.12710673\unitlength}\centering $\sigma = 1$\end{minipage}}}%
     \put(0.00013219,0.25766908){\color[rgb]{0,0,0}\rotatebox{-5.8023124}{\makebox(0,0)[lt]{\begin{minipage}{0.2563894\unitlength}\centering 2$a_{\rm{pl}}$ = 2\end{minipage}}}}%

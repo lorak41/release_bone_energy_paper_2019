@@ -55,7 +55,7 @@
     \put(0.14419109,0.11195567){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{0.60}}}%
     \put(0.14419109,0.17384898){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{0.70}}}%
     \put(0.14419109,0.2357423){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{0.80}}}%
-    \put(0.0956219,0.34610027){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Release energy $[\mathrm{kN / m}]$}}}%
+    \put(0.0956219,0.34610027){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Fracture energy $[\mathrm{kN / m}]$}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=2]{Figures/crack_front_force.pdf}}%
   \end{picture}%
 \endgroup%

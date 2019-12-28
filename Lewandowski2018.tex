@@ -68,7 +68,7 @@ T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
 \begin{frontmatter}
 
-\title{Numerical investigation into fracture risk of bone following adaptation}
+\title{Numerical investigation into fracture resistance of bone following adaptation}
 
 \author[gla,vet]{Karol Lewandowski\corref{cor}}
 \ead{karol.lewandowski@glasgow.ac.uk}
@@ -81,19 +81,17 @@ T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \author[gla]{Chris J. Pearce}
 \ead{chris.pearce@glasgow.ac.uk}
 \cortext[cor]{Corresponding author}
-\address[gla]{The James Watt School of Engineering, University of Glasgow, Glasgow, G12 8QQ, UK.}
+\address[gla]{Glasgow Computational Engineering Centre, The James Watt School of Engineering, University of Glasgow, Glasgow, G12 8QQ, UK.}
 \address[vet]{Weipers Centre Equine Hospital, School of Veterinary Medicine, University of Glasgow, Glasgow, G61 1QH, UK,}
 
 \begin{abstract}
 Bone adapts in response to its mechanical environment. 
 This evolution of bone density is one of the most important mechanisms for developing fracture resistance. 
-A finite element framework for simulating bone adaptation, commonly called bone remodelling, is presented. This is followed by a novel method to both quantify the risk of fracture and to simulate fracture propagation. The authors' previous work on the application of configurational mechanics for modelling fracture is extended to include the influence of heterogeneous bone density distribution. The main advantage of the presented approach is that configurational forces, and fracture energy release rate, are expressed exclusively in terms of nodal quantities. This approach avoids the need for post-processing and enables a fully implicit formulation for modelling the evolving crack front.
+A finite element framework for simulating bone adaptation, commonly called bone remodelling, is presented. This is followed by a novel method to both quantify fracture resistance and to simulate fracture propagation. The authors' previous work on the application of configurational mechanics for modelling fracture is extended to include the influence of heterogeneous bone density distribution. The main advantage of this approach is that configurational forces, and fracture energy release rate, are expressed exclusively in terms of nodal quantities. This approach avoids the need for post-processing and enables a fully implicit formulation for modelling the evolving crack front.
 In this paper density fields are generated from both (a) bone adaptation analysis and (b) subject-specific geometry and material properties obtained from CT scans. It is shown that, in order to correctly evaluate the configurational forces at the crack front, it is necessary to have a spatially smooth density field with higher regularity than if the field is directly approximated on the finite element mesh. Therefore, discrete density data is approximated as a smooth density field using a Moving Weighted Least Squares method.
-Performance of the framework is demonstrated using numerical simulations for bone adaptation and subsequent crack propagation, including consideration of an equine 3rd metacarpal bone. The degree of bone adaption is shown to influence both the risk of fracture and the resulting crack path. 
+Performance of the framework is demonstrated using numerical simulations for bone adaptation and subsequent crack propagation, including consideration of an equine 3\textsuperscript{rd} metacarpal bone. The degree of bone adaption is shown to influence both fracture resistance and the resulting crack path. 
 
 \end{abstract}
-
-	%Bone is able to adapt to changes in its mechanical environment. Studies of the Thoroughbred racehorse show modification of the geometric properties of the third metacarpal bone in response to training. These modifications are associated with reduced bone strains. Intense training before the adaptive response is completed and bone strain reduced increases the risk of fatigue damage. Bone adaptation in response to different loads is known to increase the resistance to fracture. The development of computational models to describe bone behavior has gained tremendous importance over the last decade. In particular, computational modelling for bone growth and resorption processes followed by fracture analysis can be a useful tool to determine crack propensity. Therefore,, this study aims to develop an efficient framework which will help to understand the relationship between exercise loading, bone density and ultimately fracture risk. This case study highlights the development of subject-specific FE analyses to simulate exercise loading on equine bone and subsequently quantify changes in the fracture propensity in open source code - MoFEM.
 
 \begin{keyword}	
 Finite element analysis\sep bone remodelling \sep fracture \sep 3rd metacarpal \sep moving weighted least squares \sep configurational mechanics \sep heterogeneity
@@ -106,7 +104,7 @@ Finite element analysis\sep bone remodelling \sep fracture \sep 3rd metacarpal \
 \section{Introduction}
 This paper presents a framework for the computational modelling of bone adaptation (commonly referred to as bone remodelling) and bone fracture, and their inter-relationship.
 Bone adaptation is the on-going biological process of replacing old bone tissue with new bone, thus repairing fatigue damage~\citep{hughes2017role}.
-This ability to repair bone micro-damage caused by cyclic loading is essential for maintaining mechanical integrity. Consequently, there is a strong correlation between stress fractures and the adaptation process~\citep{hughes2017role}. Furthermore, bone repair can be overwhelmed by load-induced bone densification that also increases brittleness and the risk of fracture~\citep{loughridge2017qualitative}.
+This ability to repair bone micro-damage caused by cyclic loading is essential for maintaining mechanical integrity. Consequently, there is a strong correlation between stress fractures and the adaptation process~\citep{hughes2017role}. Furthermore, bone repair can be overwhelmed by load-induced bone densification that also increases brittleness and reduces fracture resistance~\citep{loughridge2017qualitative}.
 
 One of the first mathematical theories for bone adaptation~\citep{cowin1976bone}, based on open system thermodynamics, has its foundation in the theory of poroelasticity. 
 In this approach (unlike classical closed systems), energy, mass, momentum and entropy can be exchanged with the environment. It has been adopted and enhanced over the years
@@ -129,18 +127,8 @@ In contrast, the current paper presents a full macro-scale model of equine bone 
 The motivation for this work is to generate subject-specific simulations to acquire meaningful insight into bone resistance
  for veterinary practitioners.
 
-%(The aim for this study is the establishment and implementation of FEM based framework suitable for clinical practice that will help to simulate density evolution, quantify current and future fracture risk based on CT scanning data derived from horses in training.) 
-%Bone adaptation process, within the developed framework, is incorporated by using computational algorithm in open system thermodynamics 
-%\citep{Kuhl2003a}.
-
-
-This article is structured as follows. The mathematical framework for bone remodelling is briefly presented in Section~\ref{sec:bone_remodel}.
-Section~\ref{sec:dens_mapping} describes a novel approach to assign heterogeneous mechanical bone properties, derived from CT scans,
-to the finite element model by means of the Moving Weighted Least Squares (MWLS) method.
-Thereafter, Section~\ref{sec:release_energy} presents an extension of a recently established approach 
-for evolving crack propagation in the context of configurational mechanics. The method is utilised to calculate the energy release rate of bones under quasi-static loading during different stages of adaptation. 
-Section~\ref{sec:numerical_examples} brings together all the developments of the framework in the form of numerical examples. 
-Finally, a brief summary of the work is presented in Section~\ref{sec:discussion} and areas for further research are identified.
+This article is structured as follows. After establishing the kinematic preliminaries in Section~\ref{preliminaries}, the mathematical framework for bone adaptation is briefly presented in Section~\ref{sec:bone_remodel}. Section~\ref{sec:fracture} extends the authors' previous work for evolving crack propagation in the context of configurational mechanics. The method is utilised to calculate fracture resistance and crack propagation under quasi-static loading during different stages of adaptation. Section \ref{sec:fem_modelling} describes the finite element method implementation and Section~\ref{sec:fem_modelling} describes a special element for capturing the singular stress field at the crack front.  
+All the above components are brought together into a single framework and its performance is demonstrated using a series of numerical examples in Section~\ref{sec:numerical_examples}.
 
 \begin{figure}[h]
 	\centering
@@ -148,13 +136,13 @@ Finally, a brief summary of the work is presented in Section~\ref{sec:discussion
 		\node at (0,4) {\includegraphics[width=14cm]{Figures/framework.png}};
 		\node at(0,0.6){\hspace{1cm} a) Density mapping. \hspace{1.3cm} b) Bone adaptation.  \hspace{1cm} c) Crack propagation analysis.  };
 \end{tikzpicture}
-\caption{Framework for estimating bone fracture resistance in MoFEM~\citep{mofem2017}. a) Density derived from Quantitative Computed Tomography (qCT) is mapped onto finite element mesh; (b) bone adaptation analysis; (c) fracture mechanics to evaluate the fracture energy release rate of an initial crack at different time steps~c).}
+\caption{Framework for estimating bone fracture resistance in MoFEM~\citep{mofem2017}. a) Density derived from Quantitative Computed Tomography (qCT) is mapped onto finite element mesh; (b) bone adaptation analysis; (c) assessment of fracture resistance and crack propagation analysis.}
 \label{fig:framework}
 \end{figure}
 
  
  \section{Preliminaries}
- 
+ \label{preliminaries}
 Figure~\ref{fig:domains4} shows a section of bone with an initial crack in the reference domain $\mathscr{B}_{0}$. As a result of loading, the crack extends and the body deforms elastically. Working within the framework of configurational mechanics \citep{kienzler2014configurational,kaczmarczyk2014three}, it is convenient to decompose this behaviour into an extension of the crack in the material domain  $\mathscr{B}_t$ followed by elastic deformation  in the spatial domain $\Omega_t$. The former is described by the mapping from the reference  domain to the material domain ${\boldsymbol\Xi}$, whilst the latter is described by the mapping from the material to the spatial domain ${\boldsymbol\varphi}$ - Figure~\ref{fig:domains4}.
 
 \begin{figure}[th] 
@@ -165,7 +153,7 @@ Figure~\ref{fig:domains4} shows a section of bone with an initial crack in the r
 %\def\svgwidth{15cm} 	\input{Figures/Configurations.pdf_tex} 
 \includegraphics[width=10cm]{Figures/domains5.pdf} 
 \end{center}
-\caption{Decomposition of crack propagation in elastically deforming bone.}
+\caption{Kinematics of crack propagation in elastically deforming bone.}
 \label{fig:domains4}
 \end{figure}
 
@@ -203,15 +191,6 @@ determined from, for example, CT imaging~\citep{zadpoor2013open}.
 
  \subsection{Conservation of mass}
 
-%Density is a field that evolves in the current material configuration and is defined as:
-%\begin{equation}
-%	\rho = \rho(\mathbf{X},t) 
-%	= \rho\left(
-%		\mathbf \Xi( { \boldsymbol {\rm \upchi}}, t), t
-%	\right)
-%\label{eq:density_material}	
-%\end{equation}
-%
 Following Kuhl and Steinmann~\citep{kuhl2003computational}, it is assumed that
 the rate of change of the time-dependent material density is in equilibrium
 with mass flux, expressed as:
@@ -272,11 +251,11 @@ $\rho^{\rm {mid}}$ is their average. The bell function
 (\ref{eq:bell_function}) is illustrated in Figure~\ref{fig:bell_func} for
 different values of the integer exponent, $b$. Its application and influence
 on the overall results are elaborated in
-Section~\ref{sec:numerical_examples:bone_adap}.
+Section~\ref{sec:numerical_examples}.
 \begin{figure}[!htb]
 	\centering
 		\input{Figures/tikz/myfile_bell.tex}
-		\caption{Bell function plotted for different values of the integer exponent $b$. 
+		\caption{Bell function for parameter $c$ for different values of the integer exponent $b$. 
 		As $b \rightarrow \infty$, the bell-shape curve becomes infinitely steep at 
 		$\rho{^\mathrm{min}}$ and $ \rho{^\mathrm{max}}$.}
 		\label{fig:bell_func}
@@ -309,48 +288,9 @@ where $\mathbf P$ is the the first Piola-Kirchhoff stress:
 
 This coupled system of equations is solved using the finite element method - see Section \ref{sec:numerical_examples:bone_adap}.
 
-
-
-
-
-%. MWLS provides additionally a high regularity
-%of the field which is a necessity for crack propagation (as will emerge in the following equations).
-%That enables to map bone density and its
-%gradients onto finite element mesh integration points and
-%account for moving background current material mesh, as is shown in following
-%sections.
-
-%\subsection{Crack front kinematics}
-%
-%\begin{figure}
-%	\begin{centering}
-%	%	\includegraphics[width=12cm]{Figures/CrackSurface.pdf}
-%		\def\svgwidth{12cm}
-%		\input{Figures/CrackSurface.pdf_tex}
-%		\caption{Crack construction~\citep{kaczmarczyk2017energy}.}
-%		\label{fig:frac_crack_con}
-%	\end{centering}
-%\end{figure}
-%
-%The crack surface is denoted by $\Gamma$ (having two sides distinguished through superscripts $+$ and $-$) with a crack front $\partial
-%\Gamma$, see Figure~\ref{fig:frac_crack_con}. 
-%Moreover, unit vector, $\mathbf N$, is defined to be normal along the body boundary $\partial {\mathcal{B}}_t$ and the crack boundary $\Gamma^{+} \cup \Gamma^{+} \cup \partial \Gamma$.
-%Following~\citep{kaczmarczyk2014three}, a kinematic relationship between the
-%change in crack surface area $\dot A_\Gamma$ and the crack front velocity
-%$\mathbf{\dot W}$ can be defined as:
-%\begin{equation}\label{eq:crack_front}
-%\dot A_\Gamma = 
-%\int_{\partial \Gamma} \mathbf A_{\partial \Gamma} \cdot 
-%{\dot {\boldsymbol {\rm W} } } \mathrm d L 
-%\end{equation}
-%where $\mathbf A_{\partial \Gamma}$ is a kinematic state variable that
-%defines the current crack front orientation. $\mathbf A_{\partial \Gamma}$
-%could be seen as a unit vector normal to crack front and tangential to crack
-%surface.
-
-
-\section{Fracture risk and fracture propagation}\label{sec:release_energy}
-Various theories exist in the literature regarding failure criteria for bone tissue and it is now common practice for researchers to estimate fracture risk within the framework of FEM. In particular, subject-specific FEM models can potentially quantify the risk of failure under a given loading scenario. However, this still remains an open challenge.
+\section{Fracture resistance and fracture propagation}
+\label{sec:fracture}
+Various theories exist in the literature regarding failure criteria for bone tissue and it is now common practice for researchers to estimate fracture resistance within the framework of FEM. In particular, subject-specific FEM models can potentially quantify the risk of failure under a given loading scenario. However, this still remains an open challenge.
 
 In recent years, the main focus in bone mechanics was in the use of different strength criteria for the onset of failure. 
 The most commonly adopted ones were based on stress~\citep{keyak2005predicting} or strain measures~\citep{schileo2008subject} assuming bone failure is determined by a yield criterion~\citep{yosibash2010predicting}. 
@@ -359,17 +299,6 @@ This variation is explained perhaps by the focus on the local initiation of fail
 The fracture process of bone is very important,  particularly in the case of fatigue fractures~\citep{gupta2008fracture}. 
 Limitations in previous studies (e.g. use of 2D geometry~\citep{bettamer2017using}, assuming homogeneous bone properties~\citep{gasser2007numerical}), 
 can also explain why an appropriate model for bone fracture has not been developed previously.
-
-%There are many methods available to numerically simulate fracture initiation and growth. 
-%They can be divided into two categories: discrete and smeared approaches. 
-%Discrete crack models originally were limited to describe crack formation only on element boundaries~\citep{Scordelis1967}. 
-%More recently, in the presence of automatic mesh generators, the extended finite element method (xFEM) separated the crack path from the underlying mesh, see e.g.~\citep{Belytschko1999} where xFEM was applied to model brittle fracture. 
-%Lattice element approach (also known as rigid body spring networks) have also been used to model discrete crack paths for concrete at computational low cost~\citep{bolanderSaito1998, grassl2010}.  
-%Another novel approach in isogeometric analysis that introduces knot insertions that lower the order of continuity to introduce cracks in solids~\citep{Hosseini2014}. 
-%The continuum damage, or diffused crack approach, incorporates a damage parameter into the model that controls the strength of the material. An advantage of this approach is that it does not require interface tracking since the damage parameter varies continuously over the domain (see, e.g.~\citep{deBorst2004}). 
-%Closely related to continuum damage models are the phase-field models which have become extremely popular over the last decade. 
-%The numerical solution of these models is based on an approximate potential developed by Mumford~\citep{Mumford1989}. 
-%The main advantage is that the fracture problem can be described purely by partial differential equations~\citep{Miehe2010a,Borst2014}. \\
 
 This paper builds on the authors' computational framework~\citep{kaczmarczyk2017energy} for brittle fracture within the context of configurational mechanics, extending it here to include the influence of heterogeneous materials such as bone.
 The concept of configurational forces was originally introduced by Eshelby~\citep{eshelby1951force}. 
@@ -382,77 +311,6 @@ associated with spatially varying bone density are introduced into the formulati
 An additional goal is to investigate bone fracture at different stages of bone adaptation, utilising either the results from bone adaptation analysis (Section~\ref{sec:bone_remodel}) or data directly taken from CT scans. 
 Similar concepts of combined adaptation and fracture analyses has been presented before~\citep{hambli2013integrated}. 
 However, it utilised a different adaptation model and continuum damage mechanics approach for fracture, both of which require many more parameters to calibrate. 
-
-%\section{Brittle fracture in heterogeneous bone}\label{sec:release_energy}
-
-% \subsection{Kinematics}\label{sec:Kinematics}
-
-%In the context of configurational mechanics, an elastic body with an initial
-%crack, as visualised in Figure~\ref{fig:frac_kinematics}, is considered. To
-%independently observe the deformation of the material in physical space
-%$\Omega_t$ and the evolution of the crack surface in material space $\mathcal
-%B_t$, it is convenient to decompose the problem into separate configurations.
-%First, propagation of the crack is described by the mapping from the
-%reference configuration to the current material domain, $\Xi$. Next, purely
-%elastic deformation is mapped from the current material to current spatial domain,
-%$\mathbf \varphi$. Let $\mathbf x = \varphi(\mathbf X,t)$ describe the motion
-%of the body, which transforms material positions, $\mathbf X$, to their
-%spatial counterparts, $\mathbf x$. The physical displacements are derived as
-%follows:
-%\begin{equation}
-%\mathbf u = \mathbf x - \mathbf X
-%\end{equation}
-%
-%The reference configuration represents the body before crack extensions with
-%mapping $\Xi( { \boldsymbol {\rm \upchi}}, t)$ of the reference
-%coordinates, ${ \boldsymbol {\rm \upchi}}$, on to the current material coordinates,
-%$\mathbf X$. This mapping describes a material structural change, i.e.
-%extensions of the crack, as a result of the crack front movement.
-%\begin{figure}[h!]
-%	\begin{centering}
-%	%	\includegraphics[width=10cm]{Figures/Configurations.pdf}
-%	\def\svgwidth{15cm}
-%	\input{Figures/Configurations.pdf_tex}
-%		\caption{Decomposition of crack propagation in an elastically deforming body.}
-%		\label{fig:frac_kinematics}
-%	\end{centering}
-%\end{figure}
-%
-%Finally, mapping $\mathbf \Phi ({ \boldsymbol {\rm \upchi}},t)$ transforms
-%reference coordinates on to the spatial coordinates, ${\boldsymbol {\rm x}}$.
-%The current material and spatial displacements are:
-%\begin{equation}
-%\mathbf W = \mathbf X - { \boldsymbol {\rm \upchi}} \quad 
-%\mathrm{and} \quad \mathbf w = \mathbf x - { \boldsymbol {\rm \upchi}}
-%\end{equation}
-%$\mathbf H$ and $\mathbf h$ gradients of the material and spatial maps are
-%defined as:
-%\begin{equation}
-%\mathbf H = \nabla_{\boldsymbol {\rm \upchi}} {\boldsymbol {\rm \Xi}}, 
-%\quad \mathbf  h =   \nabla_{\boldsymbol {\rm \upchi}} {\boldsymbol {\rm \Phi}}
-%\end{equation}
-%Corresponding deformation gradient $\mathbf F$ is derived as follows:
-%\begin{equation}
-%\mathbf F = \nabla_{\mathbf{X}} \varphi = \mathbf h \mathbf H^{-1}
-%\end{equation}
-%Moreover, the right Cauchy-Green deformation tensor $\boldsymbol
-%{\rm C}$ is denoted by:
-%\begin{equation}
-%\mathbf{C}=\mathbf{F}^{\rm T}\mathbf{F}
-%\end{equation}
-%
-%Moving on, the velocity of a material point $\mathbf X$ and the time
-%derivative of the deformation gradient have the following form:
-%\begin{equation}\label{eq:crack_disp}
-%{\dot {\boldsymbol {\rm u} } } = {\dot {\boldsymbol {\rm w} } } - \mathbf F{\dot {\boldsymbol {\rm W} } }
-%\end{equation}
-%and
-%\begin{equation}\label{eq:crack_def_grad}
-%{\dot {\boldsymbol {\rm F} } } = 
-%\nabla_{\mathbf X} {\dot {\boldsymbol {\rm w} } } - 
-%\mathbf F \nabla_{\mathbf X } {\dot {\boldsymbol {\rm W} } }
-%\end{equation}
-
 
 \subsection{First and second laws of thermodynamics}
 
@@ -524,7 +382,7 @@ ${\bm {\Sigma}}$ is the Eshelby stress tensor and
 $\mathbf f^{\mathrm {inh}}$ is an additional fictitious force that arises from variations in the density field and drives the crack front from dense to less dense material. 
 
 The spatial conservation law of linear momentum balance is repeated here:
-\begin{equation} \label{eq:linear_momentum}
+\begin{equation} \label{eq:linear_momentum2}
 \nabla_{\mathbf X} \cdot \mathbf P = 0
 \;
 \forall \mathbf{X}\in\mathcal B_t,
@@ -574,21 +432,6 @@ is in equilibrium with the material resistance $\gamma \mathbf A_{\partial \Gamm
 
 It should be noted that crack front equilibrium is unaffected by material heterogeneities and does not depend on $\mathbf f^{\mathrm {inh}}$. All terms in Eq.~\ref{eq:crack_local_first_law} are only evaluated at the crack front. However, it will be shown in Section~\ref{sec:fem_fracture_prop} that, in a discrete setting, calculation of the nodal configurational forces involves a volume integral of the density gradient.
 
-%Second, crack front equilibrium takes
-%a similar form to that presented in \citep{kaczmarczyk2017energy}, that, as will be
-%shown later, justifies the use of the Griffith criterion, originally proposed
-%for homogenous materials.
-
-%In this work, energy is only dissipated due to topology evolution. 
-%It is possible to extend the formulation to include other dissipative processes, such as related to cohesive forces.
-%
-%\subsection{Constitutive equations}
-%
-%\subsubsection{Fracture}
-%In the present work, bone is considered to be perfectly brittle. The likelihood of fracture is evaluated
-%for the direction of crack propagation that results in maximum energy dissipation.  
-%However, 
-
 Since Eq.~(\ref{eq:crack_local_first_law}) has more than one solution at equilibrium, depending on whether the crack 
 does or does not propagate, the formulation is supplemented by a straightforward criterion for crack growth, equivalent to Griffith's  criterion~\citep{kaczmarczyk2017energy}:
 \begin{equation} \label{eq:grif1}
@@ -600,10 +443,6 @@ per unit area of the crack surface $\Gamma$, also known as the Griffith energy. 
 either $\phi<0$ and $\dot{\mathbf{W}}=0$, or $\phi=0$, $\dot{\mathbf{W}}\ne 0$ and $\gamma\mathbf{A}_{\partial\Gamma}=\mathbf{G}$. 
 
 
-%The crack will propagate only when crack release energy is equal to material
-%toughness (and will be arrested when it is lower than toughness). The condition 
-%that the crack release energy is greater than the material toughness is an inadmissible state.
-
 The direction of fracture propagation is
 constrained by the second law of thermodynamics. Here we assume that fracture takes place
 relatively fast compared to the process of adaptation (with no healing), 
@@ -611,16 +450,6 @@ such that non-negative dissipation at the crack front can be expressed as
 \begin{equation}
 	\mathcal{D} = \gamma \dot{\mathbf{W}} \cdot \mathbf{A}_{\partial\Gamma}= \dot{\mathbf{W}} \cdot \mathbf{G}\ge0
 \end{equation}
-%For brittle fracture, from all possible crack propagation directions, the one which
-%maximises dissipation of energy is chosen, leading to the following equation:
-%\begin{equation}
-%	\gamma \mathbf{A}_{\partial\Gamma} = \mathbf{G}
-%\end{equation} 
-%where the magnitude of $\mathbf{G}$ can be interpreted as the crack release
-%energy $g = 2\gamma$,
-%	\begin{equation}
-%	 g/2 = \mathbf{G} \cdot \mathbf{A}_{\partial\Gamma}
-%\end{equation}
 
 It should be noted that the well-established stress intensity factors are not applicable 
 in the case of heterogeneous materials, since it requires the existence of
@@ -634,34 +463,17 @@ the realm of large displacements and large strains, hence it
 is generally valid under any assumption for strains and displacements.
 
 
-
-
 \subsection{Density field}
 \label{sec:dens_mapping}
-The previous subsections have shown that  fracture modelling of bone is influenced by the density distribution in the material configuration. This density field can be generated from either (a) a bone adaptation analysis, solving both Eqs~(\ref{eq:mass_balance}) and (\ref{eq:linear_momentum}), or (b) subject-specific data (geometry and material properties) available from, for example, computed tomography (CT) scans. Previous examples in the literature of subject-specific modelling to assess the stresses and fracture risk of bones can be found in~\citep{poelert2013patient,Helgason2008b,Yosibash2010}. Most algorithms that use voxel data have simply averaged~\citep{zannoni1999material} or integrated data onto finite elements, thereby supplying a constant density within their volume~\citep{taddei2007material, schileo2008subject}. In this paper, radiopacity associated with each 3D voxel from CT scan data is spatially approximated. 
+The previous subsections have shown that  fracture modelling of bone is influenced by the density distribution in the material configuration. This density field can be generated from either (a) a bone adaptation analysis, solving both Eqs~(\ref{eq:mass_balance}) and (\ref{eq:linear_momentum2}), or (b) subject-specific data (geometry and material properties) available from, for example, computed tomography (CT) scans. Previous examples in the literature of subject-specific modelling to assess the stresses and fracture resistance of bones can be found in~\citep{poelert2013patient,Helgason2008b,Yosibash2010}. Most algorithms that use voxel data have simply averaged~\citep{zannoni1999material} or integrated data onto finite elements, thereby supplying a constant density within their volume~\citep{taddei2007material, schileo2008subject}. In this paper, radiopacity associated with each 3D voxel from CT scan data is spatially approximated. 
 
 In the numerical examples described later, both sources of density data are used. It will be shown in the next section that, in order to evaluate the configurational forces at the crack front, it is necessary to have a spatially smooth density field. Therefore, discrete density data will need to be approximated as a smooth density field, and this will be achieved by adopting the Moving Weighted Least Squares (MWLS) method. This mapping approach was chosen since it offers higher regularity (i.e. higher derivatives exist) than when the field is
 directly approximated on the finite element mesh. Full details are given in \citep{karol_lewandowski_moving_2019}.  %LINK TO ZENODO
-%The higher regularity is essential for the crack propagation problem, whereby the second derivative of the density field $\partial^2 \rho^h / \partial \mathbf{X}^2$ appears in the tangent stiffness.
-
-
-%The density field is described as a discrete field, $v({\boldsymbol{\rm x}}_i)$, where ${\boldsymbol{\rm x}}_i$ is the position vector of each voxel.
-%Thereafter, $v({\boldsymbol{\rm x}}_i)$ is mapped onto target points (e.g. mesh nodes or integration points) by means of the Moving Weighted Least Squares (MWLS) method. 
-%The main advantage of adopting MWLS is that it provides a smooth density field and gradient over the entire domain leading to significant reduction of noise and a more accurate representation of the data. 
 
 
 \section{Finite element modelling} \label{sec:fem_modelling}
 
 This section considers the sequential analysis of bone adaptation and fracture propagation, although it is recognised that the density field could be obtained directly from subject-specific data, in which case it may not be necessary to undertake the bone adaptation analysis. A sequential approach is justified since the process of bone adaptation takes place at a much longer time scales than fracture.
-%Initially, the bone remodelling problem is solved using the finite element method. Then the calculated densities are mapped onto another mesh for solving the fracture propagation problem.
-%Mapping of the density field from the first to the second mesh is achieved by using a Moving Weighted Least Squares (MWLS) approach that is described later in Section~\ref{sec:mwls}. 
-%This mapping approach was chosen since it offers higher regularity (i.e. higher derivatives exist) than when the field is
-%directly approximated on the mesh. The higher regularity is essential for the
-%crack propagation problem, whereby the second derivative of the density field 
-%$\partial^2 \rho^h / \partial \mathbf{X}^2$ 
-%appears in the tangent stiffness.
-
-
 
 Three-dimensional domains are discretised with tetrahedral finite elements. 
 Fields are approximated in the current material and current spatial spaces with 
@@ -684,7 +496,6 @@ It should be noted that shape functions $\Phi^\textrm{MWLS}(\mathbf{X})$ are eva
 current material points, $\mathbf{X}$, rather than reference points, $\pmb\upchi$, as presented in Eq.~(\ref{eq:discretisation}) with the property of partition of unity.
 Since the density field is evaluated at $\mathbf{X}$, the approximation is independent of changes of the material configuration (i.e.
 changing mesh).
-%and degrees of freedom $\tilde{\pmb\uprho}^h(\Xi({\boldsymbol {\rm \upchi}}),t)$ are values of density at evaluated points.
 
 \subsection{Bone adaptation}
 The bone adaptation problem is solved with a staggered approach, the material configuration is fixed
@@ -846,12 +657,6 @@ whereas, for the fracture propagation problem, it is approximated as
 		\mathbf{F}^\textrm{h}, \rho^{h,\textrm{MWLS}})
 \end{equation}
 
-%Note that in the presented approach, one can load initial density from CT
-%scans, run bone adaptation analysis and subsequently introduce crack to calculate the 
-%release energy. It is also possible to load densities directly onto mesh with a prescribed fracture as presented on Figure \ref{fig:framework}.
-%In each case, initial density is approximated using MWLS and then projected on current 
-%material configuration.
-
 The residual force vector in the discretised spatial domain is expressed in the classical way as:
 \begin{equation}
 \label{spatial_residual}
@@ -918,158 +723,10 @@ $i,j,k,l,p,r \in \{0,1,2\}$ are material indices and $\boldsymbol{\upepsilon}$ i
 Moreover, the total number of degrees of freedom on element is $3(N_{\rm{base}}+1)$ and the units of $\tilde{\mathbf{A}}_\Gamma^\textrm{h}$ are $[{\rm m}^{-1}]$. $\mathbf{N}$ are the normals to the crack surface $\Gamma$.
 
 
-
-
-%Let the whole surface ${\partial\mathcal{B}^h_t}$ of the body domain, ${\mathcal{B}^h_t}$, at current material
-%configuration be discretised by non overlapping triangles $\mathcal{T}_i$ whose collection is defined as:
-%\begin{equation}
-%	\mathcal{T} := \left\{ 
-%		\mathcal{T} \in {\partial\mathcal{B}^h_t} : 
-%		\mathcal{T}_i \cap \mathcal{T}_j  = \emptyset \;\;
-%		\textrm{and}\;\;
-%		{\partial\mathcal{B}^h_t} = \sum_i^\tau \mathcal{T}_i 
-%	\right\}
-%\end{equation}
-%where $\tau$ is the total number of triangles on ${\partial\mathcal{B}^h_t}$.
-%Furthermore, crack front is approximated by edges $\Gamma^h$, defined similarly to
-%triangles, but with one dimension lower. With the above at hand, the triangulated domain can be defined with triangles that are part of body boundary and
-%adjacent to the crack front as:
-%\begin{equation}
-% S^h_\Gamma :=
-% \left\{
-%	 \mathbf{X} \in \mathcal{T}
-%	 : \partial \mathcal{T} \cap \Gamma^h \neq \emptyset
-% \right\}
-%\end{equation}
-%Next, a matrix of crack tangent vectors can be defined as follows:
-
-%Therefore, multiplication of $\mathbf{Z}^{\rm{front}}$ with nodal crack release energy ${\tilde{\mathbf{g}}}^h$ results in
-%evaluation of crack configurational forces:
-%
-%
-%\begin{equation}
-%\mathbf{f}^\textrm{material,internal,crack}	= \dfrac{1}{2} {(\mathbf{Z}^\textrm{front})}^{\rm{T}} {\tilde{\mathbf{g}}}^h 
-%	\label{eq:mat_int_crack}
-%\end{equation}
-%
-%Combining Eqs.(\ref{eq:mat_int_crack}) and (\ref{eq:mat_int_front}) equilibrium at the crack front can be evaluated through the residual:
-%
-%\begin{equation}
-%\mathbf{r}^h_{\textrm{material,crack}} = \dfrac{1}{2} {(\mathbf{Z}^\textrm{front})}^{\rm{T}} {\tilde{\mathbf{g}}}^h - \tilde{\mathbf{G}}^\textrm{h} = \mathbf{0}
-%	\label{eq:residual_crack}
-%\end{equation}
-%
-%Subsequently. by multiplying Eq.~(\ref{eq:residual_crack}) on both sides with $\mathbf{Z}^\textrm{front}$ and solving for ${\tilde{\mathbf{g}}}^h$ the expression below is obtained:
-%
-%
-%\begin{equation}
-%	{\tilde{\mathbf{g}}}^\textrm{h}
-%	= 2
-%	\left[
-%	\left(\mathbf{Z}^{\rm{front}}{(\mathbf{Z}^{\rm{front}})}^\textrm{T}\right)^{-1}
-%	\mathbf{Z}^{\rm{front}}
-%	\right]
-%	\tilde{\mathbf{G}}^\textrm{h}	
-%\label{eq:gc_lagrange}
-%\end{equation}
-%
-%
-%which leads 
-%immediately to fracture. %spontaneous and catastrophic
-%Since the scope of this paper is limited to the calculation crack release
-%energy only, the nodal internal configurational forces on front crack nodes are
-%calculated as follows:
-%where $\tilde{\mathbf{G}}^\textrm{h}$ is a vector of degrees of
-%freedom only on crack front nodes and integration takes place only on
-%tetrahedrons adjacent to crack front nodes, similarly to integration of the crack
-%area tangent vectors matrix presented in the next subsection.
-
-% \subsection{Material problem for crack release energy}
-%
-% The nodal configurational forces 
-% $\tilde{\mathbf{G}}^\textrm{h}$ are evaluated at
-% the crack front nodes. 
-% %Moreover, the dimension of configurational nodal force is
-%% $[\rm{J/m}]$, but Griffith cracks release energy should be in units $[{\rm{J/m}}^2]$.
-%% That discrepancy disappears in-plane stress analysis, where configurational
-%% forces are divided by the thickness of the body. 
-% The magnitude of nodal configurational forces at the crack front node is the value of J-integral. 
-%% In the case of 3D analysis, to remove that discrepancy in units some researchers
-%% divide adjacent edges into half \citep{GuersesMiehe2009}. However, that gives the
-%% correct value for crack release energy only for straight crack fronts.
-%
-%
-%It can be noticed that by comparison of Eq.~({\ref{eq:gc_lagrange}}) with Theorem 1(3.) in \citep{AinsworthEssential} 
-%nodal Griffith surface energy ${\tilde{\mathbf{g}}}^h$ could be interpeted as a Lagrange multiplier constraining the crack area growth.
-%Furthermore, dimension term in square brackets on left hand side of Eq.~(\ref{eq:gc_lagrange}) is $[\rm{1/m}]$ which multiplied by dimension
-%of configurational force $[\rm{J/m}]$ gives dimension of crack release energy, i.e.
-%$[{\rm{J/m^2}}]$. Thereby, the main advantage of the presented approach is that crack release 
-%energy is expressed exclusively in terms of nodal quantities, which enables
-%implicit formulation of crack propagation algorithm, however this is 
-%out of the scope of this work.
-
 \section{Singularity element}
-%\section{Approximation}
-%\subsection{Quarter point elements} %should that be in appendix?
-
-%Following bone adaptation or using subject-specific data from CT scans, it can be useful to assess the likelihood of fracture without undertaking a full fracture propagation analysis. In such cases it is 
+\label{sec:singularity}
 For the purposes of determining parameters such as stress intensity factors, it can be useful to reproduce the singular stress field at the crack front. However, conventional finite elements that adopt polynomial approximation functions are unable to do this. 
 In this paper a new type of finite element with hierarchical approximation functions that overcome this problem is briefly presented. This is inspired by the so-called quarter-point elements, originally developed in the 1970s, whereby the mid-node of all edges connected to the crack tip node were shifted to the quarter-point~\citep{barsoum1976use,henshell1975crack}. In this work, all bodies are discretised using 3D tetrahedral elements. However, for simplicity, we present the main attributes in this paper in 1D.
-
-%The results is a nonlinear mapping between natural (isoparametric) and local coordinates $\xi \rightarrow x$ which produces  the square root singularity. Stress and strain fields are dependent on the radial function of the crack tip, reaching infinity as $ r \rightarrow 0$. \\
-
-% \subsubsection{Standard shape functions} 
-
-% %\textcolor{red}{Only focus on hierarchical base functions, drop standard, that is not novel.} \\
-
-% The concept of quarter point element is briefly described by means of 1D 2-nd order finite element with standard base shape functions. 
-% Global configuration of 2-nd order element with nodes 0, 2 and 1 is schematically presented in Figure~\ref{fig:1d-quarter}(a) where node 0 coincides with the crack tip.
-% Furthermore, the natural coordinate system of the element is presented in Figure~\ref{fig:1d-quarter}b and the corresponding standard shape functions $N_0$, $N_2$ and $N_1$ are presented in Figure~\ref{fig:1d-quarter}c.  
-% \begin{figure}[h!]
-% 	\begin{center}
-% 		\begin{tabular}{c}
-% 		{\def\svgwidth{15cm} \input{Figures/QuarterPoint.pdf_tex}}\\  %& \includegraphics[height=2.1cm]{Figures/2ndOrderNodeOr.pdf} &   &  \includegraphics[height=1.3cm]{Figures/StandardElement.pdf}\\
-% 		\end{tabular}
-% 		\caption{1D 2-nd order quarter-point element with standard shape functions:a) global configuration, b) natural coordinates, c) base shape functions }
-% 		\label{fig:1d-quarter}
-% 	\end{center}
-% \end{figure}
-% Let the demonstrated element be a quarter-point type, the distance between node 0 with nodes 2 and 1 is given by radial coordinate $r_{\rm q}$ (see Figure~\ref{fig:1d-quarter}(a)). 
-% The position of the middle node 2 is controlled by the parameter $\kappa$. 
-% The quadratic 1D displacement function of this element is: 
-% \begin{equation}\label{eq:crack_disp_func}
-% \begin{aligned}
-% &u(\xi) = \sum_{a=0}^2 N_a (\xi) u^{(a)} = \frac{1}{2} \xi (\xi - 1)u^{(0)} + (1 - \xi^2)u^{(2)} + \frac{1}{2} \xi (\xi + 1)u^{(1)} =\\
-% & u^{(2)} + \frac{1}{2}(u^{(1)} - u^{(0)})\xi + \left[ \frac{1}{2} (u^{(0)} + u^{(1)}) - u^{(2)} \right] \xi^2 
-% \end{aligned}
-% \end{equation}
-% Note that Eq.~(\ref{eq:crack_disp_func}) is ordered by powers of $\xi$ that is element natural coordinate. 
-% In the classical isoparametric formulation, the same interpolation functions are also used for the coordinates, i.e. as well for the radius $r_{\rm q}$ with the nodal values $r^{(0)}_{\rm q} = 0$, $r^{(2)}_{\rm q} = \kappa l$, $r^{(1)}_{\rm q} = l$:
-% \begin{equation}\label{eq:crack_radius_dep}
-% r_{\rm q}(\xi) = \sum_{a=0}^2 N_a (\xi) r^{(a)}_{\rm q} = \kappa l + \frac{1}{2} l \xi  + \left(  \frac{1}{2} - \kappa \right) l \xi^2.
-% \end{equation}
-% Any value chosen for $\kappa$ would fulfil equality $r_{\rm q}(\xi=-1) = 0$ in Eq.~(\ref{eq:crack_radius_dep}).
-% However, the aim of quarter point element is to generate an approximated displacement field, $u(r_{\rm q})$, so that the resulting strains evaluated as $\varepsilon (r_{\rm q}) = \partial u(r_{\rm q})/\partial r_{\rm q}$.
-% To achieve this, a $r^{\theta}_{\rm q}$ term with $\theta < 1$ in Eq.~(\ref{eq:crack_disp_func}) should be pursued.
-% Here, value $\kappa = 1/4$ is used providing the following relations:
-% %From Eq.~(\ref{eq:crack_radius_dep}) it can be derived that radius $r_{\rm q}(\xi=-1) = 0$ for $ \kappa=1/4$, providing the following relations:
-% \begin{equation}
-% r_{\rm q}= \frac{l}{4}(1+\xi)^2 \quad \Rightarrow \quad \xi = 2 \sqrt{\frac{r_{\rm q}}{l}} -1,
-% \end{equation}
-% which substituted into Eq.~(\ref{eq:crack_disp_func}) results to an expression with a term $r^{0.5}_{\rm q}= \sqrt{r_{\rm q}}$ renders the desired radial dependence of the displacements $u(r_{\rm q})$ and strains $\varepsilon(r_{\rm q})$:
-% \begin{equation}
-% \begin{aligned}
-% u(r_{\rm q}) = u^{(0)} &+ \left( -3u^{(0)} - u^{(1)} +4u^{(2)} \right) \sqrt{\frac{r_{\rm q}}{l}} + 2 \left( u^{(0)} + u^{(1)} -2 u^{(2)} \right) \frac{r_{\rm q}}{l}\\
-% \varepsilon(r_{\rm q}) = \frac{\partial u}{ \partial r_{\rm q}} = &+ \left( - \frac{3}{2}u^{(0)} - \frac{1}{2}u^{(1)} +2u^{(2)} \right) \frac{1}{\sqrt{lr_{\rm q}}} + 2 \left( u^{(0)} + u^{(1)} -2 u^{(2)} \right) \frac{1}{l}
-% \end{aligned}
-% \end{equation}
-% The displacement function contains now a constant (rigid body motion) and linear function also a $\sqrt r_{\rm q}$ term, which reproduces the displacement field at the crack tip. 
-% The strain in the quarter-point element possesses the square root $1/{\sqrt r_{\rm q}}$ singularity.
-%\subsubsection{Hierarchical shape functions}
-%In this section, the concept of 2-nd order quarter-point element formulation with standard shape function is extended to the case of hierarchical shape functions.
-%A more detailed description for higher dimensions can be found in, for example,~\citep{nejati2015use}.
-
-%The adoption of hierarchical approximation functions~\citep{Ainsworth2003}  used in this work does not introduce extra nodes beyond those at the vertices. This feature greatly simplifies both $p$~- and $hp$~-refinement.
 
 For elements adjacent to the crack tip in the material configuration, the approximated material displacement field, using hierarchical shape functions (up to 2nd order), is expressed as:
 \begin{equation}\label{eq:hierarchical_u}
@@ -1093,21 +750,14 @@ W(r_{\rm q}) &= W^{(0)} + \left( -W^{(0)} + W^{(1)} - W^{(2)} \right) \sqrt \fra
 \end{aligned}
 \end{equation}
 Eq.~(\ref{eq:singstrain}) has the necessary terms to reproduce rigid body motion and pass the patch tests, as well as the desired singularity at the crack tip due the existence of the term $1 / \sqrt r_{\rm q}$. This will enable the elements adjacent to the crack front to reproduce the strain singularity resulting in an accurate finite element solution~\citep{nejati2015use}. 
-The influence of this approach for tetrahedral elements will be investigated in Section~\ref{sec:quarter_point_results}.
+The influence of this approach for tetrahedral elements will be investigated in Section~\ref{sec:release_energy_rate}.
 
 \section{Numerical examples}
 \label{sec:numerical_examples}
 Several numerical examples are presented to illustrate each aspect of the proposed framework. 
 The first set of analyses, presented in Subsection~\ref{sec:numerical_examples:bone_adap}, considers bone adaptation, using an equine 3rd metacarpal bone as a case study.
-The second set of analyses, in Subsection~\ref{sec:mals_mapping}, shows the results of MWLS mapping onto an FE mesh. 
-The performance of the singularity element formulation is demonstrated in Subsection~\ref{sec:release_energy_rate} using a finite plate with through thickness crack subjected to uniaxial stress. In the penultimate subsection, the framework is used to investigate the likelihood of fracture at different  stages of adaptation. The final subsection considers fracture propagation at different stages of adaptation.
+The performance of the singularity element formulation is demonstrated in Subsection~\ref{sec:release_energy_rate} using a finite plate with through thickness crack subjected to uniaxial stress. In the penultimate subsection, the framework is used to investigate the likelihood of fracture at different  stages of adaptation. The final example considers fracture propagation at different stages of adaptation.
 
-All data for these numerical examples, including meshes and results, are available online [REF - Author, DOI, Repository].
-
-
-
-%Finally, the results of release energy rate for simple finite plate problem and metacarpal bone are presented in Subsection~\ref{sec:release_energy_rate} verifying the implementation. 
-%Additionally, convergence study is conducted with and without quarter point elements at the crack tip.
 \subsection{Bone adaptation examples}
 \label{sec:numerical_examples:bone_adap}
 This subsection considers the bone adaptation of an equine 3rd metacarpal bone. 
@@ -1171,7 +821,7 @@ An adaptive time stepping scheme (using PETSc~\citep{petsc-web}) is used in all 
 				\node at(-3.1,-0.3){ $F = 5 \mathrm{kN}$ };
 				\node at(2.8,-0.3){ Fixed end };
 	\end{tikzpicture}
-		\caption{Finite element mesh of the equine 3rd metacarpal bone. The subject specific three-dimensional mesh consists of 14,041 quadratic tetrahedral elements and 70,901 degrees of freedom. To simulate the peak load of a gallop, 5 kN forces are applied on the lateral and medial side of the distal condyle.}
+		\caption{Finite element mesh of the equine 3rd metacarpal bone. The mesh consists of 14,041 quadratic tetrahedral elements and 70,901 degrees of freedom. To simulate the peak load of a gallop, 5 kN forces are applied on the lateral and medial side of the distal condyle.}
 		\label{fig:mc3_BC}
 	\end{center}
 \end{figure}
@@ -1224,36 +874,11 @@ The resulting maximum density is 2.8~$[{\text {g/cm}}^3]$ and the minimum is clo
 		\end{tikzpicture}
 		% \caption{  }    
 	\end{subfigure}
-	\caption{ Change in overall mass of the bone over time for 3 cases (see Table~\ref{tab:three_cases}). Density distribution contours in 3rd metacarpal bone at five snapshots in time in (a) and at the last converged step for b) and c).} 
+	\caption{Change in bone mass over time for 3 cases (see Table~\ref{tab:three_cases}). Density distribution contours in 3rd metacarpal bone at five snapshots in time in (a) and at the last converged step for (b) and (c).} 
 	\label{fig:density_changes_}
 \end{figure}
 
-
-% When adaptation converges to an equilibrium state, an interesting phenomenon is observed.
-% For each density level there is a corresponding value of constant strain energy density $\psi$
-% This result is a direct consequence of the constitutive Eq.~(\ref{eq:mass_source}).
-% This feature can be visualised by plotting the strain energy density on the contours of constant density levels as presented in Figure~\ref{fig:mc3_biol_eq}. 
-
-
-% \begin{figure}
-% 	\centering
-% %	\begin{tikzpicture}
-% %	\node at (2,0) {	\includegraphics[width=16cm]{Figures/mc3_biol_eq.png} };
-% %	\node at (0.4,-0.6) {\includegraphics[width=3cm]{Figures/scale_bars/mc3_biol_eq_scale1.pdf}};
-% %	\node at (9,2)  {\includegraphics[width=4.5cm]{Figures/scale_bars/mc3_biol_eq_scale2.pdf}};
-% %	\node at (1,-2)  { a) \hspace{5cm} b) \hspace{5cm} c) };
-% 	\def\svgwidth{14cm}
-% 	\input{Figures/mc3_biol_eq.pdf_tex}
-% %	\end{tikzpicture}
-% 	\caption{Case 1: Biological equilibrium state. a) Density map. b) Contours of density. c) Strain energy plotted on contours of density.}
-% 	\label{fig:mc3_biol_eq}
-% \end{figure}
-
-
 The maximum density for Case~1 is noticeably higher than in the actual equine bones~\citep{yamada2015experimental} and the minimum density is unrealistically close to zero. This justifies the proposed bell shape function (Eq.~(\ref{eq:bell_function})) used for the next two analyses (Case~2 and Case~3). 
-%Therefore, in the following section, the results of two analyses with the application of the bell function (see Eq.~\ref{eq:bell_function}) are presented. 
-%In the first one, the parameters for the function are: $b = 1000$, $\rho_\mathrm{max} = 2.5$~$[{\text{g/cm}}^3]$, $\rho_\mathrm{min} = 0.3$~$[{\text{g/cm}}^3]$. 
-%All the rest of parameters remain unchanged. 
 
 The results for Case~2 are plotted in Figure~\ref{fig:density_bell1}.
 The last converged step takes place at $t=93$~$[{\text{d}}]$. 
@@ -1268,8 +893,7 @@ Furthermore,  reducing the range between the upper and lower bounds of density h
 The dense cortical shaft on the dorsal side of the bone is less dense and covers a much larger region. 
 Furthermore, unrealistically low values of densities have been eliminated. 
 However, as with the previous case, the overall solution converges to the same mass as in Case~1, albeit requiring significantly more time steps. \\
-%In the next sections, the methods will be presented on how to map the resulting density patterns from bone adaptation analysis on different meshes by using moving least squares approximation. Subsequently, the new model will be used to estimate the propensity to fracture, by calculating material forces on the introduced crack tip.
-% I DELETED MWLS MAPPING EXAMPLES (KAROL)
+
 \subsection{Stress intensity calculations}
 \label{sec:release_energy_rate}
 To examine the calculation of configurational forces at the crack front in bodies with both homogeneous and heterogeneous density distributions, five numerical examples are presented.
@@ -1282,14 +906,13 @@ The final two examples demonstrate the calculation of configurational forces for
 A finite plate with height, $h_{\rm {pl}} = 10$, thickness $t_{\rm {pl}}=1$ and half width $b_{\rm{pl}} = 2.5$ and a horizontal through-thickness crack with half width $a_{\rm {pl}} = 1$, as presented in Figure~\ref{fig:plate_load_mesh}(a), is considered. All input parameters presented are dimensionless. 
 The  plate is spatially discretised using 1384 tetrahedral elements and subjected to uniaxial stress in the longitudinal direction, as indicated in Figure~\ref{fig:plate_load_mesh}(b). 
 Displacements are constrained on three vertices of the plate to prevent rigid body motion. 
-%\includegraphics[width=0.5\linewidth]{Figures/plate_load_mesh.png}
 
 \begin{figure}[h!]
 \begin{center}
 \begin{tabular}{c}
 {\def\svgwidth{15cm} \input{Figures/InfSlab.pdf_tex}}\\
 \end{tabular}
-\caption{Finite plate with a horizontal crack. a) Plate geometry and through thickness crack. b) Applied uniaxial stress $\sigma$ and finite element mesh where elements presented with grey colour have approximation order $p_{\rm g}$ and elements that have vertices at crack tip, presented with yellow colour, have approximation order $p_{\rm l}+p_{\rm g}$. }
+\caption{Finite plate with a horizontal crack. a) Plate geometry with through thickness crack. b) Finite element mesh - grey elements have approximation order $p_{\rm g}$ and yellow elements have vertices at crack tip and have approximation order $p_{\rm l}+p_{\rm g}$. }
 \label{fig:plate_load_mesh}
 \end{center}
 \end{figure}
@@ -1299,32 +922,25 @@ The purpose of this analysis is to calculate the Mode I stress intensity factor 
 K_{\rm I}=\sigma \sqrt{\pi a_{\rm {pl}}} \left[  \frac{1 - \frac{a_{\rm {pl}}}{2b_{\rm {pl}}} + 0.326 (\frac{a_{\rm {pl}}}{b_{\rm {pl}}})^2 }{\sqrt{1-\frac{a_{\rm {pl}}}{b_{\rm {pl}}}}}  \right]
 \end{equation}
 where $\sigma $ is the applied stress. 
-%Dimensions of the specimen are presented in Figure~\ref{fig:plate_load_mesh} along with the finite element model consisting of 1384 tetrahedral elements. 
 Young's modulus $E$ and Poisson's ratio $\nu$ are $1000$ and $0.3$, respectively. 
 
 
 Hierarchical approximation functions allow for global and local p-refinment without changing the mesh.
 In general, all tetrahedrons of the mesh have a global order of approximation, $p_{\rm g}$, with some elements subjected to local refinement of order $p_{\rm{l}}$.
- %$p_{\rm{l}} + 1$~to~$p_{\rm{l}} + p_{\rm{g}}$.
-%When $p_{\rm l}+p_{\rm g}\leq3$, two types of tetrahedral elements are considered where local order of approximation is increased to $p_{\rm l}+p_{\rm g}$ only at elements with vertices at the crack tip as presented in Figure~\ref{fig:plate_load_mesh}b.
-%Otherwise, a number of groups of tetrahedrals with different orders of approximation are considered.
-%Similar to the case where $p_{\rm l} + p_{\rm g} \leq 3$, the first group of elements is composed of the tetrahedrals with vertices at the crack tip and have approximation order $p_{\rm l}+p_{\rm g}$.
-%The second group of elements is consisted of the tetrahedrons adjacent to the first set elements, with approximation order that is one less than the previous set, i.e. $p_{\rm l}+p_{\rm g}-1$.
-%This process continues for each next adjacent group of tetrahedrons until the approximation order reaches the global order of approximation, $p_{\rm {g}}$.
 All analyses presented were run using the same mesh with p-refinement varying from 1\textsuperscript{st}-order  to 6\textsuperscript{th}-order so that $p_{\rm l} + p_{\rm g} \leq 7$.
 The Mode I stress intensity factor, $K_{\rm I}$, was calculated directly from the output configurational forces as: 
 \begin{equation}
 K_{\rm I} = \sqrt{GE}
 \end{equation}
 where $G$ is the change of elastic strain energy per unit area of crack growth.
-The deformed shape of the plate is illustrated in Figure~\ref{fig:plate_conv_no_sing}.
-From the graph, it is evident that, for the same coarse mesh and number of nodes, the solution can improve drastically when the order of approximation is increased. 
+From Figure~\ref{fig:plate_conv}(a), it is evident that, for the same coarse mesh and number of nodes, the solution can improve drastically when the order of approximation is increased. 
 The well known shear locking associated with first-order approximation is observed. 
 The minimum error achieved is $0.50\%$ for all the cases with total order of approximation  $p_{\rm l} + p_{\rm g} = 7$. 
 Therefore, it can be observed that using a low order of global approximation plus local p-refinement 
 can achieve the same level of accuracy as using high order approximation globally, but with fewer degrees of freedom and lower computational cost.
+
 \begin{figure}[h]
-	\centering.
+	\centering
 	\input{Figures/tikz/legend1.tex}
 	\begin{minipage}{.45\textwidth}
 		\hspace{-0.5cm}
@@ -1334,8 +950,6 @@ can achieve the same level of accuracy as using high order approximation globall
 			\node at (-1.2,-1.1){$0.50\%$};
 			\node at (0,0) {};
 			\end{tikzpicture}
-			\caption{Convergence plot for stress intensity factor $K_{\rm I}$ Relative rror (\%) versus no. of DOF (log10) and deformed shape of the plate (bottom left).}
-			\label{fig:plate_conv_no_sing}
 	\end{minipage}%
 	\quad \quad \quad
 	\begin{minipage}{.45\textwidth}
@@ -1344,23 +958,28 @@ can achieve the same level of accuracy as using high order approximation globall
 			\node at (0,0){	\input{Figures/tikz/plate_conv_singularity.tex} };
 			\node at (-1.2,-1.0){$0.028\%$};
 	\end{tikzpicture}
-	\caption{Convergence plot for stress intensity factor $K_{\rm I}$ Relative error~(\%) versus no. of DOF (log10).}
-	\label{fig:plate_conv_singularity}
 	\end{minipage}
+				\begin{centering} (a)\hspace{7cm}(b) \end{centering}
+	\caption{Convergence plot for stress intensity factor $K_{\rm I}$. Relative error (\%) versus no. of DOF (log10) for (a) using hierarchical approximation functions and (b) using singularity elements.}
+			\label{fig:plate_conv}
 \end{figure}
-Based on the results in Figure~\ref{fig:plate_conv_singularity}, it is evident that using singularity elements improves the convergence rate significantly and lowers the error by an order of magnitude, from 0.50\% down to 0.028\%. 
-However, it can also be seen from Figure~\ref{fig:plate_conv_singularity} that for each combination of p-refinement, the error increases with further refinement after it reaches the minimum value. 
+
+
+
+
+Based on the results in Figure~\ref{fig:plate_conv}(b), it is evident that using singularity elements improves the convergence rate significantly and lowers the error by an order of magnitude, from 0.50\% down to 0.028\%. 
+However, it can also be seen that for each combination of p-refinement, the error increases with further refinement after it reaches the minimum value. 
 This suggests that the solution cannot be further improved by enhancing the order of approximation alone. 
 Reducing the the elements size and increasing the plate width (to better replicate the infinite plate used to determine the analytical solution), the error would probably decrease further. 
-Nevertheless, the results are considered sufficiently accurate for the purpose at hand. \\
-%The critical thickness is that which causes the specimen to be dominated by a state of plane strain, as opposed to plane stress. The stress in the through-thickness z direction must become zero at the sides of the specimen since no traction is applied there, and in a thin specimen the stress will not have room to rise to appreciable values within the material. The strain in the z direction is not zero, of course, and the specimen will experience a Poisson contraction given by εz = ν(σx + σy). But when the specimen is thicker, material near the center will be unable to contract laterally due to the constraint of adjacent material. Now the z-direction strain is zero, so a tensile stress will arise as the material tries to contract but is prevented from doing so. 
+Nevertheless, the results are considered sufficiently accurate for the purpose at hand. 
+
 Overall, these results indicate that it is of great benefit to use the singularity elements, since they improve the accuracy of the solution with no extra cost.
 Furthermore, the difference in execution time for the analysis with and without their inclusion was negligible. 
 
 \subsubsection{Heterogeneous material}
 So far the numerical examples have assumed homogenous material properties. Here we consider the effect of a heterogeneous density distribution. 
 Considering the same problem of the finite plate with horizontal crack, a density field $\mathbf{\rho}(x,y,z) = 0.125y + 1$ is directly assigned to the integration (Gauss) points of each tetrahedral element.
-As expected, configurational forces are induced at the crack tip under load and, as explained in Section \ref{sec:release_energy}, these forces are influeced by the non-uniform density distribution. 
+As expected, configurational forces are induced at the crack tip under load and, as explained in Section \ref{sec:fem_fracture_prop}, these forces are influenced by the non-uniform density distribution. 
 However, the stress intensity factor loses its meaning in the case of heterogeneous materials and there is no agreed approach to validate either configurational forces or stress intensity factors for such cases (except for the special case of functionally graded materials~\citep{kim2002finite}).
 %, by using MWLS method, demonstrated in Section~\ref{sec:mwls}.
 
@@ -1387,7 +1006,7 @@ Therefore, it can be concluded that the proposed estimation of fracture energy r
 		\node at (5,-0.0) {	\includegraphics[width=2cm]{Figures/tikz/gradient.png}};
 		\node at (-4.5,-2.8){$0.3\%$};
 		\end{tikzpicture}
-	\caption{Convergence of error in release energy rate from Finite Difference Method. Density distribution (bottom right).}
+	\caption{Convergence plot for stress intensity factor $K_{\rm I}$ for heterogeneous density distribution. Relative error (\%) versus no. of DOF (log10).}
 	\label{fig:covergencefdm}
 \end{figure}
 
@@ -1409,7 +1028,7 @@ It can be seen that, for the same mesh, as the order of approximation increases,
 		\def\svgwidth{10cm}
 		\input{Figures/bone_ct_mesh_cut.pdf_tex}
 %	\includegraphics[width=0.5\linewidth]{Figures/bone_ct_mesh_cut.png}
-	\caption{Bone geometry with mapped density from CT by using MWLS. In order to calculate the configurational forces, an initial crack is introduced by cutting the mesh with a circular surface. The cutting algorithm is not limited to planar cracks. }
+	\caption{Bone geometry with density mapped from CT using MWLS. Initial crack introduced by cutting the mesh with a circular surface.}
 	\label{fig:bone_ct_mesh_cut}
 \end{figure}
 
@@ -1418,14 +1037,14 @@ It can be seen that, for the same mesh, as the order of approximation increases,
 	\def\svgwidth{12cm}
 	\input{Figures/crack_front_force.pdf_tex}
 	%\includegraphics[width=0.9\linewidth]{Figures/crack_front_force.png}
-	\caption{Crack surface and vectors of material (crack driving) forces at the front.}
+	\caption{Crack surface and configurational forces at the crack front.}
 	\label{fig:crackfrontforce}
 \end{figure}
 
 \begin{figure}[h!]
 	\centering
 	\input{Figures/tikz/max_g1_convergece.tex}
-	\caption{Convergence plot of maximum configurational force in Mode-I versus no of DOF (log10) for subsequent discretisations and $p$~-~refinements. Results are mesh independent since they all converge to the value for energy release of approximately $ G_{\rm I} = 0.9 \, [\mathrm{kJ} / \mathrm{m}^2]$ for increasing orders of approximation. }
+	\caption{Convergence plot of fracture energy release rate versus no of DOF (log10) for subsequent discretisations and $p$~-~refinements.}
 	\label{fig:max_g1_convergece}
 \end{figure}
 A crack will propagate when the energy release rate $G$ equals the material's resistance to crack extension, $g_{\rm c}$. Assuming $g_{\rm c} = 2.0\,[\mathrm{ kJ/m^2}]$~\citep{gasser2007numerical} it can be estimated that this particular metacarpal bone with this initial crack can sustain loading of approximately 2.2 times greater before a fracture starts to propagate. 
@@ -1438,7 +1057,7 @@ However, this time, densities from a bone adaptation analysis (Section~\ref{sec:
 	%\includegraphics[width=0.8\linewidth]{Figures/frack_mesh_cutting.png}
 			\def\svgwidth{12cm}
 		\input{Figures/frack_mesh_cutting.pdf_tex}
-	\caption{The resulting density distribution from the bone adaptation analysis is approximated directly onto integration points of the mesh used for fracture analysis using MWLS method described in~\citep{karol_lewandowski_moving_2019}. The cutting circular plane used to create an initial crack is also shown.}
+	\caption{Density distribution from bone adaptation analysis mapped onto fracture analysis mesh. Initial crack created using the cutting plane shown.}
 	\label{fig:frackmeshcutting}
 \end{figure}
 The resulting energy release rate at different points in time of bone adaptation are illustrated in Figure~\ref{fig:crackmc3release} for three different local $p$~-~refinements. It can be seen that the variation in energy release rate for increased orders of approximation at the crack front is very small. 
@@ -1446,12 +1065,12 @@ The resulting energy release rate at different points in time of bone adaptation
 	\centering
 %	\includegraphics[width=1\linewidth]{Figures/tikz/crack_mc3_release.png}
 		\begin{tikzpicture}
-			\node at(0,0){	\input{Figures/tikz/crack_mc3_release.tex} s};
+			\node at(0,0){	\input{Figures/tikz/crack_mc3_release.tex}};
 			\node at(0,0){ \includegraphics[width=9cm]{Figures/tikz/density_for_g1_conv.png}};
 			\node at(2,-1){                    	\def\svgwidth{4cm} 	\input{Figures/scale_bars/scale_bar_density_rainbow.pdf_tex}  } ;
 		
 		\end{tikzpicture}
-	\caption{Configurational forces for remodelled bones for three local $p$~-~refinements.}
+	\caption{Fracture energy release rate over time during bone adaptation for three local $p$~-~refinements.}
 	\label{fig:crackmc3release}
 \end{figure}
 It can be seen that there is a trend of increasing release energy rate over time and that by introducing a notch in the resorption zone, where no loading is applied, the configurational force attains larger values. This indicates that over time the bone becomes more prone to fracture in this specific region. 
@@ -1460,7 +1079,7 @@ It can be seen that there is a trend of increasing release energy rate over time
 In this section we move the analysis further by simulating the process of crack propagation for different levels of bone adaptation. The magnitude of applied forces (Figure \ref{fig:mc3_BC}) is controlled by the increment in crack area during each load step using an arc-length technique. The initial finite element mesh is the same as previously, although it is locally refined as the crack front advances. The fracture energy is $2.0\,[\mathrm{ kJ/m^2}]$ for the entire domain. 
 All five cases (time snapshots) are solved using 2nd-order approximation functions.
 The numerically predicted crack paths are shown in Figure~\ref{fig:crack_snapshots}. 
-It can be seen that the crack has an initially planar shape and then curves towards the lateral side of the bone. This simulated crack path compares well with fractures observed in radiographs \citep{whitton2010third}, especially considering the simplified loading conditions. The load factor versus crack area plots are shown in Figure~\ref{fig:crack_remodel_frac_compar}. Consistent with the previous analysis in Section~\ref{sec:mc3_release_eng}, the metacarpal bone shows an increased risk of fracture - i.e. for the same crack area, the remodelled bone requires much lower force (load factor) to induce crack propagation. Low density levels at biological equilibrium ($t=90$ and $t=200$) also influences the crack path, with the crack curving earlier than in the initial stages of remodelling. 
+It can be seen that the crack has an initially planar shape and then curves towards the lateral side of the bone. This simulated crack path compares well with fractures observed in radiographs \citep{whitton2010third}, especially considering the simplified loading conditions. The load factor versus crack area plots are shown in Figure~\ref{fig:crack_remodel_frac_compar}. Consistent with the previous analysis in Section~\ref{sec:mc3_release_eng}, the metacarpal bone shows a decreased resistance to fracture - i.e. for the same crack area, the remodelled bone requires much lower force (load factor) to induce crack propagation. Low density levels at biological equilibrium ($t=90$ and $t=200$) also influences the crack path, with the crack curving earlier than in the initial stages of remodelling. 
 
 \begin{figure}[h!]
 	\centering
@@ -1469,7 +1088,7 @@ It can be seen that the crack has an initially planar shape and then curves towa
 	\node at (0.25,1.8) {	\includegraphics[width=7cm]{Figures/pngs/crack_surfaces_adapt.png}};
 	\node at (1.5,0) {	Crack surfaces};
 	\end{tikzpicture}
-	\caption{Load factor versus crack area for different snapshots from bone remodelling analysis. It can be noticed that the heterogeneity of the bone inclueced both load factor and the resulting crack surface.}
+	\caption{Load factor versus crack area for different moments in time during bone adaptation analysis. Bone density distribution influenced both load factor and the resulting crack surface.}
 	\label{fig:crack_remodel_frac_compar}
 \end{figure}
 
@@ -1481,38 +1100,38 @@ It can be seen that the crack has an initially planar shape and then curves towa
 		\end{tikzpicture}
 		
 	\end{centering}		
-		\caption{Snapshots for points shown in Figure~\ref{fig:crack_remodel_frac_compar} of crack propagation in equine 3rd metacarpal. }
+		\caption{Crack surface evolution in equine 3rd metacarpal.}
 		\label{fig:crack_snapshots}
 \end{figure}
 
 
-As previously demonstrated (in Figure~\ref{fig:plate_conv_singularity}) modelling singularity can significantly improve the accuracy of the configurational forces at the crack front. In the next example we considered bone with heterogeneous density distribution mapped from CT scan data. 
-In the Figure~\ref{fig:crack_singular_vs_non} results from crack analysis with and without Quarter Point elements are depicted. It is evident that accurate stress state at the tip has a negligible impact on the full crack propagation analysis and the resulting load factor.  
+As previously demonstrated (Figure~\ref{fig:plate_conv}(b)) modelling singularity can significantly improve the accuracy of the configurational forces at the crack front. In the next example we considered bone with heterogeneous density distribution mapped from CT scan data. 
+In the Figure~\ref{fig:load_factor1}(a) results from crack analysis with and without Quarter Point elements are depicted. It is evident that accurate stress state at the tip has a negligible impact on the full crack propagation analysis and the resulting load factor.  
 
 \begin{figure}[h]
 	\centering
 	\begin{minipage}{.45\textwidth}
-		\hspace{-0.5cm}
+		\hspace{-1cm}
 	\begin{tikzpicture}
 		\node at(0.,0){  	\input{Figures/tikz/fracture/remod_heter_singular.tex} };
 	\end{tikzpicture}
-	\caption{Load factor versus crack area for with and without modelled singularity at the tip.}
-	\label{fig:crack_singular_vs_non}
 \end{minipage}%
-\quad \quad 
+\quad
 \begin{minipage}{.45\textwidth}
 	\begin{tikzpicture}
 	\node at(0.,0){  	\input{Figures/tikz/fracture/homo_vs_het.tex} };
 	\node at (2,0.35) {	\includegraphics[width=3.5cm]{Figures/pngs/crack_surf_heter_compar.png}};
 	\end{tikzpicture}
-	\caption{Load factor versus crack area for heterogeneous versus homogeneous bone.}
-	\label{fig:crack_homo_vs_het}
-\end{minipage}%
+\end{minipage}
+
+(a) \hspace{6cm} (b)
+	\caption{Load factor versus crack area for (a) with and without singularity element and (b) homogeneous versus heterogeneous density distribution.}
+	\label{fig:load_factor1}
 \end{figure}
-From the load-crack area curves in Figure~\ref{fig:crack_homo_vs_het} it can be observed that including density data from CT scans have a significant impact on the predicted load factor and crack path as well. 
+From the load-crack area curves in Figure~\ref{fig:load_factor1}(b) it can be observed that including density data from CT scans have a significant impact on the predicted load factor and crack path as well. 
 
 
-Finally, we investigated the h and p convergence. The results presented on the Figures \ref{fig:crack_ct_h_ref} and \ref{fig:crack_ct_p_ref} show good numerical convergence for consecutive refinements. It can be concluded that our formulation predicts crack path accurately with minimal effect from original mesh or order of approximation. 
+Finally, we investigated the h and p convergence. The results presented on the Figures \ref{fig:load_factor2}(a) and \ref{fig:load_factor2}(b) show good numerical convergence for consecutive refinements. It can be concluded that our formulation predicts crack path accurately with minimal effect from original mesh or order of approximation. 
 
 \begin{figure}
 	\centering
@@ -1520,16 +1139,16 @@ Finally, we investigated the h and p convergence. The results presented on the F
 		\begin{tikzpicture}
 			\node at(0.,0){ \input{Figures/tikz/fracture/real_fract_ct_h_ref.tex} };
 		 \end{tikzpicture}
-		 \caption{Load factor versus crack area ($h$~-~refinement).}
-		 \label{fig:crack_ct_h_ref}
 	\end{minipage}%
 	\begin{minipage}{.5\textwidth}
 		\begin{tikzpicture}
 			\node at(0,0){         \input{Figures/tikz/fracture/real_fract_ct_p_ref.tex} };
 		\end{tikzpicture}
-		\caption{Load factor versus crack area ($p$~-~refinement).}
-		\label{fig:crack_ct_p_ref}
 	\end{minipage}
+	
+	(a)\hspace{5cm} (b)
+			 \caption{Load factor versus crack area (a) $h$~-~refinement). (b) $p$~-~refinement.}
+		 \label{fig:load_factor2}
 	\end{figure}
 
 
@@ -1561,95 +1180,26 @@ Finally, we investigated the h and p convergence. The results presented on the F
 %$-\frac{\partial \psi}{\partial a} = \frac{\partial S}{\partial a} = \mathcal\mathbf G_c$
 
 \section{Discussion}\label{sec:discussion}
-Development of a 3D Finite Element model for biological applications is a very complicated process. 
-Unlike that in typical engineering research subjects, there is still very little knowledge of the material properties. 
-Another issue is lack of proper definition of the boundary conditions. Constraints are mostly explicit when analysing engineering objects such as concrete beams or steel frames under different loading conditions. 
-However, in a living body it is challenging to accurately define loads. 
-Model geometry suffers from inaccuracies in scanning as well as segmentation process. 
-Results from such models could potentially include an increasing number of errors since the data collected from each stage of the 
-model creation encompasses high ancertenty data~\citep{campoli2014effects}.
-Available information is usually subject-specific or gathered for a relatively small population of subjects and cannot be generalised. 
-Subsequently, even if one manages to overcome the aforementioned obstacles, there is a need for validation of such models, which will also have to deal with similar difficulties. 
-%A possible number of errors increase at each stage of creating such models since there is high uncertainty about obtained data~\citep{campoli2014effects}. 
-
-Over the years, many frameworks have been developed to quantify such uncertainty levels, which might greatly increase the credibility of computational models~\citep{wille2016uncertainty}. 
-CT scanning on living horses limbs is still too cumbersome to be used as a standard diagnostic tool.
-As to best authors' knowledge there is a limited number of facilities that can perform CT scanning for horses without the necessity for anaesthesia. 
-Nevertheless, this study can bring new insight in the area of catastrophic injuries in order to improve the welfare of the thoroughbred racehorse. %The successful application of developed framework would enable the introduction of interventions for veterinary practitioners, such as suggestions for training regimes based on known risk factors for lateral condylar fractures that could reduce the probability of fracture in racehorses. \\
-
-In summary, the goals of this study were to: (i) implement bone adaptation algorithm to predict density levels in response to high-intensity training 
-for racehorses, (ii) to incorporate an efficient and accurate mapping strategy to represent heterogeneous bone material properties for hierarchical 
-finite element models and (iii) to assess the potential of linear fracture mechanics in evaluating bones' propensity to failure. 
-
-Despite certain limitations, it was demonstrated that the implemented open systems thermodynamics framework allows for simulation of a natural behaviour of hard biological tissues. 
-The proposed computational method may have a great potential to identify the risk of fracture related to changes in bone mineral density. 
-Understanding the effects of changing release energy in response to bone adaptation can help developing training regimes that reduces the liability of fatal injury. 
-Furthermore, the model uses very few parameters which can be experimentally determined in a practical manner increasing the attractiveness of this approach.\\ 
-
-Application of a bell function to enforce bounds on density levels in the constitutive model did not provide rigid constrains for density levels, but merely slowed down the convergence to the biological equilibrium process. 
-Nevertheless, it may still become useful, when one tries to fit the model parameters into the actual density data form CT scanning in defined periods of time. 
-One could also constrain density bounds by introducing and calibrating mass influx to the balance of mass equation~\citep{sharma2013adaptive}. 
-Nonetheless, bones in the living organisms are never fully load adapted~\citep{christen2014bone}. 
-Therefore, achieving a biological equilibrium that results in unrealistic levels of density should never take place in a real case scenario. \\
+This paper has presented a FEM computational modelling framework to investigate the influence of bone adaptation, and associated bone density distribution, on fracture resistance and fracture propagation. 
+The influence of the heterogeneous density distribution was captured using an extension of the authors' previous work on configurational mechanics for fracture. 
+Configurational forces are the driver for crack propagation and it was shown that in order to evaluate correctly these forces at the crack front it is necessary to have a spatially smooth density field, with higher regularity than if the field is directly approximated on the finite element mesh. 
+Therefore, density data is approximated as a smooth field using a Moving Weighted Least Squares method. 
+In this paper, the bone density field was generated from both bone adaptation analyses and from subject-specific geometry and material properties obtained from CT scans. 
+It is important to note that the adoption of configurational mechanics avoids the need for post-processing, since configurational forces, and the fracture energy release rate, are expressed exclusively in terms of nodal quantities.
 
 
 
-A novel method in quantifying bone fracture propensity was presented. By scanning the bone, running the bone adaptation simulation and subsequently introducing a notch in the geometry at particular time steps, it can be observed from the values of configurational forces how loading the bone influences its resistance to fracture. 
-This framework, can be potentially a very useful tool in diagnostic of fractures and eventually prevention of catastrophic failures. 
-Moreover, the code used for all numerical analyses was developed keeping in mind scalability and robustness. 
-Entire framework can be executed on parallel computer system in order to fit in an efficient patient-specific modelling routine that can handle many patients within a practical time window. \\
+The constitutive model for bone adaptation included a bell function to define the rate of adaptation. 
+This did not enforce rigid bounds on density levels, but merely slowed down the rate of convergence to biological equilibrium. 
+This approach will be useful when trying fit model parameters to the actual density data form CT scans in defined periods of time. 
+It is also possible to enforce bounds on density levels by introducing and calibrating mass influx in the mass balance equation~\citep{sharma2013adaptive}. 
 
-Numerical examples demonstrated the accuracy of the proposed framework. 
-Convergence has been validated for all examples, in particular, the use of quarter point elements was shown to improve the convergence of calculated release energy rates. However, it was also confirmed that improved accuracy of the stress at the tip has no impact on the crack propagation analysis. \\
-Supplementary data (ct scans, meshfiles, command lines) necessary to reproduce results demonstrated in this work can be found in~\citep{karol_lewandowski_2019_dataset}. Presented bone remodelling and fracture mechanics approaches are submodules in MoFEM library, which can be easily installed using multiplatform Spack package manager~\citep{spack2015}. 
+Numerical examples demonstrated the performance and accuracy of the proposed framework. 
+Numerical convergence was demonstrated for all examples and the use of singularity elements was shown to further improve the rate of convergence. However, it was also confirmed that improved accuracy of the stress at the tip had no impact on the crack propagation analysis and the resulting crack path.  The final example, demonstrated how mechanical loading and subsequent adaptation influence the resistance to bone fracture. Therefore, this framework will be a useful tool in understanding fractures in bone and ultimately preventing catastrophic fractures. 
 
-\subsection{Limitations and future work}
-The methods presented in this paper have several important limitations. 
-Considerably more work has to be done to determine bone loading, since using simplified input results in unrealistically low densities in non load-bearing regions. 
-Multiple load cases can be critical in modelling bone adaptation~\citep{geraldes2016consideration}. 
-In the future, the forces will be obtained by using gait data and musculoskeletal analysis~\citep{Delp2007} combined with FEM mortar contact formulation in MoFEM~\citep{athanasiadis2018mortar}. 
-Another method to predict realistic loading is to solve an~inverse problem to bone adaptation. 
-Promising results have been reported in that field by using machine learning methods like Neural Networks~\citep{campoli2012computational}. 
-The current linear fracture mechanics approach does not take into account nonlinear cohesive mechanisms like collagen fiber bridging at the crack tip~\citep{yang2006fracture}. 
-Therefore, the calculated release energy with presented approach might be overestimated. 
-More research is also required to calibrate material parameters, in particular those regarding constitutive relations for bone adaptation. 
+All analyses were undertaken using MoFEM~\citep{mofem2017} that has been developed to support scalability and ensure robustness. The entire framework can be executed on parallel computer systems. Supplementary data (CT scans, mesh files, command lines) necessary to reproduce the results of all numerical examples can be found in~\citep{karol_lewandowski_2019_dataset}. The bone adaptation and fracture mechanics are both submodules in the MoFEM library~\citep{mofem2017}, which can installed using the flexible package manager, Spack~\citep{spack2015}. 
 
 
-%Overall, the presented examples of density evolution, at this point are not sufficient to make any practical conclusions about the remodelling of the metacarpal bones. \\
-
-
-%Calculation of release energy rate does not give any insights into quantitative strength of the bones' structure. Future implantation on an implicit crack propagation for heterogeneous bodies will allow to trace a full dissipative loading path. The process of determining detailed musculoskeletal loads using kinematic data and external forces is called inverse dynamic analysis
-
-%Another limitation of the study is that only one load case is considered. 
-%However, it is important to note that while simulating bone functional adaptation a detailed knowledge of the actual loading situation is elementary. By assuming that all three cases occur simultaneously in some loading conditions forces could balance each other.
-
-%The model is not yet calibrated and validated against patient data, however, it provides valuable insight to the bone remodelling behaviour for equine metacarpal and is capable of qualitatively comparing different loading.
-
-%bone remodelling is not purely load-driven. Possible causes for this could be that also other mechanisms, for example, calcium homeostasis, influence normal bone remodelling and thus bone is never fully load adapted. as suggested in~\citep{christen2014bone}. The authors of previously mentioned publication also suggests that approximately 50\% of the bone structure might be determined by mechanical loading.
-
-
-%No previous study has investigated release energy of brittle fracture in heterogeneous bodies like bones. 
-%In the future we might use a micro CT scanning as ot was shown that it is currently the most accurate method to estimate bone strength. 
-%We are hoping that when we refine the model we could confirm that bone remodelling may increase the propensity to cracks and find potential practical applications in the fracture prevention.
-% this research can be easily translated into human applications 
-%Presented framework could be also combined with other risk factors~\citep{georgopoulos2017risk} which should improve the clinical assessment of fracture risk
-%The correlation between bone adaptation, high intense training and stress fractures is still poorly understood. The promising results of this study offer a novel framework to simulate  changes in the bone structure as a result of loading and quantify the risk of fatal injury. 
-%In conclusion, this study has shown that fracture resistance in the equine metacarpal bone can be numerically quantified. 
-%Understanding the effects of changing release energy in response to bone remodelling will help in the development of training regimes that reduces the risk of fatal injury in racehorses
-%This approach might become especially handy to analyse whether a discovered crack in the equine bone is liable to propagate under certain loading conditions. 
-%model with the capability to simulate the bone density growth and resorption processes due to mechanical stimuli
-%A reduction in this speciﬁc type of fracture would have a signiﬁcant global impact on the number of Thoroughb redracehorses subjected to euthanasia as a result of in jury incurred duringracing
-%has a massive welfare and economic impact on horse racing
-
-%A better understanding of the influence of race training on subchondral bone remodelling is essential to understanding the pathophysiology of subchondral bone injury.
-
-%Therefore, the development of computational tools with the capability to estimate bone adaptation when prosthetic devices are used has a remarkable importance, since these processes may contribute to implant success or failure. In this scenario, the finite-element method (FEM) has been playing a key role, being used to study and evaluate the mechanical behaviour of prosthetic devices
-
-%The flexibility of the hierarchic finite element is fully utilised, which permits the use of arbitrary order of approximation leading to accurate results for relatively coarse meshes. The developed computational framework is implemented in our group's FE software, MoFEM (Mesh-Oriented Finite Element Method). \\
-
-%Moreover, the application of the study proposes a computational assessment tool for veterinary specialists, focused on the simulation of a healthy femur and a femur with an implanted prosthesis submitted to loads.
-
-%The main objective advocated in this contribution is the setting up of a modelling framework relying on the thermodynamics of irreversible processes
 
 \newpage
 % \bibliographystyle{abbrv}
