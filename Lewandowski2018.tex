@@ -91,23 +91,6 @@ A finite element framework for simulating bone adaptation, commonly called bone 
 In this paper density fields are generated from both (a) bone adaptation analysis and (b) subject-specific geometry and material properties obtained from CT scans. It is shown that, in order to correctly evaluate the configurational forces at the crack front, it is necessary to have a spatially smooth density field with higher regularity than if the field is directly approximated on the finite element mesh. Therefore, discrete density data is approximated as a smooth density field using a Moving Weighted Least Squares method.
 Performance of the framework is demonstrated using numerical simulations for bone adaptation and subsequent crack propagation, including consideration of an equine 3rd metacarpal bone. The degree of bone adaption is shown to influence both the risk of fracture and the resulting crack path. 
 
-<<<<<<< HEAD
-=======
-	
-
-\textcolor{red} ABSTRACT TO BE REWRITTEN:
-
-Fractures of the metacarpal condyle are a common orthopaedic injury in thoroughbred racehorses.  .  
-A large proportion of injuries occur in the absence of a specific traumatic event and show typical characteristics of stress fractures. 
-This paper presents a finite element framework for simulating both bone remodelling of equine 3rd metacarpal bones and the associated propensity for fracture. 
-The proposed approach can improve the understanding of the correlation between high exercise intensity, bone adaptation and fracture risk, ultimately improving the welfare of the racehorse. 
-The remodelling analysis uses a well known phenomenological approach for the macroscopic behaviour of bone, based on open system thermodynamics.  
-The subsequent assessment of fracture propensity is conducted by evaluating the strain release energy rate within the context of configurational mechanics, enabling the influence of spatially varying bone density to be captured.
-Furthermore, new finite elements are developed to accurately resolve the the stress singularity in linear elastic fracture mechanics. This means that analyses can be undertaken efficiently and accurately, utilising relatively coarse finite element meshes and adopting multigrid algebraic solvers.
-Accurate representation of subject-specific geometry and material properties, obtained from CT scans, are utilised. A new approach to assign bone density from CT scans to the finite element models, using moving weighted least squares is presented. 
-The resulting framework provides a robust and energy consistent method for quantifying the influence of bone adaptation on the fracture propensity. Performance, verification, convergence and validation of the presented method are demonstrated by numerical examples.
-The promising results of this study offer a~novel framework to simulate changes in the bone structure in response to exercise and quantify the likelihood of fracture .
->>>>>>> 55a8d1d54689d8f5c6beea61beb9a3b5a0fcb378
 \end{abstract}
 
 	%Bone is able to adapt to changes in its mechanical environment. Studies of the Thoroughbred racehorse show modification of the geometric properties of the third metacarpal bone in response to training. These modifications are associated with reduced bone strains. Intense training before the adaptive response is completed and bone strain reduced increases the risk of fatigue damage. Bone adaptation in response to different loads is known to increase the resistance to fracture. The development of computational models to describe bone behavior has gained tremendous importance over the last decade. In particular, computational modelling for bone growth and resorption processes followed by fracture analysis can be a useful tool to determine crack propensity. Therefore,, this study aims to develop an efficient framework which will help to understand the relationship between exercise loading, bone density and ultimately fracture risk. This case study highlights the development of subject-specific FE analyses to simulate exercise loading on equine bone and subsequently quantify changes in the fracture propensity in open source code - MoFEM.
@@ -1198,7 +1181,7 @@ Significant densification occurred immediately after reaching the maximum level 
 After 100~$[{\text d}]$, biological equilibrium was achieved and no further changes in density took place. 
 The resulting maximum density is 2.8~$[{\text {g/cm}}^3]$ and the minimum is close to zero.
 
-\begin{figure}
+\begin{figure}[h]
 	% \captionsetup{font=normalsize,labelfont={bf,sf}}
 	\captionsetup[sub]{font=small}
 	\centering
@@ -1340,34 +1323,30 @@ The well known shear locking associated with first-order approximation is observ
 The minimum error achieved is $0.50\%$ for all the cases with total order of approximation  $p_{\rm l} + p_{\rm g} = 7$. 
 Therefore, it can be observed that using a low order of global approximation plus local p-refinement 
 can achieve the same level of accuracy as using high order approximation globally, but with fewer degrees of freedom and lower computational cost.
-\begin{figure}
-	\centering
-	\caption*{ }
-	% \vspace{-1.5cm}
+\begin{figure}[h]
+	\centering.
 	\input{Figures/tikz/legend1.tex}
-\end{figure}
-\begin{figure}
-	% \centering.
 	\begin{minipage}{.45\textwidth}
 		\hspace{-0.5cm}
 		\begin{tikzpicture}
-			\node at (-10,0)   {		\input{Figures/tikz/plate_conv_no_sing.tex} };
+			\node at (0,0)   {		\input{Figures/tikz/plate_conv_no_sing.tex} };
 			% \node at (-3.4,-0.9)   {		\def\svgwidth{1.8cm}	 	\input{Figures/tikz/plate_conv_no_sing_fig.pdf_tex} };
-			% \node at (1.,-2.75){$0.50\%$};
+			\node at (-1.2,-1.1){$0.50\%$};
 			\node at (0,0) {};
 			\end{tikzpicture}
-			\caption{Convergence plot for stress intensity factor $K_{\rm I}$ Error (\%) versus no. of DOF (log10) and deformed shape of the plate (bottom left).}
+			\caption{Convergence plot for stress intensity factor $K_{\rm I}$ Relative rror (\%) versus no. of DOF (log10) and deformed shape of the plate (bottom left).}
 			\label{fig:plate_conv_no_sing}
 	\end{minipage}%
-	\quad \quad
+	\quad \quad \quad
 	\begin{minipage}{.45\textwidth}
 		\vspace{-0.25cm}
 		\begin{tikzpicture}
 			\node at (0,0){	\input{Figures/tikz/plate_conv_singularity.tex} };
-			% \node at (-4.4,-2.5){$0.028\%$};
+			\node at (-1.2,-1.0){$0.028\%$};
 	\end{tikzpicture}
-	\caption{Convergence plot for stress intensity factor $K_{\rm I}$ Error (\%) versus no. of DOF (log10).}
+	\caption{Convergence plot for stress intensity factor $K_{\rm I}$ Relative error~(\%) versus no. of DOF (log10).}
 	\label{fig:plate_conv_singularity}
+	\end{minipage}
 \end{figure}
 Based on the results in Figure~\ref{fig:plate_conv_singularity}, it is evident that using singularity elements improves the convergence rate significantly and lowers the error by an order of magnitude, from 0.50\% down to 0.028\%. 
 However, it can also be seen from Figure~\ref{fig:plate_conv_singularity} that for each combination of p-refinement, the error increases with further refinement after it reaches the minimum value. 
@@ -1459,7 +1438,7 @@ However, this time, densities from a bone adaptation analysis (Section~\ref{sec:
 	%\includegraphics[width=0.8\linewidth]{Figures/frack_mesh_cutting.png}
 			\def\svgwidth{12cm}
 		\input{Figures/frack_mesh_cutting.pdf_tex}
-	\caption{The resulting density distribution from the bone adaptation analysis is approximated directly onto integration points of the mesh used for fracture analysis using MWLS method described in~\ref{sec:mwls}. The cutting circular plane used to create an initial crack is also shown.}
+	\caption{The resulting density distribution from the bone adaptation analysis is approximated directly onto integration points of the mesh used for fracture analysis using MWLS method described in~\citep{karol_lewandowski_moving_2019}. The cutting circular plane used to create an initial crack is also shown.}
 	\label{fig:frackmeshcutting}
 \end{figure}
 The resulting energy release rate at different points in time of bone adaptation are illustrated in Figure~\ref{fig:crackmc3release} for three different local $p$~-~refinements. It can be seen that the variation in energy release rate for increased orders of approximation at the crack front is very small. 
@@ -1508,16 +1487,29 @@ It can be seen that the crack has an initially planar shape and then curves towa
 
 
 As previously demonstrated (in Figure~\ref{fig:plate_conv_singularity}) modelling singularity can significantly improve the accuracy of the configurational forces at the crack front. In the next example we considered bone with heterogeneous density distribution mapped from CT scan data. 
-In the Figure~\ref{fig:crack_singular_vs_non} results from crack analysis with and without Quarter Point elements are depicted. It is evident that accurate stress state at the tip has a negligible impact on the full crack propagation analysis and the resulting load factor. 
+In the Figure~\ref{fig:crack_singular_vs_non} results from crack analysis with and without Quarter Point elements are depicted. It is evident that accurate stress state at the tip has a negligible impact on the full crack propagation analysis and the resulting load factor.  
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
+	\begin{minipage}{.45\textwidth}
+		\hspace{-0.5cm}
 	\begin{tikzpicture}
 		\node at(0.,0){  	\input{Figures/tikz/fracture/remod_heter_singular.tex} };
 	\end{tikzpicture}
 	\caption{Load factor versus crack area for with and without modelled singularity at the tip.}
 	\label{fig:crack_singular_vs_non}
+\end{minipage}%
+\quad \quad 
+\begin{minipage}{.45\textwidth}
+	\begin{tikzpicture}
+	\node at(0.,0){  	\input{Figures/tikz/fracture/homo_vs_het.tex} };
+	\node at (2,0.35) {	\includegraphics[width=3.5cm]{Figures/pngs/crack_surf_heter_compar.png}};
+	\end{tikzpicture}
+	\caption{Load factor versus crack area for heterogeneous versus homogeneous bone.}
+	\label{fig:crack_homo_vs_het}
+\end{minipage}%
 \end{figure}
+From the load-crack area curves in Figure~\ref{fig:crack_homo_vs_het} it can be observed that including density data from CT scans have a significant impact on the predicted load factor and crack path as well. 
 
 
 Finally, we investigated the h and p convergence. The results presented on the Figures \ref{fig:crack_ct_h_ref} and \ref{fig:crack_ct_p_ref} show good numerical convergence for consecutive refinements. It can be concluded that our formulation predicts crack path accurately with minimal effect from original mesh or order of approximation. 
@@ -1541,43 +1533,13 @@ Finally, we investigated the h and p convergence. The results presented on the F
 	\end{figure}
 
 
-% ..................................................................................................................................................................
 
 % OPTIONAL RESULTS - GRAPHICS, SHOULD WE INCLUDE THEM?
 
 %In the process of moving the crack front nodes, the mesh quality can potentially deteriorate leading to numerical errors. One of the solutions to overcome this difficulty is to refine the mesh surrounding the crack tip after certain (usually three) number of load steps. 
-\begin{figure}
-	\centering
-	\begin{tikzpicture}
-	\node at(0.,0){  	\input{Figures/tikz/fracture/homo_vs_het.tex} };
-	\node at (2,1) {	\includegraphics[width=5cm]{Figures/pngs/crack_surf_heter_compar.png}};
-	\end{tikzpicture}
-	\caption{Load factor versus crack area for heterogeneous versus homogeneous bone.}
-	\label{fig:crack_homo_vs_het}
-\end{figure}
 
 
-% \begin{figure}
-% 	\centering
-% 	\begin{tikzpicture}
-% 	 \node at(0.,0){ \input{Figures/tikz/fracture/real_fract_ct_h_ref.tex} };
-% 	\end{tikzpicture}
-% 	\caption{Load factor versus crack area for consecutive global $h$~-~refinements.}
-% 	\label{fig:crack_ct_h_ref}
-% \end{figure}
-
-
-% \begin{figure}
-% 	\centering
-% 	\begin{tikzpicture}
-% 		\node at(0,0){         \input{Figures/tikz/fracture/real_fract_ct_p_ref.tex} };
-% 	\end{tikzpicture}
-% 	\caption{Load factor versus crack area for consecutive $p$~-~refinements.}
-% 	\label{fig:crack_ct_p_ref}
-% \end{figure}
-
-
-..................................................................................................................................................................
+% ..................................................................................................................................................................
 
 % \begin{figure}[h!]
 % 	\begin{centering}
