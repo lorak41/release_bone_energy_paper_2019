@@ -16,7 +16,6 @@
 % \DeclareMathOperator*{\aoperator}{ \text{\huge${\mathsf{A}}$}}
 \pagenumbering{arabic}
 
-
 %Packages for Matlab2TikZ
 \usepackage{pgfplots}
 \pgfplotsset{compat=newest}
@@ -118,7 +117,7 @@ In particular, the Finite Element Method (FEM) has been used to improve understa
 
 A schematic of the modelling framework is presented in Figure~\ref{fig:framework}. This paper extends the authors' previous work on modelling fracture propagation \citep{kaczmarczyk2014three,kaczmarczyk2017energy} to incorporate the influence of spatially varying bone density. Furthermore, it combines this with bone adaptation \citep{kaczmarczyk2011efficient,lewandowski2017}. 
 
-Although this work is generic in nature and applicable to both human and animal bone, this paper focuses the numerical examples on equine bone, for which there are ...
+Although this work is generic in nature and applicable to both human and animal bone, this paper focuses the numerical examples on equine bone. 
 
 To the best of the authors' knowledge, to date there is only one report of equine bone adaptation in a FEM framework~\citep{Wang2016}. 
 In that work, a mechanostat micro-scale model of three-dimensional cortical bone remodelling, informed by \emph{in~vivo} equine data, was presented. 
@@ -143,7 +142,7 @@ All the above components are brought together into a single framework and its pe
  
  \section{Preliminaries}
  \label{preliminaries}
-Figure~\ref{fig:domains4} shows a section of bone with an initial crack in the reference domain $\mathscr{B}_{0}$. As a result of loading, the crack extends and the body deforms elastically. Working within the framework of configurational mechanics \citep{kienzler2014configurational,kaczmarczyk2014three}, it is convenient to decompose this behaviour into an extension of the crack in the material domain  $\mathscr{B}_t$ followed by elastic deformation  in the spatial domain $\Omega_t$. The former is described by the mapping from the reference  domain to the material domain ${\boldsymbol\Xi}$, whilst the latter is described by the mapping from the material to the spatial domain ${\boldsymbol\varphi}$ - Figure~\ref{fig:domains4}.
+Figure~\ref{fig:domains4} shows a section of bone with an initial crack in the reference domain $\mathscr{B}_{0}$. As a result of loading, the crack extends and the body deforms elastically. Working within the framework of configurational mechanics \citep{kaczmarczyk2014three,kienzler2014configurational}, it is convenient to decompose this behaviour into an extension of the crack in the material domain  $\mathscr{B}_t$ followed by elastic deformation  in the spatial domain $\Omega_t$. The former is described by the mapping from the reference  domain to the material domain ${\boldsymbol\Xi}$, whilst the latter is described by the mapping from the material to the spatial domain ${\boldsymbol\varphi}$ - Figure~\ref{fig:domains4}.
 
 \begin{figure}[th] 
 \setlength{\fboxsep}{0pt}%
@@ -404,7 +403,6 @@ The equivalent material momentum balance is expressed as:
 It is important to note that $\mathbf f^{\mathrm {inh}}=\mathbf{0}$ in the case of homogeneous materials, with uniform density distribution.
 
 After applying the divergence theorem to Eq.~(\ref{eq:crack_first_law}) and recognising the momentum balance laws, we follow~\citep{kaczmarczyk2017energy} to establish a local form of Eq.~(\ref{eq:crack_first_law}), which represents an expression for equilibrium of the crack front as
-
 %Following, the divergence theorem is applied to gradient terms. Considering the volume and boundary integrals, and grouping together terms that are work conjugate to the spatial and material velocities, the local conservation laws are obtained. 
 %Furthermore, the surface $\mathcal C$ (Figure~\ref{fig:frac_crack_con})
 %collapses to the crack front $\partial \Gamma $ and integrals over the crack
@@ -413,8 +411,6 @@ After applying the divergence theorem to Eq.~(\ref{eq:crack_first_law}) and reco
 %\lim_{\mathcal C \to 0} \int_{\mathcal C} (\cdot ) \mathrm d S = \lim_{\mathcal C \to 0} \int_{{\mathcal L}_{\rm t}} \int_{ {\mathcal L}_{\rm n}} (\cdot) \mathrm d S = \int_{\partial \Gamma} \lim_{|\mathcal{ L }|\to 0} \int_{{\mathcal L}_{\rm n} } (\cdot ) \mathrm d S
 %\end{equation}
 %with the integrals at crack front:
-
-
 %Following \citep{kaczmarczyk2017energy}, the an expression for equilibrium of the crack front is expressed as
 \begin{equation}\label{eq:crack_local_first_law}
 	{\dot {\boldsymbol {\rm W} } } \cdot 
@@ -719,7 +715,7 @@ A^\textrm{h}_{\Gamma} =
 \right\|
 \end{equation}
 where $\alpha, \beta \in \{0, \dots, N_{\rm{base}}\}$ are numbers of base functions,
-$i,j,k,l,p,r \in \{0,1,2\}$ are material indices and $\boldsymbol{\upepsilon}$ is the Levi-Civita tensor. 
+$i,j,k,l,p,r \in \{0,1,2\}$ are material indices and $\boldsymbol{\upepsilon}$~is the Levi-Civita tensor. 
 Moreover, the total number of degrees of freedom on element is $3(N_{\rm{base}}+1)$ and the units of $\tilde{\mathbf{A}}_\Gamma^\textrm{h}$ are $[{\rm m}^{-1}]$. $\mathbf{N}$ are the normals to the crack surface $\Gamma$.
 
 
@@ -927,7 +923,7 @@ Young's modulus $E$ and Poisson's ratio $\nu$ are $1000$ and $0.3$, respectively
 
 Hierarchical approximation functions allow for global and local p-refinment without changing the mesh.
 In general, all tetrahedrons of the mesh have a global order of approximation, $p_{\rm g}$, with some elements subjected to local refinement of order $p_{\rm{l}}$.
-All analyses presented were run using the same mesh with p-refinement varying from 1\textsuperscript{st}-order  to 6\textsuperscript{th}-order so that $p_{\rm l} + p_{\rm g} \leq 7$.
+All analyses presented were run using the same mesh with p-refinement varying from 1\textsuperscript{st}-order to 6\textsuperscript{th}-order so that $p_{\rm l} + p_{\rm g} \leq 7$.
 The Mode I stress intensity factor, $K_{\rm I}$, was calculated directly from the output configurational forces as: 
 \begin{equation}
 K_{\rm I} = \sqrt{GE}
@@ -938,7 +934,6 @@ The well known shear locking associated with first-order approximation is observ
 The minimum error achieved is $0.50\%$ for all the cases with total order of approximation  $p_{\rm l} + p_{\rm g} = 7$. 
 Therefore, it can be observed that using a low order of global approximation plus local p-refinement 
 can achieve the same level of accuracy as using high order approximation globally, but with fewer degrees of freedom and lower computational cost.
-
 \begin{figure}[h]
 	\centering
 	\input{Figures/tikz/legend1.tex}
@@ -1055,7 +1050,7 @@ However, this time, densities from a bone adaptation analysis (Section~\ref{sec:
 \begin{figure}[h]
 	\centering
 	%\includegraphics[width=0.8\linewidth]{Figures/frack_mesh_cutting.png}
-			\def\svgwidth{12cm}
+			\def\svgwidth{9cm}
 		\input{Figures/frack_mesh_cutting.pdf_tex}
 	\caption{Density distribution from bone adaptation analysis mapped onto fracture analysis mesh. Initial crack created using the cutting plane shown.}
 	\label{fig:frackmeshcutting}
@@ -1133,7 +1128,7 @@ From the load-crack area curves in Figure~\ref{fig:load_factor1}(b) it can be ob
 
 Finally, we investigated the h and p convergence. The results presented on the Figures \ref{fig:load_factor2}(a) and \ref{fig:load_factor2}(b) show good numerical convergence for consecutive refinements. It can be concluded that our formulation predicts crack path accurately with minimal effect from original mesh or order of approximation. 
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	\begin{minipage}{.5\textwidth}
 		\begin{tikzpicture}
@@ -1197,7 +1192,7 @@ It is also possible to enforce bounds on density levels by introducing and calib
 Numerical examples demonstrated the performance and accuracy of the proposed framework. 
 Numerical convergence was demonstrated for all examples and the use of singularity elements was shown to further improve the rate of convergence. However, it was also confirmed that improved accuracy of the stress at the tip had no impact on the crack propagation analysis and the resulting crack path.  The final example, demonstrated how mechanical loading and subsequent adaptation influence the resistance to bone fracture. Therefore, this framework will be a useful tool in understanding fractures in bone and ultimately preventing catastrophic fractures. 
 
-All analyses were undertaken using MoFEM~\citep{mofem2017} that has been developed to support scalability and ensure robustness. The entire framework can be executed on parallel computer systems. Supplementary data (CT scans, mesh files, command lines) necessary to reproduce the results of all numerical examples can be found in~\citep{karol_lewandowski_2019_dataset}. The bone adaptation and fracture mechanics are both submodules in the MoFEM library~\citep{mofem2017}, which can installed using the flexible package manager, Spack~\citep{spack2015}. 
+All analyses were undertaken using MoFEM~\citep{mofem2017} that has been developed to support scalability and ensure robustness. The entire framework can be executed on parallel computer systems. Supplementary data (CT scans, mesh files, command lines) necessary to reproduce the results of all numerical examples can be found in~\citep{karol_lewandowski_2019_dataset}. The bone adaptation and fracture mechanics are both submodules in the MoFEM library~\citep{mofem2017}, which can be installed using the flexible package manager, Spack~\citep{spack2015}. 
 
 
 
