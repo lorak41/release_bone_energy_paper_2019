@@ -50,14 +50,14 @@
   \makeatother%
   \begin{picture}(1,0.46254566)%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{Figures/CrackSurface.pdf}}%
-    \put(0.62696985,0.32815709){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{${\mathcal L_{\rm t}}(\xi)$}}}%
+    \put(0.62696985,0.33015709){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{${\mathcal L_{\rm t}}(\xi)$}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=2]{Figures/CrackSurface.pdf}}%
     \put(0.28916419,0.26178122){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\mathcal B_t$}}}%
-    \put(0.8527663,0.28193102){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{${\mathcal {\rm C}}$}}}%
+    \put(0.8727663,0.25193102){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{${\mathcal {\rm C}}$}}}%
     \put(0.82609744,0.17703349){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\partial \Gamma$}}}%
     \put(0.67912232,0.13258536){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\Gamma^{-}$}}}%
     \put(0.62934043,0.19125688){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\Gamma^{+}$}}}%
-    \put(0.18011814,0.22207426){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\partial \mathcal B_t$}}}%
+    \put(0.18011814,0.20207426){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\partial \mathcal B_t$}}}%
     \put(0.17419175,0.38208744){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{${\mathcal {\rm C}}$}}}%
     \put(0.0671457,0.27485742){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\Gamma^{-}$}}}%
     \put(0.03988418,0.33526878){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\Gamma^{+}$}}}%
