@@ -55,7 +55,7 @@
     \put(0.13701176,0.11657278){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{1.0}}}%
     \put(0.2395295,0.11657278){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{1.5}}}%
     \put(0.34204732,0.11657278){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{2.0}}}%
-    \put(0.24026178,0.18286356){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Density $[\mathrm{g/cm^3}]$}}}%
+    \put(0.23026178,0.17286356){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Density $[\mathrm{g/cm^3}]$}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=2]{Figures/bone_ct_mesh_cut.pdf}}%
     \put(0.74458309,0.35080747){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Cutting surface}}}%
   \end{picture}%

@@ -829,7 +829,7 @@ The resulting maximum density is 2.8~$[{\text {g/cm}}^3]$ and the minimum is clo
 	\begin{subfigure}[b]{0.475\textwidth}
 		\begin{tikzpicture}
 			\node at (0,0) {	\input{Figures/tikz/mc3_density.tex} };
-			\node at(0.5,1.0){ \includegraphics[width=2.5cm]{Figures/tikz/mc3_density_fig.png}};
+			\node at(0.5,0.9){ \includegraphics[width=4.5cm]{Figures/tikz/mc3_density_fig.png}};
 			% \node at(3,3){                    	\def\svgwidth{5cm} 	\input{Figures/scale_bars/scale_bar_density_rainbow.pdf_tex}  } ;
 			\end{tikzpicture}
 		\caption{ Case 1. }
@@ -940,6 +940,7 @@ can achieve the same level of accuracy as using high order approximation globall
 			\node at (-1.2,-1.1){$0.50\%$};
 			\node at (0,0) {};
 			\end{tikzpicture}
+		\begin{centering} (a) \end{centering}
 	\end{minipage}%
 	\\
 	% \quad \quad \quad
@@ -949,8 +950,9 @@ can achieve the same level of accuracy as using high order approximation globall
 			\node at (0,0){	\input{Figures/tikz/plate_conv_singularity.tex} };
 			\node at (-1.2,-1.0){$0.028\%$};
 	\end{tikzpicture}
+\begin{centering} (b) \end{centering}
 	\end{minipage}
-				\begin{centering} (a)\hspace{7cm}(b) \end{centering}
+				% \begin{centering} (a)\hspace{7cm}(b) \end{centering}
 	\caption{Convergence plot for stress intensity factor $K_{\rm I}$. Relative error (\%) versus no. of DOF (log10) for (a) using hierarchical approximation functions and (b) using singularity elements.}
 			\label{fig:plate_conv}
 \end{figure}
@@ -1023,8 +1025,7 @@ It can be seen that, for the same mesh, as the order of approximation increases,
 	\centering
 	\def\svgwidth{7cm}
 	\input{Figures/crack_front_force.pdf_tex}
-	\caption{Cra
-	ck surface and configurational forces at the crack front.}
+	\caption{Crack surface and configurational forces at the crack front.}
 	\label{fig:crackfrontforce}
 \end{figure}
 
@@ -1069,20 +1070,20 @@ It can be seen that the crack has an initially planar shape and then curves towa
 	\centering
 	\begin{tikzpicture}
 	\node at(0.,0){  	\input{Figures/tikz/fracture/remodel_frac_compar.tex} };
-	\node at (1.0,0.3) {	\includegraphics[width=4cm]{Figures/pngs/crack_surfaces_adapt.png}};
-	\node at (1.8,-0.75) {	Crack surfaces};
+	\node at (0.9,1) {	\includegraphics[width=4.5cm]{Figures/pngs/crack_surfaces_adapt.png}};
+	\node at (1.8,-0.3) {	Crack surfaces};
 	\end{tikzpicture}
 	\caption{Load factor versus crack area for different moments in time during bone adaptation analysis. Bone density distribution influenced both load factor and the resulting crack surface.}
 	\label{fig:crack_remodel_frac_compar}
 \end{figure}
 
 \begin{figure*}[h!]
+	\centering
 	\begin{centering}
 			\begin{tikzpicture}
-				\node at (0,0) {			\includegraphics[width=12cm]{Figures/pngs/crack_spatial_conf.png} };
+				\node at (0,0) {			\includegraphics[width=10cm]{Figures/pngs/crack_spatial_conf.png} };
 				% \node at(1,-2.5){a) \hspace{2.5cm} b)  \hspace{2.5cm}  c)  \hspace{2.5cm}  d)  \hspace{2.5cm}  };
 		\end{tikzpicture}
-		
 	\end{centering}		
 		\caption{Crack surface evolution in equine 3rd metacarpal.}
 		\label{fig:crack_snapshots}
@@ -1143,8 +1144,6 @@ Therefore, density data is approximated as a smooth field using a Moving Weighte
 In this paper, the bone density field was generated from both bone adaptation analyses and from subject-specific geometry and material properties obtained from CT scans. 
 It is important to note that the adoption of configurational mechanics avoids the need for post-processing, since configurational forces, and the fracture energy release rate, are expressed exclusively in terms of nodal quantities.
 
-
-
 The constitutive model for bone adaptation included a bell function to define the rate of adaptation. 
 This did not enforce rigid bounds on density levels, but merely slowed down the rate of convergence to biological equilibrium. 
 This approach will be useful when trying fit model parameters to the actual density data form CT scans in defined periods of time. 
@@ -1157,7 +1156,9 @@ All analyses were undertaken using MoFEM~\cite{mofem2017} that has been develope
 
 % \newpage
 \bibliographystyle{abbrv}
-% \bibliographystyle{spbasic}
-\bibliography{bibfile.bib}
+%\bibliographystyle{numeric}
+%\bibliographystyle{spbasic}
+
+\bibliography{bibfile}
 
 \end{document}
