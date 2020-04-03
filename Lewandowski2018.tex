@@ -233,10 +233,10 @@ the rate of the adaptation process with units~$[\rm{s/cm^2}]$.
 % 		\label{fig:bell_func}
 % \end{figure}
 
-In most cases, the values of parameters for bone adaptation models are chosen using trial and error approach based on the outcome of the predictions. Ideally, these values should be obtained by solving an inverse model based on the provided data of bone anatomy, loading, and density levels as proposed in \citep{zadpoor2013open}. In this work, the parameters are based on the previously validated investigation of human tibia \cite{pang2012computational} with the adjustment for the higher stiffness measured in equine bones \cite{Les1994}.
+In most cases, the values of parameters for bone adaptation models are chosen using trial and error approach based on the outcome of the predictions. Ideally, these values should be obtained by solving an inverse model based on the provided data of bone anatomy, loading, and density levels as proposed in \citep{zadpoor2013open}. However, it still remains an open challenge in computational biomechanics. In this work, the parameters are based on the previously validated investigation of human tibia \cite{pang2012computational} with the adjustment for the higher stiffness measured in equine bones \cite{Les1994}.
 
 \subsection{Elastic constitutive relationship}
-As an elastic cellular material, the free energy $\Psi (\mathbf F, \rho)$ for bone is typically weighted by the relative density \citep{gibson1982mechanics} as follows:
+As an elastic cellular material, the free energy $\Psi (\mathbf F, \rho)$ for bone is typically weighted by the relative density \citep{gibson1982mechanics,Kuhl2003a,pang2012computational,Waffenschmidt2012} as follows:
 \begin{equation}
 \Psi=\left[\frac{\rho}{\rho_{0}^{\ast}}\right]^{n}\Psi^{\mathrm{neo}},
 \label{eq:free_energ}
