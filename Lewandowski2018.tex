@@ -966,7 +966,7 @@ can achieve the same level of accuracy as using high order approximation globall
 Based on the results in Figure~\ref{fig:plate_conv}(b), it is evident that using singularity elements improves the convergence rate significantly and lowers the error by an order of magnitude, from 0.50\% down to 0.028\%. 
 However, it can also be seen that for each combination of p-refinement, the error increases with further refinement after it reaches the minimum value. 
 This suggests that the solution cannot be further improved by enhancing the order of approximation alone. 
-Reducing the the elements size and increasing the plate width (to better replicate the infinite plate used to determine the approximate solution), the error would probably decrease further. 
+Reducing the the elements size and increasing the plate width (to better replicate the infinite plate used to determine the approximate solution, the error would probably decrease further. 
 Nevertheless, the results are considered sufficiently accurate for the purpose at hand. 
 
 Overall, these results indicate that it is of great benefit to use the singularity elements, since they improve the accuracy of the solution with no extra cost.
@@ -1170,7 +1170,7 @@ It is important to note that the adoption of configurational mechanics avoids th
 Numerical examples demonstrated the performance and accuracy of the proposed framework. 
 Numerical convergence was demonstrated for all examples and the use of singularity elements was shown to further improve the rate of convergence. However, it was also confirmed that improved accuracy of the stress at the tip had no impact on the crack propagation analysis and the resulting crack path.  The final example, demonstrated how mechanical loading and subsequent adaptation influence the resistance to bone fracture. Therefore, this framework will be a useful tool in understanding fractures in bone and ultimately preventing catastrophic fractures. 
 
-All analyses were undertaken using MoFEM~\cite{mofemJoss2020} that has been developed to support scalability and ensure robustness. The entire framework can be executed on parallel computer systems. Supplementary data (CT scans, mesh files, command lines) necessary to reproduce the results of all numerical examples can be found in~\cite{karol_lewandowski_2019_dataset}. The bone adaptation and fracture mechanics are both submodules in the MoFEM library~\cite{mofemJoss2020}, which can be installed using the flexible package manager, Spack~\cite{spack2015}. 
+All analyses were undertaken using MoFEM library \cite{mofemJoss2020} that has been developed to support scalability and ensure robustness. The entire framework can be executed on parallel computer systems. Supplementary data (CT scans, mesh files, command lines) necessary to reproduce the results of all numerical examples can be found in~\cite{karol_lewandowski_2019_dataset}. The bone adaptation and fracture mechanics are both submodules in the MoFEM~\cite{mofemJoss2020}, which can be installed using the flexible package manager, Spack~\cite{spack2015}. 
 
 % \newpage
 \bibliographystyle{abbrv}
