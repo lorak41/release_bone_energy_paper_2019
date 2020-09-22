@@ -66,7 +66,18 @@
 % \address[vet]{Weipers Centre Equine Hospital, School of Veterinary Medicine, University of Glasgow, Glasgow, G61 1QH, UK,}
 
 \begin{abstract}
-Bone adapts in response to its mechanical environment and this significantly influences both fracture resistance and propagation of the crack path. This paper presents a new approach to the computational modelling of fracture in heterogeneous and adapting materials, with specific focus on bone. This work is undertaken within the framework of configurational mechanics, extended for the first time to capture the influence of heterogeneous density distribution. The configurational forces, and fracture energy release rate, are expressed exclusively in terms of nodal quantities, avoiding the need for post-processing and enabling a fully implicit formulation for modelling the evolving crack front. The density field is generated from a combination of bone adaptation (remodelling) finite element analysis and subject-specific geometry and material properties obtained from CT scans. It is shown that, in order to correctly evaluate the configurational forces at the crack front, it is necessary to have a spatially smooth density field with high regularity. Therefore, discrete density data is approximated as a smooth density field using a Moving Weighted Least Squares method. Performance of the framework is demonstrated using numerical simulations for bone adaptation and subsequent fracture propagation, including analysis of an equine 3\textsuperscript{rd} metacarpal bone. Critically, the degree of bone adaption and bone density distribution are shown to influence both fracture resistance and the resulting crack path.
+Materials with spatially heterogeneous properties are present in many critical engineering applications such as in nuclear industry, for piezoelectric and thermoelastic components as well as biological systems such as bones.
+This paper presents a new energy consistent formulation for brittle crack propagation in heterogeneous elastic solids within the framework of configurational mechanics.
+The spatially varying material properties considered are Young's modulus and fracture energy per unit area.
+Moreover, the configurational forces and fracture energy release rate, are expressed exclusively in terms of nodal quantities, avoiding the need for post-processing and enabling a fully implicit formulation for modelling the evolving crack front.
+The proposed formulation is verified and validated by comparing numerical results with analytical solution for a benchmark test and experimental results, respectively.
+Both crack path and load displacement curves presented very good agreement with experiments where crack path was independent of material heterogeneity for those cases.
+Finally, this framework was applied to investigate crack propagation within an equine 3rd metacarpal bone for different spatially varying material properties obtained from CT scans taken at different times.
+It was found that the differences in material properties between the scans result to changes of both fracture resistance and the resulting crack path.
+   
+
+
+%Bone adapts in response to its mechanical environment and this significantly influences both fracture resistance and propagation of the crack path. This paper presents a new approach to the computational modelling of fracture in heterogeneous and adapting materials, with specific focus on bone. This work is undertaken within the framework of configurational mechanics, extended for the first time to capture the influence of heterogeneous density distribution. The configurational forces, and fracture energy release rate, are expressed exclusively in terms of nodal quantities, avoiding the need for post-processing and enabling a fully implicit formulation for modelling the evolving crack front. The density field is generated from a combination of bone adaptation (remodelling) finite element analysis and subject-specific geometry and material properties obtained from CT scans. It is shown that, in order to correctly evaluate the configurational forces at the crack front, it is necessary to have a spatially smooth density field with high regularity. Therefore, discrete density data is approximated as a smooth density field using a Moving Weighted Least Squares method. Performance of the framework is demonstrated using numerical simulations for bone adaptation and subsequent fracture propagation, including analysis of an equine 3\textsuperscript{rd} metacarpal bone. Critically, the degree of bone adaption and bone density distribution are shown to influence both fracture resistance and the resulting crack path.
 
 \keywords{ Finite element analysis \and bone remodelling  \and fracture  \and moving weighted least squares  \and configurational mechanics  \and heterogeneity}
 \end{abstract}
@@ -75,33 +86,77 @@ Bone adapts in response to its mechanical environment and this significantly inf
 %\linenumbers
 
 \section{Introduction}
-This paper presents a framework for the computational modelling of bone adaptation (commonly referred to as bone remodelling) and bone fracture, and their inter-relationship.
+
+This paper presents a new thermodynamically consistent formulation for the computational modelling of brittle crack propagation in heterogeneous materials. Materials with spatially varying mechanical properties are present in many critical engineering applications. Hence, there is an increasing need for understanding the fracture behaviour within bodies with such properties.
+
+A critical example of heterogeneous material is irradiated graphite that is a key component for operation in Advanced Gas-cooled Reactors (AGR)
+Reaktor Bolshoy Moshchnosty Kanalny (RBMK) high-power channel reactors.
+Graphite bricks are present to form channels for coolant fluid flow and entry and withdrawal of cooling and shutdown components \cite{Tsang2006, Steer2007}.
+Through reactors' life-time, defects become present in the bricks due to high temperatures present, 
+fast neutron irradiation and radiolytic oxidation, that lead to mass loss and material properties alteration leading to full crack development that can potentially compromise the reactors serviceability \cite{BrockLehurst1970, Babout2005, McNally2017}.
+Recent experimental evidence for irradiated and oxidised graphite has indicated that the change of work of fracture is consistent with changes of irradiation and oxidisation levels and Young's modulus \cite{Tzelepi2018}.
+Therefore, proper consideration of material properties is essential for numerical models that aim
+to aid in the assessment and prediction of the life-span of AGR and RBMK reactors.
+
+Furthermore, Functionally Graded Materials (FGM) is a class of materials whose composition (and therefore material properties) is spatially varying in a smooth fashion \cite{KawasakiWatanabe1997}.
+Such materials are present both in nature (bamboo, bones and skin) and they can also be manufactured and used in critical engineering applications \cite{Jha2013, NaebeShirvan2016}.
+The advantage of artificial FGMs is that they can be designed to achieve desired mechanical behaviour, for instance, to avoid functionality deterioration of for connections between different materials \cite{Erdogan1995, FinotSuresh1996}. 
+
+In particular, bones naturally present FGM properties partially due to bone adaptation (commonly reference as bone remodelling).
 Bone adaptation is the on-going biological process of replacing old bone tissue with new bone, thus repairing fatigue damage~\cite{hughes2017role}.
-This ability to repair bone micro-damage caused by cyclic loading is essential for maintaining mechanical integrity. Consequently, there is a strong correlation between stress fractures and the adaptation process~\cite{hughes2017role}. Furthermore, bone repair can be overwhelmed by load-induced bone densification that also increases brittleness and reduces fracture resistance~\cite{loughridge2017qualitative}.
+This ability to repair bone micro-damage caused by cyclic loading is essential for maintaining mechanical integrity. 
+Therefore, different configurations of bone tissue quality and hence material properties can be observed at different times of bone life. 
+Consequently, there is a strong correlation between stress fractures and the adaptation process~\cite{hughes2017role}. 
+Furthermore, bone repair can be overwhelmed by load-induced bone densification that also increases brittleness and reduces fracture resistance~\cite{loughridge2017qualitative}.
 
-One of the first mathematical theories for bone adaptation~\cite{cowin1976bone}, based on open system thermodynamics, has its foundation in the theory of poroelasticity. 
-In this approach (unlike classical closed systems), energy, mass, momentum and entropy can be exchanged with the environment. It has been adopted and enhanced over the years
-~\cite{harrigan1996bone, jacobs1995numerical, weinans1992behavior}.
-This process of density evolution requires a~mechanical stimuli as a trigger for bone adaptation. This stimulus may take the form of stress~\cite{beaupre1990approach, carter1996mechanical, doblare2002anisotropic}, strains~\cite{cowin1976bone} or strain energy density~\cite{weinans1992behavior, kuhl2003theory,kaczmarczyk2011efficient, Connor2017bone}. 
+Numerical have been proposed models to investigate crack propensity and stress intensity factors in FGMs,
+for instance \cite{KimPaulino2002, Ayhan2009, ZhangBEM2011, ShiMan2014, ShojaeeDaneshmand2015} and found that....
+However, despite the breadth and importance of applications where irradiated graphite and FGMs are present, 
+numerical modelling of crack propagation within such bodies is still at early stage.
+The majority of well validated models available are limited to 2D analysis \cite{KimPaulino2004,Bayesteh2013, Ooi2015, Chafi2019}.
+For 3D case, a phase field model has also been proposed \cite{Hirshikesh2019}.
+However, such approach is strongly mesh-size and step-size dependent that could be increasingly computationally challenging for full scale engineering applications.
+Therefore, the need is still present for developing an energetically consistent model for crack propagation in heterogeneous materials.
+%ChengPeriDynamics2018
 
-
-The use of computational tools to describe bone behaviour has gained a tremendous importance over the last decade. 
-In particular, the Finite Element Method (FEM) has been used to improve understanding of the fracture behaviour of bones and the relationships between load conditions and bone architecture~\cite{podshivalov2014road, poelert2013patient}. However, there are only a few examples of the numerical analysis of both bone adaptation and fracture, e.g.~\cite{hambli2013integrated}. This paper presents a new computational framework based on FEM in order to predict bone density profiles 
-(bone adaptation) due to exercise, quantify fracture resistance and simulate fracture propagation. This will improve understanding of the interrelationship between these phenomena and enable subject-specific simulations to be undertaken.
-
-A schematic of the modelling framework is presented in Figure~\ref{fig:framework}. This paper extends the authors' previous work on modelling fracture propagation \cite{kaczmarczyk2014three,kaczmarczyk2017energy} to incorporate the influence of spatially varying bone density. Furthermore, it combines this with bone adaptation \cite{kaczmarczyk2011efficient,lewandowski2017}. 
-
-Although this work is generic in nature and applicable to both human and animal bone, this paper focuses the numerical examples on equine bone. 
-
-To the best of the authors' knowledge, to date there is only one report of equine bone adaptation in a FEM framework~\cite{Wang2016}. 
-In that work, a mechanostat micro-scale model of three-dimensional cortical bone remodelling, informed by \emph{in~vivo} equine data, was presented. 
-The model used the von Mises stress as a stimulus to control microstructural cortical bone remodelling.
-In contrast, the current paper presents a full macro-scale model of equine bone response to mechanical loading, testing a hypothesis that micro-damage and fracture can be modelled at the macroscale by using clinically available CT-scanning data.
-The motivation for this work is to generate subject-specific simulations to acquire meaningful insight into bone resistance
- for veterinary practitioners.
+This paper extends the authors' previous work on modelling fracture propagation \cite{kaczmarczyk2014three,kaczmarczyk2017energy} to incorporate the influence of spatially varying Young's modulus and fracture resistance.
+To the best of author's knowledge there has been no other work to resolve crack propagation within heterogeneous bodies within the ALE framework.
+This model offers computationally efficient 3D analysis tool for complicated materials by means of a monolithic approach with relatively small number of elements.
+The general applicability of this work is presented by validating the model with experimental results for FGMs and then applying it to a full-scale model of equine bones using clinically available CT-scanning data.
+The motivation of the present work is to develop a numerical model that can offer means to better understand crack propagation within irradiated graphite brick as well as bones at different times of their life.
 
 This article is structured as follows. After establishing the kinematic preliminaries in Section~\ref{preliminaries}, the mathematical framework for bone adaptation is briefly presented in Section~\ref{sec:bone_remodel}. Section~\ref{sec:fracture} extends the authors' previous work for evolving crack propagation in the context of configurational mechanics. The method is utilised to calculate fracture resistance and crack propagation under quasi-static loading during different stages of adaptation. Section \ref{sec:fem_modelling} describes the finite element method implementation and Section~\ref{sec:fem_modelling} describes a special element for capturing the singular stress field at the crack front.  
 All the above components are brought together into a single framework and its performance is demonstrated using a series of numerical examples in Section~\ref{sec:numerical_examples}.
+
+
+
+%This paper presents a framework for the computational modelling of bone adaptation (commonly referred to as bone remodelling) and bone fracture, and their inter-relationship.
+%Bone adaptation is the on-going biological process of replacing old bone tissue with new bone, thus repairing fatigue damage~\cite{hughes2017role}.
+%This ability to repair bone micro-damage caused by cyclic loading is essential for maintaining mechanical integrity. Consequently, there is a strong correlation between stress fractures and the adaptation process~\cite{hughes2017role}. Furthermore, bone repair can be overwhelmed by load-induced bone densification that also increases brittleness and reduces fracture resistance~\cite{loughridge2017qualitative}.
+
+%One of the first mathematical theories for bone adaptation~\cite{cowin1976bone}, based on open system thermodynamics, has its foundation in the theory of poroelasticity. 
+%In this approach (unlike classical closed systems), energy, mass, momentum and entropy can be exchanged with the environment. It has been adopted and enhanced over the years
+%~\cite{harrigan1996bone, jacobs1995numerical, weinans1992behavior}.
+%This process of density evolution requires a~mechanical stimuli as a trigger for bone adaptation. This stimulus may take the form of stress~\cite{beaupre1990approach, carter1996mechanical, doblare2002anisotropic}, strains~\cite{cowin1976bone} or strain energy density~\cite{weinans1992behavior, kuhl2003theory,kaczmarczyk2011efficient, Connor2017bone}. 
+
+
+%The use of computational tools to describe bone behaviour has gained a tremendous importance over the last decade. 
+%In particular, the Finite Element Method (FEM) has been used to improve understanding of the fracture behaviour of bones and the relationships between load conditions and bone architecture~\cite{podshivalov2014road, poelert2013patient}. However, there are only a few examples of the numerical analysis of both bone adaptation and fracture, e.g.~\cite{hambli2013integrated}. This paper presents a new computational framework based on FEM in order to predict bone density profiles 
+%(bone adaptation) due to exercise, quantify fracture resistance and simulate fracture propagation. This will improve understanding of the interrelationship between these phenomena and enable subject-specific simulations to be undertaken.
+
+%A schematic of the modelling framework is presented in Figure~\ref{fig:framework}. This paper extends the authors' previous work on modelling fracture propagation \cite{kaczmarczyk2014three,kaczmarczyk2017energy} to incorporate the influence of spatially varying bone density. Furthermore, it combines this with bone adaptation \cite{kaczmarczyk2011efficient,lewandowski2017}. 
+
+%Although this work is generic in nature and applicable to both human and animal bone, this paper focuses the numerical examples on equine bone. 
+
+%To the best of the authors' knowledge, to date there is only one report of equine bone adaptation in a FEM framework~\cite{Wang2016}. 
+%In that work, a mechanostat micro-scale model of three-dimensional cortical bone remodelling, informed by \emph{in~vivo} equine data, was presented. 
+%The model used the von Mises stress as a stimulus to control microstructural cortical bone remodelling.
+%In contrast, the current paper presents a full macro-scale model of equine bone response to mechanical loading, testing a hypothesis that micro-damage and fracture can be modelled at the macroscale by using clinically available CT-scanning data.
+%The motivation for this work is to generate subject-specific simulations to acquire meaningful insight into bone resistance
+% for veterinary practitioners.
+
+%This article is structured as follows. After establishing the kinematic preliminaries in Section~\ref{preliminaries}, the mathematical framework for bone adaptation is briefly presented in Section~\ref{sec:bone_remodel}. Section~\ref{sec:fracture} extends the authors' previous work for evolving crack propagation in the context of configurational mechanics. The method is utilised to calculate fracture resistance and crack propagation under quasi-static loading during different stages of adaptation. Section \ref{sec:fem_modelling} describes the finite element method implementation and Section~\ref{sec:fem_modelling} describes a special element for capturing the singular stress field at the crack front.  
+%All the above components are brought together into a single framework and its performance is demonstrated using a series of numerical examples in Section~\ref{sec:numerical_examples}.
 
 \begin{figure}[h]
 	   \begin{tikzpicture}
