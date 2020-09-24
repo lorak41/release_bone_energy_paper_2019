@@ -19,8 +19,8 @@ xmax=600000,
 xminorticks=true,
 xlabel style={font=\color{white!15!black}},
 xlabel={DOFs $\mathrm{log}_{10}$},
-ymin=0.4,
-ymax=1,
+ymin=0.2,
+ymax=0.5,
 ylabel style={font=\color{white!15!black}},
 ylabel={Fracture energy release rate [$\mathrm{kN} / \mathrm{m}$]},
 axis background/.style={fill=white},
@@ -28,44 +28,44 @@ legend style={at={(0.97,0.03)}, anchor=south east, legend cell align=left, align
 ]
 \addplot [color=blue, line width=2.0pt, mark size=2.0pt, mark=triangle, mark options={solid, blue}]
   table[row sep=crcr]{%
-4957	0.596\\
-6946	0.783\\
-12787	0.865\\
-35248	0.883\\
-46615	0.893\\
-103867	0.895\\
-122743	0.9\\
+4957	0.298\\
+6946	0.3915\\
+12787	0.4325\\
+35248	0.4415\\
+46615	0.4465\\
+103867	0.4475\\
+122743	0.45\\
 };
 \addlegendentry{$p_{\rm l}= 1 \, \mathrm{to} \, 3, \: p_{\rm g}=1 \, \mathrm{to} \, 3,$ coarse mesh}
 
 \addplot [color=green, line width=2.0pt, mark size=2.0pt, mark=o, mark options={solid, green}]
   table[row sep=crcr]{%
-7816	0.701\\
-10405	0.809\\
-17692	0.876\\
-55684	0.9\\
-69757	0.898\\
-166900	0.906\\
-190165	0.905\\
+7816	0.3505\\
+10405	0.4045\\
+17692	0.438\\
+55684	0.45\\
+69757	0.449\\
+166900	0.453\\
+190165	0.4525\\
 };
 \addlegendentry{$p_{\rm l}= 2 \, \mathrm{to} \, 3, \: p_{\rm g}=1 \, \mathrm{to} \, 3,$ base mesh}
 
 \addplot [color=mycolor1, line width=2.0pt, mark size=2.0pt, mark=+, mark options={solid, mycolor1}]
   table[row sep=crcr]{%
-15313	0.69\\
-18406	0.821\\
-27412	0.861\\
-108895	0.888\\
-126496	0.896\\
-336172	0.898\\
-365473	0.899\\
+15313	0.345\\
+18406	0.4105\\
+27412	0.4305\\
+108895	0.444\\
+126496	0.448\\
+336172	0.449\\
+365473	0.4495\\
 };
 \addlegendentry{$p_{\rm l}= 2 \, \mathrm{to} \, 3, \: p_{\rm g}=1 \, \mathrm{to} \, 3,$ fine mesh}
 
 \addplot [color=black, dashed, line width=2.0pt, forget plot]
   table[row sep=crcr]{%
-3000	0.9\\
-600000	0.9\\
+3000	0.45\\
+600000	0.45\\
 };
 \end{axis}
 
