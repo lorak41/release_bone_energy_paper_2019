@@ -72,7 +72,7 @@ The spatially varying material properties considered are Young's modulus and fra
 Moreover, the configurational forces and fracture energy release rate, are expressed exclusively in terms of nodal quantities, avoiding the need for post-processing and enabling a fully implicit formulation for modelling the evolving crack front.
 The proposed formulation is verified and validated by comparing numerical results with analytical solution for a benchmark test and experimental results, respectively.
 Both crack path and load displacement curves presented very good agreement with experiments where crack path was independent of material heterogeneity for those cases.
-Finally, this framework was applied to investigate performance of the model for non-idealised case of crack propagation within an equine 3rd metacarpal with varying material properties obtained from CT scan.
+Finally, this framework was applied to investigate performance of the model for non-idealised case of crack propagation within an equine 3rd metacarpal with varying material properties obtained from CT scanning.
 It was found that the model performs well for challenging body shape and material properties input.   
 % Bone adapts in response to its mechanical environment and this significantly influences both fracture resistance and propagation of the crack path. This paper presents a new approach to the computational modelling of fracture in heterogeneous and adapting materials, with specific focus on bone. This work is undertaken within the framework of configurational mechanics, extended for the first time to capture the influence of heterogeneous density distribution. The configurational forces, and fracture energy release rate, are expressed exclusively in terms of nodal quantities, avoiding the need for post-processing and enabling a fully implicit formulation for modelling the evolving crack front. The density field is generated from a combination of bone adaptation (remodelling) finite element analysis and subject-specific geometry and material properties obtained from CT scans. It is shown that, in order to correctly evaluate the configurational forces at the crack front, it is necessary to have a spatially smooth density field with high regularity. Therefore, discrete density data is approximated as a smooth density field using a Moving Weighted Least Squares method. Performance of the framework is demonstrated using numerical simulations for bone adaptation and subsequent fracture propagation, including analysis of an equine 3\textsuperscript{rd} metacarpal bone. Critically, the degree of bone adaption and bone density distribution are shown to influence both fracture resistance and the resulting crack path.
 
@@ -117,11 +117,21 @@ However, such approach is strongly mesh-size and step-size dependent that could 
 Therefore, the need is still present for developing an energetically consistent model for crack propagation in heterogeneous materials.
 %ChengPeriDynamics2018
 
-This paper extends the authors' previous work on modelling fracture propagation \cite{kaczmarczyk2014three,kaczmarczyk2017energy} to incorporate the influence of spatially varying Young's modulus and fracture resistance.
-To the best of author's knowledge there has been no other work to resolve crack propagation in heterogeneous bodies within the ALE framework.
+This paper builds on the authors' computational framework~\cite{kaczmarczyk2017energy} for brittle fracture within the context of configurational mechanics, extending it here to include the influence of heterogeneous materials.
+The concept of configurational forces was originally introduced by Eshelby~\cite{eshelby1951force}. 
+Unlike physical forces, configurational forces act on the material manifold and represent the tendency of imperfections like cracks, voids or material inhomogeneities to move relative to the surrounding material. 
+The past two decades have seen a growing interest in this approach for analysis of material imperfections~\cite{maugin2016configurational} and in particular for evaluating the forces driving crack advancement~\cite{kaczmarczyk2017energy,steinmann2001application, ozencc2016configurational}. 
+However, until recently this approach has never been used to effectively assess configurational forces in heterogeneous bodies with cracks. 
 This model offers computationally efficient 3D analysis tool for complex materials by means of a monolithic approach with relatively small number of elements.
 The general applicability of this work is presented by validating the model with experimental results for FGMs and applying it to a full-scale model of equine bones using clinically available CT-scanning data.
 The motivation of the present work is to develop a numerical model that can offer means to better understand crack propagation within irradiated graphite bricks as well as bones to acquire insight into bone resistance for veterinary practitioners.
+
+
+
+In the current study, additional configurational forces arising from inhomogeneities~\cite{kienzler2014configurational}
+associated with spatially varying bone density are introduced into the formulation. This allows for the accurate assessment of the likelihood of a crack to propagate and to simulate  the subsequent propagation of fractures in bone. 
+An additional goal is to investigate complex equine bone fracture, utilising data directly taken from CT scans.  
+% 
 
 This article is structured as follows. After establishing the kinematic preliminaries in Section~\ref{preliminaries}. Section~\ref{sec:fracture} extends the authors' previous work for evolving crack propagation in the context of configurational mechanics. The method is utilised to calculate fracture resistance and crack propagation under quasi-static loading. Section \ref{sec:fem_modelling} describes the finite element method implementation and describes a special element for capturing the singular stress field at the crack front.  
 All the above components are brought together into a single framework and its performance is demonstrated using a series of numerical examples in Section~\ref{sec:numerical_examples}.
@@ -137,7 +147,7 @@ Figure~\ref{fig:domains4} shows a section of a solid with an initial crack in th
 \begin{center}
 % \includegraphics[width=0.7\textwidth]{Figures/domains4.eps} // by Chris (keep as a reference)
 %\def\svgwidth{15cm} 	\input{Figures/Configurations.pdf_tex} 
-\includegraphics[width=7cm]{Figures/domains5.pdf} 
+\includegraphics[width=9cm]{Figures/domains5.pdf} 
 \end{center}
 \caption{Kinematics of crack propagation in elastically deforming bone.}
 \label{fig:domains4}
@@ -278,28 +288,11 @@ The time derivative of the physical displacement $\mathbf{u}$ and the deformatio
 % $n$ is a characteristic exponent and $\rho_{0}^{\ast}$ is the reference density. Such form of the Piola-Kirchhoff stress was adopted from porous materials like bones~\cite{Gibson2005}. However, it can be used for generic heterogeneous materials.
 % This coupled system of equations is solved using the finite element method - see Section \ref{sec:numerical_examples:bone_adap}.
 % 
-\section{Fracture resistance and fracture propagation}
-\label{sec:fracture}
-Various theories exist in the literature regarding failure criteria for bone tissue and it is now common practice for researchers to estimate fracture resistance within the framework of FEM. In particular, subject-specific FEM models can potentially quantify the risk of failure under a given loading scenario. However, this still remains an open challenge.
+% \section{Fracture resistance and fracture propagation}
+% \label{sec:fracture}
 
-In recent years, the main focus in bone mechanics was in the use of different strength criteria for the onset of failure. 
-The most commonly adopted ones were based on stress~\cite{keyak2005predicting} or strain measures~\cite{schileo2008subject} assuming bone failure is determined by a yield criterion~\cite{yosibash2010predicting}. 
-Experimental validation of such simplified models show that there is a significant spread in the predicted failure, with errors between 10\% and 20\%~\cite{van2014accurately}.
-This variation is explained perhaps by the focus on the local initiation of failure, rather than the complete failure mechanism. 
-The fracture process of bone is very important,  particularly in the case of fatigue fractures~\cite{gupta2008fracture}. 
-Limitations in previous studies (e.g. use of 2D geometry~\cite{bettamer2017using}, assuming homogeneous bone properties~\cite{gasser2007numerical}), 
-can also explain why an appropriate model for bone fracture has not been developed previously.
 
-This paper builds on the authors' computational framework~\cite{kaczmarczyk2017energy} for brittle fracture within the context of configurational mechanics, extending it here to include the influence of heterogeneous materials such as bone.
-The concept of configurational forces was originally introduced by Eshelby~\cite{eshelby1951force}. 
-Unlike physical forces, configurational forces act on the material manifold and represent the tendency of imperfections like cracks, voids or material inhomogeneities to move relative to the surrounding material. 
-The past two decades have seen a growing interest in this approach for analysis of material imperfections~\cite{maugin2016configurational} and in particular for evaluating the forces driving crack advancement~\cite{kaczmarczyk2017energy,steinmann2001application, ozencc2016configurational}. 
-However, until recently this approach has never been used to effectively assess configurational forces in heterogeneous bodies with cracks. 
 
-In the current study, additional configurational forces arising from inhomogeneities~\cite{kienzler2014configurational}
-associated with spatially varying bone density are introduced into the formulation. This allows for the accurate assessment of the likelihood of a crack to propagate and to simulate  the subsequent propagation of fractures in bone. 
-An additional goal is to investigate complex equine bone fracture, utilising data directly taken from CT scans.  
-% 
 \subsection{First and second laws of thermodynamics}
 
 The first law of thermodynamics can be expressed as 
@@ -365,7 +358,7 @@ where
 %\mathrm{and} \quad
 \end{aligned}
 \end{equation}
-where $\mathbf P$ is the the first Piola-Kirchhoff stress, in case of heterogeneous materials has the following form:
+where $\rho$ is the density and $\mathbf P$ is the the first Piola-Kirchhoff stress, in case of heterogeneous materials has the following form:
 \begin{equation}
 \mathbf P = \frac{\partial \Psi (\mathbf F, \rho)}{\partial \mathbf F} = \left[ \frac{\rho }{ \rho_{0}^{\ast} } \right]^{n}  \frac{ \partial \Psi (\mathbf F) }{ \partial \mathbf F}
 \label{eq:piola_heter}
@@ -943,7 +936,7 @@ The gradient depicted on the geometries illustrates linear variations of Young's
 \end{figure}
 % 
 
-The arc-length control is used to trace the nonlinear response with an adaptive crack area increment where the target is set to $\delta s$ = 5 $[\mathrm{mm}^2]$ per load step. Figure~\ref{fig:fgm_case1} shows comparison of load versus crack mouth opening displacement (CMOD) curves for a homogeneous beam and a functinally graded one for Case 1 (symmetric loading) obtained by the presented approach and reports from literature. Due to symmetry, the crack is in pure Mode-I, therefore the resulting crack is a plane surface. It is evident that the material gradation results in an increased critical load $P$. There is a good agreement between results from the literature and configurational mechanics approach. 
+The arc-length control is used to trace the nonlinear response with an adaptive crack area increment where the target is set to $\Delta s$ = 5 $[\mathrm{mm}^2]$ per load step. Figure~\ref{fig:fgm_case1} shows comparison of load versus crack mouth opening displacement (CMOD) curves for a homogeneous beam and a functionally graded one for Case 1 (symmetric loading) obtained by the presented approach and reports from literature. Due to symmetry, the crack is in pure Mode-I, therefore the resulting crack is a plane surface. It is evident that the material gradation results in an increased critical load $P$. There is a good agreement between results from the literature and configurational mechanics approach. 
 % 
 % 
 \begin{figure}
@@ -1013,7 +1006,18 @@ the lateral para-sagittal groove of the distal condyle of the leading forelimb~\
 Despite considerable research in the field, including applying diagnostic methods such as radiography 
 \cite{bogers2016quantitative, crijns2014intramodality, loughridge2017qualitative}, magnetic resonance imaging 
 \cite{tranquille2017MRI} and biomarkers~\cite{mcilwraith2005use}, it still remains a challenge to accurately predict the fracture risk and prevent this type of significant injury.
-% 
+
+Various theories exist in the literature regarding failure criteria for bone tissue and it is now common practice for researchers to estimate fracture resistance within the framework of FEM. In particular, subject-specific FEM models can potentially quantify the risk of failure under a given loading scenario. However, this still remains an open challenge.
+
+In recent years, the main focus in bone mechanics was in the use of different strength criteria for the onset of failure. 
+The most commonly adopted ones were based on stress~\cite{keyak2005predicting} or strain measures~\cite{schileo2008subject} assuming bone failure is determined by a yield criterion~\cite{yosibash2010predicting}. 
+Experimental validation of such simplified models show that there is a significant spread in the predicted failure, with errors between 10\% and 20\%~\cite{van2014accurately}.
+This variation is explained perhaps by the focus on the local initiation of failure, rather than the complete failure mechanism. 
+The fracture process of bone is very important,  particularly in the case of fatigue fractures~\cite{gupta2008fracture}. 
+Limitations in previous studies (e.g. use of 2D geometry~\cite{bettamer2017using}, assuming homogeneous bone properties~\cite{gasser2007numerical}), 
+can also explain why an appropriate model for bone fracture has not been developed previously.
+
+
 The material parameters are presented in Table~\ref{tab:parameters_mc3}. The elastic properties for both cortical and trabecular bone are approximated using power law derived from mechanical tests of MC3 bone~\cite{Les1994}. 
 Such empirical elasticity-density relationships are commonly adopted in finite element investigations of bones \citep{helgason2008mathematical}. Note that the stress is scaled depending on density as shown in Eq.\ref{eq:piola_heter}, which is equivalent to spatially varying Young's modulus (e.g. like in FGM). Due to lack of experimental data, the fracture energy $g_{\text c}$ is assumed constant for the entire domain. 
 % Each case considers a different function for the parameter $c$ that defines the rate of bone adaptation and is used to compute the mass source, $\mathcal{R}_0$, according to Eq.~(\ref{eq:mass_source}).
@@ -1027,7 +1031,7 @@ The two forces are often considered in the literature as an equivalent of joint 
 		\hline
 		 Param.             & Description                  & Value  \\ \hline
 		$E  $                 & Young's modulus              & $4700 \,\mathrm{ [MPa]}$ ~\cite{Les1994} \\
-		$\nu  $               & Poisson ratio                & $0.3 \,\mathrm{ [-]}$ \\
+		$\nu  $               & Poisson's ratio                & $0.3 \,\mathrm{ [-]}$ \\
 		$g_{\text c}$					&	Fracture energy							 &  $2.0\,[\mathrm{ N/mm}]$ \\
 		$n$                   & Porosity exponent            & $2.25 \,\mathrm{ [-]}$     ~\cite{Les1994}   \\ 
 		\hline
@@ -1120,7 +1124,7 @@ It can be seen that, for the same mesh, as the order of approximation increases,
 	\caption{Convergence plot of fracture energy release rate versus no of DOF (log10) for subsequent discretisations and $p$~-~refinements.}
 	\label{fig:max_g1_convergece}
 \end{figure}
-A crack will propagate when the energy release rate $G$ equals the material's resistance to crack extension, $g_{\rm c}$. Assuming $g_{\rm c} = 2.0\,[\mathrm{ kJ/m^2}]$~\cite{gasser2007numerical} it can be estimated that this particular metacarpal bone with this initial crack can sustain loading of approximately 4.4 times greater before a fracture starts to propagate. 
+A crack will propagate when the energy release rate $G$ equals the material's resistance to crack extension, $g_{\rm c}$. Assuming $g_{\rm c} = 2.0\,[\mathrm{ kN/m}]$~\cite{gasser2007numerical} it can be estimated that this particular metacarpal bone with this initial crack can sustain loading of approximately 4.4 times greater before a fracture starts to propagate. 
 % 
 % 
 % 
@@ -1251,7 +1255,7 @@ It is important to note that the adoption of configurational mechanics avoids th
 
 Numerical examples demonstrated the performance and accuracy of the proposed framework. 
 Numerical convergence was demonstrated and the use of singularity elements was shown to further improve the rate of convergence. 
-However, it was also confirmed that improved accuracy of the stress at the tip had no impact on the crack propagation analysis and the resulting crack path. Analyses of functionally graded materials showed the ability of the propsed method to simulate experimental crack paths. The final example, demonstrated how mechanical loading influence the resistances to bone fracture while using experimental material data. Therefore, this framework will be a useful tool in understanding fractures in bone and ultimately preventing catastrophic fractures. 
+However, it was also confirmed that improved accuracy of the stress at the tip had no impact on the crack propagation analysis and the resulting crack path. Analyses of functionally graded materials showed the ability of the proposed method to simulate experimental crack paths. The final example, demonstrated how mechanical loading influence the resistances to bone fracture while using experimental material data. Therefore, this framework will be a useful tool in understanding fractures in bone and ultimately preventing catastrophic fractures. 
 
 All analyses were undertaken using MoFEM library \cite{mofemJoss2020} that has been developed to support scalability and ensure robustness. The entire framework can be executed on parallel computer systems. Supplementary data (CT scans, mesh files, command lines) necessary to reproduce the results of all numerical examples can be found in~\cite{karol_lewandowski_2019_dataset}. The bone adaptation and fracture mechanics are both submodules in the MoFEM~\cite{mofemJoss2020}, which can be installed using the flexible package manager, Spack~\cite{spack2015}. 
 
