@@ -72,9 +72,8 @@ The spatially varying material properties considered are Young's modulus and fra
 Moreover, the configurational forces and fracture energy release rate, are expressed exclusively in terms of nodal quantities, avoiding the need for post-processing and enabling a fully implicit formulation for modelling the evolving crack front.
 The proposed formulation is verified and validated by comparing numerical results with analytical solution for a benchmark test and experimental results, respectively.
 Both crack path and load displacement curves presented very good agreement with experiments where crack path was independent of material heterogeneity for those cases.
-Finally, this framework was applied to investigate crack propagation within an equine 3rd metacarpal bone for different spatially varying material properties obtained from CT scans.
-It was found that the differences in material properties between the scans result to changes of both fracture resistance and the resulting crack path.
-   
+Finally, this framework was applied to investigate performance of the model for non-idealised case of crack propagation within an equine 3rd metacarpal with varying material properties obtained from CT scan.
+It was found that the model performs well for challenging body shape and material properties input.   
 % Bone adapts in response to its mechanical environment and this significantly influences both fracture resistance and propagation of the crack path. This paper presents a new approach to the computational modelling of fracture in heterogeneous and adapting materials, with specific focus on bone. This work is undertaken within the framework of configurational mechanics, extended for the first time to capture the influence of heterogeneous density distribution. The configurational forces, and fracture energy release rate, are expressed exclusively in terms of nodal quantities, avoiding the need for post-processing and enabling a fully implicit formulation for modelling the evolving crack front. The density field is generated from a combination of bone adaptation (remodelling) finite element analysis and subject-specific geometry and material properties obtained from CT scans. It is shown that, in order to correctly evaluate the configurational forces at the crack front, it is necessary to have a spatially smooth density field with high regularity. Therefore, discrete density data is approximated as a smooth density field using a Moving Weighted Least Squares method. Performance of the framework is demonstrated using numerical simulations for bone adaptation and subsequent fracture propagation, including analysis of an equine 3\textsuperscript{rd} metacarpal bone. Critically, the degree of bone adaption and bone density distribution are shown to influence both fracture resistance and the resulting crack path.
 
 \keywords{ Finite element analysis \and functionally graded materials  \and fracture  \and moving weighted least squares  \and configurational mechanics  \and heterogeneity}
@@ -108,8 +107,8 @@ Therefore, different configurations of bone tissue quality and hence material pr
 Consequently, there is a strong correlation between stress fractures and the adaptation process~\cite{hughes2017role}. 
 Furthermore, bone repair can be overwhelmed by load-induced bone densification that also increases brittleness and reduces fracture resistance~\cite{loughridge2017qualitative}.
 
-Numerical have been proposed models to investigate crack propensity and stress intensity factors in FGMs,
-for instance \cite{KimPaulino2002, Ayhan2009, ZhangBEM2011, ShiMan2014, ShojaeeDaneshmand2015} and found that.... IGNATIOS
+Numerical have been proposed models to investigate crack propensity and stress intensity factors in FGMs for various material distribution and multiple cracks,
+for instance \cite{KimPaulino2002, Ayhan2009, ZhangBEM2011, ShiMan2014, ShojaeeDaneshmand2015}.
 However, despite the breadth and importance of applications where irradiated graphite and FGMs are present, 
 numerical modelling of crack propagation within such bodies is still at early stage.
 The majority of well validated models available are limited to 2D analysis \cite{KimPaulino2004,Bayesteh2013, Ooi2015, Chafi2019}.
