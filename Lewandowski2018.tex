@@ -781,9 +781,9 @@ The influence of this approach is investigated in Section~\ref{sec:release_energ
 \section{Numerical examples}
 \label{sec:numerical_examples}
 Several numerical examples are presented to illustrate each aspect of the proposed formulation. 
-The accuracy of calculated energy release and the performance of the singularity element formulation is demonstrated in Subsection~\ref{sec:release_energy_rate} using a finite plate with through thickness crack subjected to uniaxial stress. The next 
-section, the framework is compared against experimental and numerical data from literature for functionally graded materials.
-The final example considers fracture propagation of equine bone using experimental density data. 
+The accuracy of calculated energy release and the performance of the singularity element formulation is demonstrated in Subsection~\ref{sec:release_energy_rate} using a finite plate with through thickness crack subjected to uniaxial stress. Moreover, in Section~\ref{sec:crack_propagation_FGM}, 
+the framework is compared against experimental and numerical data from literature for functionally graded materials.
+The final example considers fracture propagation of equine bone using experimental density data presented in Section~\ref{sec:mc3_release_eng}. 
 % 
 % 
 % 
@@ -826,18 +826,18 @@ where $\sigma $ is the applied stress.
 Young's modulus $E$ and Poisson's ratio $\nu$ are $1000$ and $0.3$, respectively. 
 
 
-Hierarchical approximation functions allow for global and local p-refinment without changing the mesh.
+Hierarchical approximation functions allow for global and local $p$~-~refinement without changing the mesh.
 In general, all tetrahedrons of the mesh have a global order of approximation, $p_{\rm g}$, with some elements subjected to local refinement of order $p_{\rm{l}}$.
-All analyses presented were run using the same mesh with p-refinement varying from 1\textsuperscript{st}-order to 6\textsuperscript{th}-order so that $p_{\rm l} + p_{\rm g} \leq 7$.
+All analyses presented were run using the same mesh with $p$~-~refinement varying from 1\textsuperscript{st}-order to 6\textsuperscript{th}-order so that $p_{\rm l} + p_{\rm g} \leq 7$.
 The Mode I stress intensity factor, $K_{\rm I}$, was calculated directly from the output configurational forces as: 
-\begin{equation}
+\begin{equation}\label{eq:SIF_g_c}
 K_{\rm I} = \sqrt{GE}
 \end{equation}
 where $G$ is the change of elastic strain energy per unit area of crack growth.
 From Figure~\ref{fig:plate_conv}(a), it is evident that, for the same coarse mesh and number of nodes, the solution can improve drastically when the order of approximation is increased. 
 The well known shear locking associated with first-order approximation is observed. 
 The minimum error achieved is $0.50\%$ for all the cases with total order of approximation  $p_{\rm l} + p_{\rm g} = 7$. 
-Therefore, it can be observed that using a low order of global approximation plus local p-refinement 
+Therefore, it can be observed that using a low order of global approximation plus local $p$~-~refinement 
 can achieve the same level of accuracy as using high order approximation globally, but with fewer degrees of freedom and lower computational cost.
 \begin{figure}[h]
 	\centering
@@ -868,7 +868,7 @@ can achieve the same level of accuracy as using high order approximation globall
 
 
 Based on the results in Figure~\ref{fig:plate_conv}(b), it is evident that using singularity elements improves the convergence rate significantly and lowers the error by an order of magnitude, from 0.50\% down to 0.028\%. 
-However, it can also be seen that for each combination of p-refinement, the error increases with further refinement after it reaches the minimum value. 
+However, it can also be seen that for each combination of $p$~-~refinement, the error increases with further refinement after it reaches the minimum value. 
 This suggests that the solution cannot be further improved by enhancing the order of approximation alone. 
 Reducing the the elements size and increasing the plate width (to better replicate the infinite plate used to determine the approximate solution, the error would probably decrease further. 
 Nevertheless, the results are considered sufficiently accurate for the purpose at hand. 
@@ -912,11 +912,11 @@ Therefore, it can be concluded that the proposed estimation of fracture energy r
 	\label{fig:covergencefdm}
 \end{figure}
 
-\subsection{Crack propagation in FGMs}
+\subsection{Crack propagation in FGMs} \label{sec:crack_propagation_FGM} 
 % 
-The correct implementation and performance of the presented computational method is demonstrated by means of two 3D numerical examples of crack propagation in functionally graded materials. In order to validate the numerical results, we adopt examples reported by \cite{kim2004simulation}, who compared their analyses against experimental data \cite{galvez1996crack, rousseau2000compositionally}. The examples consider crack propagation in graded beams under three-point bending. Figure~\ref{fig:fgm_mesh_load} shows specimen geometries, discretisation and boundary conditions for two cases: a) simple symmetric three-point bending and b) considering offset loading which results in a mixed mode crack evolution. Discretisation is undertaken using 3D quadratic tetrahedral elements with an additional local p-refinement around the crack tip, where 3rd order polynomials are used. 
+The correct implementation and performance of the presented computational method is demonstrated by means of two 3D numerical examples of crack propagation in functionally graded materials. In order to validate the numerical results, we adopt examples reported by \cite{kim2004simulation}, who compared their analyses against experimental data \cite{galvez1996crack, rousseau2000compositionally}. The examples consider crack propagation in graded beams under three-point bending. Figure~\ref{fig:fgm_mesh_load} shows specimen geometries, discretisation and boundary conditions for two cases: a) simple symmetric three-point bending and b) considering offset loading which results in a mixed mode crack evolution. Discretisation is undertaken using 3D quadratic tetrahedral elements with an additional local $p$~-~refinement around the crack tip, where 3rd order polynomials are used. 
 
-The gradient depicted on the geometries illustrates linear variations of Young's modulus $E$ and fracture toughness $K_\mathrm{Ic}$. The analyses consider two materials: homogeneous poly-methyl-methacrylate (PMMA) and linearly graded polymer. The numerical values of material properties for PMMA are as follows: $E$ = 2890 [MPa], $\nu$ = 0.4,  $K_\mathrm{Ic}$ = 1.09 [MPa $\sqrt{\mathrm m}$] and for the graded case values at top and bottom points are shown in Table~\ref{tab:parameters_fgm}. Note that due to current limitations of the implementation the Poisson's ratio is assumed to be constant (unlike in original work of \cite{kim2004simulation} where the used ratio was varying from 0.39 to 0.41). 
+The gradient depicted on the geometries illustrates linear variations of Young's modulus $E$ and fracture toughness $K_\mathrm{Ic}$. The analyses consider two materials: homogeneous poly-methyl-methacrylate (PMMA) and linearly graded polymer. The numerical values of material properties for PMMA are as follows: $E$ = 2890~${\rm {[MPa]}}$, $\nu$ = 0.4,  $K_\mathrm{Ic}$ = 1.09 [MPa $\sqrt{\mathrm m}$] and for the graded case values at top and bottom points are shown in Table~\ref{tab:parameters_fgm}. Note that due to current limitations of the implementation the Poisson's ratio is assumed to be constant (unlike in original work of \cite{kim2004simulation} where the used ratio was varying from 0.39 to 0.41). 
 % 
 \begin{table}[h]
 	\centering
@@ -927,7 +927,7 @@ The gradient depicted on the geometries illustrates linear variations of Young's
 		$60  $            \hspace{1.0cm}   &  4000  	 \hspace{1.0cm}	& 0.4      \hspace{1.0cm}     &  1.19 \\
 		\hline
 	\end{tabular} 
-	\caption{Material parameters used for FGM simulations.}
+	\caption{Material parameters used for FGM simulations. Relationship between $K_\mathrm{Ic}$ and $g_{\rm c}$ can be found in Eq. \ref{eq:SIF_g_c}}
 	\label{tab:parameters_fgm}
 \end{table}
 % 
@@ -937,7 +937,7 @@ The gradient depicted on the geometries illustrates linear variations of Young's
 	\centering
 	\begin{center}
 	\def\svgwidth{12cm} \input{Figures/fgm_geom.pdf_tex}
-	\caption{FGM example: A crack in a beam subjected to three-point bending. Geometry, boundary conditions and initial discretisation for Case 1: considering symmetric loading. a) Case 2: considering offset loading. b). Units in [N], [mm]. Note that in both cases the total force P is applied in the form of uniformly distributed pressure on a block with dimensions: 2.25x4.5x18 [mm]. The initial meshes consits of 1751 and 1794 quadratic tetrahedral elements.}
+	\caption{FGM example: A crack in a beam subjected to three-point bending. Geometry, boundary conditions and initial discretisation for Case 1: considering symmetric loading. a) Case 2: considering offset loading. b). Units in [N], [mm]. Note that in both cases the total force P is applied in the form of uniformly distributed pressure on a block with dimensions: 2.25x4.5x18 [mm]. The initial meshes consists of 1751 and 1794 quadratic tetrahedral elements.}
 	\label{fig:fgm_mesh_load}
 	\end{center}
 \end{figure}
@@ -971,7 +971,7 @@ Figure~\ref{fig:fgm_case2} presents a comparison of load versus CMOD curve for a
 	\label{fig:fgm_case2}
 \end{figure}
 
-It can be noticed in both 3D views in Figures~\ref{fig:fgm_case2} and \ref{fig:fgm_case2} the density of the final FE mesh is increased along the crack surfaces due to mesh cutting and adaptive refinement triggered every three load steps. Nevertheless, the resulting meshes are relatively coarse for 3D analysis with 3515 and 8079 elements for Case 1 and Case 2, respectively.
+It can be noticed in both 3D views in Figures~\ref{fig:fgm_case2} and \ref{fig:fgm_crack_path_comapre} the density of the final FE mesh is increased along the crack surfaces due to mesh cutting and adaptive refinement triggered every three load steps. Nevertheless, the resulting meshes are relatively coarse for 3D analysis with 3515 and 8079 elements for Case 1 and Case 2, respectively.
 % 
 % \begin{figure}
 % 	\centering
@@ -1015,7 +1015,7 @@ Despite considerable research in the field, including applying diagnostic method
 \cite{tranquille2017MRI} and biomarkers~\cite{mcilwraith2005use}, it still remains a challenge to accurately predict the fracture risk and prevent this type of significant injury.
 % 
 The material parameters are presented in Table~\ref{tab:parameters_mc3}. The elastic properties for both cortical and trabecular bone are approximated using power law derived from mechanical tests of MC3 bone~\cite{Les1994}. 
-Such empirical elasticity–density relationships are commonly adopted in finite element investigations of bones \citep{helgason2008mathematical}. Note that the stress is scaled depending on density as shown in Eq.\ref{eq:piola_heter}, which is equivalent to spatially varying Young's modulus (e.g. like in FGM). Due to lack of experimental data, the fracture energy $g_{\text c}$ is assumed constant for the entire domain. 
+Such empirical elasticity-density relationships are commonly adopted in finite element investigations of bones \citep{helgason2008mathematical}. Note that the stress is scaled depending on density as shown in Eq.\ref{eq:piola_heter}, which is equivalent to spatially varying Young's modulus (e.g. like in FGM). Due to lack of experimental data, the fracture energy $g_{\text c}$ is assumed constant for the entire domain. 
 % Each case considers a different function for the parameter $c$ that defines the rate of bone adaptation and is used to compute the mass source, $\mathcal{R}_0$, according to Eq.~(\ref{eq:mass_source}).
 % In Case~1, $c$ is constant. For Case~2 and Case~3 different bell functions (Eq.~(\ref{eq:bell_function})) are used. The parameters for each case are presented in Table~\ref{tab:three_cases}. 
  % is not sensitive to the initial density
@@ -1203,7 +1203,7 @@ As previously demonstrated (Figure~\ref{fig:plate_conv}(b)) modelling singularit
 From the load-crack area curves in Figure~\ref{fig:load_factor1}(b) it can be observed that including density data from CT scans have a significant impact on the predicted load factor and crack path as well. 
 % 
 % 
-Finally, we investigated the h and p convergence. The results presented on the Figures \ref{fig:load_factor2}(a) and \ref{fig:load_factor2}(b) show good numerical convergence for consecutive refinements. It can be concluded that our formulation predicts crack path accurately with minimal effect from original mesh or order of approximation. 
+Finally, we investigated the $h$ and $p$ convergence. The results presented on the Figures \ref{fig:load_factor2}(a) and \ref{fig:load_factor2}(b) show good numerical convergence for consecutive refinements. It can be concluded that our formulation predicts crack path accurately with minimal effect from original mesh or order of approximation. 
 % 
 \begin{figure*}[h]
 	\centering
