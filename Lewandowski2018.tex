@@ -907,20 +907,20 @@ Therefore, it can be concluded that the proposed estimation of fracture energy r
 
 \subsection{Crack propagation in FGMs} \label{sec:crack_propagation_FGM} 
 % 
-The correct implementation and performance of the presented computational method is demonstrated by means of two 3D numerical examples of crack propagation in functionally graded materials. In order to validate the numerical results, we adopt examples reported by \cite{kim2004simulation}, who compared their analyses against experimental data \cite{galvez1996crack, rousseau2000compositionally}. The examples consider crack propagation in graded beams under three-point bending. Figure~\ref{fig:fgm_mesh_load} shows specimen geometries, discretisation and boundary conditions for two cases: a) simple symmetric three-point bending and b) considering offset loading which results in a mixed mode crack evolution. Discretisation is undertaken using 3D quadratic tetrahedral elements with an additional local $p$~-~refinement around the crack tip, where 3rd order polynomials are used. 
+The correct implementation and performance of the presented computational method is demonstrated by means of two 3D numerical examples of crack propagation in functionally graded materials. In order to validate the numerical results, we adopt examples reported by \cite{kim2004simulation}, who compared their analyses against experimental data \cite{galvez1996crack, rousseau2000compositionally}. The examples consider crack propagation in graded beams under three-point bending. Figure~\ref{fig:fgm_mesh_load} shows specimen geometries, discretisation and boundary conditions for two cases: a) simple symmetric three-point bending and b) considering offset loading which results in a mixed mode crack evolution. Discretisation is undertaken using 3D quadratic tetrahedral elements with an additional local $p$~-~refinement (increased polynomial degree) around the crack tip, where 3rd order polynomials are used. 
 
-The gradient depicted on the geometries illustrates linear variations of Young's modulus $E$ and fracture toughness $K_\mathrm{Ic}$. The analyses consider two materials: homogeneous poly-methyl-methacrylate (PMMA) and linearly graded polymer. The numerical values of material properties for PMMA are as follows: $E$ = 2890~${\rm {[MPa]}}$, $\nu$ = 0.4,  $K_\mathrm{Ic}$ = 1.09 [MPa $\sqrt{\mathrm m}$] and for the graded case values at top and bottom points are shown in Table~\ref{tab:parameters_fgm}. Note that due to current limitations of the implementation the Poisson's ratio is assumed to be constant (unlike in original work of \cite{kim2004simulation} where the used ratio was varying from 0.39 to 0.41). 
+The analyses consider two materials: homogeneous poly-methyl-methacrylate (PMMA) and linearly graded polymer, where Young's modulus $E$ and fracture toughness $K_\mathrm{Ic}$ are linearly varying from top to bottom. The numerical values of material properties for PMMA are as follows: $E$ = 2890~${\rm {[MPa]}}$, $\nu$ = 0.4,  $K_\mathrm{Ic}$ = 1.09 [MPa $\sqrt{\mathrm m}$] and for the graded case values at top and bottom points are shown in Table~\ref{tab:parameters_fgm}. Note that due to current limitations of the implementation the Poisson's ratio is assumed to be constant (unlike in original work of \cite{kim2004simulation} where the used ratio was varying from 0.39 to 0.41). 
 % 
 \begin{table}[h]
 	\centering
 	\begin{tabular}{llll}
 		\hline
-		X2 [mm]            \hspace{1.0cm} 	&  $E$ [MPa] \hspace{1.0cm} & $\nu$    \hspace{1.0cm}     & $K_\mathrm{Ic}$ [MPa $\sqrt{\mathrm m}$]  \\ \hline
+		Y [mm]            \hspace{1.0cm} 	&  $E$ [MPa] \hspace{1.0cm} & $\nu$    \hspace{1.0cm}     & $K_\mathrm{Ic}$ [MPa $\sqrt{\mathrm m}$]  \\ \hline
 		$0  $              \hspace{1.0cm}   &  1780  	 \hspace{1.0cm}	& 0.4      \hspace{1.0cm}  		&  0.99\\
 		$60  $            \hspace{1.0cm}   &  4000  	 \hspace{1.0cm}	& 0.4      \hspace{1.0cm}     &  1.19 \\
 		\hline
 	\end{tabular} 
-	\caption{Material parameters used for FGM simulations. Relationship between $K_\mathrm{Ic}$ and $g_{\rm c}$ can be found in Eq. \ref{eq:SIF_g_c}}
+	\caption{Material parameters used for FGM simulations. Relationship between $K_\mathrm{Ic}$ and $g_{\rm c}$ can be found in Eq.~\ref{eq:SIF_g_c}.}
 	\label{tab:parameters_fgm}
 \end{table}
 % 
@@ -951,7 +951,7 @@ The arc-length control is used to trace the nonlinear response with an adaptive 
 \end{figure}
 % 
 % 
-Figure~\ref{fig:fgm_case2} presents a comparison of load versus CMOD curve for a homogeneous beam and a graded beam for Case 2 (mixed-mode) obtained by the present numerical simulation and results from \citep{kim2004simulation}. It can be noticed that the peak loads obtained by the current simulations are slighly lower than those obtained in the literature. However, a few load steps after the peak load, the curves are in very good agreement. This can be explained by the initial cutting surface misalignment. As shown in Figure~\ref{fig:fgm_mesh_load} the initial cutting surface is short and vertically aligned, in comparison to the resulting crack surfaces shown in \ref{fig:fgm_crack_path_comapre}, where the crack trajectory curves towards left hand side. In the first loading steps the crack reorientates towards a pure mode I situation, therefore the initial load required for crack propagation is different than in the literature.
+Figure~\ref{fig:fgm_case2} presents a comparison of load versus CMOD curve for a homogeneous beam and a graded beam for Case 2 (mixed-mode) obtained by the present numerical simulation and results from \citep{kim2004simulation}. It can be noticed that the peak loads obtained by the current simulations are slightly lower than those obtained in the literature. However, a few load steps after the peak load, the curves are in very good agreement. This can be explained by the initial cutting surface misalignment. As shown in Figure~\ref{fig:fgm_mesh_load} the initial cutting surface is short and vertically aligned, in comparison to the resulting crack surfaces shown in \ref{fig:fgm_crack_path_comapre}, where the crack trajectory curves towards left hand side. In the first loading steps the crack reorientates towards a pure mode I situation, therefore the initial load required for crack propagation is different than in the literature.
 % 
 \begin{figure}
 	\centering
