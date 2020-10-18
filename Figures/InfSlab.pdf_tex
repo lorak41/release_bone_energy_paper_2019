@@ -62,10 +62,10 @@
     \put(0.67317854,0.29806901){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.34637755\unitlength}\raggedright order $p_{\mathrm l}+p_{\mathrm g}$\end{minipage}}}%
     \put(0.50339824,0.53027819){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.12710673\unitlength}\centering $\sigma = 1$\end{minipage}}}%
     \put(0.50241695,0.03781703){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.12710673\unitlength}\centering $\sigma = 1$\end{minipage}}}%
-    \put(0.00013219,0.25766908){\color[rgb]{0,0,0}\rotatebox{-5.8023124}{\makebox(0,0)[lt]{\begin{minipage}{0.2563894\unitlength}\centering 2$a_{\rm{pl}}$ = 2\end{minipage}}}}%
-    \put(-0.00243088,0.1){\color[rgb]{0,0,0}\rotatebox{-9.923418}{\makebox(0,0)[lt]{\begin{minipage}{0.26012585\unitlength}\centering 2$b_{\rm{pl}}$ = 5\end{minipage}}}}%
-    \put(0.1877816,0.00916765){\color[rgb]{0,0,0}\rotatebox{51.239756}{\makebox(0,0)[lt]{\begin{minipage}{0.19365306\unitlength}\centering $t_{\rm{pl}}$ = 1\end{minipage}}}}%
-    \put(-0.00249779,0.11707764){\color[rgb]{0,0,0}\rotatebox{90}{\makebox(0,0)[lt]{\begin{minipage}{0.28018149\unitlength}\centering $h_{\rm{pl}} = 10$\end{minipage}}}}%
+    \put(0.00013219,0.24766908){\color[rgb]{0,0,0}\rotatebox{-5.8023124}{\makebox(0,0)[lt]{\begin{minipage}{0.2563894\unitlength}\centering 2$a$ = 2\end{minipage}}}}%
+    \put(-0.00243088,0.1){\color[rgb]{0,0,0}\rotatebox{-9.923418}{\makebox(0,0)[lt]{\begin{minipage}{0.26012585\unitlength}\centering 2$b$ = 5\end{minipage}}}}%
+    \put(0.1877816,0.00916765){\color[rgb]{0,0,0}\rotatebox{51.239756}{\makebox(0,0)[lt]{\begin{minipage}{0.19365306\unitlength}\centering $t$ = 1\end{minipage}}}}%
+    \put(-0.00249779,0.11707764){\color[rgb]{0,0,0}\rotatebox{90}{\makebox(0,0)[lt]{\begin{minipage}{0.28018149\unitlength}\centering $h = 10$\end{minipage}}}}%
     \put(0.0040462,0.01947952){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.11343934\unitlength}\centering a)\end{minipage}}}%
     \put(0.41582885,0.01947952){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.11343934\unitlength}\centering b)\end{minipage}}}%
   \end{picture}%

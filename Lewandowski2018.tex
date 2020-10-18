@@ -31,7 +31,7 @@
 
 \begin{document}
 
-\title{A novel approach for crack propagation in heterogeneous materials within configurational mechanics framework}
+\title{A computational framework for crack propagation in spatially heterogeneous materials}
 \subtitle{}
 \author{Karol Lewandowski \and
 	{\L}ukasz Kaczmarczyk \and
@@ -66,15 +66,19 @@
 % \address[vet]{Weipers Centre Equine Hospital, School of Veterinary Medicine, University of Glasgow, Glasgow, G61 1QH, UK,}
 
 \begin{abstract}
-Materials with spatially heterogeneous properties are present in many critical engineering applications such as in nuclear industry, for piezoelectric and thermoelastic components as well as biological systems such as bones.
-This paper presents a new energy consistent formulation for brittle crack propagation in heterogeneous elastic solids within the framework of configurational mechanics.
+This paper presents a mathematical formulation and numerical modelling framework for brittle crack propagation in heterogeneous elastic solids. Materials with spatially heterogeneous properties are present in both natural and engineered scenarios.
+We show that the methodology using configurational mechanics previously established for homogeneous materials 
+can be developed and applied for the more general case of heterogeneous materials, without the need for any further assumptions. 
 The spatially varying material properties considered are Young's modulus and fracture energy per unit area.
-Moreover, the configurational forces and fracture energy release rate, are expressed exclusively in terms of nodal quantities, avoiding the need for post-processing and enabling a fully implicit formulation for modelling the evolving crack front.
-The proposed formulation is verified and validated by comparing numerical results with analytical solution for a benchmark test and experimental results, respectively.
-Both crack path and load displacement curves presented very good agreement with experiments where crack path was independent of material heterogeneity for those cases.
-Finally, this framework was applied to investigate performance of the model for non-idealised case of crack propagation within an equine 3rd metacarpal with varying material properties obtained from CT scanning.
-It was found that the model performs well for challenging body shape and material properties input.   
-% Bone adapts in response to its mechanical environment and this significantly influences both fracture resistance and propagation of the crack path. This paper presents a new approach to the computational modelling of fracture in heterogeneous and adapting materials, with specific focus on bone. This work is undertaken within the framework of configurational mechanics, extended for the first time to capture the influence of heterogeneous density distribution. The configurational forces, and fracture energy release rate, are expressed exclusively in terms of nodal quantities, avoiding the need for post-processing and enabling a fully implicit formulation for modelling the evolving crack front. The density field is generated from a combination of bone adaptation (remodelling) finite element analysis and subject-specific geometry and material properties obtained from CT scans. It is shown that, in order to correctly evaluate the configurational forces at the crack front, it is necessary to have a spatially smooth density field with high regularity. Therefore, discrete density data is approximated as a smooth density field using a Moving Weighted Least Squares method. Performance of the framework is demonstrated using numerical simulations for bone adaptation and subsequent fracture propagation, including analysis of an equine 3\textsuperscript{rd} metacarpal bone. Critically, the degree of bone adaption and bone density distribution are shown to influence both fracture resistance and the resulting crack path.
+The proposed model is based on the assumption of maximal dissipation of energy and utilises the Griffith criterion; we 
+show for the first time that this is sufficient to predict crack propagation in brittle heterogeneous materials. 
+Furthermore, we show that the crack path trajectory orientates itself such that it is always subject to mode I. 
+The configurational forces and fracture energy release rate are both expressed exclusively in terms of nodal quantities, 
+avoiding the need for post-processing and enabling a fully implicit formulation for modelling the evolving crack front and creation of new crack surfaces.
+The proposed formulation is verified and validated by comparing numerical results with both analytical solutions and experimental results.
+Both the crack path and load-displacement response presented show very good agreement with experiments where the crack path was independent of material heterogeneity for those cases.
+Finally, the model is successfully used to consider the real and challenging scenario of fracture of an equine bone, with spatially varying material properties obtained from CT scanning. 
+
 
 \keywords{ Finite element analysis \and functionally graded materials  \and fracture  \and moving weighted least squares  \and configurational mechanics  \and heterogeneity}
 \end{abstract}
@@ -85,56 +89,58 @@ It was found that the model performs well for challenging body shape and materia
 \section{Introduction}
 % 
 % 
-This paper presents a new thermodynamically consistent formulation for the computational modelling of brittle crack propagation in heterogeneous materials. Materials with spatially varying mechanical properties are present in many critical engineering applications. Hence, there is an increasing need for understanding the fracture behaviour within bodies with such properties.
-% 
-A critical example of heterogeneous material is irradiated graphite that is a key component for operation in Advanced Gas-cooled Reactors (AGR)
-Reaktor Bolshoy Moshchnosty Kanalny (RBMK) high-power channel reactors.
-Graphite bricks are present to form channels for coolant fluid flow and entry and withdrawal of cooling and shutdown components \cite{Tsang2006, Steer2007}.
-Through reactors' life-time, defects become present in the bricks due to high temperatures present, 
-fast neutron irradiation and radiolytic oxidation, that lead to mass loss and material properties alteration leading to full crack development that can potentially compromise the reactors serviceability \cite{BrockLehurst1970, Babout2005, McNally2017}.
-Recent experimental evidence for irradiated and oxidised graphite has indicated that the change of work of fracture is consistent with changes of irradiation and oxidisation levels and Young's modulus \cite{Tzelepi2018}.
-Therefore, proper consideration of material properties is essential for numerical models that aim
-to aid in the assessment and prediction of the life-span of AGR and RBMK reactors.
+The predictive modelling of crack propagation continues to generate significant scientific interest and 
+represents an ongoing focus for computational mechanics research.  
+The unstable and highly nonlinear nature of crack propagation in three-dimensional solids
+means that the development of a robust and objective modelling capability, 
+that is able to capture the evolution of the crack front and creation of new crack surfaces, represents a considerable challenge.
 
-Furthermore, Functionally Graded Materials (FGM) is a class of materials whose composition (and therefore material properties) is spatially varying in a smooth fashion \cite{KawasakiWatanabe1997}.
-Such materials are present both in nature (bamboo, bones and skin) and they can also be manufactured and used in critical engineering applications \cite{Jha2013, NaebeShirvan2016}.
-The advantage of artificial FGMs is that they can be designed to achieve desired mechanical behaviour, for instance, to avoid functionality deterioration of for connections between different materials \cite{Erdogan1995, FinotSuresh1996}. 
+This paper extends the authors' previous work for brittle fracture in solids that comprise homogeneous materials~\cite{kaczmarczyk2017energy}, 
+to now consider spatially heterogenous materials. 
+Such materials are prevalent in both natural and engineered materials. 
+Functionally Graded Materials (FGM) is a class of materials whose composition (and therefore material properties) 
+vary spatially in a smooth fashion \cite{KawasakiWatanabe1997} and are used in many engineering 
+applications \cite{Jha2013, NaebeShirvan2016}.
+The advantage of FGMs is that they can be designed to achieve desired mechanical behaviour \cite{Erdogan1995, FinotSuresh1996}. 
+Nevertheless, it is necessary to model their behaviour and failure characteristics when used in critical engineering applications. 
+Numerical models have been proposed to investigate crack propensity and stress intensity factors in FGMs for various material distribution 
+and multiple cracks, for instance \cite{KimPaulino2002, Ayhan2009, ZhangBEM2011, ShiMan2014, ShojaeeDaneshmand2015}. 
+Despite the breadth and importance of applications where these materials are present, 
+numerical modelling of crack propagation is still at early stage.
+The majority of well validated models available are limited to 2D analysis \cite{KimPaulino2004,Bayesteh2013, Ooi2015, Chafi2019}.
+For the 3D case, a phase field model has also been proposed \cite{Hirshikesh2019}.
+However, such an approach is strongly mesh-size and step-size dependent, 
+which could present an unsurmountable computational challenge for full scale  applications.
 
-In particular, bones naturally present FGM properties partially due to bone adaptation (commonly reference as bone remodelling).
-Bone adaptation is the on-going biological process of replacing old bone tissue with new bone, thus repairing fatigue damage~\cite{hughes2017role}.
-This ability to repair bone micro-damage caused by cyclic loading is essential for maintaining mechanical integrity. 
-Therefore, different configurations of bone tissue quality and hence material properties can be observed at different locations and times of bone life. 
+Natural materials, such as bamboo, bone and skin exhibit spatially heterogenous materials that also evolve over time. 
+In particular, bone adapts to its mechanical environment (commonly referred to as bone remodelling); 
+this is an on-going biological process of replacing old bone tissue with new bone, thus repairing fatigue damage~\cite{hughes2017role}. 
+This ability to repair bone micro-damage is essential for maintaining mechanical integrity. 
+Therefore, variations in bone tissue quality and hence material properties can be observed at different locations and times of bone life. 
 Consequently, there is a strong correlation between stress fractures and the adaptation process~\cite{hughes2017role}. 
 Furthermore, bone repair can be overwhelmed by load-induced bone densification that also increases brittleness and reduces fracture resistance~\cite{loughridge2017qualitative}.
 
-Numerical have been proposed models to investigate crack propensity and stress intensity factors in FGMs for various material distribution and multiple cracks,
-for instance \cite{KimPaulino2002, Ayhan2009, ZhangBEM2011, ShiMan2014, ShojaeeDaneshmand2015}.
-However, despite the breadth and importance of applications where irradiated graphite and FGMs are present, 
-numerical modelling of crack propagation within such bodies is still at early stage.
-The majority of well validated models available are limited to 2D analysis \cite{KimPaulino2004,Bayesteh2013, Ooi2015, Chafi2019}.
-For 3D case, a phase field model has also been proposed \cite{Hirshikesh2019}.
-However, such approach is strongly mesh-size and step-size dependent that could be increasingly computationally challenging for full scale engineering applications.
-Therefore, the need is still present for developing an energetically consistent model for crack propagation in heterogeneous materials.
-%ChengPeriDynamics2018
-
-This paper builds on the authors' computational framework~\cite{kaczmarczyk2017energy} for brittle fracture within the context of configurational mechanics, extending it here to include the influence of heterogeneous materials.
+This paper addresses the need for an energetically consistent model for crack propagation in heterogeneous materials.
+The formulation is developed in the framework of configurational mechanics and solved numerically using the finite element method.
 The concept of configurational forces was originally introduced by Eshelby~\cite{eshelby1951force}. 
-Unlike physical forces, configurational forces act on the material manifold and represent the tendency of imperfections like cracks, voids or material inhomogeneities to move relative to the surrounding material. 
+Unlike physical forces, configurational forces act on the material manifold and represent the tendency of imperfections like cracks, 
+voids or material inhomogeneities to move relative to the surrounding material. 
 The past two decades have seen a growing interest in this approach for analysis of material imperfections~\cite{maugin2016configurational} and in particular for evaluating the forces driving crack advancement~\cite{kaczmarczyk2017energy,steinmann2001application, ozencc2016configurational}. 
-However, until recently this approach has never been used to effectively assess configurational forces in heterogeneous bodies with cracks. 
-This model offers computationally efficient 3D analysis tool for complex materials by means of a monolithic approach with relatively small number of elements.
-The general applicability of this work is presented by validating the model with experimental results for FGMs and applying it to a full-scale model of equine bones using clinically available CT-scanning data.
-The motivation of the present work is to develop a numerical model that can offer means to better understand crack propagation within irradiated graphite bricks as well as bones to acquire insight into bone resistance for veterinary practitioners.
+However, until recently this approach has never been used to effectively assess configurational forces for cracking in heterogeneous bodies. 
+
+The model presented in this paper is based on the assumption of maximal dissipation of energy and utilises the Griffith criterion. 
+We show for the first time that these assumptions are sufficient to predict crack propagation in brittle heterogeneous materials, 
+using configurational mechanics. 
+Additional configurational forces, arising from inhomogeneities~\cite{kienzler2014configurational}
+associated with spatially varying properties are introduced into the formulation. This allows for both the accurate assessment of the likelihood of a crack to propagate and to simulate the subsequent propagation of fractures. 
+The model offers a computationally efficient 3D analysis tool for complex materials by means of a monolithic approach 
+with relatively small number of finite elements. 
+
+This article is structured as follows. After establishing the kinematic preliminaries in Section~\ref{preliminaries}, Section~\ref{sec:fracture} extends the authors' previous work for evolving crack propagation within the framework of configurational mechanics. Section \ref{sec:fem_modelling} describes the finite element method implementation and briefly introduces a special element for capturing the singular stress field at the crack front.  
+All the above components are brought together into a single framework and its performance is demonstrated using a series of numerical examples in Section~\ref{sec:numerical_examples}, where the model is validated with experimental results for 
+FGMs, as well as applying it to a full-scale model of equine bones using clinically available CT-scanning data.
 
 
-
-In the current study, additional configurational forces arising from inhomogeneities~\cite{kienzler2014configurational}
-associated with spatially varying bone density are introduced into the formulation. This allows for the accurate assessment of the likelihood of a crack to propagate and to simulate  the subsequent propagation of fractures in bone. 
-An additional goal is to investigate complex equine bone fracture, utilising data directly taken from CT scans.  
-% 
-
-This article is structured as follows. After establishing the kinematic preliminaries in Section~\ref{preliminaries}. Section~\ref{sec:fracture} extends the authors' previous work for evolving crack propagation in the context of configurational mechanics. The method is utilised to calculate fracture resistance and crack propagation under quasi-static loading. Section \ref{sec:fem_modelling} describes the finite element method implementation and describes a special element for capturing the singular stress field at the crack front.  
-All the above components are brought together into a single framework and its performance is demonstrated using a series of numerical examples in Section~\ref{sec:numerical_examples}.
 % 
 % 
 \section{Preliminaries}
@@ -358,12 +364,12 @@ where
 %\mathrm{and} \quad
 \end{aligned}
 \end{equation}
-where $\rho$ is the density and $\mathbf P$ is the the first Piola-Kirchhoff stress, in case of heterogeneous materials has the following form:
+where $\rho$ is the density and $\mathbf P$ is the the first Piola-Kirchhoff stress. In the case of heterogeneous materials, the latter term is derived as:
 \begin{equation}
 \mathbf P = \frac{\partial \Psi (\mathbf F, \rho)}{\partial \mathbf F} = \left[ \frac{\rho }{ \rho_{0}^{\ast} } \right]^{n}  \frac{ \partial \Psi (\mathbf F) }{ \partial \mathbf F}
 \label{eq:piola_heter}
 \end{equation}
-$n$ is a characteristic exponent and $\rho_{0}^{\ast}$ is the reference density. Such form of the Piola-Kirchhoff stress was adopted from porous materials like bones~\cite{Gibson2005}. However, it can be used for generic heterogeneous materials.
+The parameter $n$ is a characteristic exponent and $\rho_{0}^{\ast}$ is the reference density. Although this form of the Piola-Kirchhoff stress was adopted from porous materials, such as bone~\cite{Gibson2005}, it can be used for generic heterogeneous materials.
 % 
 ${\bm {\Sigma}}$ is the Eshelby stress tensor and
 $\mathbf f^{\mathrm {inh}}$ is an additional fictitious force that arises from variations in the density field and drives the crack front from dense to less dense material. $\mathbf f^{\mathrm {inh}}$  is computed as follows:
@@ -469,22 +475,22 @@ such that non-negative dissipation at the crack front can be expressed as
 % Similarly, the use of
 % J-integrals requires integration over the closed surface without
 % inhomogeneities (including heterogeneous density distribution), except for the crack front itself and therefore not applicable in this case.
-Finally, it is worth to note that the current framework is formulated within 
+Finally, it is worth noting that the current framework is formulated within 
 the realm of large displacements and large strains, hence it 
 is generally valid under any assumption for strains and displacements. 
 
 \subsection{Density field}
 \label{sec:dens_mapping}
-The previous subsections have shown that  fracture modelling of heterogeneous materials is influenced by the density distribution in the material configuration (see Eq.~\ref{eq:piola_heter}). This density field can be generated from e.g.  a known function of spatial position in case of functionally graded materials, a bone adaptation analysis \cite{kuhl2003theory} or experimental data available from computed tomography (CT) scans. Previous examples in the literature of subject-specific modelling to assess the stresses and fracture resistance of heterogeneous bones can be found in~\cite{poelert2013patient,Helgason2008b,yosibash2010predicting}. Most algorithms that use CT voxel data have simply averaged~\cite{zannoni1999material} or integrated data onto finite elements, thereby supplying a constant density within their volume~\cite{taddei2007material, schileo2008subject}. In this paper, the density data associated with each 3D voxel from CT scan data is spatially approximated. 
+The previous subsections have shown that fracture modelling of heterogeneous materials is influenced by the density distribution in the material configuration (see Eq.~\ref{eq:piola_heter}). This density field can be derived in a number of ways: in the case of FGMs, from a known function of spatial position; from image data of the material, such as computed tomography (CT) scans; in the case of a material that experiences remodelling, such as bone, from a separate numerical analysis \cite{kuhl2003theory,kaczmarczyk2011efficient}. Previous examples in the literature of subject-specific modelling to assess the stresses and fracture resistance of heterogeneous bones can be found in~\cite{poelert2013patient,Helgason2008b,yosibash2010predicting}. Most algorithms that use CT voxel data have simply averaged~\cite{zannoni1999material} or integrated data onto finite elements, thereby supplying a constant density within each element volume~\cite{taddei2007material, schileo2008subject}. In this paper, the density data associated with each 3D voxel from CT scan data is spatially approximated. 
 
-In the numerical examples described later, the density in the reference configuration is prescribed as a function of spatial positions (FGM) and CT scan data for bone example. It will be shown in the next section that, in order to evaluate the configurational forces at the crack front, it is necessary to have a spatially smooth density field. Therefore, discrete density data will need to be approximated as a smooth density field, and this will be achieved by adopting the Moving Weighted Least Squares (MWLS) method. This mapping approach was chosen since it offers higher regularity (i.e. higher derivatives exist) than when the field is
+In the numerical examples described later, the density in the reference configuration is prescribed as a function of spatial positions (FGM) and CT scan data for the bone example. It will be shown in the next section that, in order to evaluate the configurational forces at the crack front, it is necessary to have a spatially smooth density field. Therefore, discrete density data will need to be approximated as a smooth density field, and this will be achieved by adopting the Moving Weighted Least Squares (MWLS) method. This mapping approach was chosen since it offers higher regularity (i.e. higher derivatives exist) than when the field is
 directly approximated on the finite element mesh. Full details are given in \cite{karol_lewandowski_moving_2019}.  %LINK TO ZENODO
 % 
 \section{Finite element modelling} \label{sec:fem_modelling}
 % 
 % This section considers the sequential analysis of bone adaptation and fracture propagation, although it is recognised that the density field could be obtained directly from subject-specific data, in which case it may not be necessary to undertake the bone adaptation analysis. A sequential approach is justified since the process of bone adaptation takes place at a much longer time scales than fracture.
 
-Three-dimensional domains are discretised with tetrahedral finite elements. 
+In this work, three-dimensional domains are discretised with tetrahedral finite elements. 
 Fields are approximated in the current material and current spatial spaces with 
 hierarchical basis functions of arbitrary polynomial order, following the work of Ainsworth and Coyle~\cite{Ainsworth2003}.  
 \begin{eqnarray}
@@ -652,13 +658,13 @@ changing mesh).
 % %
 \subsection{Fracture propagation} \label{sec:fem_fracture_prop}
 % 
-The approximated Piola stress tensor for heterogeneous materials is expressed as follows:
+The approximated Piola-Kirchhoff stress tensor for heterogeneous materials is expressed as follows:
 \begin{equation}
 	\mathbf{P}^{\textrm{h},\textrm{MWLS}} = 
 		\mathbf{P}(
 		\mathbf{F}^\textrm{h}, \rho^{h,\textrm{MWLS}})
 \end{equation}
-where $\rho^{h,\textrm{MWLS}}$ is calculated density using MWLS approximation described earlier.
+where $\rho^{h,\textrm{MWLS}}$ is the calculated density using MWLS approximation described earlier.
 The residual force vector in the discretised spatial domain is expressed in the classical way as:
 \begin{equation}
 \begin{aligned}
@@ -733,11 +739,11 @@ Moreover, the total number of degrees of freedom on element is $3(N_{\rm{base}}+
 \subsection{Singularity element}
 \label{sec:singularity}
 For the purposes of determining parameters such as stress intensity factors, it can be useful to reproduce the singular stress field at the crack front. However, conventional finite elements that adopt polynomial approximation functions are unable to do this. 
-In this paper a new type of finite element with hierarchical approximation functions that overcome this problem is utilised. This is inspired by the so-called quarter-point elements, originally developed in the 1970s, whereby the mid-node of all edges connected to the crack tip node were shifted to the quarter-point~\cite{barsoum1976use,henshell1975crack}. 
+In this paper, a new type of finite element with hierarchical approximation functions that overcome this problem is utilised. This is inspired by the so-called quarter-point elements, originally developed in the 1970s, whereby the mid-node of all edges connected to the crack front node were shifted to the quarter-point~\cite{barsoum1976use,henshell1975crack}. 
 % 
-The result of such a shift is a nonlinear mapping between natural (isoparametric) and local coordinates $\xi \rightarrow \mathbf x$ which produces the square root singularity. Stress and strain fields are dependent on the radial function of the crack tip, reaching infinity as $ r \rightarrow 0$. 
+The result of such a shift is a nonlinear mapping between natural (isoparametric) and local coordinates $\xi \rightarrow \mathbf x$ which produces the square root singularity. Stress and strain fields are dependent on the radial function of the crack front, reaching infinity as $ r \rightarrow 0$. 
 % 
-In this work, all bodies are discretised using 3D tetrahedral elements. A detailed derivation of the Jacobian for three-dimensional quarter-point elements can be found in, for example in~\citep{nejati2015use}. 
+A detailed derivation of the Jacobian for three-dimensional quarter-point elements can be found in, for example in~\citep{nejati2015use}. 
 The influence of this approach is investigated in Section~\ref{sec:release_energy_rate}.
 % However, for simplicity, we present the main attributes in this paper in 1D.
 
@@ -774,7 +780,7 @@ The influence of this approach is investigated in Section~\ref{sec:release_energ
 \section{Numerical examples}
 \label{sec:numerical_examples}
 Several numerical examples are presented to illustrate each aspect of the proposed formulation. 
-The accuracy of calculated energy release and the performance of the singularity element formulation is demonstrated in Subsection~\ref{sec:release_energy_rate} using a finite plate with through thickness crack subjected to uniaxial stress. Moreover, in Section~\ref{sec:crack_propagation_FGM}, 
+The accuracy of the calculated energy release and the performance of the singularity element formulation is demonstrated in Subsection~\ref{sec:release_energy_rate} using a finite plate with through thickness crack subjected to uniaxial stress. Moreover, in Section~\ref{sec:crack_propagation_FGM}, 
 the framework is compared against experimental and numerical data from literature for functionally graded materials.
 The final example considers fracture propagation of equine bone using experimental density data presented in Section~\ref{sec:mc3_release_eng}. 
 % 
@@ -791,29 +797,29 @@ The final example considers fracture propagation of equine bone using experiment
 \subsection{Stress intensity calculations}
 \label{sec:release_energy_rate}
 To examine the calculation of configurational forces at the crack front in bodies with both homogeneous and heterogeneous density distributions, five numerical examples are presented.
-First, a simple quasi-two-dimensional plate with homogeneous material distribution is considered.  The convergence study utilises an approximate solution from literature as a reference.
+First, a simple quasi-two-dimensional plate with homogeneous material distribution is considered.  The convergence study utilises an approximate solution from the literature as a reference.
 Second, the proposed singularity elements are included for the same plate problem and their influence on the rate of convergence is presented. 
 Third, the same problem is considered again but with a heterogeneous material distribution.
-The final two examples demonstrate the calculation of configurational forces for a more representative bone.
+The final two examples demonstrate the calculation of configurational forces for a more representative problem of an equine bone.
  
 \subsubsection{Finite plate with a horizontal crack}\label{sec:plate_section}
-A finite plate with height, $h_{\rm {pl}} = 10$, thickness $t_{\rm {pl}}=1$ and half width $b_{\rm{pl}} = 2.5$ and a horizontal through-thickness crack with half width $a_{\rm {pl}} = 1$, as presented in Figure~\ref{fig:plate_load_mesh}(a), is considered. All input parameters presented are dimensionless. 
+A finite plate with height, $h = 10$, thickness $t=1$ and half width $b = 2.5$ and a horizontal through-thickness crack with half width $a = 1$, as presented in Figure~\ref{fig:plate_load_mesh}(a), is considered. All input parameters are dimensionless. 
 The  plate is spatially discretised using 1384 tetrahedral elements and subjected to uniaxial stress in the longitudinal direction, as indicated in Figure~\ref{fig:plate_load_mesh}(b). 
-Displacements are constrained on three vertices of the plate to prevent rigid body motion. 
+Displacements are constrained on three vertices to prevent rigid body motion. 
 
 \begin{figure}[h!]
 \begin{center}
 \begin{tabular}{c}
 {\def\svgwidth{8cm} \input{Figures/InfSlab.pdf_tex}}\\
 \end{tabular}
-\caption{Finite plate with a horizontal crack. a) Plate geometry with through thickness crack. b) Finite element mesh - grey elements have approximation order $p_{\rm g}$ and yellow elements have vertices at crack tip and have approximation order $p_{\rm l}+p_{\rm g}$. }
+\caption{Finite plate with a horizontal crack. a) Plate geometry with through thickness crack. b) Finite element mesh: grey elements have approximation order $p_{\rm g}$; yellow elements have vertices at crack front and have approximation order $p_{\rm l}+p_{\rm g}$. }
 \label{fig:plate_load_mesh}
 \end{center}
 \end{figure}
 
-The purpose of this analysis is to calculate the Mode I stress intensity factor $ K_{\rm I} $ directly from the configurational and compare with the solution~\cite{rooke1976compendium} for an infinite plate:
+The purpose of this analysis is to calculate the Mode I stress intensity factor $ K_{\rm I} $ directly from the configurational forces and compare with the solution~\cite{rooke1976compendium} for an infinite plate:
 \begin{equation}\label{eq:frac_analytical}
-K_{\rm I}=\sigma \sqrt{\pi a_{\rm {pl}}} \left[  \frac{1 - \frac{a_{\rm {pl}}}{2b_{\rm {pl}}} + 0.326 (\frac{a_{\rm {pl}}}{b_{\rm {pl}}})^2 }{\sqrt{1-\frac{a_{\rm {pl}}}{b_{\rm {pl}}}}}  \right]
+K_{\rm I}=\sigma \sqrt{\pi a} \left[  \frac{1 - \frac{a}{2b} + 0.326 (\frac{a}{b})^2 }{\sqrt{1-\frac{a}{b}}}  \right]
 \end{equation}
 where $\sigma $ is the applied stress. 
 Young's modulus $E$ and Poisson's ratio $\nu$ are $1000$ and $0.3$, respectively. 
@@ -843,7 +849,7 @@ can achieve the same level of accuracy as using high order approximation globall
 			\node at (-1.2,-1.1){$0.50\%$};
 			\node at (0,0) {};
 			\end{tikzpicture}
-		\begin{centering} (a) \end{centering}
+		\begin{centering} a) \end{centering}
 	\end{minipage}%
 	% \quad \quad \quad
 	\begin{minipage}{.45\textwidth}
@@ -852,15 +858,15 @@ can achieve the same level of accuracy as using high order approximation globall
 			\node at (0,0){	\input{Figures/tikz/plate_conv_singularity.tex} };
 			\node at (-1.2,-1.0){$0.028\%$};
 	\end{tikzpicture}
-\begin{centering} (b) \end{centering}
+\begin{centering} b) \end{centering}
 	\end{minipage}
 				% \begin{centering} (a)\hspace{7cm}(b) \end{centering}
-	\caption{Convergence plot for stress intensity factor $K_{\rm I}$. Relative error (\%) versus no. of DOF (log10) for (a) using hierarchical approximation functions and (b) using singularity elements.}
+	\caption{Convergence plot for stress intensity factor $K_{\rm I}$. Relative error (\%) versus no. of DOF (log10) for a) using hierarchical approximation functions and b) using singularity elements.}
 			\label{fig:plate_conv}
 \end{figure}
 
 
-Based on the results in Figure~\ref{fig:plate_conv}(b), it is evident that using singularity elements improves the convergence rate significantly and lowers the error by an order of magnitude, from 0.50\% down to 0.028\%. 
+Based on the results in Figure~\ref{fig:plate_conv}b), it is evident that using singularity elements improves the convergence rate significantly and lowers the error by an order of magnitude, from 0.50\% down to 0.028\%. 
 However, it can also be seen that for each combination of $p$~-~refinement, the error increases with further refinement after it reaches the minimum value. 
 This suggests that the solution cannot be further improved by enhancing the order of approximation alone. 
 Reducing the the elements size and increasing the plate width (to better replicate the infinite plate used to determine the approximate solution, the error would probably decrease further. 
@@ -872,24 +878,23 @@ Furthermore, the difference in execution time for the analysis with and without 
 \subsubsection{Heterogeneous material}
 
 So far the numerical examples have assumed homogenous material properties. Here we consider the effect of a heterogeneous density distribution. 
-Considering the same problem of the finite plate with horizontal crack, a density field $\mathbf{\rho}(x,y,z) = 0.125y + 1$ is directly assigned to the integration (Gauss) points of each tetrahedral element.
+Considering the same problem of the finite plate with horizontal crack, a density field $\mathbf{\rho}(x,y,z) = 0.125y + 1$ is directly assigned to the integration (Gauss) points of each tetrahedral element. Exponent $n$ and reference density $\rho_{0}^{\ast}$ (see Eq. \ref{eq:piola_heter}) are both equal to 1.
 As expected, configurational forces are induced at the crack tip under load and, as explained in Section \ref{sec:fem_fracture_prop}, these forces are influenced by the non-uniform density distribution. 
-
-However, the stress intensity factors or J-integral in the case of heterogeneous materials are difficult to calculate or obtain experimentally \citep{fischer_problems_2014}. Due to the inhomogeneities the J-integral becomes path dependent and require special correction terms to be computed \citep{eischen_fracture_1987, chang_extension_2002}. 
+It is important to note that the stress intensity factors or J-integral in the case of heterogeneous materials are difficult to calculate or obtain experimentally \citep{fischer_problems_2014}. Due to the inhomogeneities, the J-integral becomes path dependent and requires special correction terms to be computed \citep{eischen_fracture_1987, chang_extension_2002}. 
 % There is no agreed approach to validate either configurational forces or stress intensity factors for such cases (except for the special case of functionally graded materials~\cite{kim2002finite}).
 %, by using MWLS method, demonstrated in Section~\ref{sec:mwls}.
 
 A straightforward verification can be performed by using a central difference numerical integration. The energy release rate for crack growth can be calculated as the change in elastic strain energy per unit area of crack growth~\cite{Griffith163}:
 \begin{equation}
-G = \frac{\partial \psi}{\partial a_{\rm {pl}}}
+G = \frac{\partial \psi}{\partial a}
 \end{equation}
-where $\psi$ is the elastic energy of the system, and $a_{\rm{pl}}$ is the crack length. This derivative can be approximated as:
+where $\psi$ is the elastic energy of the system, and $a$ is the crack length. This derivative can be approximated as:
 \begin{equation}
- \frac{\partial \psi}{\partial a_{\rm {pl}}} = \lim_{\Delta a_{\rm {pl}} \to 0} \frac{\psi(a_{\rm {pl}} + \Delta a_{\rm {pl}}) - \psi(a_{\rm {pl}} -\Delta a_{\rm {pl}})}{2\Delta a_{\rm {pl}}}
+ \frac{\partial \psi}{\partial a} = \lim_{\Delta a \to 0} \frac{\psi(a + \Delta a) - \psi(a -\Delta a)}{2\Delta a}
 \end{equation}
-where the elastic strain energies $\psi(a_{\rm {pl}} \pm \Delta a_{\rm {pl}})$ is obtained from two additional analyses with horizontal cracks of lengths: ($a + \Delta a_{\rm {pl}}$) and ($a - \Delta a_{\rm {pl}}$), where $\Delta a_{\rm {pl}}$ is a very small value. 
-Next, knowing the resulting release energy with the crack length of $a_{\rm {pl}}$, a relative error can be calculated. 
-Twenty-four analyses, for different levels of $p$~-~refinement and values of $\Delta a_{\rm {pl}}$, have been undertaken in order to determine the error in the release energy. 
+where the elastic strain energies $\psi(a \pm \Delta a)$ is obtained from two additional analyses with horizontal cracks of lengths: ($a + \Delta a$) and ($a - \Delta a$), where $\Delta a$ is a very small value. 
+Next, knowing the resulting energy release rate with the crack length of $a$, a relative error can be calculated. 
+Twenty-four analyses, for different levels of $p$~-~refinement and values of $\Delta a$, have been undertaken in order to determine the error in the energy release rate. 
 The results are presented in Figure~\ref{fig:covergencefdm}, where it is apparent that the error in fracture energy release rate is converging to 0.3\% 
 with increasing levels of refinement. It is worth noting that a similar level of accuracy was attained for the homogeneous case.  Achieving higher precision with this means of validation is difficult due to the accumulation of truncation, approximation and discretisation errors.
 Therefore, it can be concluded that the proposed estimation of fracture energy release rate for heterogeneous materials is obtained with a satisfactory level of accuracy.
@@ -907,7 +912,7 @@ Therefore, it can be concluded that the proposed estimation of fracture energy r
 
 \subsection{Crack propagation in FGMs} \label{sec:crack_propagation_FGM} 
 % 
-The correct implementation and performance of the presented computational method is demonstrated by means of two 3D numerical examples of crack propagation in functionally graded materials. In order to validate the numerical results, we adopt examples reported by \cite{kim2004simulation}, who compared their analyses against experimental data \cite{galvez1996crack, rousseau2000compositionally}. The examples consider crack propagation in graded beams under three-point bending. Figure~\ref{fig:fgm_mesh_load} shows specimen geometries, discretisation and boundary conditions for two cases: a) simple symmetric three-point bending and b) considering offset loading which results in a mixed mode crack evolution. Discretisation is undertaken using 3D quadratic tetrahedral elements with an additional local $p$~-~refinement (increased polynomial degree) around the crack tip, where 3rd order polynomials are used. 
+The correct implementation and performance of the presented computational method is demonstrated by means of two 3D numerical examples of crack propagation in functionally graded materials. In order to validate the numerical results, we adopt examples reported by \cite{kim2004simulation}, who compared their analyses against experimental data \cite{galvez1996crack, rousseau2000compositionally}. The examples consider crack propagation in graded beams under three-point bending. Figure~\ref{fig:fgm_mesh_load} shows specimen geometries, discretisation and boundary conditions for two cases: (a) simple symmetric three-point bending and (b) considering offset loading which results in a mixed mode crack evolution. Discretisation is undertaken using 3D quadratic tetrahedral elements with an additional local $p$~-~refinement (increased polynomial degree) around the crack tip, where 3rd order polynomials are used. 
 
 The analyses consider two materials: homogeneous poly-methyl-methacrylate (PMMA) and linearly graded polymer, where Young's modulus $E$ and fracture toughness $K_\mathrm{Ic}$ are linearly varying from top to bottom. The numerical values of material properties for PMMA are as follows: $E$ = 2890~${\rm {[MPa]}}$, $\nu$ = 0.4,  $K_\mathrm{Ic}$ = 1.09 [MPa $\sqrt{\mathrm m}$] and for the graded case values at top and bottom points are shown in Table~\ref{tab:parameters_fgm}. Note that due to current limitations of the implementation the Poisson's ratio is assumed to be constant (unlike in original work of \cite{kim2004simulation} where the used ratio was varying from 0.39 to 0.41). 
 % 
@@ -920,7 +925,7 @@ The analyses consider two materials: homogeneous poly-methyl-methacrylate (PMMA)
 		$60  $            \hspace{1.0cm}   &  4000  	 \hspace{1.0cm}	& 0.4      \hspace{1.0cm}     &  1.19 \\
 		\hline
 	\end{tabular} 
-	\caption{Material parameters used for FGM simulations. Relationship between $K_\mathrm{Ic}$ and $g_{\rm c}$ can be found in Eq.~\ref{eq:SIF_g_c}.}
+	\caption{Material parameters used for FGM simulations. Relationship between $K_\mathrm{Ic}$ and $g_{\rm c}$ can be found in Eq. \ref{eq:SIF_g_c}.}
 	\label{tab:parameters_fgm}
 \end{table}
 % 
@@ -930,13 +935,13 @@ The analyses consider two materials: homogeneous poly-methyl-methacrylate (PMMA)
 	\centering
 	\begin{center}
 	\def\svgwidth{12cm} \input{Figures/fgm_geom.pdf_tex}
-	\caption{FGM example: A crack in a beam subjected to three-point bending. Geometry, boundary conditions and initial discretisation for Case 1: considering symmetric loading. a) Case 2: considering offset loading. b). Units in [N], [mm]. Note that in both cases the total force P is applied in the form of uniformly distributed pressure on a block with dimensions: 2.25x4.5x18 [mm]. The initial meshes consists of 1751 and 1794 quadratic tetrahedral elements.}
+	\caption{FGM example: A crack in a beam subjected to three-point bending. Geometry, boundary conditions and initial discretisation for Case 1: considering symmetric loading. (a) Case 2: considering offset loading. (b). Units in [N], [mm]. Note that in both cases the total force P is applied in the form of uniformly distributed pressure on a block with dimensions: 2.25x4.5x18 [mm]. The initial meshes consists of 1751 and 1794 quadratic tetrahedral elements.}
 	\label{fig:fgm_mesh_load}
 	\end{center}
 \end{figure}
 % 
 
-The arc-length control is used to trace the nonlinear response with an adaptive crack area increment where the target is set to $\Delta s$ = 5 $[\mathrm{mm}^2]$ per load step. Figure~\ref{fig:fgm_case1} shows comparison of load versus crack mouth opening displacement (CMOD) curves for a homogeneous beam and a functionally graded one for Case 1 (symmetric loading) obtained by the presented approach and reports from literature. Due to symmetry, the crack is in pure Mode-I, therefore the resulting crack is a plane surface. It is evident that the material gradation results in an increased critical load $P$. There is a good agreement between results from the literature and configurational mechanics approach. 
+The arc-length control is adopted to trace the nonlinear response, using an adaptive crack area increment with a target of $\Delta s$ = 5 $[\mathrm{mm}^2]$ per load step. Figure~\ref{fig:fgm_case1} shows comparison of load versus crack mouth opening displacement (CMOD) curves for a homogeneous beam and a functionally graded one for Case 1 (symmetric loading) obtained by the presented approach and results from the literature. Due to symmetry, the crack is in pure Mode-I, therefore the resulting crack is a plane surface. It is evident that the material gradation results in an increased critical load $P$. There is a good agreement between results from the literature and configurational mechanics approach. 
 % 
 % 
 \begin{figure}
@@ -951,7 +956,7 @@ The arc-length control is used to trace the nonlinear response with an adaptive 
 \end{figure}
 % 
 % 
-Figure~\ref{fig:fgm_case2} presents a comparison of load versus CMOD curve for a homogeneous beam and a graded beam for Case 2 (mixed-mode) obtained by the present numerical simulation and results from \citep{kim2004simulation}. It can be noticed that the peak loads obtained by the current simulations are slightly lower than those obtained in the literature. However, a few load steps after the peak load, the curves are in very good agreement. This can be explained by the initial cutting surface misalignment. As shown in Figure~\ref{fig:fgm_mesh_load} the initial cutting surface is short and vertically aligned, in comparison to the resulting crack surfaces shown in \ref{fig:fgm_crack_path_comapre}, where the crack trajectory curves towards left hand side. In the first loading steps the crack reorientates towards a pure mode I situation, therefore the initial load required for crack propagation is different than in the literature.
+Figure~\ref{fig:fgm_case2} presents a comparison of load versus CMOD curve for a homogeneous beam and a graded beam for Case 2 (mixed-mode) obtained by the present numerical simulation and results from \citep{kim2004simulation}. It can be noticed that the peak loads and initial stiffness obtained by the proposed approach are slightly lower than those obtained in the literature. This can be explained by the initial cutting surface misalignment. As shown in Figure~\ref{fig:fgm_mesh_load} the initial cutting surface is short and vertically aligned, in comparison to the resulting crack surfaces shown in \ref{fig:fgm_crack_path_comapre}, where the crack trajectory curves towards left hand side. In the first loading steps the crack reorientates towards a pure mode I situation, therefore the initial load required for crack propagation is different than in the literature. A few load steps after the peak load, the curves are in very good agreement. 
 % 
 \begin{figure}
 	\centering
@@ -979,8 +984,9 @@ It can be noticed in both 3D views in Figures~\ref{fig:fgm_case2} and \ref{fig:f
 % 	\label{fig:fgm_crack_surfaces}
 % \end{figure}
 
-The offset of the loading for Case 2 results in an mixed mode loading at the crack front.
-Figure~\ref{fig:fgm_crack_path_comapre} shows comparison of crack trajectories between the experimental and the FEM results. The present approach shows a better agreement with experimentally obtained crack path in comparison with previously documented 2D analyses \cite{kim2004simulation}. Similarly to the previous reports, the different load magnitude for varying material properties in FGM simulations has no effect on the crack trajectory within the framework of linear elastic fracture mechanics. 
+The offset of the loading for Case 2 results in a mixed mode loading at the crack front.
+Figure~\ref{fig:fgm_crack_path_comapre} shows comparison of crack paths between the experimental and the FEM results. The presented approach shows a better agreement with experimentally obtained crack path in comparison with previously documented 2D analyses \cite{kim2004simulation}. 
+Within the framework of linear elastic fracture mechanics, the varying material properties has no effect on the crack trajectory for these particular problems, although the ultimate load is influenced.
 % 
 \begin{figure}
 		\centering
@@ -989,7 +995,7 @@ Figure~\ref{fig:fgm_crack_path_comapre} shows comparison of crack trajectories b
 		\node at (3.0,-0.35) {	\includegraphics[width=3.5cm]{Figures/pngs/fmg_crack_path_cropped.png}};
 		\node at (3.0,-2.35) {3D view};
 		\end{tikzpicture}
-		\caption{Comparison of crack resulting crack surfaces obtained experimentally by \cite{galvez1996crack}, numerically by \citep{kim2004simulation} and presented configurational mechanics approach (MoFEM).}
+		\caption{Comparison of crack paths obtained experimentally by \cite{galvez1996crack}, numerically by \citep{kim2004simulation} and by the proposed approach (MoFEM).}
 		\label{fig:fgm_crack_path_comapre}
 \end{figure}
 % 
@@ -998,7 +1004,7 @@ Figure~\ref{fig:fgm_crack_path_comapre} shows comparison of crack trajectories b
 \label{sec:mc3_release_eng}
 % 
 This subsection considers the bone fracture of an equine 3rd metacarpal bone. 
-In the UK, approximately 60\% of horse fatalities at racecourses are directly or indirectly associated with a fracture, with the distal limb the most commonly affected site \cite{parkin2004risk}.
+Horse fatalities at racecourses are often directly or indirectly associated with a fracture, with the distal limb the most commonly affected site \cite{parkin2004risk}.
 Most of these fractures occur due to the accumulation of tissue fatigue, as a result of repetitive loading~\cite{Parkin2005}, rather than a specific traumatic event. 
 Intense exercise and excessive loading of the metacarpal bones results in maladaptation. 
 The location of 3rd metacarpal fractures is remarkably consistent across a large number of racehorses,  with crack initiation presenting from 
@@ -1017,13 +1023,14 @@ The fracture process of bone is very important,  particularly in the case of fat
 Limitations in previous studies (e.g. use of 2D geometry~\cite{bettamer2017using}, assuming homogeneous bone properties~\cite{gasser2007numerical}), 
 can also explain why an appropriate model for bone fracture has not been developed previously.
 
-
-The material parameters are presented in Table~\ref{tab:parameters_mc3}. The elastic properties for both cortical and trabecular bone are approximated using power law derived from mechanical tests of MC3 bone~\cite{Les1994}. 
-Such empirical elasticity-density relationships are commonly adopted in finite element investigations of bones \citep{helgason2008mathematical}. Note that the stress is scaled depending on density as shown in Eq.\ref{eq:piola_heter}, which is equivalent to spatially varying Young's modulus (e.g. like in FGM). Due to lack of experimental data, the fracture energy $g_{\text c}$ is assumed constant for the entire domain. 
+The material parameters for the following analyses are presented in Table~\ref{tab:parameters_mc3}. 
+The elastic properties for both cortical and trabecular bone are approximated using a power law derived from mechanical tests of MC3 bone~\cite{Les1994}. 
+Such empirical elasticity-density relationships are commonly adopted in finite element investigations of bones \citep{helgason2008mathematical}. 
+Note that the stress is scaled depending on density as shown in Eq.\ref{eq:piola_heter}, which is equivalent to spatially varying Young's modulus (e.g. like in FGM). Due to lack of experimental data, the fracture energy $g_{\text c}$ is assumed constant for the entire domain. 
 % Each case considers a different function for the parameter $c$ that defines the rate of bone adaptation and is used to compute the mass source, $\mathcal{R}_0$, according to Eq.~(\ref{eq:mass_source}).
 % In Case~1, $c$ is constant. For Case~2 and Case~3 different bell functions (Eq.~(\ref{eq:bell_function})) are used. The parameters for each case are presented in Table~\ref{tab:three_cases}. 
  % is not sensitive to the initial density
-Boundary conditions are simplified to two representative forces (5~$\text{[kN]}$~each) spanning over a small area based on pressure film studies~\cite{Brama2001}, as demonstrated in Figure~\ref{fig:mc3_BC}. 
+Boundary conditions are simplified to two representative forces (5~$\text{[kN]}$~each) spanning over a small area based on pressure film studies~\cite{Brama2001}, as illustrated in Figure~\ref{fig:mc3_BC}. 
 The two forces are often considered in the literature as an equivalent of joint peak force at the mid-stance of a horse gait. Obviously, with such simplified loading case the analysis is not sufficient to produce any quantitative results regarding critical loading for the metacarpal but rather to demonstrate the potential of this approach. 
 \begin{table}[h]
 	\centering
@@ -1124,7 +1131,7 @@ It can be seen that, for the same mesh, as the order of approximation increases,
 	\caption{Convergence plot of fracture energy release rate versus no of DOF (log10) for subsequent discretisations and $p$~-~refinements.}
 	\label{fig:max_g1_convergece}
 \end{figure}
-A crack will propagate when the energy release rate $G$ equals the material's resistance to crack extension, $g_{\rm c}$. Assuming $g_{\rm c} = 2.0\,[\mathrm{ kN/m}]$~\cite{gasser2007numerical} it can be estimated that this particular metacarpal bone with this initial crack can sustain loading of approximately 4.4 times greater before a fracture starts to propagate. 
+A crack will propagate when the energy release rate $G$ equals the material's resistance to crack extension, $g_{\rm c}$. Assuming $g_{\rm c} = 2.0\,[\mathrm{ kN/m}]$~\cite{gasser2007numerical}, it can be estimated that for this particular metacarpal bone with this initial crack, loading can be increased by a factor of approximately 4.4 before a fracture starts to propagate. 
 % 
 % 
 % 
@@ -1153,9 +1160,13 @@ A crack will propagate when the energy release rate $G$ equals the material's re
 % It can be seen that there is a trend of increasing release energy rate over time and that by introducing a notch in the resorption zone, where no loading is applied, the configurational force attains larger values. This indicates that over time the bone becomes more prone to fracture in this specific region. 
 % 
 \subsection{Crack propagation in bone}
-In this section, we move the analysis further by simulating the full process of crack propagation equine bone. The magnitude of applied forces (Figure \ref{fig:mc3_BC}) is controlled by the increment in crack area during each load step using an arc-length technique. The initial finite element mesh is the same as previously, although it is locally refined as the crack front advances. In this example we considered bone with heterogeneous density distribution mapped from CT scan data. 2nd order tetrahedral elements are used.
-The numerically predicted crack paths are shown in Figure~\ref{fig:crack_snapshots}. 
-It can be seen that the crack has an initially planar shape and then curves towards the lateral side of the bone. This simulated crack path compares well with fractures observed in radiographs \cite{whitton2010third}, especially considering the simplified loading conditions. 
+In this section, we take the analysis further by simulating the full process of crack propagation in equine bone. 
+The magnitude of applied forces (Figure \ref{fig:mc3_BC}) is controlled by the increment in crack area during each load step using an arc-length technique. 
+The initial finite element mesh is the same as previously, although it is locally refined as the crack front advances. 
+The heterogeneous density distribution is mapped from CT scan data. 
+The mesh comprises 2nd order tetrahedral elements.
+The numerically predicted crack path is shown in Figure~\ref{fig:crack_snapshots}. 
+It can be seen that the crack shape is initially planar before curving towards the lateral side of the bone. This simulated crack path compares well with fractures observed in radiographs \cite{whitton2010third}, especially considering the simplified loading conditions. 
 The load factor versus crack area plot is shown in Figure~\ref{fig:load_factor1}a). 
 % Consistent with the previous analysis in Section~\ref{sec:mc3_release_eng}, the metacarpal bone shows a decreased resistance to fracture - i.e. for the same crack area, the remodelled bone requires much lower force (load factor) to induce crack propagation. Low density levels at biological equilibrium ($t=90$ and $t=200$) also influences the crack path, with the crack curving earlier than in the initial stages of remodelling. 
 % \begin{figure}[h!]
@@ -1182,8 +1193,7 @@ The load factor versus crack area plot is shown in Figure~\ref{fig:load_factor1}
 \end{figure*}
 % 
 % 
-In the next example we considered bone with heterogeneous density distribution mapped from CT scan data. 
-As previously demonstrated (Figure~\ref{fig:plate_conv}(b)) modelling singularity can significantly improve the accuracy of the configurational forces at the crack front. In the Figure~\ref{fig:load_factor1}(a) results from crack analysis with Quarter Point elements are also depicted. It is evident that accurate stress state at the tip has a negligible impact on the full crack propagation analysis and the resulting load factor.  
+Figure~\ref{fig:load_factor1}(a) compares results with and without using singularity element. Although the singularity element improves the accuracy of stresses at the crack front, as previously demonstrated (Figure~\ref{fig:plate_conv}(b)), it is evident that it has negligible influence on the overall response. Figure~\ref{fig:load_factor1}(b) compares the results with heterogeneous material properties to results with homogeneous properties. From the load-crack area curves, it can be observed that the heterogeneous nature of bone has a significant impact on the predicted response and crack path. 
 % 
 \begin{figure*}[h]
 	\centering
@@ -1204,10 +1214,10 @@ As previously demonstrated (Figure~\ref{fig:plate_conv}(b)) modelling singularit
 	\caption{Load factor versus crack area for (a) with and without singularity element and (b) homogeneous versus heterogeneous density distribution.}
 	\label{fig:load_factor1}
 \end{figure*}
-From the load-crack area curves in Figure~\ref{fig:load_factor1}(b) it can be observed that including density data from CT scans have a significant impact on the predicted load factor and crack path as well. 
+
 % 
 % 
-Finally, we investigated the $h$ and $p$ convergence. The results presented on the Figures \ref{fig:load_factor2}(a) and \ref{fig:load_factor2}(b) show good numerical convergence for consecutive refinements. It can be concluded that our formulation predicts crack path accurately with minimal effect from original mesh or order of approximation. 
+Finally, we investigated $h$ and $p$ convergence. The results presented on the Figures \ref{fig:load_factor2}(a) and \ref{fig:load_factor2}(b) show good numerical convergence for consecutive refinements. It can be concluded that our formulation predicts the crack path accurately with minimal effect from the original mesh or order of approximation. 
 % 
 \begin{figure*}[h]
 	\centering
@@ -1238,10 +1248,12 @@ Finally, we investigated the $h$ and $p$ convergence. The results presented on t
 % \label{fig:real_fractures}
 % \end{figure}
 % 
-It is important to note that bone is generally regarded as a quasi-brittle material \cite{gasser2007numerical}, therefore linear fracture mechanics assumptions by itself are insufficient to provide a meaningful insight into bone fractures without including cohesive effects like e.g. collagen fiber bridging. However, the authors consider including such phenomena into the formulation in the future. The presented crack propagation in bone example is mainly included as an extreme case of a highly heterogeneous material and complex three-dimensional final crack geometry while utilising material data obtained from CT scans.
+It is important to note that bone is generally regarded as a quasi-brittle material \cite{gasser2007numerical}. Therefore, the assumption of linear fracture mechanics has limited applicability and further developments should include cohesive effects, such as collagen fibre bridging. 
+
 % 
 \section{Discussion}\label{sec:discussion}
-This paper has presented a FEM computational modelling framework to investigate the influence of heterogeneous material properties on fracture resistance and fracture propagation. 
+This paper has presented a mathematical formulation and computational modelling framework to investigate the 
+influence of heterogeneous material properties on fracture resistance and fracture propagation. 
 The influence of the heterogeneous density distribution was captured using an extension of the authors' previous work on configurational mechanics for fracture. 
 Configurational forces are the driver for crack propagation and it was shown that in order to evaluate correctly these forces at the crack front it is necessary to have a spatially smooth density field, with higher regularity than if the field is directly approximated on the finite element mesh. 
 Therefore, density data is approximated as a smooth field using a Moving Weighted Least Squares method. 
@@ -1255,9 +1267,16 @@ It is important to note that the adoption of configurational mechanics avoids th
 
 Numerical examples demonstrated the performance and accuracy of the proposed framework. 
 Numerical convergence was demonstrated and the use of singularity elements was shown to further improve the rate of convergence. 
-However, it was also confirmed that improved accuracy of the stress at the tip had no impact on the crack propagation analysis and the resulting crack path. Analyses of functionally graded materials showed the ability of the proposed method to simulate experimental crack paths. The final example, demonstrated how mechanical loading influence the resistances to bone fracture while using experimental material data. Therefore, this framework will be a useful tool in understanding fractures in bone and ultimately preventing catastrophic fractures. 
+However, it was also confirmed that improved accuracy of the stress at the crack front had no impact on the crack propagation analysis and the resulting crack path. 
+Analyses of functionally graded materials showed the ability of the proposed method to simulate experimental crack paths. 
+The final example, demonstrated how mechanical loading influence the resistances to bone fracture while using experimental material data. 
+Therefore, this framework will be a useful tool in understanding fractures in bone and ultimately preventing catastrophic fractures. 
 
-All analyses were undertaken using MoFEM library \cite{mofemJoss2020} that has been developed to support scalability and ensure robustness. The entire framework can be executed on parallel computer systems. Supplementary data (CT scans, mesh files, command lines) necessary to reproduce the results of all numerical examples can be found in~\cite{karol_lewandowski_2019_dataset}. The bone adaptation and fracture mechanics are both submodules in the MoFEM~\cite{mofemJoss2020}, which can be installed using the flexible package manager, Spack~\cite{spack2015}. 
+All analyses were undertaken using MoFEM library \cite{mofemJoss2020} that has been developed to support scalability and ensure robustness. 
+The entire framework can be executed on parallel computer systems. Supplementary data (CT scans, mesh files, command lines) 
+necessary to reproduce the results of all numerical examples can be found in~\cite{karol_lewandowski_2019_dataset}. 
+The bone adaptation and fracture mechanics are both submodules in the MoFEM~\cite{mofemJoss2020}, 
+which can be installed using the flexible package manager, Spack~\cite{spack2015}. 
 
 % \newpage
 \bibliographystyle{abbrv}
