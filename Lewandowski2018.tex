@@ -137,7 +137,7 @@ associated with spatially varying properties are introduced into the formulation
 The model offers a computationally efficient 3D analysis tool for complex materials by means of a monolithic approach 
 with relatively small number of finite elements. 
 
-This article is structured as follows. After establishing the kinematic preliminaries in Section~\ref{preliminaries}, Section~\ref{sec:fracture} extends the authors' previous work for evolving crack propagation within the framework of configurational mechanics. Section \ref{sec:fem_modelling} describes the finite element method implementation and briefly introduces a special element for capturing the singular stress field at the crack front.  
+This article is structured as follows. After establishing the kinematic preliminaries in Section~\ref{preliminaries}, Section~\ref{sec:fracture_prop} extends the authors' previous work for evolving crack propagation within the framework of configurational mechanics. Section \ref{sec:fem_modelling} describes the finite element method implementation and briefly introduces a special element for capturing the singular stress field at the crack front.  
 All the above components are brought together into a single framework and its performance is demonstrated using a series of numerical examples in Section~\ref{sec:numerical_examples}, where the model is validated with experimental results for 
 FGMs, as well as applying it to a full-scale model of equine bones using clinically available CT-scanning data.
 
@@ -299,6 +299,8 @@ The time derivative of the physical displacement $\mathbf{u}$ and the deformatio
 % \label{sec:fracture}
 
 
+\section{Fracture propagation}
+\label{sec:fracture_prop}
 
 \subsection{First and second laws of thermodynamics}
 
@@ -930,7 +932,7 @@ The analyses consider two materials: homogeneous poly-methyl-methacrylate (PMMA)
 		$60  $            \hspace{1.0cm}   &  4000  	 \hspace{1.0cm}	& 0.4      \hspace{1.0cm}     &  1.19 \\
 		\hline
 	\end{tabular} 
-	\caption{Material parameters used for FGM simulations. Relationship between $K_\mathrm{Ic}$ and $g_{\rm c}$ can be found in Eq. \ref{eq:SIF_g_c}.}
+	\caption{Material parameters used for FGM simulations. Relationship between $K_\mathrm{Ic}$ and $g_{\rm c}$ can be found in Eq.~\ref{eq:SIF_g_c}.}
 	\label{tab:parameters_fgm}
 \end{table}
 % 

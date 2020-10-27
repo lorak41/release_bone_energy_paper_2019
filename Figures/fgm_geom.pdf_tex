@@ -56,7 +56,7 @@
     \put(0,0){\includegraphics[width=\unitlength,page=1]{Figures/fgm_geom.pdf}}%
     \put(0.00454282,0.48260335){\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}a=24\end{tabular}}}}%
     \put(0.3963691,0.62436565){\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}P\end{tabular}}}}%
-    \put(0.19088631,0.43746423){\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}cutting surface\end{tabular}}}}%
+    \put(0.22088631,0.43746423){\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}cutting surface\end{tabular}}}}%
     \put(0.12607418,0.36994404){\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}15\end{tabular}}}}%
     \put(0.274858,0.36970548){\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}120\end{tabular}}}}%
     \put(0.40625597,0.33660227){\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}20\end{tabular}}}}%
@@ -68,8 +68,8 @@
     \put(0.12607418,0.02620943){\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}15\end{tabular}}}}%
     \put(0.274858,0.02597103){\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}120\end{tabular}}}}%
     \put(-0.00124126,0.06199627){\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}b)\end{tabular}}}}%
-    \put(0.18630319,0.09372962){\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}cutting surface\end{tabular}}}}%
-    \put(0.44443378,0.02597103){\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}20\end{tabular}}}}%
+    \put(0.22630319,0.09372962){\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}cutting surface\end{tabular}}}}%
+    \put(0.45043378,0.02597103){\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}20\end{tabular}}}}%
     \put(0.60025978,0.02597103){\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}115\end{tabular}}}}%
     \put(0.87066144,0.03055415){\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}18\\ \end{tabular}}}}%
     \put(0.97050809,0.18441606){\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}60\\ \end{tabular}}}}%
