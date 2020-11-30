@@ -1,6 +1,6 @@
 %% Creator: Inkscape 1.0beta1 (32d4812, 2019-09-19), www.inkscape.org
 %% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
-%% Accompanies image file 'Figures/fgm_geom.pdf' (pdf, eps, ps)
+%% Accompanies image file 'fgm_geom.pdf' (pdf, eps, ps)
 %%
 %% To include the image in your LaTeX document, write
 %%   \input{<filename>.pdf_tex}
@@ -79,5 +79,6 @@
     \put(0,0){\includegraphics[width=\unitlength,page=3]{Figures/fgm_geom.pdf}}%
     \put(0.08564383,0.29629765){\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}X\end{tabular}}}}%
     \put(0.04633183,0.3380239){\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Y\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{Figures/fgm_geom.pdf}}%
   \end{picture}%
 \endgroup%
