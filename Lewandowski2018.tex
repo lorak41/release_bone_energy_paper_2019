@@ -760,7 +760,7 @@ Finally, after rebuilding the mesh around the crack surfaces, the field of mater
 		\node at(0,-3){c) \hspace{4.5cm} d)  \hspace{4.5cm} };
 		\end{tikzpicture}
 
-		\caption{a) Nodal configurational force. b)~Crack front extension. c)~Mesh reconstruction around the tip. d)~MWLS mapping onto new material points.}
+		\caption{a) Nodal configurational force. b)~Crack front extension. c)~Further extension with mesh cutting and remeshing around the tip. d)~MWLS projection onto new integration points in material domain.}
 		\label{fig:crack_procedure}
 \end{figure}
 
@@ -876,7 +876,7 @@ can achieve the same level of accuracy as using a global high order approximatio
 			\node at (0,0)   {		\input{Figures/tikz/plate_conv_no_sing.tex} };
 			\node at (-1.2,-1.1){$0.50\%$};
 			\node at (0,0) {};
-			\end{tikzpicture}
+			\end{tikzpicture}\\
 		\begin{centering} a) \end{centering}
 	\end{minipage}%
 	% \quad \quad \quad
@@ -885,7 +885,7 @@ can achieve the same level of accuracy as using a global high order approximatio
 		\begin{tikzpicture}
 			\node at (0,0){	\input{Figures/tikz/plate_conv_singularity.tex} };
 			\node at (-1.2,-1.0){$0.028\%$};
-	\end{tikzpicture}
+	\end{tikzpicture}\\
 \begin{centering} b) \end{centering}
 	\end{minipage}
 				% \begin{centering} (a)\hspace{7cm}(b) \end{centering}
@@ -897,7 +897,7 @@ can achieve the same level of accuracy as using a global high order approximatio
 From the results in Figure~\ref{fig:plate_conv}b) it is evident that using singularity elements improves the convergence rate significantly and lowers the error by an order of magnitude, from 0.50\% down to 0.028\%. 
 However, it can also be seen that for each combination of $p$~-~refinement, the error increases with further refinement after it reaches the minimum value. 
 This suggests that the solution cannot be further improved by enhancing the order of approximation alone. 
-Reducing the elements size ($h$~-~refinement) and increasing the plate dimensions to better replicate the plane stress conditions used to determine the approximate solution, could potentially improve the solution. 
+Reducing the elements size ($h$~-~refinement) and changing the plate dimensions to better replicate the plane stress conditions used to determine the approximate solution, could potentially improve the solution. 
 Nevertheless, the results are considered sufficiently accurate for the purpose at hand. 
 
 Overall, these results indicate that singularity elements provide significant benefit, since they improve the accuracy of the solution with no extra cost.
@@ -922,11 +922,11 @@ where $\psi$ is the elastic energy of the system, and $a$ is the crack length. T
  \label{eq:fdm_crack}
 \end{equation}
 where the elastic strain energies $\psi(a \pm \Delta a)$ is obtained from two additional analyses with horizontal cracks of lengths: ($a + \Delta a$) and ($a - \Delta a$), where $\Delta a$ is a very small value. 
-Next, knowing the resulting energy release rate with the crack length of $a$, a relative error can be calculated.
+Next, knowing the resulting energy release rate with the crack length of $a$, a relative error can be calculated. It is worth to note, that calculating energy release using Eq.~\ref{eq:fdm_crack} is not suitable for any practical analyses as it can be only used for simple crack paths, it is computationally expensive and potentially unstable for sufficiently low $\Delta a$. 
+
 Twenty-four analyses, for different levels of $p$~-~refinement and values of $\Delta a$, have been undertaken in order to determine the error in the energy release rate. 
 The results are presented in Figure~\ref{fig:covergencefdm}, where it is apparent that the error in fracture energy release rate is converging to 0.3\% 
-with increasing levels of refinement. It is worth noting that a similar level of accuracy was attained for the homogeneous case.  Achieving higher precision with this means of validation is difficult due to the accumulation of truncation, approximation and discretisation errors. Moreover, it is worth to note that calculating energy release using Eq.~\ref{eq:fdm_crack} is not suitable for any practical analyses as it can be only used for simple crack paths, it is computationally expensive and potentially unstable for sufficiently low $\Delta a$.
-Therefore, it can be concluded that the proposed estimation of fracture energy release rate for heterogeneous materials is obtained with a satisfactory level of accuracy.
+with increasing levels of refinement. It is worth noting that a similar level of accuracy was attained for the homogeneous case.  Achieving higher precision with this means of validation is difficult due to the accumulation of truncation, approximation and discretisation errors. Therefore, it can be concluded that the proposed estimation of fracture energy release rate for heterogeneous materials is obtained with a satisfactory level of accuracy.
 \begin{figure}[h]
 	\centering
 %	\includegraphics[width=0.7\linewidth]{Figures/tikz/covergence_FDM.png}
@@ -994,7 +994,7 @@ Figure~\ref{fig:fgm_case2} presents a comparison of load versus CMOD curve for b
 	\node at (2.0,-0.2) {	\includegraphics[width=7cm]{Figures/pngs/fgm_case2crack.png}};
 	\node at (2.0,-1.2) {3D view};
 	\end{tikzpicture}
-	\caption{Case 2: Comparison of Load - CMOD curves for homogeneous and FGM beams obtained by \citep{kim2004simulation} and the present numerical analysis (MoFEM). 3D view of final crack surface and FE mesh.}
+	\caption{Case 2: Comparison of Load - CMOD curves for homogeneous and FGM beams obtained by \citep{kim2004simulation} and the present numerical analysis (MoFEM). 3D view of final crack surface and FE mesh. The mesh is locally refined and the order of approximation increased around the crack tip due to applied  hp-adaptivity scheme.}
 	\label{fig:fgm_case2}
 \end{figure}
 
@@ -1050,7 +1050,7 @@ Experimental validation of such simplified models show that there is a significa
 This variation is perhaps explained by the focus on both the use of strength criteria, rather than energy (as in this paper), and the local initiation of failure, rather than the complete failure mechanism.
 The fracture process of bone is very important,  particularly in the case of fatigue fractures~\cite{gupta2008fracture}. 
 Limitations in previous studies (e.g. use of 2D geometry~\cite{bettamer2017using}, assuming homogeneous bone properties~\cite{gasser2007numerical}), 
-can also explain why an appropriate model for bone fracture has not been developed previously.
+can also explain why an appropriate model for bone fracture has not been developed previously. In contrast to many studies (e.g. \cite{marco2018heterogeneous}), we do not intend to simulate cracks at microscale, but rather focus on modelling fractures at macroscale with approximated material properties. Our approach uses the Griffith criterion with maximal energy dissipation principle for evolving crack front, and does not demand additional empirical laws which have to be established experimentally.
 
 The material parameters for the following analyses are presented in Table~\ref{tab:parameters_mc3}. 
 The elastic properties for both cortical and trabecular bone are approximated using a power law derived from mechanical tests of MC3 bone~\cite{Les1994}. 
