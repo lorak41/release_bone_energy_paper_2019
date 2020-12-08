@@ -901,9 +901,7 @@ can achieve the same level of accuracy as using a global high order approximatio
 
 From the results in Figure~\ref{fig:plate_conv}b) it is evident that using singularity elements improves the convergence rate significantly and lowers the error by an order of magnitude, from 0.50\% down to 0.028\%. 
 However, it can also be seen that for each combination of $p$~-~refinement, the error increases with further refinement after it reaches the minimum value. 
-This suggests that the solution cannot be further improved by enhancing the order of approximation alone. 
-Reducing the elements size ($h$~-~refinement) and changing the plate dimensions to better replicate the plane stress conditions used to determine the approximate solution, could potentially improve the solution. 
-Nevertheless, the results are considered sufficiently accurate for the purpose at hand. 
+This suggests that the solution cannot be further improved by enhancing the order of approximation alone, since ultimately the model converges to a 3D solution. The measured stress difference between inner and outer nodes varies up to 9\%, where plane stress conditions used to determine the reference solution assumed they are constant. Therefore, refining the element size and reducing the plate thickness to better replicate the plane stress could improve the solution. Nevertheless, the results are considered sufficiently accurate for the purpose at hand. 
 
 Overall, these results indicate that singularity elements provide significant benefit, since they improve the accuracy of the solution with no extra cost.
 Furthermore, the difference in execution time for the analysis with and without their inclusion was negligible. 
