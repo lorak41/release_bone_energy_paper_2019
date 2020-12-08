@@ -139,7 +139,7 @@ with relatively small number of finite elements.
 
 Furthermore, the focus of this work is on the modelling of physical processes arising from crack propagating through material heterogeneity and not on the particular choice of displacement jump approximation approach along the crack path.
 The framework proposed is not restricted to the underlying crack propagation implementation of the present work i.e. mesh cutting algorithm.
-Other popular brittle crack propagation approaches such as XFEM and PUFEM, \citep{Belytschko1999, WriggersXFEM, Babuska2017, Tian2019} could adopt the present framework by adding explicit approximation of material position to incorporate configurational forces evaluation.  
+Other popular brittle crack propagation approaches such as XFEM and PUFEM, \citep{Belytschko1999, WriggersXFEM, Babuska2017, Tian2019} could adopt the present framework by adding explicit approximation of material positions to incorporate configurational forces evaluation.  
 
 This article is structured as follows. After establishing the kinematic preliminaries in Section~\ref{preliminaries}, Section~\ref{sec:fracture_prop} extends the authors' previous work for evolving crack propagation within the framework of configurational mechanics. Section \ref{sec:fem_modelling} describes the finite element method implementation and briefly introduces a special element for capturing the singular stress field at the crack front.  
 All the above components are brought together into a single framework and its performance is demonstrated using a series of numerical examples in Section~\ref{sec:numerical_examples}, where the model is validated with experimental results for 
@@ -984,7 +984,7 @@ The arc-length control is adopted to trace the nonlinear response, using an adap
 	\node at (2.0,-0.2) {	\includegraphics[width=7cm]{Figures/pngs/fgm_case1crack.png}};
 	\node at (2.0,-1.2) {3D view};
 	\end{tikzpicture}
-	\caption{Case 1: Comparison of Load - CMOD curves for homogeneous and FGM beams obtained by \citep{kim2004simulation} and the present numerical analysis (MoFEM). 3D view of final crack surface and FE mesh as a result of the implemented mesh cutting adaptive $h$~-~~$p$~-~refinement scheme}.
+	\caption{Case 1: Comparison of Load - CMOD curves for homogeneous and FGM beams obtained by \citep{kim2004simulation} and the present numerical analysis (MoFEM). 3D view of final crack surface and FE mesh as a result of the implemented mesh cutting adaptive $h$~-~~$p$~-~refinement scheme.}
 	\label{fig:fgm_case1}
 \end{figure}
 % 
@@ -998,7 +998,7 @@ Figure~\ref{fig:fgm_case2} presents a comparison of load versus CMOD curve for b
 	\node at (2.0,-0.2) {	\includegraphics[width=7cm]{Figures/pngs/fgm_case2crack.png}};
 	\node at (2.0,-1.2) {3D view};
 	\end{tikzpicture}
-	\caption{Case 2: Comparison of Load - CMOD curves for homogeneous and FGM beams obtained by \citep{kim2004simulation} and the present numerical analysis (MoFEM). 3D view of final crack surface and FE mesh. The mesh is locally refined and the order of approximation increased around the crack tip as a result of the implemented mesh cutting adaptive $h$~-~~$p$~-~refinement scheme}
+	\caption{Case 2: Comparison of Load - CMOD curves for homogeneous and FGM beams obtained by \citep{kim2004simulation} and the present numerical analysis (MoFEM). 3D view of final crack surface and FE mesh. The mesh is locally refined and the order of approximation increased around the crack tip as a result of the implemented mesh cutting adaptive $h$~-~~$p$~-~refinement scheme.}
 	\label{fig:fgm_case2}
 \end{figure}
 
@@ -1223,7 +1223,7 @@ The load factor versus crack area plot is shown in Figure~\ref{fig:load_factor1}
 				% \node at(1,-2.5){a) \hspace{2.5cm} b)  \hspace{2.5cm}  c)  \hspace{2.5cm}  d)  \hspace{2.5cm}  };
 		\end{tikzpicture}
 	\end{centering}		
-		\caption{Crack surface evolution in equine 3rd metacarpal based on an adaptive $h$~-~~$p$~-~refinement mesh cutting scheme}.
+		\caption{Crack surface evolution in equine 3rd metacarpal based on an adaptive $h$~-~~$p$~-~refinement mesh cutting scheme.}
 		\label{fig:crack_snapshots}
 \end{figure*}
 % 
