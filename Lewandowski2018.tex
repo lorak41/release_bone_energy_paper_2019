@@ -752,9 +752,9 @@ In addition, an arc-length method is adopted to trace the dissipative load path 
 \label{sec:crack_topology}
 % 
 Continuous advancement of the crack front, and evolution of the crack surfaces, requires constant adjustments to, and adaptation of, the finite element mesh during an analysis. 
-From a given crack configuration, the crack front is advanced by moving the nodes at the crack front in the direction of the configurational forces to establish crack front equilibrium, resulting in maximum energy dissipation (see Eq.~\ref{eq:max_dissp}) - see Figure~\ref{fig:crack_procedure}(a) and (b). This is achieved with only local changes to the mesh, including edge flipping ahead of the crack front and edge splitting behind the crack front (Figure~\ref{fig:crack_procedure}(c)).
+From a given crack configuration, the crack front is advanced by moving the nodes at the crack front in the direction of the configurational forces to establish crack front equilibrium, resulting in maximum energy dissipation (Eq.~\ref{eq:max_dissp}) - see Figure~\ref{fig:crack_procedure}(a) and (b). This is achieved with only local changes to the mesh.
 
-However, once the quality of the tetrahedral elements deteriorates, typically after 3-4 increments, the crack needs to be re-established by cutting the volume mesh by the new crack surfaces. This process involves only limited changes to the volume elements, since it is restricted to the elements immediately surrounding the crack. In addition, higher-order and p-adaptive elements based on a hierarchical approximation basis framework \citep{mofemJoss2020,Ainsworth2003} is adopted. Not only does this permit local enhancement of the approximation, it also mitigates the occasional existence of distorted elements in the mesh. 
+However, once the quality of the tetrahedral elements deteriorates, typically after 3-4 increments, the crack needs to be re-established by cutting the volume mesh by the new crack surfaces - Figure~\ref{fig:crack_procedure}(c). This process involves only limited changes to the volume elements, since it is restricted to the elements immediately surrounding the crack. In addition, higher-order and p-adaptive elements based on a hierarchical approximation basis framework \citep{mofemJoss2020,Ainsworth2003} is adopted. Not only does this permit local enhancement of the approximation, it also mitigates the occasional existence of distorted elements in the mesh. 
 
 As part of this $h$~-~~$p$~-~refinement scheme, the field of material parameters (density) is also mapped onto the new mesh. The data is stored on the vertices of a background mesh which does not change throughout the analysis. The data for any given material point of the new mesh is approximated using a meshless moving weighted least squares (MWLS) approach from the data stored on neighbouring vertices of the background mesh. 
 
@@ -904,9 +904,9 @@ can achieve the same level of accuracy as using a global high order approximatio
 \end{figure}
 
 
-From the results in Figure~\ref{fig:plate_conv}b) it is evident that using singularity elements improves the convergence rate significantly and lowers the error by an order of magnitude, from 0.50\% down to 0.028\%. 
+From the results in Figure~\ref{fig:plate_conv}(b) it is evident that using singularity elements improves the convergence rate significantly and lowers the error by an order of magnitude, from 0.50\% down to 0.028\%. 
 However, it can also be seen that for each combination of $p$~-~refinement, the error increases with further refinement after it reaches the minimum value. 
-This suggests that the solution cannot be further improved by enhancing the order of approximation alone, since ultimately the model converges to a 3D solution. The difference between the stress calculated at the inner and outer nodes varies up to 9\%, whereas plane stress conditions assume the stress is constant throughout the thickness. Refining the element size and reducing the plate thickness will give better agreement with the assumptions used to obtain the analytical solution. Nevertheless, the results are considered sufficiently accurate for the purpose at hand. 
+This suggests that the solution cannot be further improved by enhancing the order of approximation alone, since ultimately the model converges to a 3D solution. The difference between the stress calculated at the inner and outer nodes varies by up to 9\%, whereas plane stress conditions assume the stress is constant throughout the thickness. Refining the element size and reducing the plate thickness will give better agreement with the assumptions used to obtain the analytical solution. Nevertheless, the results are considered sufficiently accurate for the purpose at hand. 
 
 Overall, these results indicate that singularity elements provide significant benefit, since they improve the accuracy of the solution with no extra cost.
 Furthermore, the difference in execution time for the analysis with and without their inclusion was negligible. 
@@ -950,7 +950,7 @@ with increasing levels of refinement. It is worth noting that a similar level of
 \subsection{Crack propagation in FGMs} \label{sec:crack_propagation_FGM} 
 % 
 The correct implementation and performance of the presented computational method is demonstrated by means of two 3D numerical examples of crack propagation in functionally graded materials. In order to validate the numerical results, we adopt examples reported by \cite{kim2004simulation}, who compared their analyses against experimental data \cite{galvez1996crack, rousseau2000compositionally}. The examples consider crack propagation in graded beams under three-point bending. Figure~\ref{fig:fgm_mesh_load} shows specimen geometries, discretisation and boundary conditions for two cases: (a) simple symmetric three-point bending and (b) considering offset loading which results in a mixed mode crack evolution. Discretisation is undertaken using 3D quadratic tetrahedral elements with an additional local $p$~-~refinement (increased polynomial degree) around the crack tip, where 3rd order polynomials are used.
-Throughout the analyses, the mesh adapts as the crack propagates according to an $h$~-~~$p$~-~refinement scheme as mentioned in Section~\ref{sec:crack_topology}.
+Throughout the analyses, the mesh adapts as the crack propagates according to $h$~-~~$p$~-~refinement scheme as mentioned in Section~\ref{sec:crack_topology}.
 
 The analyses consider two materials: homogeneous poly-methyl-methacrylate (PMMA) and linearly graded polymer, where Young's modulus $E$ and fracture toughness $K_\mathrm{Ic}$ are linearly varying from top to bottom. The numerical values of material properties for PMMA are as follows: $E$ = 2890~${\rm {[MPa]}}$, $\nu$ = 0.4,  $K_\mathrm{Ic}$ = 1.09 [MPa $\sqrt{\mathrm m}$] and for the graded case values at top and bottom points are shown in Table~\ref{tab:parameters_fgm}. Note that due to current limitations of the implementation the Poisson's ratio is assumed to be constant (unlike in original work of \cite{kim2004simulation} where the used ratio was varying from 0.39 to 0.41). 
 % 
@@ -1059,7 +1059,7 @@ Experimental validation of such simplified models show that there is a significa
 This variation is perhaps explained by the focus on both the use of strength criteria, rather than energy (as in this paper), and the local initiation of failure, rather than the complete failure mechanism.
 The fracture process of bone is very important,  particularly in the case of fatigue fractures~\cite{gupta2008fracture}. 
 Limitations in previous studies (e.g. use of 2D geometry~\cite{bettamer2017using}, assuming homogeneous bone properties~\cite{gasser2007numerical}), 
-can also explain why an appropriate model for bone fracture has not been developed previously. In contrast to many studies (e.g. \cite{marco2018heterogeneous}), we do not simulate cracks at the microscale, but rather focus on modelling fractures at macroscale with approximated material properties. Our approach uses the Griffith criterion with maximal energy dissipation principle for evolving crack front, and does not require additional empirical laws which have to be established experimentally.
+can also explain why an appropriate model for bone fracture has not been developed previously. In contrast to many studies (e.g. \cite{marco2018heterogeneous}), we do not simulate cracks at the microscale, but rather focus on modelling fractures at the macroscale with approximated material properties. Our approach uses the Griffith criterion with maximal energy dissipation principle for evolving crack front, and does not require additional empirical laws which have to be established experimentally.
 
 The material parameters for the following analyses are presented in Table~\ref{tab:parameters_mc3}. 
 The elastic properties for both cortical and trabecular bone are approximated using a power law derived from mechanical tests of MC3 bone~\cite{Les1994}. 
@@ -1117,7 +1117,7 @@ Using a $\mathrm {K_2 HPO_4}$ calibration phantom, grey scale values from CT sca
 using five tubes with reference densities. 
 The mechanical material properties were mapped onto the integration points of the mesh of the metacarpal bone using the MWLS method described in~\ref{sec:dens_mapping}. 
 % 
-An initial crack was generated in the mesh using a cutting plane, as shown in Figure~\ref{fig:bone_ct_mesh_cut}. A notch is situated at the origin of the most common location of a lateral condyle fracture~\cite{jacklin2012frequency}. The adaptive $h$~-~~$p$~-~refinement method described in Section~\ref{sec:crack_topology} proved successful in resolving the propagating crack through the challenging bone geometry.
+An initial crack was generated in the mesh using a cutting plane, as shown in Figure~\ref{fig:bone_ct_mesh_cut}. A notch is situated at the origin of the most common location of a lateral condyle fracture~\cite{jacklin2012frequency}. The adaptive $h$~-~~$p$~-~refinement method described in Section~\ref{sec:crack_topology} proved successful in resolving the propagating crack topology through the challenging bone geometry.
 
 The numerical analyses were undertaken using three meshes consisted of 6069, 10032 and 21189 tetrahedrons and repeated for 1\textsuperscript{st}, 2\textsuperscript{nd} and 3\textsuperscript{rd}-order of global $p$~-~refinement and local $p$~-~refinement at the crack tip. The finite element meshes were generated by discretising the segmented geometry of a full-scale model of an equine 3rd metacarpal bone derived from CT scan data - see Figure~\ref{fig:mc3_BC}.
 % 
@@ -1206,7 +1206,7 @@ The heterogeneous density distribution is mapped from CT scan data.
 The mesh comprises 2nd order tetrahedral elements.
 The numerically predicted crack path is shown in Figure~\ref{fig:crack_snapshots}. 
 It can be seen that the crack shape is initially planar before curving towards the lateral side of the bone. This simulated crack path compares well with fractures observed in radiographs \cite{whitton2010third}, especially considering the simplified loading conditions. 
-The load factor versus crack area plot is shown in Figure~\ref{fig:load_factor1}a). 
+The load factor versus crack area plot is shown in Figure~\ref{fig:load_factor1}(a). 
 % Consistent with the previous analysis in Section~\ref{sec:mc3_release_eng}, the metacarpal bone shows a decreased resistance to fracture - i.e. for the same crack area, the remodelled bone requires much lower force (load factor) to induce crack propagation. Low density levels at biological equilibrium ($t=90$ and $t=200$) also influences the crack path, with the crack curving earlier than in the initial stages of remodelling. 
 % \begin{figure}[h!]
 % 	\centering
